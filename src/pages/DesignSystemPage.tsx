@@ -606,22 +606,22 @@ export default function DesignSystem() {
         {/* SECTION 15: Skeleton */}
         <SectionWrapper id="skeleton" num="15" title="Skeleton" description="Loading placeholders for cards and content." source="src/components/ui/skeleton.tsx">
           <div style={{ display: 'flex', gap: 16 }}>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12, padding: 24, border: '1px solid #EDF0F7', borderRadius: 12 }}>
-              <Skeleton className="h-10 w-10 rounded-lg" />
-              <Skeleton className="h-5 w-3/4" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-5/6" />
+            <div className="shadcn-card" style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div className="shadcn-skeleton" style={{ height: 40, width: 40, borderRadius: 8 }} />
+              <div className="shadcn-skeleton" style={{ height: 20, width: '75%' }} />
+              <div className="shadcn-skeleton" style={{ height: 16, width: '100%' }} />
+              <div className="shadcn-skeleton" style={{ height: 16, width: '83%' }} />
             </div>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12, padding: 24, border: '1px solid #EDF0F7', borderRadius: 12 }}>
-              <Skeleton className="h-8 w-1/2" />
-              <Skeleton className="h-5 w-2/3" />
-              <Skeleton className="h-4 w-1/3" />
+            <div className="shadcn-card" style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div className="shadcn-skeleton" style={{ height: 32, width: '50%' }} />
+              <div className="shadcn-skeleton" style={{ height: 20, width: '66%' }} />
+              <div className="shadcn-skeleton" style={{ height: 16, width: '33%' }} />
             </div>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12, padding: 24, border: '1px solid #EDF0F7', borderRadius: 12 }}>
-              <Skeleton className="h-4 w-1/4" />
-              <Skeleton className="h-5 w-full" />
-              <Skeleton className="h-4 w-5/6" />
-              <Skeleton className="h-4 w-1/3" />
+            <div className="shadcn-card" style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div className="shadcn-skeleton" style={{ height: 16, width: '25%' }} />
+              <div className="shadcn-skeleton" style={{ height: 20, width: '100%' }} />
+              <div className="shadcn-skeleton" style={{ height: 16, width: '83%' }} />
+              <div className="shadcn-skeleton" style={{ height: 16, width: '33%' }} />
             </div>
           </div>
         </SectionWrapper>
