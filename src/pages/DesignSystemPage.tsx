@@ -391,12 +391,12 @@ export default function DesignSystem() {
         <SectionWrapper id="badges" num="05" title="Badges" description="Product-specific badge variants for tagging and labelling." source="src/components/ui/badge.tsx">
           <h3 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: 16 }}>Product Variants</h3>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 }}>
-            <Badge variant="m8-ads">Mark8 Ads</Badge>
-            <Badge variant="m8-sight">Mark8 Sight</Badge>
-            <Badge variant="m8-shelf">Mark8 Shelf</Badge>
-            <Badge variant="m8-returns">Mark8 Returns</Badge>
-            <Badge variant="m8-reco">Mark8 Reco</Badge>
-            <Badge variant="m8-inventory">Mark8 Inventory</Badge>
+            <span className="badge-m8-ads">Mark8 Ads</span>
+            <span className="badge-m8-sight">Mark8 Sight</span>
+            <span className="badge-m8-shelf">Mark8 Shelf</span>
+            <span className="badge-m8-returns">Mark8 Returns</span>
+            <span className="badge-m8-reco">Mark8 Reco</span>
+            <span className="badge-m8-inventory">Mark8 Inventory</span>
           </div>
           <h3 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: 16 }}>shadcn Defaults</h3>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
