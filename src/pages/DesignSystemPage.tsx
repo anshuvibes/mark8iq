@@ -500,18 +500,18 @@ export default function DesignSystem() {
         {/* SECTION 09: Tabs */}
         <SectionWrapper id="tabs" num="09" title="Tabs" description="Tabbed content for switching between product views." source="src/components/ui/tabs.tsx">
           <Tabs defaultValue="ads">
-            <TabsList>
-              <TabsTrigger value="ads">Mark8 Ads</TabsTrigger>
-              <TabsTrigger value="sight">Mark8 Sight</TabsTrigger>
-              <TabsTrigger value="shelf">Mark8 Shelf</TabsTrigger>
-              <TabsTrigger value="reco">Mark8 Reco</TabsTrigger>
-              <TabsTrigger value="returns">Mark8 Returns</TabsTrigger>
+            <TabsList className="shadcn-tabs-list">
+              <TabsTrigger className="shadcn-tabs-trigger" value="ads">Mark8 Ads</TabsTrigger>
+              <TabsTrigger className="shadcn-tabs-trigger" value="sight">Mark8 Sight</TabsTrigger>
+              <TabsTrigger className="shadcn-tabs-trigger" value="shelf">Mark8 Shelf</TabsTrigger>
+              <TabsTrigger className="shadcn-tabs-trigger" value="reco">Mark8 Reco</TabsTrigger>
+              <TabsTrigger className="shadcn-tabs-trigger" value="returns">Mark8 Returns</TabsTrigger>
             </TabsList>
-            <TabsContent value="ads"><p className="m8-p5" style={{ color: '#6b7280', padding: 16 }}>Turbocharge ROI with ad insights that connect every spend decision to real marketplace performance.</p></TabsContent>
-            <TabsContent value="sight"><p className="m8-p5" style={{ color: '#6b7280', padding: 16 }}>Benchmark share of voice, track keyword rankings, and monitor Buy Box ownership across all competitors.</p></TabsContent>
-            <TabsContent value="shelf"><p className="m8-p5" style={{ color: '#6b7280', padding: 16 }}>Detect stockouts before they happen with DOSH calculations and unified inventory ageing across all warehouses.</p></TabsContent>
-            <TabsContent value="reco"><p className="m8-p5" style={{ color: '#6b7280', padding: 16 }}>Match every marketplace transaction across sales, returns, fees, and settlements into one reconciled view.</p></TabsContent>
-            <TabsContent value="returns"><p className="m8-p5" style={{ color: '#6b7280', padding: 16 }}>Track every return from initiation to final resolution with mobile-first execution and granular loss attribution.</p></TabsContent>
+            <TabsContent className="shadcn-tabs-content" value="ads"><p>Turbocharge ROI with ad insights that connect every spend decision to real marketplace performance.</p></TabsContent>
+            <TabsContent className="shadcn-tabs-content" value="sight"><p>Benchmark share of voice, track keyword rankings, and monitor Buy Box ownership across all competitors.</p></TabsContent>
+            <TabsContent className="shadcn-tabs-content" value="shelf"><p>Detect stockouts before they happen with DOSH calculations and unified inventory ageing across all warehouses.</p></TabsContent>
+            <TabsContent className="shadcn-tabs-content" value="reco"><p>Match every marketplace transaction across sales, returns, fees, and settlements into one reconciled view.</p></TabsContent>
+            <TabsContent className="shadcn-tabs-content" value="returns"><p>Track every return from initiation to final resolution with mobile-first execution and granular loss attribution.</p></TabsContent>
           </Tabs>
         </SectionWrapper>
 
