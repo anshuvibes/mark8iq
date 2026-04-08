@@ -596,10 +596,10 @@ export default function DesignSystem() {
         {/* SECTION 14: Toast */}
         <SectionWrapper id="toast" num="14" title="Toast" description="Notification toasts for feedback and alerts." source="sonner">
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Button variant="m8-violet" onClick={() => toast.success('Dashboard synced. Data refreshed from all marketplaces.')}>Success</Button>
-            <Button variant="m8-dark" onClick={() => toast.error('Sync failed. Check your marketplace credentials.')}>Error</Button>
-            <Button variant="m8-outline-violet" onClick={() => toast('PRISM refresh in progress. Data updates within 60 minutes.')}>Info</Button>
-            <Button variant="m8-outline-dark" onClick={() => toast.warning('Ad spend approaching 80L threshold. Review budget.')}>Warning</Button>
+            <button className="btn-m8-violet" onClick={() => toast.success('Dashboard synced. Data refreshed from all marketplaces.')}>Success</button>
+            <button className="btn-m8-dark" onClick={() => toast.error('Sync failed. Check your marketplace credentials.')}>Error</button>
+            <button className="btn-m8-outline-violet" onClick={() => toast('PRISM refresh in progress. Data updates within 60 minutes.')}>Info</button>
+            <button className="btn-m8-outline-dark" onClick={() => toast.warning('Ad spend approaching 80L threshold. Review budget.')}>Warning</button>
           </div>
         </SectionWrapper>
 
