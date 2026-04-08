@@ -15,7 +15,7 @@ export default function SuccessStoriesPage() {
 
   return (
     <Layout>
-      <main ref={ref} dangerouslySetInnerHTML={{ __html: mainHTML }} />
+      <main ref={ref} className="PressAndAwards_PressAndAwardsPage__5mwDx" dangerouslySetInnerHTML={{ __html: mainHTML }} />
       <Footer />
     </Layout>
   );

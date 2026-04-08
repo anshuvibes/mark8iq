@@ -15,7 +15,7 @@ export default function WhyUsPage() {
 
   return (
     <Layout>
-      <main ref={ref} dangerouslySetInnerHTML={{ __html: mainHTML }} />
+      <main ref={ref} className="WhyUs_WhyUsPage__NG7Dv" dangerouslySetInnerHTML={{ __html: mainHTML }} />
       <Footer />
     </Layout>
   );

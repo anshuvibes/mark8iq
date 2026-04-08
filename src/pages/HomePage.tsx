@@ -15,7 +15,7 @@ export default function HomePage() {
 
   return (
     <Layout>
-      <main ref={ref} dangerouslySetInnerHTML={{ __html: mainHTML }} />
+      <main ref={ref} className="Home_HomePage__ceAKX" dangerouslySetInnerHTML={{ __html: mainHTML }} />
       <Footer />
     </Layout>
   );

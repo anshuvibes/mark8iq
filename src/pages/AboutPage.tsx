@@ -15,7 +15,7 @@ export default function AboutPage() {
 
   return (
     <Layout>
-      <main ref={ref} dangerouslySetInnerHTML={{ __html: mainHTML }} />
+      <main ref={ref} className="AboutUs_AboutUsPage__gTlQT" dangerouslySetInnerHTML={{ __html: mainHTML }} />
       <Footer />
     </Layout>
   );

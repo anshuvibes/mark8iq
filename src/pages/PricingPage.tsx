@@ -21,7 +21,7 @@ export default function PricingPage() {
 
   return (
     <Layout>
-      <main ref={ref} dangerouslySetInnerHTML={{ __html: mainHTML }} />
+      <main ref={ref} className="Pricing_PricingPage__B3Lk5" dangerouslySetInnerHTML={{ __html: mainHTML }} />
       <Footer />
     </Layout>
   );
