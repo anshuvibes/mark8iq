@@ -144,4 +144,35 @@ All colors MUST be HSL.
     width: 100% !important;
     object-fit: cover !important;
   }
+
+  /* Stories of real outcomes: fit in one mobile viewport */
+  .StoryCard_StoryCard__Jez_H .StoryCard_story_img__twL_l {
+    width: 85% !important;
+    max-height: 350px !important;
+  }
+  .StoryCard_StoryCard__Jez_H .StoryCard_story_img__twL_l .StoryCard_img_wrap__zH3yH {
+    max-height: 350px !important;
+    overflow: hidden !important;
+  }
+  .StoryCard_StoryCard__Jez_H .StoryCard_story_img__twL_l .StoryCard_img_wrap__zH3yH .clipCard,
+  .StoryCard_StoryCard__Jez_H .StoryCard_story_img__twL_l .StoryCard_img_wrap__zH3yH .ClipCard_ClipCard__bXUlH {
+    max-height: 350px !important;
+  }
+  .StoryCard_StoryCard__Jez_H .StoryCard_story_img__twL_l .StoryCard_img_wrap__zH3yH .ClipCard_ClipCardInner__BFU7k {
+    aspect-ratio: 1 !important;
+    max-height: 340px !important;
+  }
+  .StoryCard_StoryCard__Jez_H .StoryCard_story_content___h_7Y {
+    gap: 10px !important;
+  }
+  .StoryCard_StoryCard__Jez_H .StoryCard_story_content___h_7Y .ContentFromCms_contentFromCms__qAvpD p {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 8px !important;
+  }
+  .HomeStories_HomeStories__V3PkK .section_spacing,
+  .HomeStories_HomeStories__V3PkK {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+  }
 }
