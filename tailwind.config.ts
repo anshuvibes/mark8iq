@@ -13,24 +13,7 @@ export default {
       },
     },
     extend: {
-      fontFamily: {
-        saira: ['Saira', 'sans-serif'],
-      },
       colors: {
-        m8: {
-          violet: 'var(--m8-violet)',
-          dark: 'var(--m8-dark)',
-          light: 'var(--m8-light)',
-          white: 'var(--m8-white)',
-          muted: 'var(--m8-muted)',
-          ads: 'var(--m8-ads)',
-          sight: 'var(--m8-sight)',
-          shelf: 'var(--m8-shelf)',
-          returns: 'var(--m8-returns)',
-          reco: 'var(--m8-reco)',
-          inventory: 'var(--m8-inventory)',
-          pink: 'var(--m8-pink)',
-        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -79,11 +62,6 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-        'm8-sm': 'var(--m8-radius-sm)',
-        'm8-md': 'var(--m8-radius-md)',
-        'm8-lg': 'var(--m8-radius-lg)',
-        'm8-xl': 'var(--m8-radius-xl)',
-        'm8-full': 'var(--m8-radius-full)',
       },
       keyframes: {
         "accordion-down": {

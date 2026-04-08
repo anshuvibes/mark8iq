@@ -15,11 +15,6 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        'm8-dark': 'bg-m8-dark text-white hover:bg-m8-dark/90 rounded-m8-md font-saira',
-        'm8-violet': 'bg-m8-violet text-white hover:bg-m8-violet/90 rounded-m8-md font-saira',
-        'm8-outline-dark': 'border border-m8-dark text-m8-dark bg-transparent hover:bg-m8-dark/5 rounded-m8-md font-saira',
-        'm8-outline-violet': 'border border-m8-violet text-m8-violet bg-transparent hover:bg-m8-violet/5 rounded-m8-md font-saira',
-        'm8-ghost': 'text-m8-dark bg-transparent hover:underline font-saira p-0',
       },
       size: {
         default: "h-10 px-4 py-2",

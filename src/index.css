@@ -9,26 +9,6 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 0 0% 100%;
-
-    /* Mark8 IQ brand tokens */
-    --m8-violet: #8E59FF;
-    --m8-dark: #080D19;
-    --m8-light: #EDF0F7;
-    --m8-white: #ffffff;
-    --m8-text: #080D19;
-    --m8-muted: #6b7280;
-    --m8-ads: #FC7459;
-    --m8-sight: #6895FC;
-    --m8-shelf: #6895FC;
-    --m8-returns: #52BFBC;
-    --m8-reco: #7CBC71;
-    --m8-inventory: #FCB24F;
-    --m8-pink: #DD4062;
-    --m8-radius-sm: 4px;
-    --m8-radius-md: 8px;
-    --m8-radius-lg: 12px;
-    --m8-radius-xl: 16px;
-    --m8-radius-full: 9999px;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -196,19 +176,3 @@ All colors MUST be HSL.
     padding-bottom: 30px !important;
   }
 }
-
-/* Mark8 IQ Typography Utility Classes */
-.m8-h1-display { font-family: 'Saira', sans-serif; font-size: 80px; font-weight: 400; line-height: 110%; letter-spacing: -0.03em; }
-.m8-h1-large   { font-family: 'Saira', sans-serif; font-size: 60px; font-weight: 400; line-height: 110%; letter-spacing: -0.03em; }
-.m8-h2         { font-family: 'Saira', sans-serif; font-size: 50px; font-weight: 400; line-height: 60px; letter-spacing: -0.03em; }
-.m8-h3-xl      { font-family: 'Saira', sans-serif; font-size: 40px; font-weight: 400; line-height: 30px; letter-spacing: -0.03em; }
-.m8-h3-l       { font-family: 'Saira', sans-serif; font-size: 35px; font-weight: 400; line-height: 45px; letter-spacing: -0.03em; }
-.m8-h3-m       { font-family: 'Saira', sans-serif; font-size: 30px; font-weight: 400; line-height: 30px; letter-spacing: -0.03em; }
-.m8-h4         { font-family: 'Saira', sans-serif; font-size: 28px; font-weight: 400; line-height: 110%; letter-spacing: -0.03em; }
-.m8-p1         { font-family: 'Saira', sans-serif; font-size: 25px; font-weight: 400; line-height: 150%; letter-spacing: -0.03em; }
-.m8-p2         { font-family: 'Saira', sans-serif; font-size: 24px; font-weight: 400; line-height: 35px; letter-spacing: 0; }
-.m8-p3         { font-family: 'Saira', sans-serif; font-size: 20px; font-weight: 400; line-height: normal; letter-spacing: 0; }
-.m8-p3-medium  { font-family: 'Saira', sans-serif; font-size: 20px; font-weight: 500; line-height: normal; letter-spacing: 0; }
-.m8-p4         { font-family: 'Saira', sans-serif; font-size: 18px; font-weight: 400; line-height: normal; letter-spacing: 0; }
-.m8-p5         { font-family: 'Saira', sans-serif; font-size: 16px; font-weight: 300; line-height: 24px; letter-spacing: 0; }
-.m8-p6         { font-family: 'Saira', sans-serif; font-size: 14px; font-weight: 300; line-height: normal; letter-spacing: 0; }
