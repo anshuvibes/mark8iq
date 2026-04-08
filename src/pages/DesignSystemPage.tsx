@@ -328,31 +328,31 @@ export default function DesignSystem() {
           <h3 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: 16 }}>Brand Patterns</h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 32 }}>
             {[
-              { variant: 'm8-dark' as const, copy: 'Get in Touch', note: 'Dark section backgrounds, hero CTAs' },
-              { variant: 'm8-violet' as const, copy: 'Get in Touch', note: 'Light section backgrounds, primary actions' },
-              { variant: 'm8-outline-dark' as const, copy: 'Contact Our Team', note: 'Secondary actions on dark sections' },
-              { variant: 'm8-outline-violet' as const, copy: 'Contact Our Team', note: 'Secondary actions on light sections' },
-            ].map(({ variant, copy, note }) => (
-              <div key={variant} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-                <Button variant={variant}>{copy}</Button>
-                <code className="m8-p6" style={{ color: '#aeb3c8' }}>variant="{variant}"</code>
+              { cls: 'btn-m8-dark', copy: 'Get in Touch', note: 'Dark section backgrounds, hero CTAs' },
+              { cls: 'btn-m8-violet', copy: 'Get in Touch', note: 'Light section backgrounds, primary actions' },
+              { cls: 'btn-m8-outline-dark', copy: 'Contact Our Team', note: 'Secondary actions on dark sections' },
+              { cls: 'btn-m8-outline-violet', copy: 'Contact Our Team', note: 'Secondary actions on light sections' },
+            ].map(({ cls, copy, note }) => (
+              <div key={cls} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                <button className={cls}>{copy}</button>
+                <code className="m8-p6" style={{ color: '#aeb3c8' }}>.{cls}</code>
                 <p className="m8-p6" style={{ color: '#6b7280', textAlign: 'center' }}>{note}</p>
               </div>
             ))}
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32, padding: '16px 0', borderTop: '1px solid #EDF0F7' }}>
-            <Button variant="m8-ghost">Learn more</Button>
-            <span className="m8-p6" style={{ color: '#aeb3c8' }}>variant="m8-ghost" — tertiary actions, "Learn more" links</span>
+            <button className="btn-m8-ghost">Learn more</button>
+            <span className="m8-p6" style={{ color: '#aeb3c8' }}>.btn-m8-ghost — tertiary actions, "Learn more" links</span>
           </div>
 
           <h3 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: 16 }}>States</h3>
           <div style={{ display: 'flex', gap: 24, marginBottom: 32 }}>
             {[
-              { label: 'Normal', el: <Button variant="m8-violet">Normal</Button> },
-              { label: 'Hover', el: <Button variant="m8-violet" className="bg-[#8E59FF]/90">Hover</Button> },
-              { label: 'Disabled', el: <Button variant="m8-violet" disabled>Disabled</Button> },
-              { label: 'Loading', el: <Button variant="m8-violet" disabled><Loader2 className="animate-spin" />Loading</Button> },
+              { label: 'Normal', el: <button className="btn-m8-violet">Normal</button> },
+              { label: 'Hover', el: <button className="btn-m8-violet" style={{ backgroundColor: 'rgba(142,89,255,0.85)' }}>Hover</button> },
+              { label: 'Disabled', el: <button className="btn-m8-violet" disabled>Disabled</button> },
+              { label: 'Loading', el: <button className="btn-m8-violet" disabled><Loader2 style={{ width: 16, height: 16 }} className="animate-spin" />Loading</button> },
             ].map(({ label, el }) => (
               <div key={label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
                 {el}
@@ -363,9 +363,9 @@ export default function DesignSystem() {
 
           <h3 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: 16 }}>Sizes</h3>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <Button variant="m8-violet" size="sm">Small</Button>
-            <Button variant="m8-violet">Default</Button>
-            <Button variant="m8-violet" size="lg">Large</Button>
+            <button className="btn-m8-violet btn-size-sm">Small</button>
+            <button className="btn-m8-violet">Default</button>
+            <button className="btn-m8-violet btn-size-lg">Large</button>
           </div>
         </SectionWrapper>
 
@@ -391,12 +391,12 @@ export default function DesignSystem() {
         <SectionWrapper id="badges" num="05" title="Badges" description="Product-specific badge variants for tagging and labelling." source="src/components/ui/badge.tsx">
           <h3 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: 16 }}>Product Variants</h3>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 }}>
-            <Badge variant="m8-ads">Mark8 Ads</Badge>
-            <Badge variant="m8-sight">Mark8 Sight</Badge>
-            <Badge variant="m8-shelf">Mark8 Shelf</Badge>
-            <Badge variant="m8-returns">Mark8 Returns</Badge>
-            <Badge variant="m8-reco">Mark8 Reco</Badge>
-            <Badge variant="m8-inventory">Mark8 Inventory</Badge>
+            <span className="badge-m8-ads">Mark8 Ads</span>
+            <span className="badge-m8-sight">Mark8 Sight</span>
+            <span className="badge-m8-shelf">Mark8 Shelf</span>
+            <span className="badge-m8-returns">Mark8 Returns</span>
+            <span className="badge-m8-reco">Mark8 Reco</span>
+            <span className="badge-m8-inventory">Mark8 Inventory</span>
           </div>
           <h3 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: 16 }}>shadcn Defaults</h3>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -447,51 +447,51 @@ export default function DesignSystem() {
         <SectionWrapper id="forms" num="07" title="Forms" description="Form elements with default, error, and disabled states." source="src/components/ui/">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <Label>Brand name</Label>
-              <Input placeholder="Brand name" />
+              <label className="shadcn-label">Brand name</label>
+              <input className="shadcn-input" placeholder="Brand name" />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <Label>Brand name (error)</Label>
-              <Input placeholder="Brand name" style={{ borderColor: '#DD4062' }} />
-              <p className="m8-p6" style={{ color: '#DD4062' }}>This field is required</p>
+              <label className="shadcn-label">Brand name (error)</label>
+              <input className="shadcn-input error" placeholder="Brand name" />
+              <span className="shadcn-error">This field is required</span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <Label>Brand name (disabled)</Label>
-              <Input placeholder="Brand name" disabled />
+              <label className="shadcn-label">Brand name (disabled)</label>
+              <input className="shadcn-input" placeholder="Brand name" disabled />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <Label>Describe your challenge</Label>
-              <Textarea placeholder="Describe your challenge" />
+              <label className="shadcn-label">Describe your challenge</label>
+              <textarea className="shadcn-textarea" placeholder="Describe your challenge" />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <Label>Marketplace</Label>
+              <label className="shadcn-label">Marketplace</label>
               <Select>
-                <SelectTrigger><SelectValue placeholder="Select marketplace" /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="amazon">Amazon</SelectItem>
-                  <SelectItem value="flipkart">Flipkart</SelectItem>
-                  <SelectItem value="myntra">Myntra</SelectItem>
+                <SelectTrigger className="shadcn-select-trigger"><SelectValue placeholder="Select marketplace" /></SelectTrigger>
+                <SelectContent className="shadcn-select-content">
+                  <SelectItem className="shadcn-select-item" value="amazon">Amazon</SelectItem>
+                  <SelectItem className="shadcn-select-item" value="flipkart">Flipkart</SelectItem>
+                  <SelectItem className="shadcn-select-item" value="myntra">Myntra</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Checkbox id="agree" />
-                <Label htmlFor="agree">I agree to be contacted</Label>
+                <Checkbox id="agree" className="shadcn-checkbox" />
+                <label className="shadcn-label" htmlFor="agree" style={{ marginBottom: 0 }}>I agree to be contacted</label>
               </div>
               <RadioGroup defaultValue="general">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <RadioGroupItem value="general" id="general" />
-                  <Label htmlFor="general">General Enquiry</Label>
+                  <RadioGroupItem value="general" id="general" className="shadcn-radio" />
+                  <label className="shadcn-label" htmlFor="general" style={{ marginBottom: 0 }}>General Enquiry</label>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <RadioGroupItem value="demo" id="demo" />
-                  <Label htmlFor="demo">Schedule a Demo</Label>
+                  <RadioGroupItem value="demo" id="demo" className="shadcn-radio" />
+                  <label className="shadcn-label" htmlFor="demo" style={{ marginBottom: 0 }}>Schedule a Demo</label>
                 </div>
               </RadioGroup>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Switch id="email-notif" />
-                <Label htmlFor="email-notif">Email notifications</Label>
+                <Switch id="email-notif" className="shadcn-switch" />
+                <label className="shadcn-label" htmlFor="email-notif" style={{ marginBottom: 0 }}>Email notifications</label>
               </div>
             </div>
           </div>
@@ -500,35 +500,35 @@ export default function DesignSystem() {
         {/* SECTION 09: Tabs */}
         <SectionWrapper id="tabs" num="09" title="Tabs" description="Tabbed content for switching between product views." source="src/components/ui/tabs.tsx">
           <Tabs defaultValue="ads">
-            <TabsList>
-              <TabsTrigger value="ads">Mark8 Ads</TabsTrigger>
-              <TabsTrigger value="sight">Mark8 Sight</TabsTrigger>
-              <TabsTrigger value="shelf">Mark8 Shelf</TabsTrigger>
-              <TabsTrigger value="reco">Mark8 Reco</TabsTrigger>
-              <TabsTrigger value="returns">Mark8 Returns</TabsTrigger>
+            <TabsList className="shadcn-tabs-list">
+              <TabsTrigger className="shadcn-tabs-trigger" value="ads">Mark8 Ads</TabsTrigger>
+              <TabsTrigger className="shadcn-tabs-trigger" value="sight">Mark8 Sight</TabsTrigger>
+              <TabsTrigger className="shadcn-tabs-trigger" value="shelf">Mark8 Shelf</TabsTrigger>
+              <TabsTrigger className="shadcn-tabs-trigger" value="reco">Mark8 Reco</TabsTrigger>
+              <TabsTrigger className="shadcn-tabs-trigger" value="returns">Mark8 Returns</TabsTrigger>
             </TabsList>
-            <TabsContent value="ads"><p className="m8-p5" style={{ color: '#6b7280', padding: 16 }}>Turbocharge ROI with ad insights that connect every spend decision to real marketplace performance.</p></TabsContent>
-            <TabsContent value="sight"><p className="m8-p5" style={{ color: '#6b7280', padding: 16 }}>Benchmark share of voice, track keyword rankings, and monitor Buy Box ownership across all competitors.</p></TabsContent>
-            <TabsContent value="shelf"><p className="m8-p5" style={{ color: '#6b7280', padding: 16 }}>Detect stockouts before they happen with DOSH calculations and unified inventory ageing across all warehouses.</p></TabsContent>
-            <TabsContent value="reco"><p className="m8-p5" style={{ color: '#6b7280', padding: 16 }}>Match every marketplace transaction across sales, returns, fees, and settlements into one reconciled view.</p></TabsContent>
-            <TabsContent value="returns"><p className="m8-p5" style={{ color: '#6b7280', padding: 16 }}>Track every return from initiation to final resolution with mobile-first execution and granular loss attribution.</p></TabsContent>
+            <TabsContent className="shadcn-tabs-content" value="ads"><p>Turbocharge ROI with ad insights that connect every spend decision to real marketplace performance.</p></TabsContent>
+            <TabsContent className="shadcn-tabs-content" value="sight"><p>Benchmark share of voice, track keyword rankings, and monitor Buy Box ownership across all competitors.</p></TabsContent>
+            <TabsContent className="shadcn-tabs-content" value="shelf"><p>Detect stockouts before they happen with DOSH calculations and unified inventory ageing across all warehouses.</p></TabsContent>
+            <TabsContent className="shadcn-tabs-content" value="reco"><p>Match every marketplace transaction across sales, returns, fees, and settlements into one reconciled view.</p></TabsContent>
+            <TabsContent className="shadcn-tabs-content" value="returns"><p>Track every return from initiation to final resolution with mobile-first execution and granular loss attribution.</p></TabsContent>
           </Tabs>
         </SectionWrapper>
 
         {/* SECTION 10: Accordion */}
         <SectionWrapper id="accordion" num="10" title="Accordion" description="Collapsible FAQ sections." source="src/components/ui/accordion.tsx">
           <Accordion type="single" collapsible>
-            <AccordionItem value="q1">
-              <AccordionTrigger>Which marketplaces does Mark8 IQ support?</AccordionTrigger>
-              <AccordionContent>Amazon, Flipkart, Myntra, Nykaa, Zepto, Blinkit, and 9 more. New marketplaces are added based on client demand.</AccordionContent>
+            <AccordionItem className="shadcn-accordion-item" value="q1">
+              <AccordionTrigger className="shadcn-accordion-trigger">Which marketplaces does Mark8 IQ support?</AccordionTrigger>
+              <AccordionContent className="shadcn-accordion-content"><div className="shadcn-accordion-content-inner">Amazon, Flipkart, Myntra, Nykaa, Zepto, Blinkit, and 9 more. New marketplaces are added based on client demand.</div></AccordionContent>
             </AccordionItem>
-            <AccordionItem value="q2">
-              <AccordionTrigger>How does PRISM pull data without full API access?</AccordionTrigger>
-              <AccordionContent>PRISM is a hybrid RPA and API engine. It standardises data from direct marketplace APIs, RPA-based report extraction, and login-based data downloads.</AccordionContent>
+            <AccordionItem className="shadcn-accordion-item" value="q2">
+              <AccordionTrigger className="shadcn-accordion-trigger">How does PRISM pull data without full API access?</AccordionTrigger>
+              <AccordionContent className="shadcn-accordion-content"><div className="shadcn-accordion-content-inner">PRISM is a hybrid RPA and API engine. It standardises data from direct marketplace APIs, RPA-based report extraction, and login-based data downloads.</div></AccordionContent>
             </AccordionItem>
-            <AccordionItem value="q3">
-              <AccordionTrigger>Is Mark8 IQ suitable for a brand with 5 SKUs?</AccordionTrigger>
-              <AccordionContent>Mark8 IQ is built for D2C brands managing multi-marketplace operations. It scales from 5 SKUs to 50,000 SKUs.</AccordionContent>
+            <AccordionItem className="shadcn-accordion-item" value="q3">
+              <AccordionTrigger className="shadcn-accordion-trigger">Is Mark8 IQ suitable for a brand with 5 SKUs?</AccordionTrigger>
+              <AccordionContent className="shadcn-accordion-content"><div className="shadcn-accordion-content-inner">Mark8 IQ is built for D2C brands managing multi-marketplace operations. It scales from 5 SKUs to 50,000 SKUs.</div></AccordionContent>
             </AccordionItem>
           </Accordion>
         </SectionWrapper>
@@ -537,21 +537,21 @@ export default function DesignSystem() {
         <SectionWrapper id="dialog" num="11" title="Dialog" description="Modal dialog for forms and confirmations." source="src/components/ui/dialog.tsx">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="m8-violet">Open Demo Dialog</Button>
+              <button className="btn-m8-violet">Open Demo Dialog</button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="shadcn-dialog-content">
               <DialogHeader>
-                <DialogTitle>Book a demo</DialogTitle>
-                <DialogDescription>See Mark8 IQ in action. 30 minutes, no sales pitch.</DialogDescription>
+                <DialogTitle className="shadcn-dialog-title">Book a demo</DialogTitle>
+                <DialogDescription className="shadcn-dialog-description">See Mark8 IQ in action. 30 minutes, no sales pitch.</DialogDescription>
               </DialogHeader>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16, paddingTop: 16 }}>
-                <Input placeholder="Full name" />
-                <Input placeholder="Work email" />
-                <Input placeholder="Company" />
+                <input className="shadcn-input" placeholder="Full name" />
+                <input className="shadcn-input" placeholder="Work email" />
+                <input className="shadcn-input" placeholder="Company" />
               </div>
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, paddingTop: 16 }}>
-                <Button variant="outline">Cancel</Button>
-                <Button variant="m8-violet">Book Now</Button>
+                <button className="btn-m8-outline-dark">Cancel</button>
+                <button className="btn-m8-violet">Book Now</button>
               </div>
             </DialogContent>
           </Dialog>
@@ -559,20 +559,22 @@ export default function DesignSystem() {
 
         {/* SECTION 12: Carousel */}
         <SectionWrapper id="carousel" num="12" title="Carousel" description="Success story carousel with navigation." source="src/components/ui/carousel.tsx">
-          <Carousel className="w-full">
-            <CarouselContent>
+          <Carousel className="shadcn-carousel">
+            <CarouselContent className="shadcn-carousel-content">
               {[
                 { brand: 'Urban Gabru', metric: '3.2x ROAS', excerpt: 'From fragmented reports to growth across Amazon and Flipkart.', date: 'Feb 2026' },
                 { brand: 'Sugar Cosmetics', metric: '27% less wasted spend', excerpt: 'Ad budgets aligned to real attribution across 6 marketplaces.', date: 'Jan 2026' },
                 { brand: 'NGT Habit', metric: '35% ROAS improvement', excerpt: 'Unified data across Blinkit and Amazon for the first time.', date: 'Mar 2026' },
               ].map((props) => (
-                <CarouselItem key={props.brand} className="md:basis-1/2">
-                  <SuccessStoryCard {...props} />
+                <CarouselItem key={props.brand} className="shadcn-carousel-item md:basis-1/2">
+                  <div className="shadcn-card">
+                    <SuccessStoryCard {...props} />
+                  </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious className="shadcn-carousel-btn prev" />
+            <CarouselNext className="shadcn-carousel-btn next" />
           </Carousel>
         </SectionWrapper>
 
@@ -580,10 +582,10 @@ export default function DesignSystem() {
         <SectionWrapper id="slider" num="13" title="Slider" description="Range slider for budget and filter inputs." source="src/components/ui/slider.tsx">
           <div style={{ maxWidth: 400 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-              <Label>Monthly ad spend</Label>
+              <label className="shadcn-label">Monthly ad spend</label>
               <span className="m8-p5" style={{ color: '#8E59FF', fontWeight: 500 }}>{spend[0]}L</span>
             </div>
-            <Slider value={spend} onValueChange={setSpend} min={10} max={80} step={1} />
+            <Slider className="shadcn-slider-root" value={spend} onValueChange={setSpend} min={10} max={80} step={1} />
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
               <span className="m8-p6" style={{ color: '#6b7280' }}>10L</span>
               <span className="m8-p6" style={{ color: '#6b7280' }}>80L</span>
@@ -594,32 +596,32 @@ export default function DesignSystem() {
         {/* SECTION 14: Toast */}
         <SectionWrapper id="toast" num="14" title="Toast" description="Notification toasts for feedback and alerts." source="sonner">
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Button variant="m8-violet" onClick={() => toast.success('Dashboard synced. Data refreshed from all marketplaces.')}>Success</Button>
-            <Button variant="m8-dark" onClick={() => toast.error('Sync failed. Check your marketplace credentials.')}>Error</Button>
-            <Button variant="m8-outline-violet" onClick={() => toast('PRISM refresh in progress. Data updates within 60 minutes.')}>Info</Button>
-            <Button variant="m8-outline-dark" onClick={() => toast.warning('Ad spend approaching 80L threshold. Review budget.')}>Warning</Button>
+            <button className="btn-m8-violet" onClick={() => toast.success('Dashboard synced. Data refreshed from all marketplaces.')}>Success</button>
+            <button className="btn-m8-dark" onClick={() => toast.error('Sync failed. Check your marketplace credentials.')}>Error</button>
+            <button className="btn-m8-outline-violet" onClick={() => toast('PRISM refresh in progress. Data updates within 60 minutes.')}>Info</button>
+            <button className="btn-m8-outline-dark" onClick={() => toast.warning('Ad spend approaching 80L threshold. Review budget.')}>Warning</button>
           </div>
         </SectionWrapper>
 
         {/* SECTION 15: Skeleton */}
         <SectionWrapper id="skeleton" num="15" title="Skeleton" description="Loading placeholders for cards and content." source="src/components/ui/skeleton.tsx">
           <div style={{ display: 'flex', gap: 16 }}>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12, padding: 24, border: '1px solid #EDF0F7', borderRadius: 12 }}>
-              <Skeleton className="h-10 w-10 rounded-lg" />
-              <Skeleton className="h-5 w-3/4" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-5/6" />
+            <div className="shadcn-card" style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div className="shadcn-skeleton" style={{ height: 40, width: 40, borderRadius: 8 }} />
+              <div className="shadcn-skeleton" style={{ height: 20, width: '75%' }} />
+              <div className="shadcn-skeleton" style={{ height: 16, width: '100%' }} />
+              <div className="shadcn-skeleton" style={{ height: 16, width: '83%' }} />
             </div>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12, padding: 24, border: '1px solid #EDF0F7', borderRadius: 12 }}>
-              <Skeleton className="h-8 w-1/2" />
-              <Skeleton className="h-5 w-2/3" />
-              <Skeleton className="h-4 w-1/3" />
+            <div className="shadcn-card" style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div className="shadcn-skeleton" style={{ height: 32, width: '50%' }} />
+              <div className="shadcn-skeleton" style={{ height: 20, width: '66%' }} />
+              <div className="shadcn-skeleton" style={{ height: 16, width: '33%' }} />
             </div>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12, padding: 24, border: '1px solid #EDF0F7', borderRadius: 12 }}>
-              <Skeleton className="h-4 w-1/4" />
-              <Skeleton className="h-5 w-full" />
-              <Skeleton className="h-4 w-5/6" />
-              <Skeleton className="h-4 w-1/3" />
+            <div className="shadcn-card" style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div className="shadcn-skeleton" style={{ height: 16, width: '25%' }} />
+              <div className="shadcn-skeleton" style={{ height: 20, width: '100%' }} />
+              <div className="shadcn-skeleton" style={{ height: 16, width: '83%' }} />
+              <div className="shadcn-skeleton" style={{ height: 16, width: '33%' }} />
             </div>
           </div>
         </SectionWrapper>
