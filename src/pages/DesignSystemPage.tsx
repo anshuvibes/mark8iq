@@ -518,17 +518,17 @@ export default function DesignSystem() {
         {/* SECTION 10: Accordion */}
         <SectionWrapper id="accordion" num="10" title="Accordion" description="Collapsible FAQ sections." source="src/components/ui/accordion.tsx">
           <Accordion type="single" collapsible>
-            <AccordionItem value="q1">
-              <AccordionTrigger>Which marketplaces does Mark8 IQ support?</AccordionTrigger>
-              <AccordionContent>Amazon, Flipkart, Myntra, Nykaa, Zepto, Blinkit, and 9 more. New marketplaces are added based on client demand.</AccordionContent>
+            <AccordionItem className="shadcn-accordion-item" value="q1">
+              <AccordionTrigger className="shadcn-accordion-trigger">Which marketplaces does Mark8 IQ support?</AccordionTrigger>
+              <AccordionContent className="shadcn-accordion-content"><div className="shadcn-accordion-content-inner">Amazon, Flipkart, Myntra, Nykaa, Zepto, Blinkit, and 9 more. New marketplaces are added based on client demand.</div></AccordionContent>
             </AccordionItem>
-            <AccordionItem value="q2">
-              <AccordionTrigger>How does PRISM pull data without full API access?</AccordionTrigger>
-              <AccordionContent>PRISM is a hybrid RPA and API engine. It standardises data from direct marketplace APIs, RPA-based report extraction, and login-based data downloads.</AccordionContent>
+            <AccordionItem className="shadcn-accordion-item" value="q2">
+              <AccordionTrigger className="shadcn-accordion-trigger">How does PRISM pull data without full API access?</AccordionTrigger>
+              <AccordionContent className="shadcn-accordion-content"><div className="shadcn-accordion-content-inner">PRISM is a hybrid RPA and API engine. It standardises data from direct marketplace APIs, RPA-based report extraction, and login-based data downloads.</div></AccordionContent>
             </AccordionItem>
-            <AccordionItem value="q3">
-              <AccordionTrigger>Is Mark8 IQ suitable for a brand with 5 SKUs?</AccordionTrigger>
-              <AccordionContent>Mark8 IQ is built for D2C brands managing multi-marketplace operations. It scales from 5 SKUs to 50,000 SKUs.</AccordionContent>
+            <AccordionItem className="shadcn-accordion-item" value="q3">
+              <AccordionTrigger className="shadcn-accordion-trigger">Is Mark8 IQ suitable for a brand with 5 SKUs?</AccordionTrigger>
+              <AccordionContent className="shadcn-accordion-content"><div className="shadcn-accordion-content-inner">Mark8 IQ is built for D2C brands managing multi-marketplace operations. It scales from 5 SKUs to 50,000 SKUs.</div></AccordionContent>
             </AccordionItem>
           </Accordion>
         </SectionWrapper>
