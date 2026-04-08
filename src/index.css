@@ -132,3 +132,16 @@ All colors MUST be HSL.
 .CustomAccordian_acc_body__hf1qd {
   display: none;
 }
+
+/* Video card: portrait aspect ratio on mobile */
+@media (max-width: 767px) {
+  .ProductVideoCard_ProductVideoCard__IpW1N .ClipCard_ClipCardInner__BFU7k {
+    aspect-ratio: 0.65 !important;
+  }
+  .ProductVideoCard_ProductVideoCard__IpW1N .ProductVideoCard_video_wrap__Ihutq .ProductVideoCard_video_media__f_erU,
+  .ProductVideoCard_ProductVideoCard__IpW1N .ProductVideoCard_video_wrap__Ihutq .ProductVideoCard_video_media__f_erU video {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: cover !important;
+  }
+}
