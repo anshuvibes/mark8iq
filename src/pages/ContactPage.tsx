@@ -1,0 +1,22 @@
+import { useRef, useEffect } from 'react';
+import { useNavigateLinks } from '../hooks/useNavigateLinks';
+import Layout from '../components/Layout';
+import Footer from '../components/Footer';
+
+const mainHTML = `<section class="ContactSection_ContactSection__TdQQ0 section_spacing"><div class="container"><h2 class="fs_60 color_text">Contact Us</h2><h3 class="ContactSection_contact_desc__KnCkD fs_20 color_primary_dark">We're here to answer your questions, discuss your project, and help you find the best solutions for <br> your software needs. Reach out to us, and let's start building something great together.</h3><div class="ContactSection_contact_us_wrap__akZz0"><div><div class="ContactForm_ContactForm__NjUIx"><h4 class="fs_28 color_text">Get an Inquiry</h4><form><div class="ContactForm_formGroup__OwdBn"><label class="undefined fs_16  fw_400">Enquiry Type</label><div class="ContactForm_radioGroupWrap__vAB4T"><div class="ContactForm_radioGroup__TExAm"><input id="general-inquiry" type="radio" value="general-inquiry" name="enquiryType"><label for="general-inquiry">General Enquiry</label></div><div class="ContactForm_radioGroup__TExAm"><input id="schedule-meeting" type="radio" value="schedule-meeting" name="enquiryType"><label for="schedule-meeting">Schedule a meeting</label></div></div></div><div class="ContactForm_formGroup__OwdBn"><label class="undefined fs_16  fw_400" for="fullName">Name </label><input class="undefined input" placeholder="Your full name" id="fullName" type="text" name="fullName"></div><div class="ContactForm_formGroup__OwdBn"><label class="undefined fs_16  fw_400" for="email">Email Address </label><input class="undefined input" placeholder="Your email address" id="email" type="email" name="email"></div><div class="ContactForm_formGroup__OwdBn"><label class="undefined fs_16  fw_400" for="subject">Subject </label><input class="undefined input" placeholder="What’s this about?" id="subject" type="text" name="subject"></div><div class="ContactForm_formGroup__OwdBn"><label class="undefined fs_16 fw_400" for="message">Message:</label><textarea class="undefined textarea" placeholder="Tell us how can I help" id="message" name="message"></textarea></div><div class="ContactForm_form_submit_btn__UhEpS" type="submit"><span class="Button_btn_wrap__DW66V false"><button class="fs_18 font_primary fw_400 Button_btn_common_styles__ddJx7  bg_primary"><span>Submit Inquiry</span></button></span></div></form></div></div><div class="ContactSection_contact_content_wrap__qnDQv"><div class="ContactSection_contact_details__fUTKt"><h5 class="ContactSection_detail_title__N2e0X fs_28 fw_400 ">Contact us</h5><div class="ContactSection_enquiry__CDbgf"><div class="ContactSection_icon__19Vsh"><img alt="telephone" loading="lazy" width="26" height="26" decoding="async" data-nimg="1" src="https://infytrix.info/img/icons/telephone.svg" style="color: transparent;"></div><a class="ContactSection_num_mail__fFiVk fs_20 fw_400" href="tel:02248262431">022-48262431</a></div><div class="ContactSection_enquiry__CDbgf"><div class="ContactSection_icon__19Vsh"><img alt="mobile" loading="lazy" width="16" height="26" decoding="async" data-nimg="1" src="https://infytrix.info/img/icons/mobile.svg" style="color: transparent;"></div><a class="ContactSection_num_mail__fFiVk fs_20 fw_400" href="tel:+91-9765954495">+91-9765954495</a></div><div class="ContactSection_enquiry__CDbgf"><div class="ContactSection_icon__19Vsh"><img alt="telephone" loading="lazy" width="26" height="26" decoding="async" data-nimg="1" src="https://infytrix.info/img/icons/mail.svg" style="color: transparent;"></div><a class="ContactSection_num_mail__fFiVk fs_20 fw_400" href="mailto:support@infytrix.com">support@infytrix.com</a></div></div><div class="ContactSection_map_wrapper__vd2MP"><iframe src="cid:frame-F205D7DA2D0F9C03283C60F1FFF7E6A9@mhtml.blink" class="ContactSection_map_iframe__DrQ2s" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="ContactSection_address_wrap__8d7bG"><p class="ContactSection_address_title__A0oLo fs_20 fw_400">Our Address</p><p class="fs_16 fw_400">S8, 2nd Floor, Pinnacle Business Park, Shanti Nagar, Mahakali Caves Road, Andheri East, Mumbai – 400093.</p></div></div></div></div></div></section>`;
+
+export default function ContactPage() {
+  const ref = useRef<HTMLDivElement>(null);
+  useNavigateLinks(ref);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <Layout>
+      <main ref={ref} dangerouslySetInnerHTML={{ __html: mainHTML }} />
+      <Footer />
+    </Layout>
+  );
+}
