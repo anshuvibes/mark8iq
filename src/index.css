@@ -9,6 +9,26 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 0 0% 100%;
+
+    /* Mark8 IQ brand tokens */
+    --m8-violet: #8E59FF;
+    --m8-dark: #080D19;
+    --m8-light: #EDF0F7;
+    --m8-white: #ffffff;
+    --m8-text: #080D19;
+    --m8-muted: #6b7280;
+    --m8-ads: #FC7459;
+    --m8-sight: #6895FC;
+    --m8-shelf: #6895FC;
+    --m8-returns: #52BFBC;
+    --m8-reco: #7CBC71;
+    --m8-inventory: #FCB24F;
+    --m8-pink: #DD4062;
+    --m8-radius-sm: 4px;
+    --m8-radius-md: 8px;
+    --m8-radius-lg: 12px;
+    --m8-radius-xl: 16px;
+    --m8-radius-full: 9999px;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
