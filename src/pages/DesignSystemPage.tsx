@@ -537,21 +537,21 @@ export default function DesignSystem() {
         <SectionWrapper id="dialog" num="11" title="Dialog" description="Modal dialog for forms and confirmations." source="src/components/ui/dialog.tsx">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="m8-violet">Open Demo Dialog</Button>
+              <button className="btn-m8-violet">Open Demo Dialog</button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="shadcn-dialog-content">
               <DialogHeader>
-                <DialogTitle>Book a demo</DialogTitle>
-                <DialogDescription>See Mark8 IQ in action. 30 minutes, no sales pitch.</DialogDescription>
+                <DialogTitle className="shadcn-dialog-title">Book a demo</DialogTitle>
+                <DialogDescription className="shadcn-dialog-description">See Mark8 IQ in action. 30 minutes, no sales pitch.</DialogDescription>
               </DialogHeader>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16, paddingTop: 16 }}>
-                <Input placeholder="Full name" />
-                <Input placeholder="Work email" />
-                <Input placeholder="Company" />
+                <input className="shadcn-input" placeholder="Full name" />
+                <input className="shadcn-input" placeholder="Work email" />
+                <input className="shadcn-input" placeholder="Company" />
               </div>
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, paddingTop: 16 }}>
-                <Button variant="outline">Cancel</Button>
-                <Button variant="m8-violet">Book Now</Button>
+                <button className="btn-m8-outline-dark">Cancel</button>
+                <button className="btn-m8-violet">Book Now</button>
               </div>
             </DialogContent>
           </Dialog>
