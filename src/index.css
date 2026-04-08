@@ -39,20 +39,56 @@ All colors MUST be HSL.
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* ── PROPAGATION BRIDGE ──────────────────────────────────────
+       These variables are already used throughout mark8iq.css.
+       Changing them here propagates to every page on the site.
+    ─────────────────────────────────────────────────────────── */
+    --color_primary:          #8e59ff;
+    --color_primary_light:    #c1b0ff;
+    --color_primary_muted:    #aeb3c8;
+    --color_primary_dark:     #40445a;
+    --color_primary_contrast: #edeff7;
+    --color_neutral_dark:     #080d19;
+    --color_neutral_light:    #edf0f7;
+    --color_text:             #12182b;
+    --color_white:            #ffffff;
+    --color_black:            #000000;
+    --color_blue:             #6895fc;
+    --color_teal:             #52bfbc;
+    --color_green:            #7cbc71;
+    --color_yellow:           #fcb24f;
+    --color_orange:           #fc7459;
+    --color_red:              #dd4062;
+    --font_primary:           "Saira", sans-serif;
+
+    /* ── DESIGN SYSTEM TOKEN ALIASES ──────────────────────────── */
+    --m8-violet:    var(--color_primary);
+    --m8-dark:      var(--color_neutral_dark);
+    --m8-light:     var(--color_neutral_light);
+    --m8-white:     var(--color_white);
+    --m8-text:      var(--color_text);
+    --m8-ads:       var(--color_orange);
+    --m8-sight:     var(--color_blue);
+    --m8-shelf:     var(--color_blue);
+    --m8-returns:   var(--color_teal);
+    --m8-reco:      var(--color_green);
+    --m8-inventory: var(--color_yellow);
+    --m8-pink:      var(--color_red);
+
+    /* ── BORDER RADIUS ──────────────────────────────────────── */
+    --m8-radius-sm:   4px;
+    --m8-radius-md:   8px;
+    --m8-radius-lg:   12px;
+    --m8-radius-xl:   16px;
+    --m8-radius-full: 9999px;
   }
 
   .dark {
@@ -103,6 +139,22 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* ── MARK8 IQ TYPOGRAPHY CLASSES ─────────────────────────────── */
+.m8-h1-display { font-family: var(--font_primary); font-size: 80px; font-weight: 400; line-height: 110%; letter-spacing: -0.03em; }
+.m8-h1-large   { font-family: var(--font_primary); font-size: 60px; font-weight: 400; line-height: 110%; letter-spacing: -0.03em; }
+.m8-h2         { font-family: var(--font_primary); font-size: 50px; font-weight: 400; line-height: 60px;  letter-spacing: -0.03em; }
+.m8-h3-xl      { font-family: var(--font_primary); font-size: 40px; font-weight: 400; line-height: 30px;  letter-spacing: -0.03em; }
+.m8-h3-l       { font-family: var(--font_primary); font-size: 35px; font-weight: 400; line-height: 45px;  letter-spacing: -0.03em; }
+.m8-h3-m       { font-family: var(--font_primary); font-size: 30px; font-weight: 400; line-height: 30px;  letter-spacing: -0.03em; }
+.m8-h4         { font-family: var(--font_primary); font-size: 28px; font-weight: 400; line-height: 110%;  letter-spacing: -0.03em; }
+.m8-p1         { font-family: var(--font_primary); font-size: 25px; font-weight: 400; line-height: 150%;  letter-spacing: -0.03em; }
+.m8-p2         { font-family: var(--font_primary); font-size: 24px; font-weight: 400; line-height: 35px;  letter-spacing: 0; }
+.m8-p3         { font-family: var(--font_primary); font-size: 20px; font-weight: 400; line-height: normal; letter-spacing: 0; }
+.m8-p3-medium  { font-family: var(--font_primary); font-size: 20px; font-weight: 500; line-height: normal; letter-spacing: 0; }
+.m8-p4         { font-family: var(--font_primary); font-size: 18px; font-weight: 400; line-height: normal; letter-spacing: 0; }
+.m8-p5         { font-family: var(--font_primary); font-size: 16px; font-weight: 300; line-height: 24px;  letter-spacing: 0; }
+.m8-p6         { font-family: var(--font_primary); font-size: 14px; font-weight: 300; line-height: normal; letter-spacing: 0; }
 
 /* Marquee animation for infinite scroll */
 @keyframes rfm-scroll {

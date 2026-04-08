@@ -2,8 +2,16 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
+  corePlugins: {
+    preflight: false,
+  },
   theme: {
     container: {
       center: true,
@@ -57,28 +65,42 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        m8: {
+          violet: '#8E59FF',
+          dark: '#080D19',
+          light: '#EDF0F7',
+          white: '#ffffff',
+          muted: '#6b7280',
+          ads: '#FC7459',
+          sight: '#6895FC',
+          shelf: '#6895FC',
+          returns: '#52BFBC',
+          reco: '#7CBC71',
+          inventory: '#FCB24F',
+          pink: '#DD4062',
+        },
+      },
+      fontFamily: {
+        saira: ['Saira', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        'm8-sm': '4px',
+        'm8-md': '8px',
+        'm8-lg': '12px',
+        'm8-xl': '16px',
+        'm8-full': '9999px',
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {

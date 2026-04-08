@@ -12,6 +12,12 @@ const badgeVariants = cva(
         secondary: "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
         destructive: "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
         outline: "text-foreground",
+        'm8-ads': 'bg-[#FC7459]/10 text-[#FC7459] border border-[#FC7459]/20',
+        'm8-sight': 'bg-[#6895FC]/10 text-[#6895FC] border border-[#6895FC]/20',
+        'm8-shelf': 'bg-[#6895FC]/10 text-[#6895FC] border border-[#6895FC]/20',
+        'm8-returns': 'bg-[#52BFBC]/10 text-[#52BFBC] border border-[#52BFBC]/20',
+        'm8-reco': 'bg-[#7CBC71]/10 text-[#7CBC71] border border-[#7CBC71]/20',
+        'm8-inventory': 'bg-[#FCB24F]/10 text-[#FCB24F] border border-[#FCB24F]/20',
       },
     },
     defaultVariants: {
