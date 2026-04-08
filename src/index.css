@@ -103,3 +103,32 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* Marquee animation for infinite scroll */
+@keyframes rfm-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.rfm-marquee {
+  animation: rfm-scroll var(--duration, 30s) linear var(--delay, 0s) infinite !important;
+  animation-play-state: var(--play, running) !important;
+  animation-direction: var(--direction, normal) !important;
+}
+
+/* Fix Insight card vertical centering */
+.HomeIqBehind_home_iq_behind_inner__qKfTo {
+  align-items: center !important;
+  padding: 40px 60px !important;
+}
+
+/* Ensure fadeInUp elements with data-scroll="in" are visible */
+.fadeInUp[data-scroll="in"] {
+  opacity: 1 !important;
+  transform: translateY(0px) !important;
+}
+
+/* Fix accordion mobile body default hidden */
+.CustomAccordian_acc_body__hf1qd {
+  display: none;
+}
