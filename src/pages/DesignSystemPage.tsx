@@ -559,20 +559,22 @@ export default function DesignSystem() {
 
         {/* SECTION 12: Carousel */}
         <SectionWrapper id="carousel" num="12" title="Carousel" description="Success story carousel with navigation." source="src/components/ui/carousel.tsx">
-          <Carousel className="w-full">
-            <CarouselContent>
+          <Carousel className="shadcn-carousel">
+            <CarouselContent className="shadcn-carousel-content">
               {[
                 { brand: 'Urban Gabru', metric: '3.2x ROAS', excerpt: 'From fragmented reports to growth across Amazon and Flipkart.', date: 'Feb 2026' },
                 { brand: 'Sugar Cosmetics', metric: '27% less wasted spend', excerpt: 'Ad budgets aligned to real attribution across 6 marketplaces.', date: 'Jan 2026' },
                 { brand: 'NGT Habit', metric: '35% ROAS improvement', excerpt: 'Unified data across Blinkit and Amazon for the first time.', date: 'Mar 2026' },
               ].map((props) => (
-                <CarouselItem key={props.brand} className="md:basis-1/2">
-                  <SuccessStoryCard {...props} />
+                <CarouselItem key={props.brand} className="shadcn-carousel-item md:basis-1/2">
+                  <div className="shadcn-card">
+                    <SuccessStoryCard {...props} />
+                  </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious className="shadcn-carousel-btn prev" />
+            <CarouselNext className="shadcn-carousel-btn next" />
           </Carousel>
         </SectionWrapper>
 
