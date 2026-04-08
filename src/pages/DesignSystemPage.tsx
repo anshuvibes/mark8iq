@@ -582,10 +582,10 @@ export default function DesignSystem() {
         <SectionWrapper id="slider" num="13" title="Slider" description="Range slider for budget and filter inputs." source="src/components/ui/slider.tsx">
           <div style={{ maxWidth: 400 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-              <Label>Monthly ad spend</Label>
+              <label className="shadcn-label">Monthly ad spend</label>
               <span className="m8-p5" style={{ color: '#8E59FF', fontWeight: 500 }}>{spend[0]}L</span>
             </div>
-            <Slider value={spend} onValueChange={setSpend} min={10} max={80} step={1} />
+            <Slider className="shadcn-slider-root" value={spend} onValueChange={setSpend} min={10} max={80} step={1} />
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
               <span className="m8-p6" style={{ color: '#6b7280' }}>10L</span>
               <span className="m8-p6" style={{ color: '#6b7280' }}>80L</span>
