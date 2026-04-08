@@ -328,31 +328,31 @@ export default function DesignSystem() {
           <h3 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: 16 }}>Brand Patterns</h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 32 }}>
             {[
-              { variant: 'm8-dark' as const, copy: 'Get in Touch', note: 'Dark section backgrounds, hero CTAs' },
-              { variant: 'm8-violet' as const, copy: 'Get in Touch', note: 'Light section backgrounds, primary actions' },
-              { variant: 'm8-outline-dark' as const, copy: 'Contact Our Team', note: 'Secondary actions on dark sections' },
-              { variant: 'm8-outline-violet' as const, copy: 'Contact Our Team', note: 'Secondary actions on light sections' },
-            ].map(({ variant, copy, note }) => (
-              <div key={variant} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-                <Button variant={variant}>{copy}</Button>
-                <code className="m8-p6" style={{ color: '#aeb3c8' }}>variant="{variant}"</code>
+              { cls: 'btn-m8-dark', copy: 'Get in Touch', note: 'Dark section backgrounds, hero CTAs' },
+              { cls: 'btn-m8-violet', copy: 'Get in Touch', note: 'Light section backgrounds, primary actions' },
+              { cls: 'btn-m8-outline-dark', copy: 'Contact Our Team', note: 'Secondary actions on dark sections' },
+              { cls: 'btn-m8-outline-violet', copy: 'Contact Our Team', note: 'Secondary actions on light sections' },
+            ].map(({ cls, copy, note }) => (
+              <div key={cls} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                <button className={cls}>{copy}</button>
+                <code className="m8-p6" style={{ color: '#aeb3c8' }}>.{cls}</code>
                 <p className="m8-p6" style={{ color: '#6b7280', textAlign: 'center' }}>{note}</p>
               </div>
             ))}
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32, padding: '16px 0', borderTop: '1px solid #EDF0F7' }}>
-            <Button variant="m8-ghost">Learn more</Button>
-            <span className="m8-p6" style={{ color: '#aeb3c8' }}>variant="m8-ghost" — tertiary actions, "Learn more" links</span>
+            <button className="btn-m8-ghost">Learn more</button>
+            <span className="m8-p6" style={{ color: '#aeb3c8' }}>.btn-m8-ghost — tertiary actions, "Learn more" links</span>
           </div>
 
           <h3 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: 16 }}>States</h3>
           <div style={{ display: 'flex', gap: 24, marginBottom: 32 }}>
             {[
-              { label: 'Normal', el: <Button variant="m8-violet">Normal</Button> },
-              { label: 'Hover', el: <Button variant="m8-violet" className="bg-[#8E59FF]/90">Hover</Button> },
-              { label: 'Disabled', el: <Button variant="m8-violet" disabled>Disabled</Button> },
-              { label: 'Loading', el: <Button variant="m8-violet" disabled><Loader2 className="animate-spin" />Loading</Button> },
+              { label: 'Normal', el: <button className="btn-m8-violet">Normal</button> },
+              { label: 'Hover', el: <button className="btn-m8-violet" style={{ backgroundColor: 'rgba(142,89,255,0.85)' }}>Hover</button> },
+              { label: 'Disabled', el: <button className="btn-m8-violet" disabled>Disabled</button> },
+              { label: 'Loading', el: <button className="btn-m8-violet" disabled><Loader2 style={{ width: 16, height: 16 }} className="animate-spin" />Loading</button> },
             ].map(({ label, el }) => (
               <div key={label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
                 {el}
@@ -363,9 +363,9 @@ export default function DesignSystem() {
 
           <h3 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: 16 }}>Sizes</h3>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <Button variant="m8-violet" size="sm">Small</Button>
-            <Button variant="m8-violet">Default</Button>
-            <Button variant="m8-violet" size="lg">Large</Button>
+            <button className="btn-m8-violet btn-size-sm">Small</button>
+            <button className="btn-m8-violet">Default</button>
+            <button className="btn-m8-violet btn-size-lg">Large</button>
           </div>
         </SectionWrapper>
 
