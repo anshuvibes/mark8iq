@@ -447,51 +447,51 @@ export default function DesignSystem() {
         <SectionWrapper id="forms" num="07" title="Forms" description="Form elements with default, error, and disabled states." source="src/components/ui/">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <Label>Brand name</Label>
-              <Input placeholder="Brand name" />
+              <label className="shadcn-label">Brand name</label>
+              <input className="shadcn-input" placeholder="Brand name" />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <Label>Brand name (error)</Label>
-              <Input placeholder="Brand name" style={{ borderColor: '#DD4062' }} />
-              <p className="m8-p6" style={{ color: '#DD4062' }}>This field is required</p>
+              <label className="shadcn-label">Brand name (error)</label>
+              <input className="shadcn-input error" placeholder="Brand name" />
+              <span className="shadcn-error">This field is required</span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <Label>Brand name (disabled)</Label>
-              <Input placeholder="Brand name" disabled />
+              <label className="shadcn-label">Brand name (disabled)</label>
+              <input className="shadcn-input" placeholder="Brand name" disabled />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <Label>Describe your challenge</Label>
-              <Textarea placeholder="Describe your challenge" />
+              <label className="shadcn-label">Describe your challenge</label>
+              <textarea className="shadcn-textarea" placeholder="Describe your challenge" />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <Label>Marketplace</Label>
+              <label className="shadcn-label">Marketplace</label>
               <Select>
-                <SelectTrigger><SelectValue placeholder="Select marketplace" /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="amazon">Amazon</SelectItem>
-                  <SelectItem value="flipkart">Flipkart</SelectItem>
-                  <SelectItem value="myntra">Myntra</SelectItem>
+                <SelectTrigger className="shadcn-select-trigger"><SelectValue placeholder="Select marketplace" /></SelectTrigger>
+                <SelectContent className="shadcn-select-content">
+                  <SelectItem className="shadcn-select-item" value="amazon">Amazon</SelectItem>
+                  <SelectItem className="shadcn-select-item" value="flipkart">Flipkart</SelectItem>
+                  <SelectItem className="shadcn-select-item" value="myntra">Myntra</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Checkbox id="agree" />
-                <Label htmlFor="agree">I agree to be contacted</Label>
+                <Checkbox id="agree" className="shadcn-checkbox" />
+                <label className="shadcn-label" htmlFor="agree" style={{ marginBottom: 0 }}>I agree to be contacted</label>
               </div>
               <RadioGroup defaultValue="general">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <RadioGroupItem value="general" id="general" />
-                  <Label htmlFor="general">General Enquiry</Label>
+                  <RadioGroupItem value="general" id="general" className="shadcn-radio" />
+                  <label className="shadcn-label" htmlFor="general" style={{ marginBottom: 0 }}>General Enquiry</label>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <RadioGroupItem value="demo" id="demo" />
-                  <Label htmlFor="demo">Schedule a Demo</Label>
+                  <RadioGroupItem value="demo" id="demo" className="shadcn-radio" />
+                  <label className="shadcn-label" htmlFor="demo" style={{ marginBottom: 0 }}>Schedule a Demo</label>
                 </div>
               </RadioGroup>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Switch id="email-notif" />
-                <Label htmlFor="email-notif">Email notifications</Label>
+                <Switch id="email-notif" className="shadcn-switch" />
+                <label className="shadcn-label" htmlFor="email-notif" style={{ marginBottom: 0 }}>Email notifications</label>
               </div>
             </div>
           </div>
