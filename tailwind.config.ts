@@ -62,6 +62,11 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        'm8-sm': 'var(--m8-radius-sm)',
+        'm8-md': 'var(--m8-radius-md)',
+        'm8-lg': 'var(--m8-radius-lg)',
+        'm8-xl': 'var(--m8-radius-xl)',
+        'm8-full': 'var(--m8-radius-full)',
       },
       keyframes: {
         "accordion-down": {
