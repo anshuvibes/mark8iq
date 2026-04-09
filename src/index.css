@@ -63,8 +63,9 @@ All colors MUST be HSL.
     /* TEXT COLOR RULE:
        --m8-dark / --color_neutral_dark (#080d19) = dark backgrounds, buttons, nav, section fills
        --color_text (#12182b) = body copy, paragraph text on light backgrounds
-       Do not use --m8-dark for body text. Do not use --color_text for backgrounds. */
+        Do not use --m8-dark for body text. Do not use --color_text for backgrounds. */
      --color_text:             #12182b;
+     --m8-grid-base:           #F0F1F6;
     --color_white:            #ffffff;
     --color_black:            #000000;
     --color_blue:             #6895fc;
@@ -894,4 +895,10 @@ All colors MUST be HSL.
   border: none !important;
   display: block !important;
   margin: 0 !important;
+}
+
+/* Grid background tint — ensures bg-pattern-reverse.svg lines (#EDF0F7) are 
+   visible against a slightly tinted base instead of pure white */
+.CustomBg_bg_image__RIwVy {
+  background-color: var(--m8-grid-base, #F0F1F6);
 }

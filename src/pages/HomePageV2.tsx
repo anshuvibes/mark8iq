@@ -17,7 +17,7 @@ export default function HomePageV2() {
   useEffect(() => { window.scrollTo(0, 0); }, []);
   return (
     <Layout>
-      <main style={{ background: '#F4F5F9' }}>
+      <main>
         <HeroV2 />
         <TrustStripV2 />
         <FragmentationV2 />
