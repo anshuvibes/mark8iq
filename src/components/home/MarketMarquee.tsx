@@ -1,3 +1,5 @@
+import { motion } from 'motion/react';
+
 const logos = [
   { src: 'https://admin.infytrix.info/uploads/myntra_0ef843ae4c.svg', w: 133, h: 36 },
   { src: 'https://admin.infytrix.info/uploads/amazon_87c06fbfc9.svg', w: 110, h: 34 },
@@ -26,8 +28,21 @@ export default function MarketMarquee() {
     <section className="section_spacing">
       <div className="HomeBuildForMarkets_HomeBuildForMarkets__vmOOZ">
         <div>
-          <h4 className="text_center fs_30 fadeInUp color_text" data-scroll="in">Built for all markets</h4>
-          <div className="fadeInUp" data-scroll="in">
+          <motion.h4
+            className="text_center fs_30 color_text"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.5 }}
+          >
+            Built for all markets
+          </motion.h4>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <div className="rfm-marquee-container" style={{ '--pause-on-hover': 'running', '--pause-on-click': 'running', '--width': '100%', '--transform': 'none' } as React.CSSProperties}>
               <div className="rfm-overlay" style={{ '--gradient-width': '20px' } as React.CSSProperties}></div>
               <div className="rfm-marquee" style={{ '--play': 'running', '--direction': 'normal', '--duration': '47.72s', '--delay': '0s', '--iteration-count': 'infinite', '--min-width': '100%' } as React.CSSProperties}>
@@ -39,7 +54,7 @@ export default function MarketMarquee() {
                 <LogoSet />
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

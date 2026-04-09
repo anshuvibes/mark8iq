@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 
 const items = [
   { title: 'All-in-one e-commerce intelligence', desc: 'No juggling tools. One platform that manages ads, inventory, finance, and operations seamlessly.' },
@@ -17,20 +18,29 @@ export default function ImageAccordion() {
   return (
     <section className="section_spacing">
       <div className="container">
-        <div className="SectionTitle_SectionTitle__fv0YD false half_title">
+        <motion.div
+          className="SectionTitle_SectionTitle__fv0YD false half_title"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="section_title color_text" aria-label="Engineered to power every e-comm move">
             Engineered to power every e-comm move
           </h2>
-        </div>
+        </motion.div>
       </div>
       <div className="CustomImageAccordian_CustomImageAccordian__gVOJN">
         <div className="CustomImageAccordian_acc_wrap__AHbWW">
           <div className="CustomImageAccordian_acc_left__iD9HY">
             {items.map((item, i) => (
-              <div
+              <motion.div
                 key={i}
-                className={`CustomImageAccordian_acc_item__SpMrV ${i === activeIndex ? 'CustomImageAccordian_active_item__IkUwc' : 'false'} color_primary_dark fadeInUp`}
-                data-scroll="in"
+                className={`CustomImageAccordian_acc_item__SpMrV ${i === activeIndex ? 'CustomImageAccordian_active_item__IkUwc' : 'false'} color_primary_dark`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
               >
                 <div
                   className="CustomImageAccordian_acc_title__sTfie"
@@ -39,22 +49,37 @@ export default function ImageAccordion() {
                 >
                   <h5 className="fs_24">{item.title}</h5>
                 </div>
-                <div className="CustomImageAccordian_acc_desc__hBa3_">
-                  <h5 className="fs_18">{item.desc}</h5>
-                </div>
-              </div>
+                <AnimatePresence>
+                  {i === activeIndex && (
+                    <motion.div
+                      className="CustomImageAccordian_acc_desc__hBa3_"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: 'easeInOut' }}
+                      style={{ overflow: 'hidden' }}
+                    >
+                      <h5 className="fs_18">{item.desc}</h5>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             ))}
           </div>
           <div className="CustomImageAccordian_acc_right__GHGGd">
             <div className="CustomImageAccordian_acc_img_wrap__dnQfA">
-              {items.map((item, i) => (
-                <div
-                  key={i}
-                  className={`CustomImageAccordian_acc_img_item__SCb4Z ${i === activeIndex ? 'CustomImageAccordian_active_img__rIQ__' : 'false'}`}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIndex}
+                  className="CustomImageAccordian_acc_img_item__SCb4Z CustomImageAccordian_active_img__rIQ__"
+                  initial={{ opacity: 0, scale: 0.97 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.97 }}
+                  transition={{ duration: 0.4 }}
                 >
-                  <img alt={item.title} loading="lazy" width={843} height={557} style={{ color: 'transparent' }} src={IMAGE_URL} />
-                </div>
-              ))}
+                  <img alt={items[activeIndex].title} loading="lazy" width={843} height={557} style={{ color: 'transparent' }} src={IMAGE_URL} />
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </div>
