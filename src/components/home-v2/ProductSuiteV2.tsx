@@ -13,6 +13,157 @@ const modules: Record<string, { name: string; abbr: string; accent: string; pain
 const leftKeys = ['ads', 'shelf', 'reco'];
 const rightKeys = ['sight', 'returns', 'inventory'];
 
+type TableRow = { cells: string[]; statusColor?: string; statusLabel?: string; actionLabel?: string };
+type TableDef = { headers: string[]; rows: TableRow[] };
+
+const mockupData: Record<string, TableDef> = {
+  ads: {
+    headers: ['Keyword', 'Spend', 'ROAS', 'Status'],
+    rows: [
+      { cells: ['Running shoes', '₹4.2L', '8.1x', ''], statusColor: '#22c55e', statusLabel: 'Active' },
+      { cells: ['Sports footwear', '₹2.8L', '5.9x', ''], statusColor: '#22c55e', statusLabel: 'Active' },
+      { cells: ['Nike alternative', '₹1.1L', '3.2x', ''], statusColor: '#f59e0b', statusLabel: 'Review' },
+    ],
+  },
+  sight: {
+    headers: ['Keyword', 'Amazon Rank', 'Flipkart Rank', 'Change'],
+    rows: [
+      { cells: ['Face serum', '#3', '#7', '▲2'], statusColor: '#22c55e' },
+      { cells: ['Vitamin C cream', '#1', '#2', '—'], statusColor: '#9ca3af' },
+      { cells: ['Anti-aging serum', '#8', '#12', '▼1'], statusColor: '#ef4444' },
+    ],
+  },
+  shelf: {
+    headers: ['ASIN', 'Title Score', 'Image Score', 'Status'],
+    rows: [
+      { cells: ['B08X4RZT91', '94/100', '88/100', ''], statusColor: '#22c55e', statusLabel: 'Healthy' },
+      { cells: ['B07QWK8DJM', '71/100', '60/100', ''], statusColor: '#f59e0b', statusLabel: 'Needs Review' },
+      { cells: ['B09NKDP2LF', '55/100', '45/100', ''], statusColor: '#ef4444', statusLabel: 'Action Required' },
+    ],
+  },
+  returns: {
+    headers: ['Reason', 'Volume', 'Revenue Impact', 'Risk'],
+    rows: [
+      { cells: ['Size mismatch', '142 units', '₹2.1L', ''], statusColor: '#f59e0b', statusLabel: 'Medium' },
+      { cells: ['Wrong item', '38 units', '₹0.6L', ''], statusColor: '#ef4444', statusLabel: 'High' },
+      { cells: ['Changed mind', '91 units', '₹1.3L', ''], statusColor: '#22c55e', statusLabel: 'Low' },
+    ],
+  },
+  reco: {
+    headers: ['Source', 'Amount', 'Status', 'Action'],
+    rows: [
+      { cells: ['Amazon FBA Reimbursement', '₹1,24,000', ''], statusColor: '#f59e0b', statusLabel: 'Pending', actionLabel: 'Claim Now' },
+      { cells: ['Flipkart Short Payment', '₹38,500', ''], statusColor: '#ef4444', statusLabel: 'Overdue', actionLabel: 'Escalate' },
+      { cells: ['Return without credit', '₹21,200', ''], statusColor: '#22c55e', statusLabel: 'Recovered', actionLabel: 'Closed' },
+    ],
+  },
+  inventory: {
+    headers: ['SKU', 'Stock', 'Days Cover', 'Alert'],
+    rows: [
+      { cells: ['SKU-SHOE-42B', '284 units', '18 days', ''], statusColor: '#22c55e', statusLabel: 'Healthy' },
+      { cells: ['SKU-SHOE-38W', '43 units', '4 days', ''], statusColor: '#ef4444', statusLabel: 'Reorder Now' },
+      { cells: ['SKU-SHOE-40B', '121 units', '9 days', ''], statusColor: '#f59e0b', statusLabel: 'Watch' },
+    ],
+  },
+};
+
+function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string }) {
+  const data = mockupData[moduleKey];
+  if (!data) return null;
+
+  const headerBg = accent + '14'; // ~8% opacity
+  const headerBorder = accent + '26'; // ~15% opacity
+
+  return (
+    <div style={{
+      background: 'rgba(8,13,25,0.03)',
+      borderRadius: '10px',
+      border: '1px solid rgba(8,13,25,0.06)',
+      overflow: 'hidden',
+      width: '100%',
+    }}>
+      {/* Header */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${data.headers.length}, 1fr)`,
+        background: headerBg,
+        borderBottom: `1px solid ${headerBorder}`,
+        padding: '10px 16px',
+      }}>
+        {data.headers.map((h) => (
+          <span key={h} className="m8-p6" style={{ fontWeight: 600, color: 'rgba(8,13,25,0.6)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{h}</span>
+        ))}
+      </div>
+      {/* Rows */}
+      {data.rows.map((row, ri) => (
+        <div
+          key={ri}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(${data.headers.length}, 1fr)`,
+            padding: '10px 16px',
+            borderBottom: ri < data.rows.length - 1 ? '1px solid rgba(8,13,25,0.05)' : 'none',
+          }}
+        >
+          {data.headers.map((_, ci) => {
+            const isLastCol = ci === data.headers.length - 1;
+            // Status/action column
+            if (isLastCol && (row.statusLabel || row.cells[ci])) {
+              // For sight module, the change value is in cells
+              if (moduleKey === 'sight') {
+                return (
+                  <span key={ci} className="m8-p6" style={{ color: row.statusColor, fontWeight: 500 }}>
+                    {row.cells[ci]}
+                  </span>
+                );
+              }
+              // For reco, show action button
+              if (moduleKey === 'reco' && row.actionLabel) {
+                return (
+                  <div key={ci} style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                    <span className="m8-p6" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: row.statusColor, display: 'inline-block' }} />
+                      <span style={{ color: 'rgba(8,13,25,0.6)' }}>{row.statusLabel}</span>
+                    </span>
+                  </div>
+                );
+              }
+              // Default status pill
+              return (
+                <span key={ci} className="m8-p6" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: row.statusColor, display: 'inline-block' }} />
+                  <span style={{ color: 'rgba(8,13,25,0.6)' }}>{row.statusLabel}</span>
+                </span>
+              );
+            }
+            // For reco, column 3 (Status) is actually index 2
+            if (moduleKey === 'reco' && ci === 2) {
+              return (
+                <span key={ci} className="m8-p6" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: row.statusColor, display: 'inline-block' }} />
+                  <span style={{ color: 'rgba(8,13,25,0.6)' }}>{row.statusLabel}</span>
+                </span>
+              );
+            }
+            if (moduleKey === 'reco' && ci === 3) {
+              return (
+                <span key={ci} className="m8-p6" style={{ color: accent, fontWeight: 500, cursor: 'pointer' }}>
+                  {row.actionLabel}
+                </span>
+              );
+            }
+            return (
+              <span key={ci} className="m8-p6" style={{ color: ci === 0 ? '#080D19' : 'rgba(8,13,25,0.6)' }}>
+                {row.cells[ci]}
+              </span>
+            );
+          })}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function ModuleCard({ k, mod, active, onClick }: { k: string; mod: typeof modules.ads; active: boolean; onClick: () => void }) {
   return (
     <motion.div
@@ -68,6 +219,7 @@ export default function ProductSuiteV2() {
 
         {/* Hub-spoke grid */}
         <motion.div
+          className="product-suite-grid"
           style={{ display: 'grid', gridTemplateColumns: '1fr 260px 1fr', gap: '16px', alignItems: 'start', marginBottom: '40px' }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -127,6 +279,7 @@ export default function ProductSuiteV2() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
+            className="product-suite-detail"
             style={{
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
@@ -142,16 +295,7 @@ export default function ProductSuiteV2() {
               <p className="m8-p2" style={{ color: '#080D19', marginBottom: '12px' }}>{active.pain}</p>
               <p className="m8-p5" style={{ color: 'rgba(8,13,25,0.55)' }}>{active.metric}</p>
             </div>
-            <div style={{
-              background: 'rgba(8,13,25,0.04)',
-              borderRadius: '12px',
-              height: '200px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              <span className="m8-p5" style={{ color: 'rgba(8,13,25,0.35)' }}>{active.name} dashboard UI — placeholder</span>
-            </div>
+            <DataTable moduleKey={activeModule} accent={active.accent} />
           </motion.div>
         </AnimatePresence>
 
@@ -168,7 +312,10 @@ export default function ProductSuiteV2() {
 
       <style>{`
         @media (max-width: 768px) {
-          .container > div[style*="grid-template-columns: 1fr 260px 1fr"] {
+          .product-suite-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .product-suite-detail {
             grid-template-columns: 1fr !important;
           }
         }

@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 
 export default function CtaBlockV2() {
   return (
-    <section style={{ background: 'rgba(142,89,255,0.92)', padding: '100px 0', position: 'relative' }}>
+    <section style={{ background: '#8E59FF', padding: '100px 0', position: 'relative' }}>
       <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
         <motion.h2
           className="m8-h1-large"

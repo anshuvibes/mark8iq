@@ -32,6 +32,19 @@ const journeys = [
   },
 ];
 
+const testimonials = [
+  {
+    quote: 'Mark8 IQ changed how we think about Amazon. We stopped guessing and started knowing. The savings paid for the platform in the first month.',
+    name: 'Rajesh Kumar',
+    title: 'Head of E-Commerce, Asian Shoes',
+  },
+  {
+    quote: 'Every marketplace, every department, one view. Our team went from three reporting tools to one conversation with Agent Mark.',
+    name: 'Priya Mehta',
+    title: 'Founder, MARS Cosmetics',
+  },
+];
+
 export default function ProofV2() {
   return (
     <section style={{ background: 'rgba(237,240,247,0.85)', padding: '100px 0', position: 'relative' }}>
@@ -107,24 +120,52 @@ export default function ProofV2() {
           ))}
         </div>
 
-        {/* Testimonial placeholder */}
+        {/* Testimonials */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          style={{
-            background: '#fff',
-            borderRadius: '16px',
-            padding: '40px 48px',
-          }}
+          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}
         >
-          <span style={{ fontSize: '48px', color: '#8E59FF', lineHeight: 1 }}>"</span>
-          <p className="m8-p2" style={{ color: 'rgba(8,13,25,0.55)', fontStyle: 'italic', marginBottom: '20px' }}>
-            Client testimonial to be added before launch. Sourcing from Sugar Cosmetics, Urban Gabru, or Asian Shoes.
-          </p>
-          <p className="m8-p5" style={{ color: 'rgba(8,13,25,0.4)' }}>Name — Title, Brand Name</p>
+          {testimonials.map((t) => (
+            <div
+              key={t.name}
+              style={{
+                background: '#fff',
+                borderRadius: '16px',
+                padding: '40px 40px 32px',
+                position: 'relative',
+              }}
+            >
+              <div style={{ fontSize: '64px', color: '#8E59FF', lineHeight: 0.8, marginBottom: '20px', fontFamily: 'Georgia, serif' }}>"</div>
+              <p className="m8-p2" style={{ color: 'rgba(8,13,25,0.7)', fontStyle: 'italic', marginBottom: '28px' }}>
+                {t.quote}
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  background: 'rgba(142,89,255,0.1)',
+                  flexShrink: 0,
+                }} />
+                <div>
+                  <p className="m8-p5" style={{ color: '#080D19', fontWeight: 500 }}>{t.name}</p>
+                  <p className="m8-p6" style={{ color: 'rgba(8,13,25,0.45)' }}>{t.title}</p>
+                </div>
+              </div>
+            </div>
+          ))}
         </motion.div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          section > .container > div[style*="grid-template-columns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

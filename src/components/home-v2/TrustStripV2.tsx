@@ -16,17 +16,31 @@ export default function TrustStripV2() {
           Trusted by India's fastest growing brands
         </motion.p>
         <motion.div
-          style={{ display: 'flex', justifyContent: 'center', gap: '48px', flexWrap: 'wrap', alignItems: 'center' }}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '12px',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+          }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          {brands.map((brand, i) => (
+          {brands.map((brand) => (
             <span
               key={brand}
-              className="m8-p4"
-              style={{ color: '#080D19', opacity: 0.28 + i * 0.02, fontWeight: 400 }}
+              style={{
+                background: 'rgba(8,13,25,0.04)',
+                border: '1px solid rgba(8,13,25,0.08)',
+                borderRadius: '9999px',
+                padding: '8px 20px',
+                fontFamily: 'Saira, sans-serif',
+                fontSize: '14px',
+                color: 'rgba(8,13,25,0.5)',
+                fontWeight: 500,
+              }}
             >
               {brand}
             </span>
