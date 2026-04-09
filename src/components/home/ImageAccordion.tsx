@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 
 const items = [
   { title: 'All-in-one e-commerce intelligence', desc: 'No juggling tools. One platform that manages ads, inventory, finance, and operations seamlessly.' },
@@ -10,7 +10,14 @@ const items = [
   { title: 'Customizable & Enterprise-Ready', desc: 'Built for fast-growing brands and enterprises needing deep analytics across thousands of SKUs.' },
 ];
 
-const IMAGE_URL = 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fecomm-intelligence.6c7b7e24.png&w=1920&q=75';
+const IMAGES = [
+  'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fecomm-intelligence.6c7b7e24.png&w=1920&q=75',
+  'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fanalytics-matter.2c7f06e0.png&w=1920&q=75',
+  'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fai-driven.6dc2bb18.png&w=1920&q=75',
+  'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fgranular-insight.bfbfef3a.png&w=1920&q=75',
+  'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fall-segments.58e90c25.png&w=1920&q=75',
+  'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fenterprise-ready.3be11bfc.png&w=1920&q=75',
+];
 
 export default function ImageAccordion() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -29,59 +36,69 @@ export default function ImageAccordion() {
             Engineered to power every e-comm move
           </h2>
         </motion.div>
-      </div>
-      <div className="CustomImageAccordian_CustomImageAccordian__gVOJN">
-        <div className="CustomImageAccordian_acc_wrap__AHbWW">
-          <div className="CustomImageAccordian_acc_left__iD9HY">
-            {items.map((item, i) => (
-              <motion.div
-                key={i}
-                className={`CustomImageAccordian_acc_item__SpMrV ${i === activeIndex ? 'CustomImageAccordian_active_item__IkUwc' : 'false'} color_primary_dark`}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.08 }}
-              >
-                <div
-                  className="CustomImageAccordian_acc_title__sTfie"
+
+        <div className="CustomImageAccordian_CustomImageAccordian__gVOJN">
+          <div className="CustomImageAccordian_acc_wrap__AHbWW">
+            <div className="CustomImageAccordian_acc_left__iD9HY">
+              {items.map((item, i) => (
+                <motion.div
+                  key={i}
+                  className={`CustomImageAccordian_acc_item__SpMrV ${i === activeIndex ? 'CustomImageAccordian_active_item__IkUwc' : ''} color_primary_dark`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
                   onClick={() => setActiveIndex(i)}
                   style={{ cursor: 'pointer' }}
                 >
-                  <h5 className="fs_24">{item.title}</h5>
-                </div>
-                <AnimatePresence>
-                  {i === activeIndex && (
-                    <motion.div
-                      className="CustomImageAccordian_acc_desc__hBa3_"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: 'easeInOut' }}
-                      style={{ overflow: 'hidden' }}
-                    >
-                      <h5 className="fs_18">{item.desc}</h5>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
-          </div>
-          <div className="CustomImageAccordian_acc_right__GHGGd">
-            <div className="CustomImageAccordian_acc_img_wrap__dnQfA">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeIndex}
-                  className="CustomImageAccordian_acc_img_item__SCb4Z CustomImageAccordian_active_img__rIQ__"
-                  initial={{ opacity: 0, scale: 0.97 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.97 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <img alt={items[activeIndex].title} loading="lazy" width={843} height={557} style={{ color: 'transparent' }} src={IMAGE_URL} />
+                  <div className="CustomImageAccordian_acc_title__sTfie">
+                    <h5 className="fs_24">{item.title}</h5>
+                  </div>
+                  <div className="CustomImageAccordian_acc_desc__hBa3_">
+                    <h5 className="fs_18">{item.desc}</h5>
+                  </div>
                 </motion.div>
-              </AnimatePresence>
+              ))}
+            </div>
+            <div className="CustomImageAccordian_acc_right__GHGGd">
+              <div className="CustomImageAccordian_acc_img_wrap__dnQfA">
+                {IMAGES.map((img, i) => (
+                  <div
+                    key={i}
+                    className={`CustomImageAccordian_acc_img_item__SCb4Z ${i === activeIndex ? 'CustomImageAccordian_active_img__rIQ__' : ''}`}
+                  >
+                    <img alt={items[i]?.title || ''} loading="lazy" width={843} height={557} style={{ color: 'transparent' }} src={img} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
+        </div>
+
+        {/* Mobile version */}
+        <div className="CustomImageAccordian_mob_custom_accordian__BaZQE">
+          {items.map((item, i) => (
+            <div
+              key={i}
+              className={`CustomImageAccordian_acc_item__SpMrV ${i === activeIndex ? 'CustomImageAccordian_active_item__IkUwc' : ''}`}
+              onClick={() => setActiveIndex(i)}
+              style={{ cursor: 'pointer' }}
+            >
+              <h4 className="CustomImageAccordian_acc_title__sTfie fs_20 fw_500 color_text">
+                {item.title}
+              </h4>
+              {i === activeIndex && (
+                <>
+                  <p className="CustomImageAccordian_acc_desc__hBa3_ fs_16 color_primary_dark">
+                    {item.desc}
+                  </p>
+                  <div className="CustomImageAccordian_acc_img_item__SCb4Z CustomImageAccordian_active_img__rIQ__">
+                    <img alt="" loading="lazy" src={IMAGES[i]} style={{ color: 'transparent' }} />
+                  </div>
+                </>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>
