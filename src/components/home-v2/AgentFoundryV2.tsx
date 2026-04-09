@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import GridOverlay from './GridOverlay';
 
 const beats = [
   { num: '01', label: 'Build', desc: 'Configure agents for any task. Bid adjustments, inventory alerts, return flags, reconciliation triggers.', color: '#FCB24F' },
@@ -15,8 +16,9 @@ const agents = [
 
 export default function AgentFoundryV2() {
   return (
-    <section style={{ background: '#FFFFFF', padding: '100px 0' }}>
-      <div className="container">
+    <section style={{ background: '#FFFFFF', padding: '100px 0', position: 'relative' }}>
+      <GridOverlay />
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         {/* Power line */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -1,11 +1,13 @@
 import { motion } from 'motion/react';
+import GridOverlay from './GridOverlay';
 
 const brands = ['Sugar Cosmetics', 'Urban Gabru', 'MARS Cosmetics', 'Beast Life', 'Asian Shoes', 'NGT Habit'];
 
 export default function TrustStripV2() {
   return (
-    <section style={{ background: '#FFFFFF', paddingTop: '40px', paddingBottom: '60px' }}>
-      <div className="container">
+    <section style={{ background: '#FFFFFF', paddingTop: '40px', paddingBottom: '60px', position: 'relative' }}>
+      <GridOverlay />
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.p
           className="m8-p6"
           style={{ textAlign: 'center', color: 'rgba(8,13,25,0.4)', marginBottom: '24px', textTransform: 'uppercase', letterSpacing: '0.08em' }}
