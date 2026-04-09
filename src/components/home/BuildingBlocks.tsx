@@ -1,3 +1,5 @@
+import { motion } from 'motion/react';
+
 const featureCards = [
   {
     title: 'Ads',
@@ -32,20 +34,36 @@ export default function BuildingBlocks() {
       <div className="HomeBuildingBlocks_HomeBuildingBlocks__ladc1">
         <div className="container">
           <div className="HomeBuildingBlocks_building_blocks_inner__FGXk9">
-            <div className="HomeBuildingBlocks_item_left__ZYuRo">
+            <motion.div
+              className="HomeBuildingBlocks_item_left__ZYuRo"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.6 }}
+            >
               <div className="SectionTitle_SectionTitle__fv0YD false half_title">
                 <h2 className="section_title color_text" aria-label="The architecture of e-comm success">
                   The architecture of e-comm success
                 </h2>
-                <div className="section_desc fadeInUp" data-scroll="in">
+                <div className="section_desc">
                   Success in e-commerce starts with control over five essential pillars. When each one is managed with precision, growth follows naturally.
                 </div>
               </div>
-            </div>
+            </motion.div>
             <div className="HomeBuildingBlocks_item_right__EY37I">
-              {featureCards.map((card) => (
-                <div className="revealFromLeft" key={card.title}>
-                  <div className="FeatureCard_FeatureCard__eGGd4">
+              {featureCards.map((card, i) => (
+                <motion.div
+                  key={card.title}
+                  initial={{ opacity: 0, x: 60 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.5, delay: i * 0.1, ease: 'easeOut' }}
+                >
+                  <motion.div
+                    className="FeatureCard_FeatureCard__eGGd4"
+                    whileHover={{ x: -8 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                  >
                     <div className="FeatureCard_initials__lzdx8 bg_primary br_10 fw_500">
                       {card.icon}
                     </div>
@@ -68,8 +86,8 @@ export default function BuildingBlocks() {
                         <img alt="" loading="lazy" width={398} height={269} style={{ color: 'transparent' }} src="https://infytrix.info/img/clip-shapes/product-card.svg" />
                       </div>
                     </div>
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               ))}
             </div>
           </div>

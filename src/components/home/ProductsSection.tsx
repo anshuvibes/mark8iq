@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { motion } from 'motion/react';
 
 const productCards = [
   { initials: 'AD', bg: 'bg_red', logo: 'https://admin.infytrix.info/uploads/Logo_1_2e952af0b7.svg', logoW: 169, logoH: 26, desc: 'Turbocharge ROI with ad insights that click.', link: '/products/ads' },
@@ -8,6 +9,13 @@ const productCards = [
   { initials: 'RE', bg: 'bg_orange', logo: 'https://admin.infytrix.info/uploads/returns_a4ec08fef0.svg', logoW: 250, logoH: 27, desc: 'Streamline claims and tackle returns head-on.', link: '/products/returns' },
   { initials: 'PO', bg: 'bg_yellow', logo: 'https://admin.infytrix.info/uploads/po_d53326717e.svg', logoW: 250, logoH: 27, desc: 'Procurement precision made simple.', link: null },
 ];
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 40 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-80px' },
+  transition: { duration: 0.6, ease: 'easeOut' },
+};
 
 export default function ProductsSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -24,7 +32,7 @@ export default function ProductsSection() {
       <div className="HomeProducts_HomeProducts__hEHu_">
         <div className="container">
           {/* Video Card */}
-          <div className="HomeProducts_main_product__Rj4qT fadeInUp" data-scroll="in">
+          <motion.div className="HomeProducts_main_product__Rj4qT" {...fadeInUp}>
             <div className="ProductVideoCard_ProductVideoCard__IpW1N">
               <div className="ProductVideoCard_ads_logo__zfoAc">
                 <img alt="Mark8 IQ" loading="lazy" width={300} height={70} style={{ color: 'transparent' }} src="https://admin.infytrix.info/uploads/logo_black_5303b9309c.svg" />
@@ -44,14 +52,21 @@ export default function ProductsSection() {
                         </div>
                       </div>
                       <div className="ProductVideoCard_content_right__U8jp1">
-                        <div className="ProductVideoCard_play_button__LqNJl br_5 bg_neutral_light" role="button" tabIndex={0} onClick={handlePlay}>
+                        <motion.div
+                          className="ProductVideoCard_play_button__LqNJl br_5 bg_neutral_light"
+                          role="button"
+                          tabIndex={0}
+                          onClick={handlePlay}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
                           <p className="fs_16">Play</p>
                           <div className="IconButton_IconButton__MhTxv bg_primary IconButton_size_regular__GEIC5 br_5">
                             <div className="IconButton_iconWrap__cJF8d iconWrap">
                               <svg xmlns="http://www.w3.org/2000/svg" width="8" height="10" fill="none" viewBox="0 0 8 10"><path fill="#EDEFF7" d="M6.643 4.152a1 1 0 0 1 0 1.696L1.53 9.044A1 1 0 0 1 0 8.196V1.804A1 1 0 0 1 1.53.956z"></path></svg>
                             </div>
                           </div>
-                        </div>
+                        </motion.div>
                       </div>
                     </div>
                   </div>
@@ -61,22 +76,33 @@ export default function ProductsSection() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Section Title */}
-          <div className="HomeProducts_product_item__iLvMm fadeInUp m_b_40" data-scroll="in">
+          <motion.div className="HomeProducts_product_item__iLvMm m_b_40" {...fadeInUp}>
             <div className="SectionTitle_SectionTitle__fv0YD false half_title">
               <h2 className="section_title color_text" aria-label="Smarter tools, Bigger wins, Zero friction">
                 Smarter tools, Bigger wins, Zero friction
               </h2>
             </div>
-          </div>
+          </motion.div>
 
           {/* Product Cards Grid */}
           <div className="HomeProducts_product_wrap__swy9W">
-            {productCards.map((card) => (
-              <div className="HomeProducts_product_item__iLvMm fadeInUp" data-scroll="in" key={card.initials}>
-                <div className="ProductCard_ProductCard__eThFZ">
+            {productCards.map((card, i) => (
+              <motion.div
+                className="HomeProducts_product_item__iLvMm"
+                key={card.initials}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.5, delay: i * 0.1, ease: 'easeOut' }}
+              >
+                <motion.div
+                  className="ProductCard_ProductCard__eThFZ"
+                  whileHover={{ y: -6 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                >
                   <div className={`ProductCard_initials__pGYfP ${card.bg} br_10 fw_500`}>{card.initials}</div>
                   <div className="ClipCard_ClipCard__bXUlH clipCard">
                     <div className="ClipCard_ClipCardInner__BFU7k ClipCardInner" style={{ WebkitMaskImage: 'url(/img/clip-shapes/product-card.svg)', aspectRatio: '1.479553903345725' }}>
@@ -112,8 +138,8 @@ export default function ProductsSection() {
                       <img alt="" loading="lazy" width={398} height={269} style={{ color: 'transparent' }} src="https://infytrix.info/img/clip-shapes/product-card.svg" />
                     </div>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             ))}
           </div>
         </div>

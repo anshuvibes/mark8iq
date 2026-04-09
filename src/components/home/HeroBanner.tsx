@@ -1,3 +1,5 @@
+import { motion } from 'motion/react';
+
 export default function HeroBanner() {
   return (
     <section className="section_spacing">
@@ -7,33 +9,62 @@ export default function HeroBanner() {
             <div className="container">
               <div className="HomeBanner_banner_item__utsH1">
                 <div className="HomeBanner_banner_item_left__Fzf9j">
-                  <div className="fs_50 m_b_10 color_text">
+                  <motion.div
+                    className="fs_50 m_b_10 color_text"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, ease: 'easeOut' }}
+                  >
                     <p>Scale every<br />mark8 confidently.</p>
-                  </div>
-                  <div className="fs_20 m_b_30 color_primary_dark">
+                  </motion.div>
+                  <motion.div
+                    className="fs_20 m_b_30 color_primary_dark"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+                  >
                     <p>One-platform solution for your fragmented data</p>
-                  </div>
-                  <div>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.4, ease: 'easeOut' }}
+                  >
                     <a href="/get-in-touch">
                       <span className="Button_btn_wrap__DW66V false">
-                        <button className="fs_18 font_primary fw_400 Button_btn_common_styles__ddJx7 bg_primary">
+                        <motion.button
+                          className="fs_18 font_primary fw_400 Button_btn_common_styles__ddJx7 bg_primary"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.97 }}
+                          transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                        >
                           <span>Find Out How</span>
-                        </button>
+                        </motion.button>
                       </span>
                     </a>
-                  </div>
-                  <div className="HomeBanner_logo_wrap__BXJMn">
+                  </motion.div>
+                  <motion.div
+                    className="HomeBanner_logo_wrap__BXJMn"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.6 }}
+                  >
                     <div className="HomeBanner_logo_item__APlQy">
                       <img alt="Amazon Verified" loading="lazy" width={106} height={68} src="https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Famazon_verified_af8a44e026.png&w=256&q=75" />
                     </div>
                     <div className="HomeBanner_logo_item__APlQy">
                       <img alt="AWS" loading="lazy" width={76} height={76} src="https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Faws_2fd4c75a82.png&w=256&q=75" />
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
-                <div className="HomeBanner_banner_item_right__FsqQl">
+                <motion.div
+                  className="HomeBanner_banner_item_right__FsqQl"
+                  initial={{ opacity: 0, x: 60 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
+                >
                   <img alt="Mark8 IQ Dashboard" loading="lazy" width={826} height={517} style={{ color: 'transparent' }} src="https://admin.infytrix.info/uploads/banner1_4e8854471b.svg" />
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>
