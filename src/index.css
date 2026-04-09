@@ -60,7 +60,11 @@ All colors MUST be HSL.
     --color_primary_contrast: #edeff7;
     --color_neutral_dark:     #080d19;
     --color_neutral_light:    #edf0f7;
-    --color_text:             #12182b;
+    /* TEXT COLOR RULE:
+       --m8-dark / --color_neutral_dark (#080d19) = dark backgrounds, buttons, nav, section fills
+       --color_text (#12182b) = body copy, paragraph text on light backgrounds
+       Do not use --m8-dark for body text. Do not use --color_text for backgrounds. */
+     --color_text:             #12182b;
     --color_white:            #ffffff;
     --color_black:            #000000;
     --color_blue:             #6895fc;

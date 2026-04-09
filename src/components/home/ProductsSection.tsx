@@ -2,11 +2,11 @@ import { useRef } from 'react';
 import { motion } from 'motion/react';
 
 const productCards = [
-  { initials: 'AD', bg: 'bg_red', logo: 'https://admin.infytrix.info/uploads/Logo_1_2e952af0b7.svg', logoW: 169, logoH: 26, desc: 'Turbocharge ROI with ad insights that click.', link: '/products/ads' },
-  { initials: 'SI', bg: 'bg_teal', logo: 'https://admin.infytrix.info/uploads/sight_2bc4263cb2.svg', logoW: 251, logoH: 27, desc: 'Boost marketplace visibility, ranking, and SOV.', link: '/products/sight' },
+  { initials: 'AD', bg: 'bg_orange', logo: 'https://admin.infytrix.info/uploads/Logo_1_2e952af0b7.svg', logoW: 169, logoH: 26, desc: 'Turbocharge ROI with ad insights that click.', link: '/products/ads' },
+  { initials: 'SI', bg: 'bg_blue', logo: 'https://admin.infytrix.info/uploads/sight_2bc4263cb2.svg', logoW: 251, logoH: 27, desc: 'Boost marketplace visibility, ranking, and SOV.', link: '/products/sight' },
   { initials: 'SH', bg: 'bg_blue', logo: 'https://admin.infytrix.info/uploads/shelf_e80e25f1be.svg', logoW: 250, logoH: 26, desc: 'Stay visible, stay ahead, stay victorious.', link: '/products/shelf' },
   { initials: 'RC', bg: 'bg_green', logo: 'https://admin.infytrix.info/uploads/reco_b099b49a62.svg', logoW: 250, logoH: 27, desc: 'Keep every penny accounted for effortlessly.', link: '/products/reco' },
-  { initials: 'RE', bg: 'bg_orange', logo: 'https://admin.infytrix.info/uploads/returns_a4ec08fef0.svg', logoW: 250, logoH: 27, desc: 'Streamline claims and tackle returns head-on.', link: '/products/returns' },
+  { initials: 'RE', bg: 'bg_teal', logo: 'https://admin.infytrix.info/uploads/returns_a4ec08fef0.svg', logoW: 250, logoH: 27, desc: 'Streamline claims and tackle returns head-on.', link: '/products/returns' },
   { initials: 'PO', bg: 'bg_yellow', logo: 'https://admin.infytrix.info/uploads/po_d53326717e.svg', logoW: 250, logoH: 27, desc: 'Procurement precision made simple.', link: null },
 ];
 
