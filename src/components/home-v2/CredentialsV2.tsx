@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import GridOverlay from './GridOverlay';
 
 const credentials = [
   { abbr: 'AMZ', name: 'Amazon Ads Advisory Board Member', proof: "One of a handful of agencies globally invited to shape Amazon's advertising direction." },
@@ -10,8 +11,9 @@ const credentials = [
 
 export default function CredentialsV2() {
   return (
-    <section style={{ background: '#FFFFFF', padding: '80px 0' }}>
-      <div className="container">
+    <section style={{ background: '#FFFFFF', padding: '80px 0', position: 'relative' }}>
+      <GridOverlay />
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         {credentials.map((c, i) => (
           <motion.div
             key={c.abbr}

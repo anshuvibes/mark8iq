@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import GridOverlay from './GridOverlay';
 
 const beats = [
   { num: '01', label: 'Analyse', desc: 'Processes every data point across all six modules simultaneously. No spreadsheet needed.' },

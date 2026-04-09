@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
+import GridOverlay from './GridOverlay';
 
 export default function CtaBlockV2() {
   return (
