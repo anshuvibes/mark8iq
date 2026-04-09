@@ -130,19 +130,9 @@ export default function FragmentationV2() {
         ))}
 
         {/* Persona labels */}
-        {personas.map(p => {
-          const x = useTransform(scrollYProgress, [0.48, 0.70, 0.86], [p.startX, p.startX, 0]);
-          const y = useTransform(scrollYProgress, [0.48, 0.70, 0.86], [p.startY, p.startY, 0]);
-          const opacity = useTransform(scrollYProgress, [0.49, 0.55, 0.83, 0.88], [0, 1, 1, 0]);
-          return (
-            <motion.span key={p.id} style={{
-              position: 'absolute', left: '50%', top: '50%', x, y, opacity,
-              color: 'rgba(255,255,255,0.48)', fontSize: 15, fontFamily: "'Saira', sans-serif", whiteSpace: 'nowrap',
-            }}>
-              {p.label}
-            </motion.span>
-          );
-        })}
+        {personas.map(p => (
+          <PersonaLabel key={p.id} scrollYProgress={scrollYProgress} startX={p.startX} startY={p.startY} label={p.label} />
+        ))}
 
         {/* Step anchor copy */}
         <motion.div className="m8-p1" style={{
