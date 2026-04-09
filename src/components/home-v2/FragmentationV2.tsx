@@ -151,13 +151,13 @@ export default function FragmentationV2() {
           backgroundColor: bgColor,
         }}
       >
-        {/* Grid overlay for dark sections */}
+        {/* Fragmentation uses opaque dark bg via motion, so it needs its own grid overlay */}
         <div style={{
           position: 'absolute',
           inset: 0,
-          backgroundImage: 'url(/img/bg-pattern.svg)',
+          backgroundImage: 'url(/img/bg-pattern-reverse.svg)',
           backgroundRepeat: 'repeat',
-          opacity: 0.04,
+          opacity: 0.06,
           pointerEvents: 'none',
         }} />
 

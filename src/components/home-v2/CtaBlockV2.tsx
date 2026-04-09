@@ -1,11 +1,9 @@
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
-import GridOverlay from './GridOverlay';
 
 export default function CtaBlockV2() {
   return (
     <section style={{ background: 'rgba(142,89,255,0.92)', padding: '100px 0', position: 'relative' }}>
-      <GridOverlay opacity={0.06} />
       <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
         <motion.h2
           className="m8-h1-large"

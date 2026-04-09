@@ -1,5 +1,4 @@
 import { motion } from 'motion/react';
-import GridOverlay from './GridOverlay';
 
 const beats = [
   { num: '01', label: 'Analyse', desc: 'Processes every data point across all six modules simultaneously. No spreadsheet needed.' },
@@ -10,7 +9,6 @@ const beats = [
 export default function AgentMarkV2() {
   return (
     <section style={{ background: 'rgba(242,242,244,0.85)', padding: '100px 0', position: 'relative' }}>
-      <GridOverlay />
       <div className="container" style={{ display: 'flex', gap: '64px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
         {/* Left column - text */}
         <div style={{ flex: '0 0 44%', maxWidth: '44%' }}>
