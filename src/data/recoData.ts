@@ -1,0 +1,65 @@
+import type { ProductPageData } from './productPageTypes';
+
+const recoData: ProductPageData = {
+  color: 'green',
+  bannerTitle: 'Every transaction accounted for,
+Under one consolidated view',
+  bannerDescription: 'Mark8 Reco connects every signal across all marketplaces, giving you the visibility to optimise faster and invest smarter.',
+  bannerImage: 'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fecomm_intelligence_9a5c77a1ab_e80eff8f86.png&amp;w=1920&amp;q=75',
+  accordionSectionTitle: 'Hidden financial leakage can hinder profitability',
+  accordionIntroText: 'In e-commerce, profitability is lost in unreconciled charges and mismatched settlements. Mark8 Reco brings the whole financial picture into a single reconciled view, ensuring every transaction is accounted for, down to the granular level.',
+  accordionItems: [
+    { title: 'End-to-end reconciliation', description: 'Match every marketplace transaction across sales, returns, commissions, logistics fees, payment gateway charges, and penalties.' },
+    { title: 'Order-level and SKU-level accuracy', description: 'Reconcile data to trace profitability per order, per product, and per SKU.' },
+    { title: 'CM1 & CM2 profitability intelligence', description: 'Calculate true contribution margins by mapping all costs against revenue with a clean view.' },
+    { title: 'Seller & vendor reconciliation parity', description: 'Handle complex reconciliation across Seller Central, Vendor Central, and hybrid models without manual intervention.' },
+    { title: 'Unified financial dashboard', description: 'Replace scattered reports with a single source of truth that finance, operations, and business teams can trust.' },
+  ],
+  accordionImages: [
+    'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fecomm_intelligence_9a5c77a1ab_e80eff8f86.png&amp;w=1920&amp;q=75',
+    'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fecomm_intelligence_9a5c77a1ab_e80eff8f86.png&amp;w=1920&amp;q=75',
+    'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fecomm_intelligence_9a5c77a1ab_e80eff8f86.png&amp;w=1920&amp;q=75',
+    'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fecomm_intelligence_9a5c77a1ab_e80eff8f86.png&amp;w=1920&amp;q=75',
+    'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fecomm_intelligence_9a5c77a1ab_e80eff8f86.png&amp;w=1920&amp;q=75',
+  ],
+  videoSrc: 'https://admin.infytrix.info/uploads/dummy_f053c3cb6f.mp4',
+  videoLogo: 'https://admin.infytrix.info/uploads/reco_b099b49a62.svg',
+  videoTitle: 'How Mark8Reco works for you',
+  featureSectionTitle: 'AI agents that optimize, predict and refine',
+  featureCards: [
+    { icon: 'https://admin.infytrix.info/uploads/adaptability_8f6127a55e_b327011e5d.svg', title: 'Profit Leak Detection Agent', description: 'Finds fee leakages, incorrect charges, and return-based losses and gives fixes to improve CM1/CM2 margins.' },
+    { icon: 'https://admin.infytrix.info/uploads/adaptability_8f6127a55e_b327011e5d.svg', title: 'Settlement Mismatch Agent', description: 'From order to invoice to settlement, this agent detects mismatches and prepares dispute-ready files.' },
+    { icon: 'https://admin.infytrix.info/uploads/adaptability_8f6127a55e_b327011e5d.svg', title: 'SKU Profitability Agent', description: 'This agent provides insights into unprofitable SKUs and suggests pricing, cost, or fulfillment changes to improve profitability.' },
+  ],
+  pricingSectionTitle: 'Smart pricing for smarter profit decisions',
+  pricingSlabs: ["lorem"],
+  marketplaces: [
+    { logo: 'https://admin.infytrix.info/uploads/myntra_initials_aa9bea2825.svg', name: 'Myntra' },
+    { logo: 'https://admin.infytrix.info/uploads/myntra_initials_aa9bea2825.svg', name: 'Myntra' },
+  ],
+  insightsSectionTitle: 'Insights that give you the edge',
+  insightCards: [
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+  ],
+  faqSectionTitle: 'Asked and answered',
+  faqItems: [],
+  otherProducts: [
+    { href: '/products/ads', icon: 'https://admin.infytrix.info/uploads/Logo_1_2e952af0b7.svg', title: 'Mark8 Ads', description: 'Turbocharge ROI with ad insights that click.', comingSoon: false },
+    { href: '/products/sight', icon: 'https://admin.infytrix.info/uploads/sight_2bc4263cb2.svg', title: 'Mark8 Sight', description: 'Boost marketplace visibility, ranking, and SOV.', comingSoon: false },
+    { href: '/products/shelf', icon: 'https://admin.infytrix.info/uploads/shelf_e80e25f1be.svg', title: 'Mark8 Shelf', description: 'Stay visible, stay ahead, stay victorious.', comingSoon: false },
+    { href: '/products/returns', icon: 'https://admin.infytrix.info/uploads/returns_a4ec08fef0.svg', title: 'Mark8 Returns', description: 'Streamline claims and tackle returns head-on.', comingSoon: false },
+    { href: '', icon: 'https://admin.infytrix.info/uploads/po_d53326717e.svg', title: 'Mark8 PO', description: 'Procurement precision made simple.', comingSoon: true },
+  ],
+};
+
+export default recoData;
