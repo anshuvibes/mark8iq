@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import GridOverlay from './GridOverlay';
 
 const modules: Record<string, { name: string; abbr: string; accent: string; pain: string; metric: string }> = {
   ads: { name: 'Mark8 Ads', abbr: 'AD', accent: '#FC7459', pain: 'Your ad spend across every marketplace. Optimized in real time.', metric: '105 Cr in ad spend optimized. 35% average ROAS improvement.' },
@@ -45,8 +44,7 @@ export default function ProductSuiteV2() {
   const active = modules[activeModule];
 
   return (
-    <section style={{ background: '#FFFFFF', padding: '100px 0', position: 'relative', zIndex: 1 }}>
-      <GridOverlay />
+    <section style={{ padding: '100px 0', position: 'relative', zIndex: 1 }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.h2
           className="m8-h1-large"

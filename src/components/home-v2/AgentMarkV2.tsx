@@ -9,7 +9,7 @@ const beats = [
 
 export default function AgentMarkV2() {
   return (
-    <section style={{ background: '#F2F2F4', padding: '100px 0', position: 'relative' }}>
+    <section style={{ background: 'rgba(242,242,244,0.85)', padding: '100px 0', position: 'relative' }}>
       <GridOverlay />
       <div className="container" style={{ display: 'flex', gap: '64px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
         {/* Left column - text */}
