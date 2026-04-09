@@ -1,7 +1,7 @@
 import type { ProductPageData } from './productPageTypes';
 
 const returnsData: ProductPageData = {
-  color: 'orange',
+  color: 'teal',
   bannerTitle: 'From pickup to payout,\nevery return mastered',
   bannerDescription: 'Mark8 Returns connects every signal across all marketplaces, giving you the visibility to optimise faster and invest smarter.',
   bannerImage: 'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fbanner_img_5cce70f4a0.png&amp;w=1920&amp;q=75',

@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { Button } from '@/components/ui/button';
 
 export default function HeroBanner() {
   return (
@@ -30,18 +31,16 @@ export default function HeroBanner() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.4, ease: 'easeOut' }}
                   >
-                    <a href="/get-in-touch">
-                      <span className="Button_btn_wrap__DW66V false">
-                        <motion.button
-                          className="fs_18 font_primary fw_400 Button_btn_common_styles__ddJx7 bg_primary"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.97 }}
-                          transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                        >
-                          <span>Find Out How</span>
-                        </motion.button>
-                      </span>
-                    </a>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.97 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                      style={{ display: 'inline-block' }}
+                    >
+                      <Button variant="m8-dark" size="lg" asChild>
+                        <a href="/get-in-touch">Find Out How</a>
+                      </Button>
+                    </motion.div>
                   </motion.div>
                   <motion.div
                     className="HomeBanner_logo_wrap__BXJMn"

@@ -9,8 +9,8 @@ const fadeInUp = {
 
 export default function EcommGrowth() {
   const stats = [
-    { value: '₹60+', unit: 'CR', label: 'Ad Spend Managed' },
-    { value: '₹700+', unit: 'CR', label: 'GMV Driven' },
+    { value: '100+', unit: 'CR', label: 'Ad Spend Managed' },
+    { value: '1,000+', unit: 'CR', label: 'GMV Driven' },
     { value: '14M+', unit: 'UNITS', label: 'Sold worldwide' },
   ];
 
