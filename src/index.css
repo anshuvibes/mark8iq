@@ -896,3 +896,9 @@ All colors MUST be HSL.
   display: block !important;
   margin: 0 !important;
 }
+
+/* Grid background tint — ensures bg-pattern-reverse.svg lines (#EDF0F7) are 
+   visible against a slightly tinted base instead of pure white */
+.CustomBg_bg_image__RIwVy {
+  background-color: var(--m8-grid-base, #F0F1F6);
+}
