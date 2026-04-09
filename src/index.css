@@ -868,6 +868,24 @@ All colors MUST be HSL.
   display: block !important;
 }
 
+/* ── CTA BUTTON (white on violet) ─────────────────────────────── */
+.btn-m8-cta {
+  background-color: #ffffff !important;
+  color: #8E59FF !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 12px 28px !important;
+  font-family: 'Saira', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background-color 0.1s ease !important;
+}
+.btn-m8-cta:hover { background-color: rgba(255,255,255,0.92) !important; }
+
 /* ── SEPARATOR ────────────────────────────────────────────────── */
 .shadcn-separator {
   height: 1px !important;
