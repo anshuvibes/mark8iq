@@ -84,8 +84,11 @@ function NavDropdown({ label, items, isOpen, onToggle, onClose, isMobile, onNavi
         <span>{label}</span>
         <span style={{
           display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           transition: 'transform 0.3s ease',
           transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+          transformOrigin: 'center center',
         }}>
           <DropdownArrow />
         </span>
