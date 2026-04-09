@@ -895,10 +895,3 @@ All colors MUST be HSL.
   transition: background-color 0.1s ease !important;
 }
 .btn-m8-cta:hover { background-color: rgba(255,255,255,0.92) !important; }
-  height: 1px !important;
-  width: 100% !important;
-  background-color: rgba(8,13,25,0.1) !important;
-  border: none !important;
-  display: block !important;
-  margin: 0 !important;
-}
