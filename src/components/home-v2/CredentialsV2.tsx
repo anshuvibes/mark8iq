@@ -1,5 +1,4 @@
 import { motion } from 'motion/react';
-import GridOverlay from './GridOverlay';
 
 const credentials = [
   { abbr: 'AMZ', name: 'Amazon Ads Advisory Board Member', proof: "One of a handful of agencies globally invited to shape Amazon's advertising direction." },

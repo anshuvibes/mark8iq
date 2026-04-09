@@ -1,5 +1,4 @@
 import { motion } from 'motion/react';
-import GridOverlay from './GridOverlay';
 
 const beats = [
   { num: '01', label: 'Build', desc: 'Configure agents for any task. Bid adjustments, inventory alerts, return flags, reconciliation triggers.', color: '#FCB24F' },

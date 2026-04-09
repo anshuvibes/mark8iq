@@ -1,5 +1,4 @@
 import { motion } from 'motion/react';
-import GridOverlay from './GridOverlay';
 
 const brands = ['Sugar Cosmetics', 'Urban Gabru', 'MARS Cosmetics', 'Beast Life', 'Asian Shoes', 'NGT Habit'];
 
