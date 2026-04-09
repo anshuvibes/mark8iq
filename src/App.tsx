@@ -15,6 +15,7 @@ import ProductReturnsPage from "./pages/ProductReturnsPage";
 import ComingSoonPage from "./pages/ComingSoonPage";
 import BlogSlugPage from "./pages/BlogSlugPage";
 import DesignSystemPage from "./pages/DesignSystemPage";
+import HomePageV2 from "./pages/HomePageV2";
 
 const App = () => {
   useEffect(() => {
