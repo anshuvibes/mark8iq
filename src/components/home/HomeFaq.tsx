@@ -9,7 +9,7 @@ const faqItems = [
   { q: 'Customizable & Enterprise-Ready', a: 'Built for fast-growing brands and enterprises needing deep analytics across thousands of SKUs.' },
 ];
 
-const IMAGE_URL = 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fecomm-intelligence.6c7b7e24.png&w=1920&q=75';
+
 
 const CrossIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" fill="none" viewBox="0 0 11 12">
