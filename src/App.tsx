@@ -58,6 +58,7 @@ const App = () => {
       <Route path="*" element={<ComingSoonPage />} />
     </Routes>
   </BrowserRouter>
-);
+  );
+};
 
 export default App;
