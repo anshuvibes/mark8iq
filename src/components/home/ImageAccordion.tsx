@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { motion } from 'motion/react';
 
 const items = [
   { title: 'All-in-one e-commerce intelligence', desc: 'No juggling tools. One platform that manages ads, inventory, finance, and operations seamlessly.' },
@@ -25,29 +24,19 @@ export default function ImageAccordion() {
   return (
     <section className="section_spacing">
       <div className="container">
-        <motion.div
-          className="SectionTitle_SectionTitle__fv0YD false half_title"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6 }}
-        >
+        <div className="SectionTitle_SectionTitle__fv0YD false half_title">
           <h2 className="section_title color_text" aria-label="Engineered to power every e-comm move">
             Engineered to power every e-comm move
           </h2>
-        </motion.div>
+        </div>
 
         <div className="CustomImageAccordian_CustomImageAccordian__gVOJN">
           <div className="CustomImageAccordian_acc_wrap__AHbWW">
             <div className="CustomImageAccordian_acc_left__iD9HY">
               {items.map((item, i) => (
-                <motion.div
+                <div
                   key={i}
                   className={`CustomImageAccordian_acc_item__SpMrV ${i === activeIndex ? 'CustomImageAccordian_active_item__IkUwc' : ''} color_primary_dark`}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.08 }}
                   onClick={() => setActiveIndex(i)}
                   style={{ cursor: 'pointer' }}
                 >
@@ -57,7 +46,7 @@ export default function ImageAccordion() {
                   <div className="CustomImageAccordian_acc_desc__hBa3_">
                     <h5 className="fs_18">{item.desc}</h5>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
             <div className="CustomImageAccordian_acc_right__GHGGd">
@@ -89,7 +78,7 @@ export default function ImageAccordion() {
               </h4>
               {i === activeIndex && (
                 <>
-                  <p className="CustomImageAccordian_acc_desc__hBa3_ fs_16 color_primary_dark">
+                  <p className="CustomImageAccordian_acc_desc__hBa3_ fs_16 color_primary_dark" style={{ display: 'block' }}>
                     {item.desc}
                   </p>
                   <div className="CustomImageAccordian_acc_img_item__SCb4Z CustomImageAccordian_active_img__rIQ__">
