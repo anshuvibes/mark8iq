@@ -16,7 +16,24 @@ import ComingSoonPage from "./pages/ComingSoonPage";
 import BlogSlugPage from "./pages/BlogSlugPage";
 import DesignSystemPage from "./pages/DesignSystemPage";
 
-const App = () => (
+const App = () => {
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    return () => lenis.destroy();
+  }, []);
+
+  return (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<HomePage />} />
