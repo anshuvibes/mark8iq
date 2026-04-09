@@ -54,24 +54,41 @@ interface NavDropdownProps {
 }
 
 function NavDropdown({ label, items, isOpen, onToggle, onClose, isMobile, onNavigate }: NavDropdownProps) {
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        onClose();
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen, onClose]);
+
   return (
     <div
       className="Header_links__hyKZG"
-      onMouseEnter={() => { if (!isMobile) onToggle(); }}
-      onMouseLeave={() => { if (!isMobile) onClose(); }}
+      ref={dropdownRef}
     >
       <div
         className="Header_link_title__KnPnj fs_16"
+        style={{ cursor: 'pointer' }}
         onClick={(e) => {
-          if (isMobile) {
-            e.preventDefault();
-            e.stopPropagation();
-            onToggle();
-          }
+          e.preventDefault();
+          e.stopPropagation();
+          onToggle();
         }}
       >
         <span>{label}</span>
-        <DropdownArrow />
+        <span style={{
+          display: 'inline-flex',
+          transition: 'transform 0.3s ease',
+          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+        }}>
+          <DropdownArrow />
+        </span>
       </div>
       <div className={`Header_dropdown__ogeNG ${isOpen ? 'Header_active__sryJG' : ''}`}>
         {items.map((item) => (
