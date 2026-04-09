@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import GridOverlay from './GridOverlay';
 
 const roles = [
   {
@@ -28,7 +27,6 @@ export default function RoleBasedValueV2() {
 
   return (
     <section style={{ background: 'rgba(237,240,247,0.85)', padding: '100px 0', position: 'relative' }}>
-      <GridOverlay />
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.h2
           className="m8-h1-large"

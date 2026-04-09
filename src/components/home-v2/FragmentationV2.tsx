@@ -151,15 +151,7 @@ export default function FragmentationV2() {
           backgroundColor: bgColor,
         }}
       >
-        {/* Grid overlay for dark sections */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: 'url(/img/bg-pattern.svg)',
-          backgroundRepeat: 'repeat',
-          opacity: 0.04,
-          pointerEvents: 'none',
-        }} />
+        {/* Grid from Layout shows through — no per-section overlay needed */}
 
         {/* Marketplace logos */}
         {marketplaces.map((m) => (
