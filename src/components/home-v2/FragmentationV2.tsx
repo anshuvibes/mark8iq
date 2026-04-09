@@ -44,6 +44,23 @@ function FloatingPill({ scrollYProgress, startX, startY, label, appearAt, style 
   );
 }
 
+function PersonaLabel({ scrollYProgress, startX, startY, label }: {
+  scrollYProgress: any; startX: number; startY: number; label: string;
+}) {
+  const x = useTransform(scrollYProgress, [0.48, 0.70, 0.86], [startX, startX, 0]);
+  const y = useTransform(scrollYProgress, [0.48, 0.70, 0.86], [startY, startY, 0]);
+  const opacity = useTransform(scrollYProgress, [0.49, 0.55, 0.83, 0.88], [0, 1, 1, 0]);
+
+  return (
+    <motion.span style={{
+      position: 'absolute', left: '50%', top: '50%', x, y, opacity,
+      color: 'rgba(255,255,255,0.48)', fontSize: 15, fontFamily: "'Saira', sans-serif", whiteSpace: 'nowrap',
+    }}>
+      {label}
+    </motion.span>
+  );
+}
+
 export default function FragmentationV2() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
