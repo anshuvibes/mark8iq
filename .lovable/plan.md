@@ -1,141 +1,125 @@
 
+# Full Site Refactor — dangerouslySetInnerHTML to React Components
 
-# Homepage Full Rewrite — From dangerouslySetInnerHTML to React Components
+## Scope
 
-## Overview
+12 files to refactor (HomePage already done):
 
-Replace the current `HomePage.tsx` (which fetches a 92KB HTML blob and injects it via `dangerouslySetInnerHTML`) with a fully componentized React page using the new design system. The page will still use the existing `mark8iq.css` class names for styling (since those styles are already loaded and working), but all content will be proper JSX with React state management for interactivity.
+| File | Size | Complexity |
+|------|------|------------|
+| **ProductAdsPage.tsx** | 108KB | High — 21 component types |
+| **ProductSightPage.tsx** | 106KB | High — identical structure to Ads |
+| **ProductRecoPage.tsx** | 103KB | High — identical structure |
+| **ProductShelfPage.tsx** | 100KB | High — identical structure |
+| **ProductReturnsPage.tsx** | 94KB | High — identical structure |
+| **Footer.tsx** | 63KB | Medium — single large block |
+| **WhyUsPage.tsx** | 50KB | Medium — 9 component types |
+| **AboutPage.tsx** | 50KB | Medium — 8 component types |
+| **SuccessStoriesPage.tsx** | 27KB | Medium — 11 component types |
+| **PricingPage.tsx** | 13KB | Medium — interactive tabs/slider |
+| **Navbar.tsx** | 8KB | Low — already has JS logic |
+| **ContactPage.tsx** | 5KB | Low — form + map |
 
-## Architecture Decision
+**Total: ~780KB of HTML strings to convert to JSX.**
 
-The refactored page will use **legacy CSS class names from mark8iq.css** for layout and styling (they already work and are pixel-perfect). The key change is structural: replacing a raw HTML string with a component tree. This means:
-- All section titles, descriptions, images, links use JSX
-- Accordions and interactive elements use React state (not DOM manipulation)
-- The marquee animation uses CSS keyframes (already in index.css)
-- No new CSS needs to be written for layout — mark8iq.css handles it
+---
 
-## Sections to Build (9 total)
+## Architecture: Shared Component Library
 
-| # | Section | Component | Key Content |
-|---|---------|-----------|-------------|
-| 1 | Hero Banner | `HeroBanner` | "Scale every mark8 confidently" + hero image + Amazon/AWS badges |
-| 2 | E-comm Growth | `EcommGrowth` | Stats (₹60+ CR, ₹700+ CR, 14M+ units) + graph SVG |
-| 3 | Architecture / Building Blocks | `BuildingBlocks` | 5 feature cards (Ads, Inventory, Returns, Finance, Research) with clip-path cards |
-| 4 | Built for All Markets | `MarketMarquee` | Infinite scrolling marquee of 6 marketplace logos |
-| 5 | Products (Video + Cards) | `ProductsSection` | Video card with play button + 6 product cards (Ads, Sight, Shelf, Reco, Returns, PO) |
-| 6 | Trusted & Certified | `TrustedCertified` | 4 compliance logos (AICPA, Wing, DPIIT, GST) in scrolling rows |
-| 7 | Engineered to Power (Image Accordion) | `ImageAccordion` | 6 accordion items with image panel that swaps on click |
-| 8 | Stories of Real Outcomes | `StoriesSection` | Testimonial cards (Myntra/Flipkart) with brand logo slider |
-| 9 | Insight Powered by Mark8 IQ | `IqInsight` | Dashboard preview image + "Experience Now" CTA |
+The key insight is that **all 5 product pages share an identical structure** with the same 21 component types. Instead of writing 5 separate pages, we build a shared component library and feed each page different data.
 
-Plus the existing `CustomAccordian` FAQ section ("Keep every detail on track") which is also in the HTML.
-
-## File Structure
+### Shared Components (used across 2+ pages)
 
 ```text
-src/
-  pages/
-    HomePage.tsx              ← Full rewrite (imports section components)
-  components/
-    home/
-      HeroBanner.tsx
-      EcommGrowth.tsx
-      BuildingBlocks.tsx
-      MarketMarquee.tsx
-      ProductsSection.tsx
-      TrustedCertified.tsx
-      ImageAccordion.tsx
-      StoriesSection.tsx
-      IqInsight.tsx
-      HomeFaq.tsx
+src/components/shared/
+  GradientCircle.tsx        — used in 9 pages
+  SectionTitle.tsx          — used in 8 pages
+  ClipCard.tsx              — used in 8 pages
+  InnerBanner.tsx           — used in 2 pages (About, WhyUs)
+  ImgTitleDescription.tsx   — used in 2 pages (About, WhyUs)
+
+src/components/product/
+  ProductInsideBanner.tsx   — used in all 5 product pages
+  ProductInsideBuiltFor.tsx — 5 pages (feature cards grid)
+  ProductInsideInsights.tsx — 5 pages (insights cards)
+  ProductVideoCard.tsx      — 5 pages
+  ProductCard.tsx           — 6 pages (cross-sell cards)
+  ProductOtherProducts.tsx  — 5 pages
+  ProductPricing.tsx        — 6 pages (pricing calculator)
+  MarketPricing.tsx         — 6 pages (marketplace selector)
+  MarketPlaceItem.tsx       — 6 pages
+  MarketDiscount.tsx        — 6 pages
+  CustomImageAccordion.tsx  — 5 pages (image accordion)
+  CustomAccordion.tsx       — 5 pages (FAQ section)
+  FeatureCard.tsx           — 5 pages
+  InsightsCard.tsx          — 5 pages
+  IconButton.tsx            — 6 pages
 ```
 
-## Implementation Steps
+### Page-Specific Components
 
-### Step 1: Create all 10 section components in `src/components/home/`
+```text
+src/components/about/
+  AboutJourney.tsx
 
-Each component:
-- Uses the **exact same CSS class names** from mark8iq.css (e.g., `HomeBanner_HomeBanner__L79e6`, `container`, `section_spacing`)
-- Renders JSX instead of HTML strings
-- Uses the same image URLs from the original site
-- Contains all text content inline (no lorem ipsum)
+src/components/pricing/
+  PricingPlanTab.tsx
 
-### Step 2: Rewrite `src/pages/HomePage.tsx`
+src/components/success/
+  SuccessStoriesBanner.tsx
+  SuccessStoriesCard.tsx
+  SuccessStoriesWrapper.tsx
 
-Replace the fetch + dangerouslySetInnerHTML pattern with:
-```tsx
-import Layout from '../components/Layout';
-import Footer from '../components/Footer';
-import HeroBanner from '../components/home/HeroBanner';
-import EcommGrowth from '../components/home/EcommGrowth';
-// ... all sections
-
-export default function HomePage() {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
-  
-  return (
-    <Layout>
-      <main className="Home_HomePage__ceAKX">
-        <div className="Home_gradient_wrap__ullU_">...</div>
-        <div className="Home_content__dmT6r">
-          <HeroBanner />
-          <EcommGrowth />
-          <BuildingBlocks />
-          <MarketMarquee />
-          <ProductsSection />
-          <TrustedCertified />
-          <ImageAccordion />
-          <StoriesSection />
-          <IqInsight />
-          <HomeFaq />
-        </div>
-      </main>
-      <Footer />
-    </Layout>
-  );
-}
+src/components/contact/
+  ContactForm.tsx
+  ContactDetails.tsx
 ```
 
-### Step 3: Interactive elements use React state
+---
 
-**ImageAccordion**: `useState` for active index. Clicking a title sets the index, which controls both the text highlight and the image panel visibility via conditional className application.
+## Execution Plan (6 phases)
 
-**HomeFaq**: `useState` for open index. Click toggles the accordion body display.
+### Phase 1: Shared primitives
+Build the 5 shared components used everywhere: `GradientCircle`, `SectionTitle`, `ClipCard`, `InnerBanner`, `ImgTitleDescription`. These are small, stateless, and used by almost every page.
 
-**MarketMarquee**: Pure CSS animation via `@keyframes` — no JS needed.
+### Phase 2: Product page component library
+Build the 15 product-specific shared components. Then refactor **one product page** (ProductAdsPage) as the template. Once verified, the other 4 product pages become data-only rewrites — same components, different props (titles, descriptions, images, colors).
 
-**ProductsSection video**: Click handler toggles video play/pause.
+### Phase 3: Remaining product pages
+Apply the template to ProductSight, ProductShelf, ProductReco, ProductReturns. Each page becomes a thin file that passes page-specific data to the shared product layout.
 
-### Step 4: Remove legacy files
+### Phase 4: About, WhyUs, SuccessStories
+Refactor these 3 medium-complexity pages using the shared primitives from Phase 1 plus their page-specific components.
 
-- Delete `public/homePage.html` (92KB)
-- Delete `src/pages/homePageContent.ts` (96KB duplicate)
-- Remove the `fetch('/homePage.html')` pattern entirely
+### Phase 5: Pricing, Contact
+Refactor these 2 pages. Pricing has interactive tabs and a range slider — these need React state. Contact has a form that needs React state for inputs.
 
-## Content Data (All Extracted)
+### Phase 6: Navbar and Footer
+Refactor the global Navbar (already has JS logic via useEffect — convert to React state) and Footer (large but static). These affect every page, so they go last to minimize risk.
 
-All text, image URLs, links, and SVG icons have been extracted from the HTML. Key data points:
+---
 
-- **30 unique image URLs** (all from infytrix.info/admin.infytrix.info CDN)
-- **6 marketplace logos** for marquee (Myntra, Amazon, Nykaa, Ajio, Meesho, Tira)
-- **5 feature cards** with inline SVG icons
-- **6 product cards** with logo SVGs and descriptions
-- **6 accordion items** with titles, descriptions, and a shared screenshot image
-- **4 compliance logos** (AICPA, Wing, DPIIT, GST)
-- **2 testimonial cards** (Myntra CEO, Flipkart CEO)
+## Potential Problems and Mitigations
 
-## Risk Mitigation
+1. **CSS class mismatch**: If JSX nesting differs from the original HTML, mark8iq.css selectors may not match. **Mitigation**: Extract exact HTML structure from each page before writing JSX. Verify each section visually after conversion.
 
-- CSS classes from mark8iq.css are preserved exactly, so layout and responsive behavior remain identical
-- Mobile breakpoints (`@media max-width: 767px`) are already handled by mark8iq.css
-- The gradient circles, clip-path cards, and other visual flourishes use existing CSS — no new styles needed
-- If any visual regression occurs, it can be fixed by adjusting the JSX structure to match the original HTML nesting
+2. **Interactive state migration**: The Pricing page slider, tab switching, and marketplace selection are currently non-functional HTML. Converting to React state means we need to implement the actual interaction logic. **Mitigation**: Build state management carefully; the pricing calculator logic needs to be reverse-engineered from the HTML data attributes.
+
+3. **Product page data extraction**: Each product page has ~100KB of content. Extracting all text, images, and SVGs accurately is error-prone. **Mitigation**: Use scripts to extract content programmatically, not manually.
+
+4. **Footer complexity**: At 63KB, the Footer contains newsletter forms, multiple link columns, and social media icons. **Mitigation**: Break into sub-components (FooterLinks, FooterNewsletter, FooterSocial, FooterBottom).
+
+5. **Navbar hover/click state**: Currently uses DOM classList toggling. Converting to React state must preserve both desktop hover and mobile click behavior. **Mitigation**: Use onMouseEnter/onMouseLeave for desktop, onClick for mobile, with a breakpoint check.
+
+6. **Bundle size**: Moving 780KB of HTML strings into JSX components could increase the JS bundle. **Mitigation**: The content is the same — it just moves from string literals to JSX. Tree-shaking and code-splitting via route-based lazy loading can mitigate this if needed later.
+
+---
 
 ## What This Achieves
 
-1. **Eliminates 92KB HTML fetch** on page load
-2. **Enables React-native interactivity** (state, effects, event handlers as JSX props)
-3. **Makes content editable** without parsing raw HTML strings
-4. **Enables future component reuse** across pages
-5. **Removes all DOM manipulation** from useEffect hooks
-
+- Eliminates all `dangerouslySetInnerHTML` from the codebase (except DesignSystem legacy examples)
+- Removes `useNavigateLinks` hook entirely — React Router `<Link>` handles navigation
+- Creates a reusable component library that makes future redesign work trivial
+- Enables React state for all interactive elements (pricing calculator, forms, accordions)
+- Makes every piece of content editable as JSX props
+- Reduces tech debt to near-zero before the redesign phase begins
