@@ -1,12 +1,60 @@
 import { motion } from 'motion/react';
 
 const credentials = [
-  { abbr: 'AMZ', name: 'Amazon Ads Advisory Board Member', proof: "One of a handful of agencies globally invited to shape Amazon's advertising direction." },
-  { abbr: 'TOP 5', name: 'Top 5 Amazon Ads Agency in India', proof: "Amazon Advanced Partner. Ranked among India's best for performance and outcomes." },
-  { abbr: 'NVDA', name: 'NVIDIA Inception Program', proof: '$1 million grant. Powering our AI infrastructure and model training.' },
-  { abbr: 'NIXI', name: 'NIXI Partner', proof: '1.5 Crore IPs for compliant, reliable data collection at scale.' },
-  { abbr: 'SI', name: 'Startup India Recognised', proof: "Officially recognised under India's national startup programme." },
+  {
+    abbr: 'AMZ',
+    name: 'Amazon Ads Advisory Board Member',
+    proof: "One of a handful of agencies globally invited to shape Amazon's advertising direction.",
+    badge: { type: 'circle' as const, color: '#FF9900', label: 'AMZ' },
+  },
+  {
+    abbr: 'TOP 5',
+    name: 'Top 5 Amazon Ads Agency in India',
+    proof: "Amazon Advanced Partner. Ranked among India's best for performance and outcomes.",
+    badge: { type: 'circle' as const, color: '#FF9900', label: 'TOP 5' },
+  },
+  {
+    abbr: 'NVDA',
+    name: 'NVIDIA Inception Program',
+    proof: '$1 million grant. Powering our AI infrastructure and model training.',
+    badge: { type: 'rect' as const, color: '#76B900', label: 'NVDA' },
+  },
+  {
+    abbr: 'NIXI',
+    name: 'NIXI Partner',
+    proof: '1.5 Crore IPs for compliant, reliable data collection at scale.',
+    badge: { type: 'circle' as const, color: '#003DA5', label: 'NIXI' },
+  },
+  {
+    abbr: 'SI',
+    name: 'Startup India Recognised',
+    proof: "Officially recognised under India's national startup programme.",
+    badge: { type: 'tricolor' as const, color: '', label: 'SI' },
+  },
 ];
+
+function BadgeIcon({ badge }: { badge: typeof credentials[0]['badge'] }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
+      {badge.type === 'circle' && (
+        <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: badge.color }} />
+      )}
+      {badge.type === 'rect' && (
+        <div style={{ width: '12px', height: '6px', borderRadius: '2px', background: badge.color }} />
+      )}
+      {badge.type === 'tricolor' && (
+        <div style={{ width: '24px', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ height: '3px', background: '#FF9933', width: '100%' }} />
+          <div style={{ height: '3px', background: '#FFFFFF', width: '100%' }} />
+          <div style={{ height: '3px', background: '#138808', width: '100%' }} />
+        </div>
+      )}
+      <span style={{ fontSize: '9px', fontWeight: 600, fontFamily: 'Saira, sans-serif', color: 'rgba(8,13,25,0.55)', textAlign: 'center' }}>
+        {badge.label}
+      </span>
+    </div>
+  );
+}
 
 export default function CredentialsV2() {
   return (
@@ -28,16 +76,20 @@ export default function CredentialsV2() {
             }}
           >
             <div style={{
-              width: '64px',
-              height: '64px',
-              borderRadius: '12px',
-              background: 'rgba(142,89,255,0.06)',
+              width: '80px',
+              height: '80px',
+              borderRadius: '16px',
+              border: '1px solid rgba(8,13,25,0.10)',
+              background: '#fff',
+              boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
               display: 'flex',
+              flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
+              gap: '6px',
               flexShrink: 0,
             }}>
-              <span className="m8-p6" style={{ color: '#8E59FF', fontWeight: 500, fontSize: '12px', textAlign: 'center' }}>{c.abbr}</span>
+              <BadgeIcon badge={c.badge} />
             </div>
             <div>
               <h3 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: '4px' }}>{c.name}</h3>
