@@ -30,60 +30,85 @@ export default function ImageAccordion() {
           </h2>
         </div>
 
-        <div className="CustomImageAccordian_CustomImageAccordian__gVOJN">
-          <div className="CustomImageAccordian_acc_wrap__AHbWW">
-            <div className="CustomImageAccordian_acc_left__iD9HY">
-              {items.map((item, i) => (
-                <div
-                  key={i}
-                  className={`CustomImageAccordian_acc_item__SpMrV ${i === activeIndex ? 'CustomImageAccordian_active_item__IkUwc' : ''} color_primary_dark`}
-                  onClick={() => setActiveIndex(i)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <div className="CustomImageAccordian_acc_title__sTfie">
-                    <h5 className="fs_24">{item.title}</h5>
-                  </div>
-                  <div className="CustomImageAccordian_acc_desc__hBa3_">
-                    <h5 className="fs_18">{item.desc}</h5>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="CustomImageAccordian_acc_right__GHGGd">
-              <div className="CustomImageAccordian_acc_img_wrap__dnQfA">
-                {IMAGES.map((img, i) => (
-                  <div
-                    key={i}
-                    className={`CustomImageAccordian_acc_img_item__SCb4Z ${i === activeIndex ? 'CustomImageAccordian_active_img__rIQ__' : ''}`}
-                  >
-                    <img alt={items[i]?.title || ''} loading="lazy" width={843} height={557} style={{ color: 'transparent' }} src={img} />
-                  </div>
-                ))}
+        {/* Desktop accordion */}
+        <div style={{ display: 'flex', alignItems: 'center', marginTop: 30, gap: 40 }}
+             className="hide_on_mobile">
+          {/* Left: accordion items */}
+          <div style={{ width: '50%', display: 'flex', flexDirection: 'column', gap: 24, borderLeft: '1px solid rgba(18, 24, 43, 0.8)' }}>
+            {items.map((item, i) => (
+              <div
+                key={i}
+                onClick={() => setActiveIndex(i)}
+                style={{
+                  paddingLeft: 30,
+                  cursor: 'pointer',
+                  opacity: i === activeIndex ? 1 : 0.5,
+                  position: 'relative',
+                  transition: 'opacity 0.3s ease',
+                }}
+              >
+                {/* Active indicator bar */}
+                {i === activeIndex && (
+                  <div style={{
+                    position: 'absolute',
+                    left: -1,
+                    top: 0,
+                    width: 3,
+                    height: '100%',
+                    backgroundColor: 'var(--color_primary_dark)',
+                  }} />
+                )}
+                <h5 className="fs_24 color_text" style={{ fontWeight: 500 }}>{item.title}</h5>
+                {i === activeIndex && (
+                  <p className="fs_18 color_primary_dark" style={{ paddingTop: 6, width: '80%' }}>
+                    {item.desc}
+                  </p>
+                )}
               </div>
-            </div>
+            ))}
+          </div>
+
+          {/* Right: image */}
+          <div style={{ flex: 1, position: 'relative' }}>
+            <img
+              alt={items[activeIndex].title}
+              loading="lazy"
+              src={IMAGES[activeIndex]}
+              style={{
+                width: '100%',
+                height: 'auto',
+                borderRadius: 8,
+                transition: 'opacity 0.3s ease',
+              }}
+            />
           </div>
         </div>
 
         {/* Mobile version */}
-        <div className="CustomImageAccordian_mob_custom_accordian__BaZQE">
+        <div className="show_on_mobile" style={{ marginTop: 30 }}>
           {items.map((item, i) => (
             <div
               key={i}
-              className={`CustomImageAccordian_acc_item__SpMrV ${i === activeIndex ? 'CustomImageAccordian_active_item__IkUwc' : ''}`}
               onClick={() => setActiveIndex(i)}
-              style={{ cursor: 'pointer' }}
+              style={{
+                padding: '16px 0',
+                borderBottom: '1px solid rgba(18, 24, 43, 0.1)',
+                cursor: 'pointer',
+                opacity: i === activeIndex ? 1 : 0.5,
+              }}
             >
-              <h4 className="CustomImageAccordian_acc_title__sTfie fs_20 fw_500 color_text">
-                {item.title}
-              </h4>
+              <h4 className="fs_20 fw_500 color_text">{item.title}</h4>
               {i === activeIndex && (
                 <>
-                  <p className="CustomImageAccordian_acc_desc__hBa3_ fs_16 color_primary_dark" style={{ display: 'block' }}>
+                  <p className="fs_16 color_primary_dark" style={{ paddingTop: 6 }}>
                     {item.desc}
                   </p>
-                  <div className="CustomImageAccordian_acc_img_item__SCb4Z CustomImageAccordian_active_img__rIQ__">
-                    <img alt="" loading="lazy" src={IMAGES[i]} style={{ color: 'transparent' }} />
-                  </div>
+                  <img
+                    alt=""
+                    loading="lazy"
+                    src={IMAGES[i]}
+                    style={{ width: '100%', marginTop: 12, borderRadius: 8 }}
+                  />
                 </>
               )}
             </div>
