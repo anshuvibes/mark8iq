@@ -20,7 +20,8 @@ const modules = [
 export default function HeroV2() {
   return (
     <section style={{ background: '#FFFFFF', minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative', zIndex: 1 }}>
-      <div className="container" style={{ display: 'flex', alignItems: 'center', gap: '48px', paddingTop: '120px', paddingBottom: '80px' }}>
+      <GridOverlay />
+      <div className="container" style={{ display: 'flex', alignItems: 'center', gap: '48px', paddingTop: '120px', paddingBottom: '80px', position: 'relative', zIndex: 1 }}>
         {/* Left Column */}
         <div style={{ flex: '0 0 55%', maxWidth: '55%' }}>
           <motion.div

@@ -9,8 +9,9 @@ const beats = [
 
 export default function AgentMarkV2() {
   return (
-    <section style={{ background: '#F2F2F4', padding: '100px 0' }}>
-      <div className="container" style={{ display: 'flex', gap: '64px', alignItems: 'center' }}>
+    <section style={{ background: '#F2F2F4', padding: '100px 0', position: 'relative' }}>
+      <GridOverlay />
+      <div className="container" style={{ display: 'flex', gap: '64px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
         {/* Left column - text */}
         <div style={{ flex: '0 0 44%', maxWidth: '44%' }}>
           <motion.div

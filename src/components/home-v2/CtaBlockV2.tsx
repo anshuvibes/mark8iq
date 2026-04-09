@@ -4,8 +4,9 @@ import GridOverlay from './GridOverlay';
 
 export default function CtaBlockV2() {
   return (
-    <section style={{ background: '#8E59FF', padding: '100px 0' }}>
-      <div className="container" style={{ textAlign: 'center' }}>
+    <section style={{ background: '#8E59FF', padding: '100px 0', position: 'relative' }}>
+      <GridOverlay opacity={0.06} />
+      <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
         <motion.h2
           className="m8-h1-large"
           style={{ color: '#fff', marginBottom: '20px' }}
