@@ -35,7 +35,7 @@ const journeys = [
 
 export default function ProofV2() {
   return (
-    <section style={{ background: '#EDF0F7', padding: '100px 0', position: 'relative' }}>
+    <section style={{ background: 'rgba(237,240,247,0.85)', padding: '100px 0', position: 'relative' }}>
       <GridOverlay />
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.h2
