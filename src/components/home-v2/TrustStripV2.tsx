@@ -5,8 +5,7 @@ const brands = ['Sugar Cosmetics', 'Urban Gabru', 'MARS Cosmetics', 'Beast Life'
 
 export default function TrustStripV2() {
   return (
-    <section style={{ background: '#FFFFFF', paddingTop: '40px', paddingBottom: '60px', position: 'relative' }}>
-      <GridOverlay />
+    <section style={{ paddingTop: '40px', paddingBottom: '60px', position: 'relative' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.p
           className="m8-p6"

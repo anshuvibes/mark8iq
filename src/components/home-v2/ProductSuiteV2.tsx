@@ -45,8 +45,7 @@ export default function ProductSuiteV2() {
   const active = modules[activeModule];
 
   return (
-    <section style={{ background: '#FFFFFF', padding: '100px 0', position: 'relative', zIndex: 1 }}>
-      <GridOverlay />
+    <section style={{ padding: '100px 0', position: 'relative', zIndex: 1 }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.h2
           className="m8-h1-large"

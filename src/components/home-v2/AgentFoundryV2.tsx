@@ -16,8 +16,7 @@ const agents = [
 
 export default function AgentFoundryV2() {
   return (
-    <section style={{ background: '#FFFFFF', padding: '100px 0', position: 'relative' }}>
-      <GridOverlay />
+    <section style={{ padding: '100px 0', position: 'relative' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         {/* Power line */}
         <motion.div
