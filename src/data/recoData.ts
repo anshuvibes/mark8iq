@@ -2,8 +2,7 @@ import type { ProductPageData } from './productPageTypes';
 
 const recoData: ProductPageData = {
   color: 'green',
-  bannerTitle: 'Every transaction accounted for,
-Under one consolidated view',
+  bannerTitle: 'Every transaction accounted for,\nUnder one consolidated view',
   bannerDescription: 'Mark8 Reco connects every signal across all marketplaces, giving you the visibility to optimise faster and invest smarter.',
   bannerImage: 'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fecomm_intelligence_9a5c77a1ab_e80eff8f86.png&amp;w=1920&amp;q=75',
   accordionSectionTitle: 'Hidden financial leakage can hinder profitability',

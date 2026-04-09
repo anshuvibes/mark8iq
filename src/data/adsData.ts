@@ -2,8 +2,7 @@ import type { ProductPageData } from './productPageTypes';
 
 const adsData: ProductPageData = {
   color: 'red',
-  bannerTitle: 'Your data, unified
-So every decision moves faster.',
+  bannerTitle: 'Your data, unified\nSo every decision moves faster.',
   bannerDescription: 'Mark8 Ads connects every signal across all marketplaces, giving you the visibility to optimise faster and invest smarter.',
   bannerImage: 'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fbanner_img_5cce70f4a0.png&amp;w=1920&amp;q=75',
   accordionSectionTitle: 'Fragmented data views lead to flawed investments',
