@@ -20,7 +20,6 @@ const buttonVariants = cva(
         'm8-outline-dark': 'border border-[#080D19] text-[#080D19] bg-transparent hover:bg-[#080D19]/5 rounded-[8px]',
         'm8-outline-violet': 'border border-[#8E59FF] text-[#8E59FF] bg-transparent hover:bg-[#8E59FF]/5 rounded-[8px]',
         'm8-ghost': 'text-[#080D19] bg-transparent hover:underline p-0 h-auto',
-        'm8-cta': 'btn-m8-cta bg-white text-[#8E59FF] hover:bg-white/90 rounded-[8px]',
       },
       size: {
         default: "h-10 px-4 py-2",
