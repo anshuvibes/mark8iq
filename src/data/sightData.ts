@@ -1,0 +1,67 @@
+import type { ProductPageData } from './productPageTypes';
+
+const sightData: ProductPageData = {
+  color: 'red',
+  bannerTitle: 'Visibility that includes the competition',
+  bannerDescription: 'Mark8 Sight connects every signal across all marketplaces, giving you the visibility to optimise faster and invest smarter.',
+  bannerImage: 'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fbanner_img_5cce70f4a0.png&amp;w=1920&amp;q=75',
+  accordionSectionTitle: 'When visibility is fragmented,  Strategy becomes guesswork',
+  accordionIntroText: 'Without a unified view of pricing, ranking, availability, and sentiment, teams react instead of optimising with intent.',
+  accordionItems: [
+    { title: 'SOV intelligence at scale', description: 'Benchmark your share of voice against competitors across organic and sponsored placements, hourly, keyword by keyword.' },
+    { title: 'Precision keyword positioning', description: 'Track exact keyword ranking and ad placement occupancy (SP, SB, SBV) for you and every competitor.' },
+    { title: 'Competitive price logic', description: 'Monitor price movements, discount strategies, and promotional triggers to understand the impact on ranking and conversion likelihood.' },
+    { title: 'Buy box stability monitoring', description: 'Detect win/loss events instantly and prevent silent conversion drops caused by suppressed ownership.' },
+    { title: 'Sentiment-driven visibility signals', description: 'Analyse review velocity, rating trends, and sentiment shifts linked directly to ranking movement and visibility loss.' },
+    { title: 'Listing integrity watchtower', description: 'Identify stockouts, suppressed listings, blocked visibility, or missing attributes before they cost discoverability.' },
+    { title: 'Fulfilment reality mapping', description: 'Track delivery timelines across regions and pin codes to identify logistical gaps that affect ranking and conversion.' },
+  ],
+  accordionImages: [
+    'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fecomm_intelligence_9a5c77a1ab.png&amp;w=1920&amp;q=75',
+    'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fecomm_intelligence_9a5c77a1ab_e80eff8f86.png&amp;w=1920&amp;q=75',
+    'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fecomm_intelligence_9a5c77a1ab.png&amp;w=1920&amp;q=75',
+    'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fecomm_intelligence_9a5c77a1ab_e80eff8f86.png&amp;w=1920&amp;q=75',
+    'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fecomm_intelligence_9a5c77a1ab.png&amp;w=1920&amp;q=75',
+    'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fecomm_intelligence_9a5c77a1ab_e80eff8f86.png&amp;w=1920&amp;q=75',
+    'https://infytrix.info/_next/image?url=https%3A%2F%2Fadmin.infytrix.info%2Fuploads%2Fecomm_intelligence_9a5c77a1ab.png&amp;w=1920&amp;q=75',
+  ],
+  videoSrc: 'https://admin.infytrix.info/uploads/dummy_396f4b4947.mp4',
+  videoLogo: 'https://admin.infytrix.info/uploads/sight_2bc4263cb2.svg',
+  videoTitle: 'How Mark8Sight works for you',
+  featureSectionTitle: 'Agents designed to monitor, detect, and alert',
+  featureCards: [
+    { icon: 'https://admin.infytrix.info/uploads/adaptability_8f6127a55e.svg', title: 'Price integrity agent', description: 'Monitors marketplace pricing in real time to detect shifts, lost Buy Box moments, and margin risks before they impact sales velocity.' },
+    { icon: 'https://admin.infytrix.info/uploads/adaptability_8f6127a55e.svg', title: 'Hello sale intelligence agent', description: 'Identifies when paid campaigns replace organic demand, revealing true incremental sales impact, wasted spend, and real marketplace ROI.' },
+  ],
+  pricingSectionTitle: 'lorem',
+  pricingSlabs: ["10L", "20L", "30L", "40L", "50L"],
+  marketplaces: [
+    { logo: 'https://admin.infytrix.info/uploads/myntra_initials_aa9bea2825.svg', name: 'Myntra' },
+    { logo: 'https://admin.infytrix.info/uploads/myntra_initials_aa9bea2825.svg', name: 'Myntra' },
+  ],
+  insightsSectionTitle: 'Insights that give you the edge',
+  insightCards: [
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+    { image: 'https://infytrix.info/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDummy.3bb7e8a0.png&amp;w=1200&amp;q=75', title: 'September 21, 2009', description: 'Features of Mark8 IQ That Power Smarter Decisions' },
+  ],
+  faqSectionTitle: 'Asked and answered',
+  faqItems: [],
+  otherProducts: [
+    { href: '/products/ads', icon: 'https://admin.infytrix.info/uploads/Logo_1_2e952af0b7.svg', title: 'Mark8 Ads', description: 'Turbocharge ROI with ad insights that click.', comingSoon: false },
+    { href: '/products/shelf', icon: 'https://admin.infytrix.info/uploads/shelf_e80e25f1be.svg', title: 'Mark8 Shelf', description: 'Stay visible, stay ahead, stay victorious.', comingSoon: false },
+    { href: '/products/reco', icon: 'https://admin.infytrix.info/uploads/reco_b099b49a62.svg', title: 'Mark8 Reco', description: 'Keep every penny accounted for effortlessly.', comingSoon: false },
+    { href: '/products/returns', icon: 'https://admin.infytrix.info/uploads/returns_a4ec08fef0.svg', title: 'Mark8 Returns', description: 'Streamline claims and tackle returns head-on.', comingSoon: false },
+    { href: '', icon: 'https://admin.infytrix.info/uploads/po_d53326717e.svg', title: 'Mark8 PO', description: 'Procurement precision made simple.', comingSoon: true },
+  ],
+};
+
+export default sightData;
