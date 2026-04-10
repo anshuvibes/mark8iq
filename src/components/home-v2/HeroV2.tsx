@@ -67,7 +67,7 @@ export default function HeroV2() {
                 boxShadow: '0 16px 48px rgba(0,0,0,0.1)',
               }}>
                 <img
-                  src="https://admin.infytrix.info/uploads/product_ads_banner_1_9e9a7e9c51.webp"
+                  src={heroDashboard}
                   alt="Mark8 IQ Dashboard"
                   style={{ width: '100%', display: 'block' }}
                   loading="lazy"
