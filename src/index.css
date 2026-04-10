@@ -908,14 +908,13 @@ All colors MUST be HSL.
   background-image:
     url("/img/bg-pattern-reverse.svg"),
     radial-gradient(
-      circle 220px at var(--m8-mouse-x) var(--m8-mouse-y),
-      hsl(262 100% 67% / 0.22) 0%,
-      hsl(262 100% 67% / 0.13) 34%,
-      hsl(262 100% 67% / 0.06) 56%,
-      transparent 76%
+      400px circle at var(--m8-mouse-x) var(--m8-mouse-y),
+      hsla(262, 100%, 67%, 0.28) 0%,
+      hsla(262, 100%, 67%, 0.16) 30%,
+      hsla(262, 100%, 67%, 0.07) 55%,
+      transparent 75%
     ) !important;
   background-repeat: repeat, no-repeat !important;
-  background-position: 0 0, 0 0 !important;
 }
 
 /* Hide the old DOM-based gradient element — replaced by CSS background */
