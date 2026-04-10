@@ -898,52 +898,43 @@ All colors MUST be HSL.
 }
 
 /* ── MOUSE-FOLLOW GRADIENT BEHIND GRID ────────────────────────── */
-/* Structure: bg-color (#F0F1F6) → ::before (violet glow) → grid SVG (::after or bg-image) → content
-   The glow sits behind the grid so the grid squares illuminate.        */
+/* Layering: bg-color (#F0F1F6) → gradient DOM element (z:0) → grid ::after (z:1) → content (z:2) */
 
-/* Base layer: solid colour */
 .CustomBg_CustomBg__mpBxm .CustomBg_bg_image__RIwVy {
-  --m8-mouse-x: 50%;
-  --m8-mouse-y: 180px;
-  position: relative !important;
   background-color: var(--m8-grid-base, #F0F1F6) !important;
   background-image: none !important;
+  position: relative !important;
 }
 
-/* Middle layer: violet radial glow following the cursor */
-.CustomBg_CustomBg__mpBxm .CustomBg_bg_image__RIwVy::before {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(
-    400px circle at var(--m8-mouse-x) var(--m8-mouse-y),
-    hsla(262, 100%, 67%, 0.28) 0%,
-    hsla(262, 100%, 67%, 0.16) 30%,
-    hsla(262, 100%, 67%, 0.07) 55%,
-    transparent 75%
-  );
-}
-
-/* Top layer: grid SVG pattern on top of the glow */
+/* Grid SVG rendered as a pseudo-element ABOVE the gradient but below content */
 .CustomBg_CustomBg__mpBxm .CustomBg_bg_image__RIwVy::after {
   content: '';
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  position: absolute;
+  inset: 0;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
   background-image: url("/img/bg-pattern-reverse.svg");
   background-repeat: repeat;
 }
 
-/* Ensure all direct children sit above the pseudo-element layers */
+/* All direct children above the grid pseudo-element */
 .CustomBg_CustomBg__mpBxm .CustomBg_bg_image__RIwVy > * {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
-/* Hide the old DOM-based gradient element */
+/* The gradient blob follows the mouse — sits between bg-color and grid */
 .CustomBg_CustomBg__mpBxm .CustomBg_bg_gradient__9nROB {
-  display: none !important;
+  position: absolute !important;
+  width: 400px !important;
+  aspect-ratio: 1 / 1 !important;
+  will-change: transform !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  display: block !important;
+}
+.CustomBg_CustomBg__mpBxm .CustomBg_bg_gradient__9nROB .gradient_circle {
+  min-height: unset !important;
+  filter: blur(150px) !important;
+  opacity: 0.55 !important;
 }
