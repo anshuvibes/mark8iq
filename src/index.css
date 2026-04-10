@@ -926,7 +926,7 @@ All colors MUST be HSL.
 /* The gradient blob follows the mouse — sits between bg-color and grid */
 .CustomBg_CustomBg__mpBxm .CustomBg_bg_gradient__9nROB {
   position: absolute !important;
-  width: 400px !important;
+  width: 350px !important;
   aspect-ratio: 1 / 1 !important;
   will-change: transform !important;
   pointer-events: none !important;
