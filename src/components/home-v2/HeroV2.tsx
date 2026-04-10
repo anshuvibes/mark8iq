@@ -18,10 +18,10 @@ const modules = [
 
 export default function HeroV2() {
   return (
-    <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative', zIndex: 1 }}>
-      <div className="container" style={{ display: 'flex', alignItems: 'center', gap: '48px', paddingTop: '120px', paddingBottom: '80px', position: 'relative', zIndex: 1 }}>
-        {/* Left Column */}
-        <div style={{ flex: '0 0 55%', maxWidth: '55%' }}>
+    <section style={{ position: 'relative', zIndex: 1 }}>
+      {/* Zone 1: Centered headline block */}
+      <div className="container" style={{ paddingTop: '140px', paddingBottom: '48px', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
           <motion.div
             {...fadeIn(0)}
             style={{
@@ -37,14 +37,15 @@ export default function HeroV2() {
           </motion.div>
 
           <motion.h1 className="m8-h1-display" style={{ color: '#080D19', marginBottom: '24px' }} {...fadeIn(0.1)}>
-            The operating system behind India's fastest growing e-commerce brands.
+            The operating system behind{' '}
+            <span style={{ color: '#8E59FF' }}>India's fastest growing brands.</span>
           </motion.h1>
 
-          <motion.p className="m8-p1" style={{ color: '#40445a', maxWidth: '520px', marginBottom: '36px' }} {...fadeIn(0.25)}>
+          <motion.p className="m8-p1" style={{ color: '#40445a', maxWidth: '600px', margin: '0 auto 36px' }} {...fadeIn(0.25)}>
             The only platform that unifies every marketplace, thinks with your data, and acts while you sleep.
           </motion.p>
 
-          <motion.div {...fadeIn(0.4)} style={{ marginBottom: '32px' }}>
+          <motion.div {...fadeIn(0.4)} style={{ marginBottom: '24px' }}>
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
@@ -61,46 +62,110 @@ export default function HeroV2() {
             Amazon Advanced Partner &nbsp;·&nbsp; NVIDIA Inception Program &nbsp;·&nbsp; Startup India Recognised
           </motion.div>
         </div>
+      </div>
 
-        {/* Right Column */}
+      {/* Zone 2: Two-column visual block */}
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-          style={{ flex: '0 0 45%', maxWidth: '45%' }}
+          className="hero-visual-block"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+          style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', marginTop: '48px' }}
         >
-          {/* Module Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '24px' }}>
-            {modules.map((mod, i) => (
-              <motion.div
-                key={mod.name}
-                whileHover={{ y: -3, boxShadow: '0 8px 24px rgba(0,0,0,0.08)' }}
-                transition={{ duration: 0.15 }}
-                style={{
-                  padding: '12px 16px',
-                  background: '#fff',
-                  borderTop: '1px solid rgba(8,13,25,0.08)',
-                  borderRight: '1px solid rgba(8,13,25,0.08)',
-                  borderBottom: '1px solid rgba(8,13,25,0.08)',
-                  borderLeft: `3px solid ${mod.accent}`,
-                  borderRadius: '10px',
-                  cursor: 'pointer',
-                }}
-              >
-                <div className="m8-p5" style={{ fontWeight: 500, color: '#080D19', marginBottom: '2px' }}>{mod.name}</div>
-                <div className="m8-p6" style={{ color: 'rgba(8,13,25,0.5)' }}>{mod.desc}</div>
-              </motion.div>
-            ))}
+          {/* Left: Dashboard screenshot */}
+          <div style={{ flex: '0 0 60%', maxWidth: '60%' }}>
+            <div style={{
+              borderRadius: '16px 16px 0 0',
+              overflow: 'hidden',
+              boxShadow: '0 16px 48px rgba(0,0,0,0.1)',
+            }}>
+              <img
+                src="https://admin.infytrix.info/uploads/product_ads_banner_1_9e9a7e9c51.webp"
+                alt="Mark8 IQ Dashboard"
+                style={{ width: '100%', display: 'block' }}
+                loading="lazy"
+              />
+            </div>
           </div>
 
-          {/* Dashboard Image */}
-          <div style={{ borderRadius: '12px', overflow: 'hidden', boxShadow: '0 12px 40px rgba(0,0,0,0.08)', border: '1px solid rgba(8,13,25,0.06)' }}>
-            <img
-              src="https://admin.infytrix.info/uploads/product_ads_banner_1_9e9a7e9c51.webp"
-              alt="Mark8 IQ Dashboard"
-              style={{ width: '100%', display: 'block' }}
-              loading="lazy"
-            />
+          {/* Right: Module selector card */}
+          <div style={{ flex: '0 0 40%', maxWidth: '40%' }}>
+            <div style={{
+              background: '#FFFFFF',
+              borderRadius: '16px',
+              padding: '28px',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.06)',
+              border: '1px solid rgba(8,13,25,0.06)',
+            }}>
+              <p className="m8-p4" style={{ color: '#080D19', marginBottom: '20px' }}>
+                What do you want to manage?
+              </p>
+
+              {/* Module grid: 2 columns */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '24px' }}>
+                {modules.map((mod) => (
+                  <div
+                    key={mod.name}
+                    style={{
+                      padding: '12px 14px',
+                      borderRadius: '10px',
+                      background: `${mod.accent}08`,
+                      border: `1px solid ${mod.accent}30`,
+                      cursor: 'pointer',
+                      transition: 'background 0.15s, border-color 0.15s',
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLDivElement).style.background = `${mod.accent}14`;
+                      (e.currentTarget as HTMLDivElement).style.borderColor = `${mod.accent}50`;
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLDivElement).style.background = `${mod.accent}08`;
+                      (e.currentTarget as HTMLDivElement).style.borderColor = `${mod.accent}30`;
+                    }}
+                  >
+                    <div style={{
+                      width: '8px',
+                      height: '8px',
+                      borderRadius: '50%',
+                      background: mod.accent,
+                      marginBottom: '8px',
+                    }} />
+                    <div className="m8-p6" style={{ color: '#080D19', marginBottom: '2px' }}>{mod.name}</div>
+                    <div className="m8-p6" style={{ color: 'rgba(8,13,25,0.45)' }}>{mod.desc}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Credential badges */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {[
+                  '1,000+ Cr GMV managed',
+                  '35% avg ROAS improvement',
+                  '90% client retention',
+                ].map((stat) => (
+                  <div
+                    key={stat}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      padding: '8px 12px',
+                      borderRadius: '8px',
+                      background: 'rgba(8,13,25,0.02)',
+                    }}
+                  >
+                    <div style={{
+                      width: '6px',
+                      height: '6px',
+                      borderRadius: '50%',
+                      background: '#8E59FF',
+                    }} />
+                    <span className="m8-p6" style={{ color: '#080D19' }}>{stat}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </motion.div>
       </div>
@@ -108,9 +173,8 @@ export default function HeroV2() {
       {/* Mobile responsive */}
       <style>{`
         @media (max-width: 991px) {
-          .container > div:first-child { flex: 0 0 100% !important; max-width: 100% !important; }
-          .container { flex-direction: column !important; }
-          section > .container > div:last-child { flex: 0 0 100% !important; max-width: 100% !important; }
+          .hero-visual-block { flex-direction: column !important; }
+          .hero-visual-block > div { flex: 0 0 100% !important; max-width: 100% !important; }
         }
       `}</style>
     </section>
