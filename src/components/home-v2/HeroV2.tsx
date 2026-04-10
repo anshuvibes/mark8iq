@@ -25,11 +25,11 @@ export default function HeroV2() {
           <div style={{ maxWidth: '860px', margin: '0 auto' }}>
             <motion.h1 className="m8-h2" style={{ color: '#080D19', marginBottom: '24px' }} {...fadeIn(0.1)}>
               The operating system behind{' '}
-              <span style={{ color: '#8E59FF' }}><br />India's fastest growing brands.</span>
+              <span style={{ color: '#8E59FF' }}><br />India's fastest growing brands</span>
             </motion.h1>
 
             <motion.p className="m8-p1" style={{ color: '#40445a', maxWidth: '600px', margin: '0 auto 36px' }} {...fadeIn(0.25)}>
-              The only platform that unifies every marketplace, thinks with your data, and acts while you sleep.
+              The only platform that unifies every marketplace, thinks with your data, and acts while you sleep
             </motion.p>
 
             <motion.div {...fadeIn(0.4)}>
