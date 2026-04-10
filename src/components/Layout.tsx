@@ -36,7 +36,7 @@ export default function Layout({ children }: LayoutProps) {
               style={{ opacity: 1 }}
             />
           </div>
-          <div>
+          <div style={{ position: 'relative', zIndex: 50 }}>
             <Navbar />
           </div>
           {children}
