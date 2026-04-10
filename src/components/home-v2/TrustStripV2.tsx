@@ -1,9 +1,12 @@
 import { motion } from 'motion/react';
 
-const logos = Array.from({ length: 11 }, (_, i) => ({
-  name: `Partner ${i + 1}`,
-  src: `/img/logos/logo_${i + 1}.png`,
-}));
+const logos = Array.from({ length: 11 }, (_, i) => {
+  const num = i + 1;
+  return {
+    name: `Partner ${num}`,
+    src: num === 10 ? '/img/logos/19eba7c1-31f9-4c46-8391-1b5a2852c4c7.png' : `/img/logos/logo_${num}.png`,
+  };
+});
 
 export default function TrustStripV2() {
   return (
