@@ -1,12 +1,12 @@
 import { motion } from 'motion/react';
 
-const brands = [
-  'Sugar Cosmetics',
-  'Urban Gabru',
-  'MARS Cosmetics',
-  'Beast Life',
-  'Asian Shoes',
-  'NGT Habit',
+const logos = [
+  { name: 'Myntra', src: 'https://admin.infytrix.info/uploads/myntra_0ef843ae4c.svg' },
+  { name: 'Amazon', src: 'https://admin.infytrix.info/uploads/amazon_87c06fbfc9.svg' },
+  { name: 'Nykaa', src: 'https://admin.infytrix.info/uploads/nykaa_31b44d3a37.svg' },
+  { name: 'Ajio', src: 'https://admin.infytrix.info/uploads/ajio_91cab1aa57.svg' },
+  { name: 'Meesho', src: 'https://admin.infytrix.info/uploads/meesho_67acd12206.svg' },
+  { name: 'Tira', src: 'https://admin.infytrix.info/uploads/tira_e819ed76f7.svg' },
 ];
 
 export default function TrustStripV2() {
@@ -42,19 +42,21 @@ export default function TrustStripV2() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          {brands.map((brand, i) => (
-            <div key={brand} style={{ display: 'flex', alignItems: 'center' }}>
-              <span
-                className="m8-p5"
-                style={{
-                  color: 'rgba(8,13,25,0.45)',
-                  padding: '6px 20px',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                {brand}
-              </span>
-              {i < brands.length - 1 && (
+          {logos.map((logo, i) => (
+            <div key={logo.name} style={{ display: 'flex', alignItems: 'center' }}>
+              <div style={{ padding: '6px 20px' }}>
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  style={{
+                    height: '24px',
+                    width: 'auto',
+                    filter: 'grayscale(100%) opacity(0.45)',
+                  }}
+                  loading="lazy"
+                />
+              </div>
+              {i < logos.length - 1 && (
                 <div style={{
                   width: '1px',
                   height: '16px',
@@ -73,6 +75,10 @@ export default function TrustStripV2() {
             flex-wrap: nowrap !important;
             justify-content: flex-start !important;
             padding-bottom: 8px;
+            scrollbar-width: none;
+          }
+          section > .container > div:last-child::-webkit-scrollbar {
+            display: none;
           }
         }
       `}</style>
