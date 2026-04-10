@@ -81,19 +81,18 @@ export default function AgentMarkWidget() {
     ]);
   };
 
-  // Hide during fragmentation scroll (detected via scroll position — simplified approach)
+  // Hide during fragmentation scroll using IntersectionObserver
   const [visible, setVisible] = useState(true);
   useEffect(() => {
-    const handleScroll = () => {
-      // Rough heuristic: fragmentation is approx 2nd-7th viewport heights
-      const vh = window.innerHeight;
-      const scrollY = window.scrollY;
-      const fragStart = vh * 1.5;
-      const fragEnd = vh * 7;
-      setVisible(scrollY < fragStart || scrollY > fragEnd);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const fragSection = document.querySelector('[data-section="fragmentation"]');
+    if (!fragSection) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setVisible(!entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    observer.observe(fragSection);
+    return () => observer.disconnect();
   }, []);
 
   if (!visible && !isOpen) return null;

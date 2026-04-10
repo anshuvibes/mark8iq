@@ -78,12 +78,11 @@ export default function HeroV2() {
                 transition={{ duration: 0.15 }}
                 style={{
                   padding: '12px 16px',
-                  borderLeft: `3px solid ${mod.accent}`,
                   background: '#fff',
-                  border: `1px solid rgba(8,13,25,0.08)`,
-                  borderLeftWidth: '3px',
-                  borderLeftStyle: 'solid',
-                  borderLeftColor: mod.accent,
+                  borderTop: '1px solid rgba(8,13,25,0.08)',
+                  borderRight: '1px solid rgba(8,13,25,0.08)',
+                  borderBottom: '1px solid rgba(8,13,25,0.08)',
+                  borderLeft: `3px solid ${mod.accent}`,
                   borderRadius: '10px',
                   cursor: 'pointer',
                 }}
