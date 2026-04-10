@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useScroll, useTransform, type MotionValue } from 'motion/react';
 
 const marketplaces = [
   { id: 'amazon', label: 'Amazon', startX: -420, startY: -190 },
@@ -37,7 +37,7 @@ function FloatingPill({
   appearRange,
   style,
 }: {
-  scrollYProgress: any;
+  scrollYProgress: MotionValue<number>;
   label: string;
   startX: number;
   startY: number;
@@ -81,7 +81,7 @@ function FloatingText({
   startY,
   appearRange,
 }: {
-  scrollYProgress: any;
+  scrollYProgress: MotionValue<number>;
   label: string;
   startX: number;
   startY: number;
