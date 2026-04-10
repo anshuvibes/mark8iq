@@ -1,4 +1,5 @@
-import { motion } from 'motion/react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import heroDashboard from '@/assets/hero-dashboard.png';
 
@@ -18,10 +19,12 @@ const modules = [
 ];
 
 export default function HeroV2() {
+  const [activeModule, setActiveModule] = useState(0);
+
   return (
     <section style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* ZONE 1: Headline block — top 40% of viewport */}
-      <div style={{ flex: '0 0 40vh', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '100px' }}>
+      {/* ZONE 1: Headline block */}
+      <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '120px', paddingBottom: '48px' }}>
         <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <div style={{ maxWidth: '860px', margin: '0 auto' }}>
             <motion.h1 className="m8-h2" style={{ color: '#080D19', marginBottom: '24px' }} {...fadeIn(0.1)}>
@@ -49,116 +52,120 @@ export default function HeroV2() {
         </div>
       </div>
 
-      {/* ZONE 2: Visual block — remaining 60% of viewport */}
-      <div style={{ flex: '1 1 60vh', display: 'flex', alignItems: 'flex-start', paddingTop: '24px' }}>
-        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <motion.div
-            className="hero-visual-block"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-            style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}
-          >
-            {/* Left: Dashboard screenshot */}
-            <div style={{ flex: '0 0 60%', maxWidth: '60%' }}>
-              <div style={{
-                borderRadius: '16px 16px 0 0',
-                overflow: 'hidden',
-                boxShadow: '0 16px 48px rgba(0,0,0,0.1)',
-              }}>
-                <img
-                  src={heroDashboard}
-                  alt="Mark8 IQ Dashboard"
-                  style={{ width: '100%', display: 'block' }}
-                  loading="lazy"
-                />
-              </div>
-            </div>
-
-            {/* Right: Module selector card */}
-            <div style={{ flex: '0 0 40%', maxWidth: '40%' }}>
-              <div style={{
-                background: '#FFFFFF',
-                borderRadius: '16px',
-                padding: '28px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.06)',
-                border: '1px solid rgba(8,13,25,0.06)',
-              }}>
-                <p className="m8-p4" style={{ color: '#080D19', marginBottom: '20px' }}>
-                  What do you want to manage?
-                </p>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '24px' }}>
-                  {modules.map((mod) => (
-                    <div
-                      key={mod.name}
-                      style={{
-                        padding: '12px 14px',
-                        borderRadius: '10px',
-                        background: `${mod.accent}08`,
-                        border: `1px solid ${mod.accent}30`,
-                        cursor: 'pointer',
-                        transition: 'background 0.15s, border-color 0.15s',
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLDivElement).style.background = `${mod.accent}14`;
-                        (e.currentTarget as HTMLDivElement).style.borderColor = `${mod.accent}50`;
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLDivElement).style.background = `${mod.accent}08`;
-                        (e.currentTarget as HTMLDivElement).style.borderColor = `${mod.accent}30`;
-                      }}
-                    >
-                      <div style={{
-                        width: '8px',
-                        height: '8px',
-                        borderRadius: '50%',
-                        background: mod.accent,
-                        marginBottom: '8px',
-                      }} />
-                      <div className="m8-p6" style={{ color: '#080D19', marginBottom: '2px' }}>{mod.name}</div>
-                      <div className="m8-p6" style={{ color: 'rgba(8,13,25,0.45)' }}>{mod.desc}</div>
-                    </div>
-                  ))}
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {[
-                    '1,000+ Cr GMV managed',
-                    '35% avg ROAS improvement',
-                    '90% client retention',
-                  ].map((stat) => (
-                    <div
-                      key={stat}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        padding: '8px 12px',
-                        borderRadius: '8px',
-                        background: 'rgba(8,13,25,0.02)',
-                      }}
-                    >
-                      <div style={{
-                        width: '6px',
-                        height: '6px',
-                        borderRadius: '50%',
-                        background: '#8E59FF',
-                      }} />
-                      <span className="m8-p6" style={{ color: '#080D19' }}>{stat}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
+      {/* ZONE 2: Full-width visual block with floating card */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+        style={{ position: 'relative', width: '100%', maxWidth: '1200px', margin: '0 auto' }}
+      >
+        {/* Dashboard image — full width, no container box */}
+        <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '16px 16px 0 0' }}>
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={activeModule}
+              src={heroDashboard}
+              alt={`${modules[activeModule].name} Dashboard`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.35 }}
+              style={{ width: '100%', display: 'block' }}
+            />
+          </AnimatePresence>
         </div>
-      </div>
+
+        {/* Floating module selector card — positioned on the right */}
+        <div
+          className="hero-module-card"
+          style={{
+            position: 'absolute',
+            top: '24px',
+            right: '-40px',
+            width: '320px',
+            background: '#FFFFFF',
+            borderRadius: '16px',
+            padding: '28px',
+            boxShadow: '0 12px 40px rgba(0,0,0,0.1)',
+            border: '1px solid rgba(8,13,25,0.06)',
+            zIndex: 2,
+          }}
+        >
+          <p className="m8-p4" style={{ color: '#080D19', marginBottom: '20px' }}>
+            What do you want to manage?
+          </p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '24px' }}>
+            {modules.map((mod, i) => (
+              <div
+                key={mod.name}
+                onMouseEnter={() => setActiveModule(i)}
+                style={{
+                  padding: '12px 14px',
+                  borderRadius: '10px',
+                  background: activeModule === i ? `${mod.accent}18` : `${mod.accent}08`,
+                  border: `1.5px solid ${activeModule === i ? mod.accent : `${mod.accent}30`}`,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                }}
+              >
+                <div style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  background: mod.accent,
+                  marginBottom: '8px',
+                }} />
+                <div className="m8-p6" style={{ color: '#080D19', marginBottom: '2px', fontWeight: activeModule === i ? 600 : 400 }}>{mod.name}</div>
+                <div className="m8-p6" style={{ color: 'rgba(8,13,25,0.45)' }}>{mod.desc}</div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {[
+              '1,000+ Cr GMV managed',
+              '35% avg ROAS improvement',
+              '90% client retention',
+            ].map((stat) => (
+              <div
+                key={stat}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  padding: '8px 12px',
+                  borderRadius: '8px',
+                  background: 'rgba(8,13,25,0.02)',
+                }}
+              >
+                <div style={{
+                  width: '6px',
+                  height: '6px',
+                  borderRadius: '50%',
+                  background: '#8E59FF',
+                }} />
+                <span className="m8-p6" style={{ color: '#080D19' }}>{stat}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
 
       <style>{`
+        @media (max-width: 1280px) {
+          .hero-module-card {
+            right: 16px !important;
+          }
+        }
         @media (max-width: 991px) {
-          .hero-visual-block { flex-direction: column !important; }
-          .hero-visual-block > div { flex: 0 0 100% !important; max-width: 100% !important; }
+          .hero-module-card {
+            position: relative !important;
+            top: auto !important;
+            right: auto !important;
+            width: 100% !important;
+            margin-top: 16px;
+          }
         }
       `}</style>
     </section>
