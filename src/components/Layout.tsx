@@ -18,7 +18,7 @@ export default function Layout({ children }: LayoutProps) {
       const rect = container.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY + window.scrollY;
-      gradient.style.transform = `translate(${x - 40}px, ${y - 40}px)`;
+      gradient.style.transform = `translate(${x - 250}px, ${y - 250}px)`;
     };
 
     container.addEventListener('mousemove', handleMouseMove);
@@ -28,14 +28,24 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div>
       <div className="CustomBg_CustomBg__mpBxm" ref={containerRef}>
-        <div className="CustomBg_bg_gradient__9nROB" ref={gradientRef}>
-          <div className="GradientCircle_GradientCircle__mH3g6 bg_primary gradient_circle" style={{opacity: 1}}></div>
-        </div>
         <div className="CustomBg_bg_image__RIwVy">
-          <div>
+          {/* Mouse-follow violet gradient — rendered above grid base, below content */}
+          <div
+            className="CustomBg_bg_gradient__9nROB"
+            ref={gradientRef}
+            style={{ zIndex: 1, pointerEvents: 'none' }}
+          >
+            <div
+              className="GradientCircle_GradientCircle__mH3g6 bg_primary gradient_circle"
+              style={{ opacity: 1 }}
+            />
+          </div>
+          <div style={{ position: 'relative', zIndex: 2 }}>
             <Navbar />
           </div>
-          {children}
+          <div style={{ position: 'relative', zIndex: 2 }}>
+            {children}
+          </div>
         </div>
       </div>
     </div>
