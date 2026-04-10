@@ -134,9 +134,13 @@ export default function HeroV2() {
                   border: `1.5px solid ${activeModule === i ? mod.accent : `${mod.accent}30`}`,
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  minHeight: '72px',
                 }}
               >
-                <img src={mod.logo} alt={mod.name} style={{ height: '18px', width: 'auto', marginBottom: '6px' }} />
+                <img src={mod.logo} alt={mod.name} style={{ height: '16px', width: 'auto', marginBottom: '6px', objectFit: 'contain', alignSelf: 'flex-start' }} />
                 <div className="m8-p6" style={{ color: 'rgba(8,13,25,0.45)' }}>{mod.desc}</div>
               </div>
             ))}
