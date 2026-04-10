@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
+import heroDashboard from '@/assets/hero-dashboard.png';
 
 const fadeIn = (delay: number) => ({
   initial: { opacity: 0, y: 20 },
