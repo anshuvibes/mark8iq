@@ -20,28 +20,51 @@ const badges = [
 export default function DeckSection03WhyInfotrix() {
   return (
     <section style={{ background: '#080D19', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', overflow: 'hidden', padding: '80px 40px' }}>
+      {/* Slide number watermark */}
+      <div className="deck-slide-number" style={{ color: 'rgba(255,255,255,0.03)' }}>03</div>
+
       {/* Grid overlay */}
       <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/img/bg-pattern.svg)', backgroundRepeat: 'repeat', opacity: 0.04, pointerEvents: 'none', zIndex: 0 }} />
 
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto', width: '100%' }}>
-        <motion.p className="m8-p5" style={{ color: '#8E59FF', marginBottom: 12 }} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.6, ease: 'easeOut' }}>
-          Why Infytrix
-        </motion.p>
-        <motion.h2 className="m8-h2" style={{ color: '#FFFFFF', marginBottom: 48 }} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}>
-          India's Fastest-Growing Marketplace Ads Partner
-        </motion.h2>
+      {/* Giant "5" anchor */}
+      <motion.div
+        style={{ position: 'absolute', left: 40, top: '50%', transform: 'translateY(-50%)', fontFamily: "'Saira', sans-serif", fontSize: 320, lineHeight: 1, color: 'rgba(142,89,255,0.06)', pointerEvents: 'none', userSelect: 'none', letterSpacing: '-0.03em', zIndex: 0 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 1, ease: 'easeOut' }}
+      >
+        5
+      </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px 40px' }}>
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto', width: '100%' }}>
+        {/* Top block — pushed right */}
+        <div style={{ marginLeft: '28%', marginBottom: 56 }}>
+          <motion.p className="m8-p5" style={{ color: '#8E59FF', marginBottom: 12 }} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.6, ease: 'easeOut' }}>
+            Why Infytrix
+          </motion.p>
+          <motion.h2 className="m8-h2" style={{ color: '#FFFFFF', marginBottom: 0 }} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}>
+            India's Fastest-Growing
+          </motion.h2>
+          <motion.h2 className="m8-h2" style={{ color: 'rgba(255,255,255,0.35)' }} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}>
+            Marketplace Ads Partner
+          </motion.h2>
+        </div>
+
+        {/* Credentials — full-width horizontal bands */}
+        <div style={{ marginLeft: '28%' }}>
           {credentials.map((cred, i) => (
             <motion.div
               key={i}
-              style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}
+              style={{ display: 'flex', alignItems: 'baseline', gap: 16, padding: '14px 0', borderTop: '1px solid rgba(255,255,255,0.06)' }}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.6, ease: 'easeOut', delay: i * 0.1 }}
+              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 + i * 0.08 }}
             >
-              <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#8E59FF', marginTop: 8, flexShrink: 0 }} />
+              <span className="m8-p6" style={{ color: 'rgba(142,89,255,0.5)', minWidth: 24 }}>
+                {String(i + 1).padStart(2, '0')}
+              </span>
               <p className="m8-p5" style={{ color: 'rgba(255,255,255,0.85)' }}>{cred}</p>
             </motion.div>
           ))}
@@ -74,6 +97,21 @@ export default function DeckSection03WhyInfotrix() {
           </motion.div>
         ))}
       </div>
+
+      <style>{`
+        .deck-slide-number {
+          position: absolute;
+          top: 60px;
+          right: 48px;
+          font-family: 'Saira', sans-serif;
+          font-size: 120px;
+          font-weight: 400;
+          line-height: 1;
+          pointer-events: none;
+          letter-spacing: -0.03em;
+          user-select: none;
+        }
+      `}</style>
     </section>
   );
 }
