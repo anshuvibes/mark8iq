@@ -897,25 +897,28 @@ All colors MUST be HSL.
   margin: 0 !important;
 }
 
-/* Grid background tint — ensures bg-pattern-reverse.svg lines (#EDF0F7) are 
-   visible against a slightly tinted base instead of pure white */
-.CustomBg_bg_image__RIwVy {
+/* ── MOUSE-FOLLOW GRADIENT BEHIND GRID ────────────────────────── */
+/* The radial glow sits underneath the grid SVG so the grid squares
+   illuminate as the cursor moves. CSS custom properties --m8-mouse-x
+   and --m8-mouse-y are set by Layout.tsx on mousemove.               */
+.CustomBg_CustomBg__mpBxm .CustomBg_bg_image__RIwVy {
   --m8-mouse-x: 50%;
   --m8-mouse-y: 180px;
-  background-color: var(--m8-grid-base, #F0F1F6);
+  background-color: var(--m8-grid-base, #F0F1F6) !important;
   background-image:
     url("/img/bg-pattern-reverse.svg"),
     radial-gradient(
       circle 220px at var(--m8-mouse-x) var(--m8-mouse-y),
-      hsl(262 100% 67% / 0.20) 0%,
-      hsl(262 100% 67% / 0.12) 34%,
+      hsl(262 100% 67% / 0.22) 0%,
+      hsl(262 100% 67% / 0.13) 34%,
       hsl(262 100% 67% / 0.06) 56%,
       transparent 76%
-    );
-  background-repeat: repeat, no-repeat;
-  background-position: 0 0, 0 0;
+    ) !important;
+  background-repeat: repeat, no-repeat !important;
+  background-position: 0 0, 0 0 !important;
 }
 
+/* Hide the old DOM-based gradient element — replaced by CSS background */
 .CustomBg_CustomBg__mpBxm .CustomBg_bg_gradient__9nROB {
   display: none !important;
 }
