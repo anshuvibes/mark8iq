@@ -15,12 +15,8 @@ export default function Layout({ children }: LayoutProps) {
     if (!container || !bg) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top + container.scrollTop;
-
-      bg.style.setProperty('--m8-mouse-x', `${x}px`);
-      bg.style.setProperty('--m8-mouse-y', `${y}px`);
+      bg.style.setProperty('--m8-mouse-x', `${e.clientX}px`);
+      bg.style.setProperty('--m8-mouse-y', `${e.clientY}px`);
     };
 
     container.addEventListener('mousemove', handleMouseMove);
