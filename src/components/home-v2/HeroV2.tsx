@@ -10,12 +10,12 @@ const fadeIn = (delay: number) => ({
 });
 
 const modules = [
-  { name: 'Mark8 Ads', accent: '#FC7459', desc: 'Ad performance' },
-  { name: 'Mark8 Sight', accent: '#6895FC', desc: 'Visibility intel' },
-  { name: 'Mark8 Shelf', accent: '#6895FC', desc: 'Digital shelf' },
-  { name: 'Mark8 Returns', accent: '#52BFBC', desc: 'Return control' },
-  { name: 'Mark8 Reco', accent: '#7CBC71', desc: 'Reconciliation' },
-  { name: 'Mark8 Inventory', accent: '#FCB24F', desc: 'Procurement' },
+  { name: 'Mark8 Ads', accent: '#FC7459', desc: 'Ad performance', logo: '/img/product-logos/black/mark8-ads.svg' },
+  { name: 'Mark8 Sight', accent: '#6895FC', desc: 'Visibility intel', logo: '/img/product-logos/black/mark8-sight.svg' },
+  { name: 'Mark8 Shelf', accent: '#6895FC', desc: 'Digital shelf', logo: '/img/product-logos/black/mark8-shelf.svg' },
+  { name: 'Mark8 Returns', accent: '#52BFBC', desc: 'Return control', logo: '/img/product-logos/black/mark8-returns.svg' },
+  { name: 'Mark8 Reco', accent: '#7CBC71', desc: 'Reconciliation', logo: '/img/product-logos/black/mark8-reco.svg' },
+  { name: 'Mark8 Inventory', accent: '#FCB24F', desc: 'Procurement', logo: '/img/product-logos/black/mark8-po.svg' },
 ];
 
 export default function HeroV2() {
@@ -136,14 +136,7 @@ export default function HeroV2() {
                   transition: 'all 0.2s ease',
                 }}
               >
-                <div style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  background: mod.accent,
-                  marginBottom: '8px',
-                }} />
-                <div className="m8-p6" style={{ color: '#080D19', marginBottom: '2px' }}>{mod.name}</div>
+                <img src={mod.logo} alt={mod.name} style={{ height: '18px', width: 'auto', marginBottom: '6px' }} />
                 <div className="m8-p6" style={{ color: 'rgba(8,13,25,0.45)' }}>{mod.desc}</div>
               </div>
             ))}
