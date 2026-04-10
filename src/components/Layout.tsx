@@ -6,19 +6,19 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const gradientRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = containerRef.current;
-    const gradient = gradientRef.current;
-    if (!container || !gradient) return;
+    if (!container) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
       const x = e.clientX - rect.left;
-      const y = e.clientY + window.scrollY;
-      gradient.style.transform = `translate(${x - 200}px, ${y - 200}px)`;
+      const y = e.clientY - rect.top;
+
+      container.style.setProperty('--m8-mouse-x', `${x}px`);
+      container.style.setProperty('--m8-mouse-y', `${y}px`);
     };
 
     container.addEventListener('mousemove', handleMouseMove);
@@ -28,12 +28,6 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div>
       <div className="CustomBg_CustomBg__mpBxm" ref={containerRef}>
-        <div className="CustomBg_bg_gradient__9nROB" ref={gradientRef}>
-          <div
-            className="GradientCircle_GradientCircle__mH3g6 bg_primary gradient_circle"
-            style={{ opacity: 1 }}
-          />
-        </div>
         <div className="CustomBg_bg_image__RIwVy">
           <div>
             <Navbar />
@@ -44,3 +38,4 @@ export default function Layout({ children }: LayoutProps) {
     </div>
   );
 }
+
