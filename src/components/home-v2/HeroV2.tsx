@@ -61,7 +61,7 @@ export default function HeroV2() {
                 transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 style={{ display: 'inline-block' }}
               >
-                <Button variant="m8-violet" size="lg" asChild>
+                <Button variant="m8-dark" size="lg" asChild>
                   <a href="/get-in-touch">Book a Demo</a>
                 </Button>
               </motion.div>
