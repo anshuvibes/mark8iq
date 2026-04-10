@@ -926,7 +926,7 @@ All colors MUST be HSL.
 /* The gradient blob follows the mouse — sits between bg-color and grid */
 .CustomBg_CustomBg__mpBxm .CustomBg_bg_gradient__9nROB {
   position: absolute !important;
-  width: 400px !important;
+  width: 350px !important;
   aspect-ratio: 1 / 1 !important;
   will-change: transform !important;
   pointer-events: none !important;
@@ -935,6 +935,8 @@ All colors MUST be HSL.
 }
 .CustomBg_CustomBg__mpBxm .CustomBg_bg_gradient__9nROB .gradient_circle {
   min-height: unset !important;
-  filter: blur(150px) !important;
-  opacity: 0.55 !important;
+  width: 350px !important;
+  height: 350px !important;
+  filter: blur(200px) !important;
+  opacity: 0.18 !important;
 }
