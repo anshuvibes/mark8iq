@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Button } from '@/components/ui/button';
-import heroDashboard from '@/assets/hero-dashboard.png';
+import heroDashboard from '@/assets/hero-dashboard.svg';
 
 const fadeIn = (delay: number) => ({
   initial: { opacity: 0, y: 20 },
