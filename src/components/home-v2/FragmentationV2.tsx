@@ -137,7 +137,7 @@ export default function FragmentationV2() {
   const consolidationCopyOpacity = useTransform(scrollYProgress, [0.91, 0.95, 0.98], [0, 1, 0]);
 
   return (
-    <div ref={containerRef} style={{ height: '500vh', position: 'relative' }}>
+    <div ref={containerRef} data-section="fragmentation" style={{ height: '500vh', position: 'relative' }}>
       <motion.div
         style={{
           position: 'sticky',
