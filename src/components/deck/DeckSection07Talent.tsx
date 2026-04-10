@@ -17,7 +17,10 @@ const talentStats = [
 
 export default function DeckSection07Talent() {
   return (
-    <section style={{ background: '#EDF0F7', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '80px 40px' }}>
+    <section style={{ background: '#EDF0F7', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '80px 40px', position: 'relative', overflow: 'hidden' }}>
+      {/* Slide number watermark */}
+      <div className="deck-slide-number" style={{ color: 'rgba(8,13,25,0.03)' }}>07</div>
+
       <div style={{ maxWidth: 1200, margin: '0 auto', width: '100%' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <motion.p className="m8-p5" style={{ color: '#8E59FF', marginBottom: 12 }} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.6, ease: 'easeOut' }}>
@@ -31,19 +34,20 @@ export default function DeckSection07Talent() {
           </motion.p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 48 }}>
+        {/* Typographic college grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px 48px', marginBottom: 48 }}>
           {colleges.map((college, i) => (
             <motion.div
               key={i}
-              style={{ background: '#FFFFFF', borderRadius: 12, padding: 24 }}
+              style={{ padding: '16px 0', borderBottom: '1px solid rgba(8,13,25,0.08)' }}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.6, ease: 'easeOut', delay: i * 0.1 }}
+              transition={{ duration: 0.6, ease: 'easeOut', delay: i * 0.08 }}
             >
-              <div style={{ width: 40, height: 40, borderRadius: 8, background: '#EDF0F7', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
-                <span className="m8-p6" style={{ color: '#8E59FF' }}>Logo</span>
-              </div>
+              <span className="m8-p6" style={{ color: 'rgba(142,89,255,0.5)', display: 'block', marginBottom: 4 }}>
+                {String(i + 1).padStart(2, '0')}
+              </span>
               <p className="m8-p3-medium" style={{ color: '#080D19', marginBottom: 4 }}>{college.name}</p>
               <p className="m8-p6" style={{ color: '#12182B' }}>{college.desc}</p>
             </motion.div>
@@ -69,6 +73,21 @@ export default function DeckSection07Talent() {
           ))}
         </motion.div>
       </div>
+
+      <style>{`
+        .deck-slide-number {
+          position: absolute;
+          top: 60px;
+          right: 48px;
+          font-family: 'Saira', sans-serif;
+          font-size: 120px;
+          font-weight: 400;
+          line-height: 1;
+          pointer-events: none;
+          letter-spacing: -0.03em;
+          user-select: none;
+        }
+      `}</style>
     </section>
   );
 }
