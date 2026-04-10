@@ -136,14 +136,7 @@ export default function HeroV2() {
                   transition: 'all 0.2s ease',
                 }}
               >
-                <div style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  background: mod.accent,
-                  marginBottom: '8px',
-                }} />
-                <div className="m8-p6" style={{ color: '#080D19', marginBottom: '2px' }}>{mod.name}</div>
+                <img src={mod.logo} alt={mod.name} style={{ height: '18px', width: 'auto', marginBottom: '6px' }} />
                 <div className="m8-p6" style={{ color: 'rgba(8,13,25,0.45)' }}>{mod.desc}</div>
               </div>
             ))}
