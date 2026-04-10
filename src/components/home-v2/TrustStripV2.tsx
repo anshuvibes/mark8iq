@@ -34,7 +34,7 @@ export default function TrustStripV2() {
               <img
                 src={logo.src}
                 alt={logo.name}
-                style={{ height: '24px', width: 'auto' }}
+                style={{ height: '32px', width: 'auto' }}
                 loading="lazy"
               />
             </div>
