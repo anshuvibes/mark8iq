@@ -7,7 +7,7 @@ const logos = Array.from({ length: 11 }, (_, i) => ({
 
 export default function TrustStripV2() {
   return (
-    <section style={{ paddingTop: '40px', paddingBottom: '60px', position: 'relative', overflow: 'hidden' }}>
+    <section style={{ paddingTop: '20px', paddingBottom: '60px', position: 'relative', overflow: 'hidden' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.p
           className="m8-p6"
