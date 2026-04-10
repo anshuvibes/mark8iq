@@ -905,13 +905,12 @@ All colors MUST be HSL.
 
 /* ── MOUSE-FOLLOW GRADIENT — Larger, more prominent to match reference site ── */
 .CustomBg_CustomBg__mpBxm .CustomBg_bg_gradient__9nROB {
-  width: 500px !important;
+  width: 400px !important;
   aspect-ratio: 1 / 1 !important;
-  z-index: 1;
   pointer-events: none;
 }
 .CustomBg_CustomBg__mpBxm .CustomBg_bg_gradient__9nROB .gradient_circle {
   min-height: unset !important;
-  filter: blur(180px) !important;
+  filter: blur(150px) !important;
   opacity: 0.55 !important;
 }
