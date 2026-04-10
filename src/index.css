@@ -900,17 +900,22 @@ All colors MUST be HSL.
 /* Grid background tint — ensures bg-pattern-reverse.svg lines (#EDF0F7) are 
    visible against a slightly tinted base instead of pure white */
 .CustomBg_bg_image__RIwVy {
+  --m8-mouse-x: 50%;
+  --m8-mouse-y: 180px;
   background-color: var(--m8-grid-base, #F0F1F6);
+  background-image:
+    url("/img/bg-pattern-reverse.svg"),
+    radial-gradient(
+      circle 220px at var(--m8-mouse-x) var(--m8-mouse-y),
+      hsl(262 100% 67% / 0.20) 0%,
+      hsl(262 100% 67% / 0.12) 34%,
+      hsl(262 100% 67% / 0.06) 56%,
+      transparent 76%
+    );
+  background-repeat: repeat, no-repeat;
+  background-position: 0 0, 0 0;
 }
 
-/* ── MOUSE-FOLLOW GRADIENT — Larger, more prominent to match reference site ── */
 .CustomBg_CustomBg__mpBxm .CustomBg_bg_gradient__9nROB {
-  width: 400px !important;
-  aspect-ratio: 1 / 1 !important;
-  pointer-events: none;
-}
-.CustomBg_CustomBg__mpBxm .CustomBg_bg_gradient__9nROB .gradient_circle {
-  min-height: unset !important;
-  filter: blur(150px) !important;
-  opacity: 0.55 !important;
+  display: none !important;
 }
