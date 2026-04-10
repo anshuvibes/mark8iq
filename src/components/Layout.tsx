@@ -18,7 +18,7 @@ export default function Layout({ children }: LayoutProps) {
       const rect = container.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY + window.scrollY;
-      gradient.style.transform = `translate(${x - 250}px, ${y - 250}px)`;
+      gradient.style.transform = `translate(${x - 200}px, ${y - 200}px)`;
     };
 
     container.addEventListener('mousemove', handleMouseMove);
