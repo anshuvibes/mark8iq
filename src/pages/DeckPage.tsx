@@ -10,6 +10,7 @@ import DeckSection06Operations from '../components/deck/DeckSection06Operations'
 import DeckSection07Talent from '../components/deck/DeckSection07Talent';
 import DeckSection08Tech from '../components/deck/DeckSection08Tech';
 import DeckSection09AI from '../components/deck/DeckSection09AI';
+import DeckSection10Journey from '../components/deck/DeckSection10Journey';
 import DeckSection10Team from '../components/deck/DeckSection10Team';
 import DeckSection11Close from '../components/deck/DeckSection11Close';
 
@@ -45,6 +46,7 @@ export default function DeckPage() {
       <DeckSection07Talent />
       <DeckSection08Tech />
       <DeckSection09AI />
+      <DeckSection10Journey />
       <DeckSection10Team />
       <DeckSection11Close />
     </div>

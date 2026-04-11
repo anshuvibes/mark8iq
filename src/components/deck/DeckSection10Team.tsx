@@ -27,7 +27,7 @@ export default function DeckSection10Team() {
   return (
     <section style={{ background: '#FFFFFF', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '80px 40px', position: 'relative', overflow: 'hidden' }}>
       {/* Slide number watermark */}
-      <div className="deck-slide-number" style={{ color: 'rgba(8,13,25,0.03)' }}>10</div>
+      <div className="deck-slide-number" style={{ color: 'rgba(8,13,25,0.03)' }}>11</div>
 
       <div style={{ maxWidth: 1200, margin: '0 auto', width: '100%' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>

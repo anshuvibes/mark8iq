@@ -9,7 +9,7 @@ export default function DeckSection11Close() {
   return (
     <section style={{ background: '#8E59FF', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', position: 'relative', overflow: 'hidden', padding: '80px 40px' }}>
       {/* Slide number watermark */}
-      <div className="deck-slide-number" style={{ color: 'rgba(255,255,255,0.06)' }}>11</div>
+      <div className="deck-slide-number" style={{ color: 'rgba(255,255,255,0.06)' }}>12</div>
 
       {/* Violet orb */}
       <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%)', pointerEvents: 'none' }} />
