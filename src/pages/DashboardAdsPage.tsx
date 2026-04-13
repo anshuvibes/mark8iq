@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Bell, Sparkles, ChevronDown } from 'lucide-react';
+import { Bell, Sparkles, ChevronDown, Calendar } from 'lucide-react';
 import AISummaryPanel from '@/components/ai-panel/AISummaryPanel';
 import { dashboardPages, type DashboardPageId } from '@/data/aiPanelMockData';
 
