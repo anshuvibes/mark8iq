@@ -54,25 +54,26 @@ const DashboardAdsPage = () => {
           </button>
         </div>
 
-        {/* Center: Date range */}
-        <button style={{
-          display: 'flex', alignItems: 'center', gap: 10,
-          padding: '6px 16px',
-          borderRadius: 'var(--m8-radius-md)',
-          border: '1px solid rgba(255,255,255,0.15)',
-          background: 'rgba(255,255,255,0.05)',
-          color: '#FFFFFF',
-          cursor: 'pointer',
-          fontFamily: 'var(--font_primary)',
-        }}>
-          <span className="m8-p6" style={{ color: '#FFFFFF' }}>06/04/2026 - 12/04/2026</span>
-          <span className="m8-p6" style={{ color: 'rgba(255,255,255,0.35)' }}>vs</span>
-          <span className="m8-p6" style={{ color: '#FFFFFF' }}>06/03/2026 - 12/03/2026</span>
-          <Calendar size={14} style={{ color: 'rgba(255,255,255,0.5)' }} />
-        </button>
+        {/* Right: Date picker + Ask AI + Bell + User */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          {/* Date range */}
+          <button style={{
+            display: 'flex', alignItems: 'center', gap: 10,
+            padding: '6px 16px',
+            borderRadius: 'var(--m8-radius-md)',
+            border: '1px solid rgba(255,255,255,0.15)',
+            background: 'rgba(255,255,255,0.05)',
+            color: '#FFFFFF',
+            cursor: 'pointer',
+            fontFamily: 'var(--font_primary)',
+          }}>
+            <span className="m8-p6" style={{ color: '#FFFFFF' }}>06/04/2026 - 12/04/2026</span>
+            <span className="m8-p6" style={{ color: 'rgba(255,255,255,0.35)' }}>vs</span>
+            <span className="m8-p6" style={{ color: '#FFFFFF' }}>06/03/2026 - 12/03/2026</span>
+            <Calendar size={14} style={{ color: 'rgba(255,255,255,0.5)' }} />
+          </button>
 
-        {/* Right: Bell + AI + User */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          {/* Ask AI */}
           <button
             onClick={() => setPanelOpen(!panelOpen)}
             title="AI Summary"
@@ -92,6 +93,7 @@ const DashboardAdsPage = () => {
             <span className="m8-p6" style={{ color: '#FFFFFF' }}>Ask AI</span>
           </button>
 
+          {/* Bell */}
           <button style={{
             background: 'none', border: 'none', cursor: 'pointer', padding: 8,
             color: 'rgba(255,255,255,0.5)',
@@ -99,9 +101,9 @@ const DashboardAdsPage = () => {
             <Bell size={18} />
           </button>
 
-          {/* User avatar */}
+          {/* User */}
           <div style={{
-            display: 'flex', alignItems: 'center', gap: 8, marginLeft: 4,
+            display: 'flex', alignItems: 'center', gap: 8,
             cursor: 'pointer',
           }}>
             <div style={{
