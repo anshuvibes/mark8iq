@@ -31,12 +31,13 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
   const lastUserMsgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Scroll the nearest scrollable parent so the newest user message sits at the top
     if (lastUserMsgRef.current) {
       const el = lastUserMsgRef.current;
       const scrollParent = el.closest('.ai-panel-scroll') as HTMLElement | null;
       if (scrollParent) {
-        const offset = el.offsetTop - scrollParent.offsetTop;
+        const elRect = el.getBoundingClientRect();
+        const parentRect = scrollParent.getBoundingClientRect();
+        const offset = elRect.top - parentRect.top + scrollParent.scrollTop;
         scrollParent.scrollTo({ top: offset, behavior: 'smooth' });
       }
     }
