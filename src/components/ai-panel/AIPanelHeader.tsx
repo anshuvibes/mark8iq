@@ -1,17 +1,15 @@
-import { X, MessageSquarePlus, Sparkles } from 'lucide-react';
+import { X, MessageSquarePlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
 interface AIPanelHeaderProps {
-  userName: string;
   hasActiveChat: boolean;
+  chatTitle?: string;
   onClose: () => void;
   onNewChat: () => void;
-  currentPage?: string;
-  dateRange?: string;
 }
 
-const AIPanelHeader = ({ userName, hasActiveChat, onClose, onNewChat, currentPage, dateRange }: AIPanelHeaderProps) => {
+const AIPanelHeader = ({ hasActiveChat, chatTitle, onClose, onNewChat }: AIPanelHeaderProps) => {
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handleNewChat = () => {
@@ -23,48 +21,48 @@ const AIPanelHeader = ({ userName, hasActiveChat, onClose, onNewChat, currentPag
   };
 
   return (
-    <div style={{ borderBottom: '1px solid rgba(18,24,43,0.06)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
-          <Sparkles size={16} style={{ color: 'var(--color_primary)', flexShrink: 0 }} />
-          <div style={{ minWidth: 0 }}>
-            <div className="m8-p5" style={{ color: 'var(--color_text)', fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {currentPage || 'AI Insights'}
-            </div>
-            {dateRange && (
-              <div className="m8-p6" style={{ color: 'rgba(18,24,43,0.4)', marginTop: 1 }}>
-                {dateRange}
-              </div>
-            )}
-          </div>
+    <div style={{ borderBottom: '1px solid rgba(18,24,43,0.06)', flexShrink: 0 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px' }}>
+        <div className="m8-p6" style={{
+          color: 'var(--color_text)',
+          fontWeight: 500,
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          minWidth: 0,
+          flex: 1,
+          opacity: chatTitle ? 1 : 0,
+          transition: 'opacity 0.2s',
+        }}>
+          {chatTitle || ''}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 2, flexShrink: 0 }}>
           <button
             onClick={handleNewChat}
             title="New chat"
             style={{
-              background: 'none', border: 'none', cursor: 'pointer', padding: 6,
-              color: 'rgba(18,24,43,0.45)',
+              background: 'none', border: 'none', cursor: 'pointer', padding: 5,
+              color: 'rgba(18,24,43,0.4)',
               borderRadius: 'var(--m8-radius-sm)',
               transition: 'background 0.15s',
             }}
             onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.05)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = 'none'; }}
           >
-            <MessageSquarePlus size={18} />
+            <MessageSquarePlus size={16} />
           </button>
           <button
             onClick={onClose}
             style={{
-              background: 'none', border: 'none', cursor: 'pointer', padding: 6,
-              color: 'rgba(18,24,43,0.45)',
+              background: 'none', border: 'none', cursor: 'pointer', padding: 5,
+              color: 'rgba(18,24,43,0.4)',
               borderRadius: 'var(--m8-radius-sm)',
               transition: 'background 0.15s',
             }}
             onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.05)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.background = 'none'; }}
           >
-            <X size={18} />
+            <X size={16} />
           </button>
         </div>
       </div>
