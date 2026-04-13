@@ -123,7 +123,7 @@ const AIPanelHeader = ({
   });
 
   return (
-    <div style={{ borderBottom: '1px solid rgba(18,24,43,0.06)', flexShrink: 0, position: 'relative' }}>
+    <div style={{ flexShrink: 0, position: 'relative' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 12px' }}>
         {hasActiveChat && (
           <button
