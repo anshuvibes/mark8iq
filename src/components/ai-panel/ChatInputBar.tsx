@@ -9,51 +9,99 @@ interface ChatInputBarProps {
 
 const ChatInputBar = ({ contextLabel, isLoading, onSend }: ChatInputBarProps) => {
   const [value, setValue] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [isFocused, setIsFocused] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSend = () => {
     const trimmed = value.trim();
     if (!trimmed || isLoading) return;
     onSend(trimmed);
     setValue('');
+    if (textareaRef.current) {
+      textareaRef.current.style.height = '44px';
+    }
   };
+
+  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(e.target.value);
+    const el = e.target;
+    el.style.height = '44px';
+    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  const hasText = value.trim().length > 0;
+  const canSend = hasText && !isLoading;
+
+  // States: default, focused-empty (intermediate), has-text, loading
+  const getBorderColor = () => {
+    if (isFocused && hasText) return 'var(--color_primary)';
+    if (isFocused) return 'rgba(142,89,255,0.35)';
+    return 'rgba(18,24,43,0.12)';
+  };
+
+  const getSendButtonStyle = () => {
+    if (canSend) {
+      return {
+        background: 'var(--color_primary)',
+        border: '1.5px solid var(--color_primary)',
+        color: '#FFFFFF',
+        cursor: 'pointer' as const,
+      };
+    }
+    if (isFocused && !hasText && !isLoading) {
+      // Intermediate: violet stroke, no fill
+      return {
+        background: 'transparent',
+        border: '1.5px solid rgba(142,89,255,0.5)',
+        color: 'rgba(142,89,255,0.5)',
+        cursor: 'default' as const,
+      };
+    }
+    return {
+      background: 'rgba(18,24,43,0.08)',
+      border: '1.5px solid transparent',
+      color: 'rgba(18,24,43,0.25)',
+      cursor: 'not-allowed' as const,
+    };
+  };
+
+  const sendStyle = getSendButtonStyle();
 
   return (
     <div style={{
-      padding: '8px 16px 16px',
+      padding: '12px 16px 16px',
       borderTop: '1px solid rgba(18,24,43,0.06)',
       background: '#FFFFFF',
     }}>
-      {/* Context label */}
-      <div className="m8-p6" style={{
-        color: 'rgba(18,24,43,0.4)',
-        marginBottom: 8,
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-      }}>
-        Responding based on: {contextLabel}
-      </div>
-
-      {/* Input row */}
+      {/* Input container */}
       <div style={{
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'flex-end',
         gap: 8,
-        padding: '8px 12px',
+        padding: '10px 12px',
         borderRadius: 'var(--m8-radius-md)',
-        border: '1px solid rgba(18,24,43,0.12)',
+        border: `1.5px solid ${getBorderColor()}`,
         background: isLoading ? 'rgba(237,240,247,0.5)' : '#FFFFFF',
-        transition: 'border-color 0.15s, background 0.15s',
+        transition: 'border-color 0.2s',
+        minHeight: 48,
       }}>
-        <input
-          ref={inputRef}
-          type="text"
+        <textarea
+          ref={textareaRef}
           value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
+          onChange={handleInput}
+          onKeyDown={handleKeyDown}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           placeholder={isLoading ? 'Generating response...' : 'Ask about this page...'}
           disabled={isLoading}
+          rows={1}
           className="m8-p6"
           style={{
             flex: 1,
@@ -62,24 +110,28 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend }: ChatInputBarProps) =>
             background: 'transparent',
             color: 'var(--color_text)',
             fontFamily: 'var(--font_primary)',
+            resize: 'none',
+            height: 44,
+            maxHeight: 120,
+            overflowY: 'auto',
+            lineHeight: '22px',
+            padding: 0,
           }}
         />
         <button
           onClick={handleSend}
-          disabled={!value.trim() || isLoading}
+          disabled={!canSend}
           style={{
             width: 28,
             height: 28,
             borderRadius: 'var(--m8-radius-md)',
-            border: 'none',
-            background: !value.trim() || isLoading ? 'rgba(18,24,43,0.08)' : 'var(--color_primary)',
-            color: !value.trim() || isLoading ? 'rgba(18,24,43,0.25)' : '#FFFFFF',
-            cursor: !value.trim() || isLoading ? 'not-allowed' : 'pointer',
+            ...sendStyle,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            transition: 'background 0.15s, color 0.15s',
+            transition: 'all 0.15s',
             flexShrink: 0,
+            marginBottom: 2,
           }}
         >
           <ArrowUp size={14} />
