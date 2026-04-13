@@ -114,6 +114,8 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
         hasActiveChat={hasActiveChat}
         onClose={onClose}
         onNewChat={handleNewChat}
+        currentPage={currentPage}
+        dateRange={dateRange}
       />
 
       {/* Scrollable middle area */}
