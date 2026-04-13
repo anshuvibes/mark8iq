@@ -31,16 +31,20 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
   const lastUserMsgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (lastUserMsgRef.current) {
-      const el = lastUserMsgRef.current;
-      const scrollParent = el.closest('.ai-panel-scroll') as HTMLElement | null;
-      if (scrollParent) {
-        const elRect = el.getBoundingClientRect();
-        const parentRect = scrollParent.getBoundingClientRect();
-        const offset = elRect.top - parentRect.top + scrollParent.scrollTop;
-        scrollParent.scrollTo({ top: offset, behavior: 'smooth' });
+    // Use rAF to ensure DOM has laid out before measuring
+    const raf = requestAnimationFrame(() => {
+      if (lastUserMsgRef.current) {
+        const el = lastUserMsgRef.current;
+        const scrollParent = el.closest('.ai-panel-scroll') as HTMLElement | null;
+        if (scrollParent) {
+          const elRect = el.getBoundingClientRect();
+          const parentRect = scrollParent.getBoundingClientRect();
+          const offset = elRect.top - parentRect.top + scrollParent.scrollTop;
+          scrollParent.scrollTo({ top: offset, behavior: 'smooth' });
+        }
       }
-    }
+    });
+    return () => cancelAnimationFrame(raf);
   }, [messages.length]);
 
   if (messages.length === 0) {
