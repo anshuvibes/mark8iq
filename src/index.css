@@ -1025,18 +1025,6 @@ body {
   --v2-frag-sub-text:       rgba(255,255,255,0.6);
 }
 
-/* Fragmentation scroll-driven dark overrides — applied during scroll animation */
-.frag-scroll-dark {
-  --v2-frag-bg:             #080D19;
-  --v2-frag-pill-bg:        rgba(255,255,255,0.08);
-  --v2-frag-pill-border:    rgba(255,255,255,0.15);
-  --v2-frag-pill-text:      rgba(255,255,255,0.85);
-  --v2-frag-dept-bg:        rgba(142,89,255,0.10);
-  --v2-frag-dept-border:    rgba(142,89,255,0.22);
-  --v2-frag-dept-text:      rgba(255,255,255,0.8);
-  --v2-frag-persona-text:   rgba(255,255,255,0.48);
-  --v2-frag-heading-text:   #FFFFFF;
-}
 
 /* V2 dark mode — very subtle transition */
 .v2-dark *,
