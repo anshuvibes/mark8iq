@@ -30,6 +30,39 @@ const personaLabels = [
   { label: 'Ops Head needs stock levels', x:    0, y: -330 },
 ];
 
+/* Shared inline style fragments */
+const pillBase: React.CSSProperties = {
+  position: 'absolute',
+  left: '50%',
+  top: '50%',
+  padding: '10px 20px',
+  borderRadius: '9999px',
+  fontSize: '15px',
+  fontFamily: "'Saira', sans-serif",
+  fontWeight: 300,
+  whiteSpace: 'nowrap',
+  pointerEvents: 'none',
+  zIndex: 2,
+  transition: 'background 0.5s ease, border-color 0.5s ease, color 0.5s ease',
+};
+
+const headingBase: React.CSSProperties = {
+  position: 'absolute',
+  left: '50%',
+  top: '50%',
+  fontFamily: "'Saira', sans-serif",
+  fontSize: '60px',
+  fontWeight: 400,
+  lineHeight: '110%',
+  letterSpacing: '-0.03em',
+  textAlign: 'center',
+  pointerEvents: 'none',
+  zIndex: 10,
+  maxWidth: '820px',
+  width: '90vw',
+  transition: 'color 0.5s ease',
+};
+
 export default function FragmentationV2() {
   const containerRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
@@ -49,24 +82,31 @@ export default function FragmentationV2() {
   const logoRef = useRef<HTMLDivElement>(null);
   const subCopyRef = useRef<HTMLDivElement>(null);
 
-  // ScrollTrigger-based theme toggle — fires when ~15% into the section
-  // so pills appear in light mode first, then body transitions to dark
+  // ScrollTrigger-based theme toggle
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const container = containerRef.current;
-    if (!container) return;
+    const sticky = stickyRef.current;
+    if (!container || !sticky) return;
 
     const themeTrigger = ScrollTrigger.create({
       trigger: container,
-      start: 'top 40%',   // dark kicks in when top of section reaches 40% viewport
+      start: 'top 40%',
       end: 'bottom bottom',
-      onEnter: () => document.body.classList.add('frag-theme-dark'),
-      onLeaveBack: () => document.body.classList.remove('frag-theme-dark'),
+      onEnter: () => {
+        document.body.classList.add('frag-theme-dark');
+        sticky.classList.add('frag-scroll-dark');
+      },
+      onLeaveBack: () => {
+        document.body.classList.remove('frag-theme-dark');
+        sticky.classList.remove('frag-scroll-dark');
+      },
     });
 
     return () => {
       themeTrigger.kill();
       document.body.classList.remove('frag-theme-dark');
+      sticky.classList.remove('frag-scroll-dark');
     };
   }, []);
 
@@ -75,6 +115,7 @@ export default function FragmentationV2() {
     gsap.registerPlugin(ScrollTrigger);
 
     const container = containerRef.current;
+    const sticky = stickyRef.current;
     if (!container) return;
 
     const tl = gsap.timeline({
@@ -86,7 +127,7 @@ export default function FragmentationV2() {
       },
     });
 
-    // PHASE 0 (t=0–8): Grid fades in (body CSS transition handles bg color)
+    // PHASE 0 (t=0–8): Grid fades in
     tl.to(gridRef.current, {
       opacity: 0.06,
       duration: 8,
@@ -250,16 +291,10 @@ export default function FragmentationV2() {
       ease: 'power3.inOut',
     }, 96);
 
-    // Background transitions to violet tint for circle reveal
-    tl.to(bgRef.current, {
-      backgroundColor: '#F5F0FF',
-      duration: 4,
-      ease: 'none',
-    }, 96);
-
-    // Also remove the dark theme class when circle expands
+    // Remove scroll-dark class during reveal
     tl.call(() => {
       document.body.classList.remove('frag-theme-dark');
+      sticky?.classList.remove('frag-scroll-dark');
     }, [], 96);
 
     gsap.set(logoRef.current, { opacity: 0, xPercent: -50, yPercent: -50 });
@@ -295,6 +330,7 @@ export default function FragmentationV2() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          transition: 'background-color 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
         }}
       >
         {/* Background color layer */}
@@ -328,20 +364,10 @@ export default function FragmentationV2() {
             key={pill.label}
             ref={(el) => { mktRefs.current[i] = el; }}
             style={{
-              position: 'absolute',
-              left: '50%',
-              top: '50%',
-              padding: '10px 20px',
-              borderRadius: '9999px',
-              background: 'rgba(255,255,255,0.08)',
-              border: '1px solid rgba(255,255,255,0.15)',
-              color: 'rgba(255,255,255,0.85)',
-              fontSize: '15px',
-              fontFamily: "'Saira', sans-serif",
-              fontWeight: 300,
-              whiteSpace: 'nowrap',
-              pointerEvents: 'none',
-              zIndex: 2,
+              ...pillBase,
+              background: 'var(--v2-frag-pill-bg)',
+              border: '1px solid var(--v2-frag-pill-border)',
+              color: 'var(--v2-frag-pill-text)',
             }}
           >
             {pill.label}
@@ -354,20 +380,10 @@ export default function FragmentationV2() {
             key={tag.label}
             ref={(el) => { deptRefs.current[i] = el; }}
             style={{
-              position: 'absolute',
-              left: '50%',
-              top: '50%',
-              padding: '10px 20px',
-              borderRadius: '9999px',
-              background: 'rgba(142,89,255,0.10)',
-              border: '1px solid rgba(142,89,255,0.22)',
-              color: 'rgba(255,255,255,0.8)',
-              fontSize: '15px',
-              fontFamily: "'Saira', sans-serif",
-              fontWeight: 300,
-              whiteSpace: 'nowrap',
-              pointerEvents: 'none',
-              zIndex: 2,
+              ...pillBase,
+              background: 'var(--v2-frag-dept-bg)',
+              border: '1px solid var(--v2-frag-dept-border)',
+              color: 'var(--v2-frag-dept-text)',
             }}
           >
             {tag.label}
@@ -383,13 +399,14 @@ export default function FragmentationV2() {
               position: 'absolute',
               left: '50%',
               top: '50%',
-              color: 'rgba(255,255,255,0.48)',
+              color: 'var(--v2-frag-persona-text)',
               fontSize: '15px',
               fontFamily: "'Saira', sans-serif",
               fontWeight: 300,
               whiteSpace: 'nowrap',
               pointerEvents: 'none',
               zIndex: 2,
+              transition: 'color 0.5s ease',
             }}
           >
             {persona.label}
@@ -400,20 +417,8 @@ export default function FragmentationV2() {
         <div
           ref={text1Ref}
           style={{
-            position: 'absolute',
-            left: '50%',
-            top: '50%',
-            fontFamily: "'Saira', sans-serif",
-            fontSize: '60px',
-            fontWeight: 400,
-            lineHeight: '110%',
-            letterSpacing: '-0.03em',
-            color: '#ffffff',
-            textAlign: 'center',
-            pointerEvents: 'none',
-            zIndex: 10,
-            maxWidth: '820px',
-            width: '90vw',
+            ...headingBase,
+            color: 'var(--v2-frag-heading-text)',
           }}
         >
           Every marketplace speaks a different language.
@@ -423,20 +428,8 @@ export default function FragmentationV2() {
         <div
           ref={text2Ref}
           style={{
-            position: 'absolute',
-            left: '50%',
-            top: '50%',
-            fontFamily: "'Saira', sans-serif",
-            fontSize: '60px',
-            fontWeight: 400,
-            lineHeight: '110%',
-            letterSpacing: '-0.03em',
-            color: '#ffffff',
-            textAlign: 'center',
-            pointerEvents: 'none',
-            zIndex: 10,
-            maxWidth: '820px',
-            width: '90vw',
+            ...headingBase,
+            color: 'var(--v2-frag-heading-text)',
           }}
         >
           Every department runs on a different tool. None of them talk to each other.
@@ -446,20 +439,8 @@ export default function FragmentationV2() {
         <div
           ref={text3Ref}
           style={{
-            position: 'absolute',
-            left: '50%',
-            top: '50%',
-            fontFamily: "'Saira', sans-serif",
-            fontSize: '60px',
-            fontWeight: 400,
-            lineHeight: '110%',
-            letterSpacing: '-0.03em',
-            color: '#ffffff',
-            textAlign: 'center',
-            pointerEvents: 'none',
-            zIndex: 10,
-            maxWidth: '820px',
-            width: '90vw',
+            ...headingBase,
+            color: 'var(--v2-frag-heading-text)',
           }}
         >
           Same data. Seven interpretations. Zero shared truth.
@@ -469,18 +450,11 @@ export default function FragmentationV2() {
         <div
           ref={pivotRef}
           style={{
-            position: 'absolute',
-            left: '50%',
-            top: '50%',
-            fontFamily: "'Saira', sans-serif",
+            ...headingBase,
             fontSize: '80px',
-            fontWeight: 400,
-            lineHeight: '110%',
-            letterSpacing: '-0.03em',
-            color: '#ffffff',
-            textAlign: 'center',
-            pointerEvents: 'none',
-            zIndex: 10,
+            maxWidth: undefined,
+            width: undefined,
+            color: 'var(--v2-frag-heading-text)',
           }}
         >
           Until now.
@@ -496,7 +470,7 @@ export default function FragmentationV2() {
             width: '60px',
             height: '60px',
             borderRadius: '50%',
-            background: '#F5F0FF',
+            background: 'var(--v2-frag-reveal-bg)',
             pointerEvents: 'none',
             zIndex: 20,
           }}
@@ -522,8 +496,9 @@ export default function FragmentationV2() {
               fontSize: '48px',
               fontFamily: "'Saira', sans-serif",
               fontWeight: 400,
-              color: '#080D19',
+              color: 'var(--v2-frag-logo-text)',
               letterSpacing: '-0.03em',
+              transition: 'color 0.5s ease',
             }}>
               mark8
             </span>
@@ -549,11 +524,12 @@ export default function FragmentationV2() {
             fontFamily: "'Saira', sans-serif",
             fontSize: '24px',
             fontWeight: 400,
-            color: 'rgba(8,13,25,0.6)',
+            color: 'var(--v2-frag-sub-text)',
             textAlign: 'center',
             pointerEvents: 'none',
             zIndex: 30,
             whiteSpace: 'nowrap',
+            transition: 'color 0.5s ease',
           }}
         >
           One platform absorbs it all.
