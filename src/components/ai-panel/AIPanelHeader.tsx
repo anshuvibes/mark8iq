@@ -68,7 +68,6 @@ const AIPanelHeader = ({
   onSelectChat,
   chatHistory = mockChatHistory,
 }: AIPanelHeaderProps) => {
-  const [showConfirm, setShowConfirm] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchActive, setSearchActive] = useState(false);
