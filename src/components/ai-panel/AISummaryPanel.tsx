@@ -79,6 +79,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   }, [simulateResponse]);
 
   const handleSuggestionSelect = useCallback((suggestion: Suggestion) => {
+    setChatTitle(suggestion.question.length > 40 ? suggestion.question.slice(0, 40) + '…' : suggestion.question);
     setMessages([
       { id: nextId(), type: 'context-pill', pillVariant: 'suggestion', pillText: suggestion.question },
     ]);
