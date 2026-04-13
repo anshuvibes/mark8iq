@@ -943,13 +943,9 @@ All colors MUST be HSL.
   opacity: 0.18 !important;
 }
 
-/* ─── Fragmentation scroll-driven theme transition ─── */
+/* ─── Smooth body transition (legacy fallback) ─── */
 body {
-  transition: background-color 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-body.frag-theme-dark {
-  background-color: #080D19 !important;
+  transition: background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Navbar stays immune to body theme switch */
