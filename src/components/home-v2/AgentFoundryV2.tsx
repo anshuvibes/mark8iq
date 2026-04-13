@@ -15,9 +15,8 @@ const agents = [
 
 export default function AgentFoundryV2() {
   return (
-    <section style={{ padding: '100px 0', position: 'relative' }}>
+    <section style={{ padding: '100px 0', position: 'relative', background: 'var(--v2-bg)' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-        {/* Power line */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -26,17 +25,16 @@ export default function AgentFoundryV2() {
             textAlign: 'center',
             marginBottom: '64px',
             padding: '32px',
-            background: 'rgba(8,13,25,0.03)',
+            background: 'var(--v2-bg-subtle)',
             borderRadius: '12px',
           }}
         >
-          <p className="m8-p2" style={{ color: 'rgba(8,13,25,0.6)', fontStyle: 'italic' }}>
+          <p className="m8-p2" style={{ color: 'var(--v2-text-secondary)', fontStyle: 'italic' }}>
             While your competitors wait for Monday morning reports, your agents already acted on Friday night's data.
           </p>
         </motion.div>
 
         <div style={{ display: 'flex', gap: '64px', alignItems: 'center' }}>
-          {/* Left column - Console UI */}
           <motion.div
             style={{ flex: '0 0 56%', maxWidth: '56%' }}
             initial={{ opacity: 0, x: -40 }}
@@ -49,9 +47,8 @@ export default function AgentFoundryV2() {
               borderRadius: '16px',
               overflow: 'hidden',
               border: '1px solid rgba(255,255,255,0.06)',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+              boxShadow: `0 20px 60px var(--v2-shadow-strong)`,
             }}>
-              {/* Console header */}
               <div style={{ padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span className="m8-p5" style={{ color: '#fff', fontWeight: 500 }}>Agent Foundry</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -60,14 +57,12 @@ export default function AgentFoundryV2() {
                 </div>
               </div>
 
-              {/* Column headers */}
               <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', padding: '10px 20px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
                 {['Agent', 'Status', 'Last action', 'Next run'].map((h) => (
                   <span key={h} className="m8-p6" style={{ color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</span>
                 ))}
               </div>
 
-              {/* Agent rows */}
               {agents.map((agent) => (
                 <div
                   key={agent.name}
@@ -89,7 +84,6 @@ export default function AgentFoundryV2() {
                 </div>
               ))}
 
-              {/* Footer stats */}
               <div style={{ padding: '14px 20px', display: 'flex', gap: '24px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
                 {['100+ signals monitored', '24/7 autonomous execution', 'Zero manual intervention'].map((stat) => (
                   <span key={stat} className="m8-p6" style={{ color: 'rgba(255,255,255,0.3)' }}>{stat}</span>
@@ -98,7 +92,6 @@ export default function AgentFoundryV2() {
             </div>
           </motion.div>
 
-          {/* Right column - text */}
           <div style={{ flex: '0 0 44%', maxWidth: '44%' }}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -118,7 +111,7 @@ export default function AgentFoundryV2() {
 
             <motion.h2
               className="m8-h1-large"
-              style={{ color: '#080D19', marginBottom: '20px' }}
+              style={{ color: 'var(--v2-text)', marginBottom: '20px' }}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
@@ -129,7 +122,7 @@ export default function AgentFoundryV2() {
 
             <motion.p
               className="m8-p2"
-              style={{ color: 'rgba(8,13,25,0.65)', marginBottom: '40px' }}
+              style={{ color: 'var(--v2-text-secondary)', marginBottom: '40px' }}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
@@ -159,14 +152,14 @@ export default function AgentFoundryV2() {
                 }}>
                   <span className="m8-p6" style={{ color: '#FCB24F', fontWeight: 500 }}>{beat.num}</span>
                 </div>
-                <h4 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: '6px' }}>{beat.label}</h4>
-                <p className="m8-p5" style={{ color: 'rgba(8,13,25,0.55)' }}>{beat.desc}</p>
+                <h4 className="m8-p3-medium" style={{ color: 'var(--v2-text)', marginBottom: '6px' }}>{beat.label}</h4>
+                <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)' }}>{beat.desc}</p>
               </motion.div>
             ))}
 
             <motion.p
               className="m8-p4"
-              style={{ color: 'rgba(8,13,25,0.45)', fontStyle: 'italic', marginTop: '28px' }}
+              style={{ color: 'var(--v2-text-muted)', fontStyle: 'italic', marginTop: '28px' }}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: '-80px' }}

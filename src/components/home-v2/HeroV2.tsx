@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import heroDashboard from '@/assets/hero-dashboard.svg';
+import ThemeToggle from './ThemeToggle';
 
 const fadeIn = (delay: number) => ({
   initial: { opacity: 0, y: 20 },
@@ -23,7 +24,6 @@ export default function HeroV2() {
   const imgContainerRef = useRef<HTMLDivElement>(null);
   const [imgHeight, setImgHeight] = useState<number | null>(null);
 
-  // Lock the image container height once the first image loads to prevent layout shift
   useEffect(() => {
     const container = imgContainerRef.current;
     if (!container) return;
@@ -40,17 +40,22 @@ export default function HeroV2() {
   };
 
   return (
-    <section style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column' }}>
-      {/* ZONE 1: Headline block — compact spacing */}
+    <section style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', background: 'var(--v2-bg)' }}>
+      {/* Theme toggle — top right */}
+      <div style={{ position: 'absolute', top: '80px', right: '40px', zIndex: 60 }}>
+        <ThemeToggle />
+      </div>
+
+      {/* ZONE 1: Headline block */}
       <div style={{ paddingTop: '80px', paddingBottom: '32px', textAlign: 'center' }}>
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-            <motion.h1 className="m8-h2" style={{ color: '#080D19', marginBottom: '16px' }} {...fadeIn(0.1)}>
+            <motion.h1 className="m8-h2" style={{ color: 'var(--v2-text)', marginBottom: '16px' }} {...fadeIn(0.1)}>
               The operating system behind{' '}
               <span style={{ color: '#8E59FF' }}><br />India's fastest growing brands</span>
             </motion.h1>
 
-            <motion.p className="m8-p2" style={{ color: '#40445a', maxWidth: '600px', margin: '0 auto 28px' }} {...fadeIn(0.25)}>
+            <motion.p className="m8-p2" style={{ color: 'var(--v2-text-secondary)', maxWidth: '600px', margin: '0 auto 28px' }} {...fadeIn(0.25)}>
               The only platform that unifies every marketplace, thinks with your data, and acts while you sleep
             </motion.p>
 
@@ -77,7 +82,6 @@ export default function HeroV2() {
         transition={{ duration: 0.7, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
         style={{ position: 'relative', width: '100%', maxWidth: '1200px', margin: '0 auto' }}
       >
-        {/* Dashboard image — full width, fixed height container */}
         <div
           ref={imgContainerRef}
           style={{
@@ -102,7 +106,7 @@ export default function HeroV2() {
           </AnimatePresence>
         </div>
 
-        {/* Floating module selector card — positioned on the right */}
+        {/* Floating module selector card */}
         <div
           className="hero-module-card"
           style={{
@@ -110,15 +114,15 @@ export default function HeroV2() {
             top: '24px',
             right: '-40px',
             width: '320px',
-            background: '#FFFFFF',
+            background: 'var(--v2-bg-card)',
             borderRadius: '16px',
             padding: '28px',
-            boxShadow: '0 12px 40px rgba(0,0,0,0.1)',
-            border: '1px solid rgba(8,13,25,0.06)',
+            boxShadow: `0 12px 40px var(--v2-shadow)`,
+            border: '1px solid var(--v2-border)',
             zIndex: 2,
           }}
         >
-          <p className="m8-p4" style={{ color: '#080D19', marginBottom: '20px' }}>
+          <p className="m8-p4" style={{ color: 'var(--v2-text)', marginBottom: '20px' }}>
             What do you want to manage?
           </p>
 
@@ -143,8 +147,8 @@ export default function HeroV2() {
                   background: mod.accent,
                   marginBottom: '8px',
                 }} />
-                <div className="m8-p6" style={{ color: '#080D19', marginBottom: '2px' }}>{mod.name}</div>
-                <div className="m8-p6" style={{ color: 'rgba(8,13,25,0.45)' }}>{mod.desc}</div>
+                <div className="m8-p6" style={{ color: 'var(--v2-text)', marginBottom: '2px' }}>{mod.name}</div>
+                <div className="m8-p6" style={{ color: 'var(--v2-text-muted)' }}>{mod.desc}</div>
               </div>
             ))}
           </div>
@@ -163,7 +167,7 @@ export default function HeroV2() {
                   gap: '10px',
                   padding: '8px 12px',
                   borderRadius: '8px',
-                  background: 'rgba(8,13,25,0.02)',
+                  background: 'var(--v2-bg-subtle)',
                 }}
               >
                 <div style={{
@@ -172,7 +176,7 @@ export default function HeroV2() {
                   borderRadius: '50%',
                   background: '#8E59FF',
                 }} />
-                <span className="m8-p6" style={{ color: '#080D19' }}>{stat}</span>
+                <span className="m8-p6" style={{ color: 'var(--v2-text)' }}>{stat}</span>
               </div>
             ))}
           </div>
