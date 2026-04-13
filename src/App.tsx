@@ -19,6 +19,7 @@ import BlogSlugPage from "./pages/BlogSlugPage";
 import DesignSystemPage from "./pages/DesignSystemPage";
 import HomePageV2 from "./pages/HomePageV2";
 import DeckPage from "./pages/DeckPage";
+import DashboardAdsPage from "./pages/DashboardAdsPage";
 
 const App = () => {
   useEffect(() => {
@@ -64,6 +65,7 @@ const App = () => {
       <Route path="/design-system" element={<DesignSystemPage />} />
       <Route path="/home-v2" element={<HomePageV2 />} />
       <Route path="/deck" element={<DeckPage />} />
+      <Route path="/dashboard/ads" element={<DashboardAdsPage />} />
       <Route path="*" element={<ComingSoonPage />} />
     </Routes>
   </BrowserRouter>
