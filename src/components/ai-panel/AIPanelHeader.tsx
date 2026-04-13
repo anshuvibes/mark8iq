@@ -170,25 +170,6 @@ const AIPanelHeader = ({
         </button>
       </div>
 
-      {showConfirm && (
-        <div style={{
-          padding: '10px 16px 12px',
-          background: 'rgba(142,89,255,0.04)',
-          borderTop: '1px solid rgba(142,89,255,0.1)',
-        }}>
-          <div className="m8-p6" style={{ color: 'var(--color_text)', marginBottom: 8 }}>
-            Go back to home? Your current conversation will be cleared.
-          </div>
-          <div style={{ display: 'flex', gap: 8 }}>
-            <Button variant="m8-violet" size="sm" onClick={() => { setShowConfirm(false); onNewChat(); }} style={{ padding: '4px 12px', fontSize: 12, height: 'auto' }}>
-              Go back
-            </Button>
-            <Button variant="m8-ghost" size="sm" onClick={() => setShowConfirm(false)} style={{ fontSize: 12 }}>
-              Keep chatting
-            </Button>
-          </div>
-        </div>
-      )}
 
       {/* ═══ FULL SLIDING DRAWER ═══ */}
       {/* Backdrop */}
