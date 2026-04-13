@@ -31,6 +31,7 @@ const nextId = () => `msg-${++msgCounter}`;
 
 const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange, inline }: AISummaryPanelProps) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [chatTitle, setChatTitle] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [haltsCollapsed, setHaltsCollapsed] = useState(false);
   const [showViewAll, setShowViewAll] = useState(false);
