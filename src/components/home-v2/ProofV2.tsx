@@ -47,7 +47,7 @@ const testimonials = [
 
 export default function ProofV2() {
   return (
-    <section style={{ background: 'var(--v2-bg-alt)', padding: '100px 0', position: 'relative' }}>
+    <section style={{ padding: '100px 0', position: 'relative' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.h2
           className="m8-h1-large"

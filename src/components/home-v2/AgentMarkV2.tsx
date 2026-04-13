@@ -8,7 +8,7 @@ const beats = [
 
 export default function AgentMarkV2() {
   return (
-    <section style={{ background: 'var(--v2-bg-alt2)', padding: '100px 0', position: 'relative' }}>
+    <section style={{ padding: '100px 0', position: 'relative' }}>
       <div className="container" style={{ display: 'flex', gap: '64px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
         {/* Left column - text */}
         <div style={{ flex: '0 0 44%', maxWidth: '44%' }}>
