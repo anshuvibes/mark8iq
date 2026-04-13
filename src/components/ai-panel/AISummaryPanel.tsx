@@ -70,6 +70,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   }, []);
 
   const handleHaltAnalyse = useCallback((halt: Halt) => {
+    setChatTitle(halt.statement.length > 40 ? halt.statement.slice(0, 40) + '…' : halt.statement);
     setMessages([
       { id: nextId(), type: 'context-pill', pillVariant: 'halt', pillText: halt.statement },
     ]);
