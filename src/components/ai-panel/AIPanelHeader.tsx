@@ -71,6 +71,7 @@ const AIPanelHeader = ({
   const [showConfirm, setShowConfirm] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchActive, setSearchActive] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -82,15 +83,14 @@ const AIPanelHeader = ({
     return () => document.removeEventListener('keydown', handler);
   }, [drawerOpen]);
 
-  // Reset search when drawer closes
   useEffect(() => {
-    if (!drawerOpen) setSearchQuery('');
+    if (!drawerOpen) { setSearchQuery(''); setSearchActive(false); }
   }, [drawerOpen]);
 
-  // Focus search input when drawer opens
+  // Focus search input when search mode activates
   useEffect(() => {
-    if (drawerOpen) setTimeout(() => searchRef.current?.focus(), 300);
-  }, [drawerOpen]);
+    if (searchActive) setTimeout(() => searchRef.current?.focus(), 50);
+  }, [searchActive]);
 
   const handleBack = () => {
     if (hasActiveChat) {
@@ -232,65 +232,72 @@ const AIPanelHeader = ({
           fontFamily: 'var(--font_primary)',
         }}
       >
-        {/* Drawer header */}
+        {/* Drawer header — two modes */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '12px 16px',
+          gap: 8,
+          padding: '10px 12px',
           borderBottom: '1px solid rgba(18,24,43,0.06)',
           flexShrink: 0,
         }}>
-          <span className="m8-p5" style={{ color: 'var(--color_text)', fontWeight: 500 }}>Chat History</span>
-          <button
-            onClick={() => setDrawerOpen(false)}
-            style={{
-              background: 'none', border: 'none', cursor: 'pointer', padding: 4,
-              color: 'rgba(18,24,43,0.4)',
-              borderRadius: 'var(--m8-radius-sm)',
-            }}
-          >
-            <X size={16} />
-          </button>
-        </div>
-
-        {/* Search bar */}
-        <div style={{ padding: '8px 12px', flexShrink: 0 }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-            padding: '7px 10px',
-            borderRadius: 'var(--m8-radius-md)',
-            border: '1px solid rgba(18,24,43,0.1)',
-            background: 'rgba(18,24,43,0.02)',
-          }}>
-            <Search size={13} style={{ color: 'rgba(18,24,43,0.3)', flexShrink: 0 }} />
-            <input
-              ref={searchRef}
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search chats…"
-              className="m8-p6"
-              style={{
-                flex: 1,
-                border: 'none',
-                outline: 'none',
-                background: 'transparent',
-                color: 'var(--color_text)',
-                fontFamily: 'var(--font_primary)',
-              }}
-            />
-            {searchQuery && (
+          {searchActive ? (
+            /* Search mode: full input */
+            <>
+              <Search size={14} style={{ color: 'rgba(18,24,43,0.3)', flexShrink: 0 }} />
+              <input
+                ref={searchRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search chats…"
+                className="m8-p6"
+                style={{
+                  flex: 1,
+                  border: 'none',
+                  outline: 'none',
+                  background: 'transparent',
+                  color: 'var(--color_text)',
+                  fontFamily: 'var(--font_primary)',
+                }}
+              />
               <button
-                onClick={() => { setSearchQuery(''); searchRef.current?.focus(); }}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: 'rgba(18,24,43,0.3)' }}
+                onClick={() => { setSearchActive(false); setSearchQuery(''); }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'rgba(18,24,43,0.4)', borderRadius: 'var(--m8-radius-sm)' }}
               >
-                <X size={12} />
+                <X size={14} />
               </button>
-            )}
-          </div>
+            </>
+          ) : (
+            /* Default mode: title + search trigger + close */
+            <>
+              <span className="m8-p5" style={{ color: 'var(--color_text)', fontWeight: 500, flex: 1 }}>Chat History</span>
+              <button
+                onClick={() => setSearchActive(true)}
+                title="Search chats"
+                style={{
+                  background: 'none', border: 'none', cursor: 'pointer', padding: 4,
+                  color: 'rgba(18,24,43,0.35)',
+                  borderRadius: 'var(--m8-radius-sm)',
+                  transition: 'background 0.15s',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.05)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'none'; }}
+              >
+                <Search size={14} />
+              </button>
+              <button
+                onClick={() => setDrawerOpen(false)}
+                style={{
+                  background: 'none', border: 'none', cursor: 'pointer', padding: 4,
+                  color: 'rgba(18,24,43,0.4)',
+                  borderRadius: 'var(--m8-radius-sm)',
+                }}
+              >
+                <X size={14} />
+              </button>
+            </>
+          )}
         </div>
 
         {/* Chat list — scrollable */}
