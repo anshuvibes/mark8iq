@@ -126,6 +126,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
               boxShadow: '-8px 0 30px rgba(8,13,25,0.08)',
               display: 'flex',
               flexDirection: 'column',
+              overflow: 'hidden',
               zIndex: 50,
               fontFamily: 'var(--font_primary)',
             }}
