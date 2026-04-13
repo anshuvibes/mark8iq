@@ -290,10 +290,9 @@ export default function FragmentationV2() {
       ease: 'power3.inOut',
     }, 96);
 
-    // Remove scroll-dark class during reveal
+    // Switch back to light during logo reveal
     tl.call(() => {
-      document.body.classList.remove('frag-theme-dark');
-      sticky?.classList.remove('frag-scroll-dark');
+      setThemeRef.current('light');
     }, [], 96);
 
     gsap.set(logoRef.current, { opacity: 0, xPercent: -50, yPercent: -50 });
