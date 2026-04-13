@@ -74,6 +74,17 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend }: ChatInputBarProps) =>
 
   const sendStyle = getSendButtonStyle();
 
+  // Inject placeholder style for better visibility
+  useEffect(() => {
+    const id = 'chat-input-placeholder-style';
+    if (!document.getElementById(id)) {
+      const style = document.createElement('style');
+      style.id = id;
+      style.textContent = `.ai-chat-textarea::placeholder { color: rgba(18,24,43,0.45) !important; }`;
+      document.head.appendChild(style);
+    }
+  }, []);
+
   return (
     <div style={{
       padding: '12px 16px 16px',
