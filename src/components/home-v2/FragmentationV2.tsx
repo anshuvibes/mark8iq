@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { useV2Theme } from './ThemeContext';
 
-const marketplacePills = [
+const setThemeRef = { current: (_t: 'light' | 'dark') => {} };
   { label: 'Amazon',           x: -420, y: -190 },
   { label: 'Flipkart',         x:  370, y: -200 },
   { label: 'Myntra',           x: -390, y:  110 },
