@@ -88,10 +88,11 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   }, [simulateResponse]);
 
   const handleSendMessage = useCallback((text: string) => {
+    if (!chatTitle) setChatTitle(text.length > 40 ? text.slice(0, 40) + '…' : text);
     setMessages(prev => [...prev, { id: nextId(), type: 'user-bubble', userText: text }]);
     if (!haltsCollapsed) setHaltsCollapsed(true);
     simulateResponse('generic');
-  }, [simulateResponse, haltsCollapsed]);
+  }, [simulateResponse, haltsCollapsed, chatTitle]);
 
   const handleNewChat = useCallback(() => {
     setMessages([]);
