@@ -167,7 +167,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
         }
       })}
 
-      <div ref={bottomRef} />
+      <div style={{ height: 1 }} />
     </div>
   );
 };
