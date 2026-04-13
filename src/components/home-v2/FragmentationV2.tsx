@@ -35,6 +35,7 @@ function FloatingPill({
   startX,
   startY,
   appearRange,
+  floatDelay,
   style,
 }: {
   scrollYProgress: MotionValue<number>;
@@ -42,10 +43,11 @@ function FloatingPill({
   startX: number;
   startY: number;
   appearRange: [number, number, number, number];
+  floatDelay: number;
   style?: React.CSSProperties;
 }) {
-  const x = useTransform(scrollYProgress, [0, 0.70, 0.86], [startX, startX, 0]);
-  const y = useTransform(scrollYProgress, [0, 0.70, 0.86], [startY, startY, 0]);
+  const x = useTransform(scrollYProgress, [0, 0.68, 0.82], [startX, startX, 0]);
+  const y = useTransform(scrollYProgress, [0, 0.68, 0.82], [startY, startY, 0]);
   const opacity = useTransform(scrollYProgress, appearRange, [0, 1, 1, 0]);
 
   return (
@@ -66,6 +68,7 @@ function FloatingPill({
         fontFamily: "'Saira', sans-serif",
         whiteSpace: 'nowrap',
         pointerEvents: 'none',
+        animation: `fragFloat 3.5s ease-in-out ${floatDelay}s infinite alternate`,
         ...style,
       }}
     >
@@ -80,15 +83,17 @@ function FloatingText({
   startX,
   startY,
   appearRange,
+  floatDelay,
 }: {
   scrollYProgress: MotionValue<number>;
   label: string;
   startX: number;
   startY: number;
   appearRange: [number, number, number, number];
+  floatDelay: number;
 }) {
-  const x = useTransform(scrollYProgress, [0.48, 0.70, 0.86], [startX, startX, 0]);
-  const y = useTransform(scrollYProgress, [0.48, 0.70, 0.86], [startY, startY, 0]);
+  const x = useTransform(scrollYProgress, [0.42, 0.68, 0.82], [startX, startX, 0]);
+  const y = useTransform(scrollYProgress, [0.42, 0.68, 0.82], [startY, startY, 0]);
   const opacity = useTransform(scrollYProgress, appearRange, [0, 1, 1, 0]);
 
   return (
@@ -105,6 +110,7 @@ function FloatingText({
         fontFamily: "'Saira', sans-serif",
         whiteSpace: 'nowrap',
         pointerEvents: 'none',
+        animation: `fragFloat 4s ease-in-out ${floatDelay}s infinite alternate`,
       }}
     >
       {label}
@@ -119,157 +125,154 @@ export default function FragmentationV2() {
     offset: ['start start', 'end end'],
   });
 
-  const bgColor = useTransform(scrollYProgress, [0, 0.10, 0.14], ['#FFFFFF', '#150e22', '#080D19']);
+  const bgColor = useTransform(scrollYProgress, [0, 0.03, 0.06], ['#FFFFFF', '#150e22', '#080D19']);
 
-  // Step anchor copy opacities
-  const step1TextOpacity = useTransform(scrollYProgress, [0.07, 0.12, 0.22, 0.27], [0, 1, 1, 0]);
-  const step2TextOpacity = useTransform(scrollYProgress, [0.28, 0.33, 0.44, 0.49], [0, 1, 1, 0]);
-  const step3TextOpacity = useTransform(scrollYProgress, [0.50, 0.55, 0.60, 0.64], [0, 1, 1, 0]);
+  const step1TextOpacity = useTransform(scrollYProgress, [0.08, 0.12, 0.22, 0.25], [0, 1, 1, 0]);
+  const step2TextOpacity = useTransform(scrollYProgress, [0.28, 0.32, 0.42, 0.45], [0, 1, 1, 0]);
+  const step3TextOpacity = useTransform(scrollYProgress, [0.48, 0.52, 0.58, 0.62], [0, 1, 1, 0]);
 
-  // Pivot
-  const pivotOpacity = useTransform(scrollYProgress, [0.63, 0.67, 0.71, 0.73], [0, 1, 1, 0]);
-  const pivotScale = useTransform(scrollYProgress, [0.63, 0.67], [0.88, 1]);
+  const pivotOpacity = useTransform(scrollYProgress, [0.60, 0.64, 0.66, 0.68], [0, 1, 1, 0]);
+  const pivotScale = useTransform(scrollYProgress, [0.60, 0.64], [0.88, 1]);
 
-  // Circle reveal
-  const circleScale = useTransform(scrollYProgress, [0.86, 1.0], [0, 40]);
-  const circleOpacity = useTransform(scrollYProgress, [0.85, 0.89], [0, 1]);
-  const logoOpacity = useTransform(scrollYProgress, [0.89, 0.94], [0, 1]);
+  const circleScale = useTransform(scrollYProgress, [0.82, 0.95], [0, 40]);
+  const circleOpacity = useTransform(scrollYProgress, [0.82, 0.86], [0, 1]);
+  const logoOpacity = useTransform(scrollYProgress, [0.88, 0.93], [0, 1]);
   const consolidationCopyOpacity = useTransform(scrollYProgress, [0.91, 0.95, 0.98], [0, 1, 0]);
 
   return (
-    <div ref={containerRef} data-section="fragmentation" style={{ height: '500vh', position: 'relative' }}>
-      <motion.div
-        style={{
-          position: 'sticky',
-          top: 0,
-          height: '100vh',
-          width: '100%',
-          overflow: 'hidden',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: bgColor,
-        }}
-      >
-        {/* Fragmentation uses opaque dark bg via motion, so it needs its own grid overlay */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: 'url(/img/bg-pattern-reverse.svg)',
-          backgroundRepeat: 'repeat',
-          opacity: 0.06,
-          pointerEvents: 'none',
-        }} />
-
-        {/* Marketplace logos */}
-        {marketplaces.map((m) => (
-          <FloatingPill
-            key={m.id}
-            scrollYProgress={scrollYProgress}
-            label={m.label}
-            startX={m.startX}
-            startY={m.startY}
-            appearRange={[0.03, 0.10, 0.83, 0.88]}
-          />
-        ))}
-
-        {/* Department tags */}
-        {departments.map((d) => (
-          <FloatingPill
-            key={d.id}
-            scrollYProgress={scrollYProgress}
-            label={d.label}
-            startX={d.startX}
-            startY={d.startY}
-            appearRange={[0.26, 0.32, 0.83, 0.88]}
-            style={{
-              background: 'rgba(142,89,255,0.10)',
-              border: '1px solid rgba(142,89,255,0.22)',
-              color: 'rgba(255,255,255,0.8)',
-            }}
-          />
-        ))}
-
-        {/* Persona labels */}
-        {personas.map((p) => (
-          <FloatingText
-            key={p.id}
-            scrollYProgress={scrollYProgress}
-            label={p.label}
-            startX={p.startX}
-            startY={p.startY}
-            appearRange={[0.49, 0.55, 0.83, 0.88]}
-          />
-        ))}
-
-        {/* Step anchor copy */}
-        <motion.div className="m8-p1" style={{ position: 'absolute', bottom: '30vh', width: '100%', textAlign: 'center', color: '#fff', opacity: step1TextOpacity, pointerEvents: 'none', padding: '0 20px' }}>
-          Every marketplace speaks a different language.
-        </motion.div>
-        <motion.div className="m8-p1" style={{ position: 'absolute', bottom: '30vh', width: '100%', textAlign: 'center', color: '#fff', opacity: step2TextOpacity, pointerEvents: 'none', padding: '0 20px' }}>
-          Every department runs on a different tool. None of them talk to each other.
-        </motion.div>
-        <motion.div className="m8-p1" style={{ position: 'absolute', bottom: '30vh', width: '100%', textAlign: 'center', color: '#fff', opacity: step3TextOpacity, pointerEvents: 'none', padding: '0 20px' }}>
-          Same data. Seven interpretations. Zero shared truth.
-        </motion.div>
-
-        {/* Pivot */}
-        <motion.div
-          className="m8-h1-large"
-          style={{
-            position: 'absolute',
-            color: '#fff',
-            opacity: pivotOpacity,
-            scale: pivotScale,
-            pointerEvents: 'none',
-            zIndex: 10,
-          }}
-        >
-          Until now.
-        </motion.div>
-
-        {/* Circle reveal */}
+    <>
+      <style>{`
+        @keyframes fragFloat {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(-6px); }
+        }
+      `}</style>
+      <div ref={containerRef} data-section="fragmentation" style={{ height: '400vh', position: 'relative' }}>
         <motion.div
           style={{
-            position: 'absolute',
-            width: '60px',
-            height: '60px',
-            borderRadius: '50%',
-            background: '#F5F0FF',
-            scale: circleScale,
-            opacity: circleOpacity,
-            zIndex: 20,
+            position: 'sticky',
+            top: 0,
+            height: '100vh',
+            width: '100%',
+            overflow: 'hidden',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-          }}
-        />
-
-        {/* Logo inside circle */}
-        <motion.div
-          style={{
-            position: 'absolute',
-            opacity: logoOpacity,
-            zIndex: 30,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '12px',
-            pointerEvents: 'none',
+            backgroundColor: bgColor,
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
-            <span style={{ fontSize: '48px', fontFamily: "'Saira', sans-serif", fontWeight: 400, color: '#080D19' }}>mark8 </span>
-            <span style={{ fontSize: '48px', fontFamily: "'Saira', sans-serif", fontWeight: 500, color: '#8E59FF' }}>IQ</span>
-          </div>
-          <motion.p
-            className="m8-p2"
-            style={{ color: 'rgba(8,13,25,0.6)', opacity: consolidationCopyOpacity, textAlign: 'center' }}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: 'url(/img/bg-pattern-reverse.svg)',
+            backgroundRepeat: 'repeat',
+            opacity: 0.06,
+            pointerEvents: 'none',
+          }} />
+
+          {marketplaces.map((m, i) => (
+            <FloatingPill
+              key={m.id}
+              scrollYProgress={scrollYProgress}
+              label={m.label}
+              startX={m.startX}
+              startY={m.startY}
+              appearRange={[0.02, 0.08, 0.80, 0.85]}
+              floatDelay={i * 0.4}
+            />
+          ))}
+
+          {departments.map((d, i) => (
+            <FloatingPill
+              key={d.id}
+              scrollYProgress={scrollYProgress}
+              label={d.label}
+              startX={d.startX}
+              startY={d.startY}
+              appearRange={[0.22, 0.28, 0.80, 0.85]}
+              floatDelay={i * 0.5}
+              style={{
+                background: 'rgba(142,89,255,0.10)',
+                border: '1px solid rgba(142,89,255,0.22)',
+                color: 'rgba(255,255,255,0.8)',
+              }}
+            />
+          ))}
+
+          {personas.map((p, i) => (
+            <FloatingText
+              key={p.id}
+              scrollYProgress={scrollYProgress}
+              label={p.label}
+              startX={p.startX}
+              startY={p.startY}
+              appearRange={[0.42, 0.48, 0.80, 0.85]}
+              floatDelay={i * 0.6}
+            />
+          ))}
+
+          <motion.div className="m8-p1" style={{ position: 'absolute', bottom: '30vh', width: '100%', textAlign: 'center', color: '#fff', opacity: step1TextOpacity, pointerEvents: 'none', padding: '0 20px' }}>
+            Every marketplace speaks a different language.
+          </motion.div>
+          <motion.div className="m8-p1" style={{ position: 'absolute', bottom: '30vh', width: '100%', textAlign: 'center', color: '#fff', opacity: step2TextOpacity, pointerEvents: 'none', padding: '0 20px' }}>
+            Every department runs on a different tool. None of them talk to each other.
+          </motion.div>
+          <motion.div className="m8-p1" style={{ position: 'absolute', bottom: '30vh', width: '100%', textAlign: 'center', color: '#fff', opacity: step3TextOpacity, pointerEvents: 'none', padding: '0 20px' }}>
+            Same data. Seven interpretations. Zero shared truth.
+          </motion.div>
+
+          <motion.div
+            className="m8-h1-large"
+            style={{
+              position: 'absolute',
+              color: '#fff',
+              opacity: pivotOpacity,
+              scale: pivotScale,
+              pointerEvents: 'none',
+              zIndex: 10,
+            }}
           >
-            One platform absorbs it all.
-          </motion.p>
+            Until now.
+          </motion.div>
+
+          <motion.div
+            style={{
+              position: 'absolute',
+              width: '60px',
+              height: '60px',
+              borderRadius: '50%',
+              background: '#F5F0FF',
+              scale: circleScale,
+              opacity: circleOpacity,
+              zIndex: 20,
+            }}
+          />
+
+          <motion.div
+            style={{
+              position: 'absolute',
+              opacity: logoOpacity,
+              zIndex: 30,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '12px',
+              pointerEvents: 'none',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
+              <span style={{ fontSize: '48px', fontFamily: "'Saira', sans-serif", fontWeight: 400, color: '#080D19' }}>mark8 </span>
+              <span style={{ fontSize: '48px', fontFamily: "'Saira', sans-serif", fontWeight: 500, color: '#8E59FF' }}>IQ</span>
+            </div>
+            <motion.p
+              className="m8-p2"
+              style={{ color: 'rgba(8,13,25,0.6)', opacity: consolidationCopyOpacity, textAlign: 'center' }}
+            >
+              One platform absorbs it all.
+            </motion.p>
+          </motion.div>
         </motion.div>
-      </motion.div>
-    </div>
+      </div>
+    </>
   );
 }

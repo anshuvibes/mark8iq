@@ -3,7 +3,7 @@ import Layout from '../components/Layout';
 import Footer from '../components/Footer';
 import HeroV2 from '../components/home-v2/HeroV2';
 import TrustStripV2 from '../components/home-v2/TrustStripV2';
-
+import FragmentationV2 from '../components/home-v2/FragmentationV2';
 import ProductSuiteV2 from '../components/home-v2/ProductSuiteV2';
 import RoleBasedValueV2 from '../components/home-v2/RoleBasedValueV2';
 import AgentMarkV2 from '../components/home-v2/AgentMarkV2';
