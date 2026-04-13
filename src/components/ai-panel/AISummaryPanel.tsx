@@ -30,6 +30,7 @@ let msgCounter = 0;
 const nextId = () => `msg-${++msgCounter}`;
 
 const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange, inline }: AISummaryPanelProps) => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [chatTitle, setChatTitle] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
