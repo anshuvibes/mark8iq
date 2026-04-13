@@ -1044,3 +1044,33 @@ body.frag-theme-dark {
 .v2-dark * {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
+
+/* ─── V2 Dark Mode: Grid Background Overrides ─── */
+/* Dark base color for the grid container */
+.v2-dark .CustomBg_bg_image__RIwVy {
+  background-color: #080D19 !important;
+}
+
+/* Invert grid lines so they show as subtle light lines on dark bg */
+.v2-dark .CustomBg_bg_image__RIwVy::after {
+  filter: invert(1) brightness(0.25);
+  opacity: 0.35;
+}
+
+/* Adjust the mouse-follow gradient for dark mode */
+.v2-dark .CustomBg_bg_gradient__9nROB .gradient_circle {
+  opacity: 0.12 !important;
+}
+
+/* Also handle frag-theme-dark on body — darken the grid container */
+body.frag-theme-dark .CustomBg_bg_image__RIwVy {
+  background-color: #080D19 !important;
+}
+body.frag-theme-dark .CustomBg_bg_image__RIwVy::after {
+  filter: invert(1) brightness(0.25);
+  opacity: 0.35;
+  transition: filter 0.7s ease, opacity 0.7s ease;
+}
+body.frag-theme-dark .CustomBg_bg_gradient__9nROB .gradient_circle {
+  opacity: 0.12 !important;
+}
