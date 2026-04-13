@@ -947,7 +947,7 @@ body {
 }
 
 body.frag-theme-dark {
-  background-color: #080D19;
+  background-color: #080D19 !important;
 }
 
 /* Navbar stays immune to body theme switch */
