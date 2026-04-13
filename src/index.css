@@ -940,3 +940,16 @@ All colors MUST be HSL.
   filter: blur(200px) !important;
   opacity: 0.18 !important;
 }
+
+/* ─── Fragmentation scroll-driven theme transition ─── */
+body {
+  transition: background-color 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.frag-theme-dark {
+  background-color: #080D19;
+}
+
+/* Navbar stays immune to body theme switch */
+.ignore-color-override .text-white { color: #fff !important; }
+.ignore-color-override .text-black { color: rgb(13,14,20) !important; }

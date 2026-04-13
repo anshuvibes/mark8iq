@@ -49,6 +49,36 @@ export default function FragmentationV2() {
   const logoRef = useRef<HTMLDivElement>(null);
   const subCopyRef = useRef<HTMLDivElement>(null);
 
+  // IntersectionObserver — toggles body theme class for Canopy-style transition
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            document.body.classList.add('frag-theme-dark');
+          } else {
+            // Only remove when scrolling back up (section exits bottom of viewport)
+            if (entry.boundingClientRect.top > 0) {
+              document.body.classList.remove('frag-theme-dark');
+            }
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(container);
+
+    return () => {
+      observer.disconnect();
+      document.body.classList.remove('frag-theme-dark');
+    };
+  }, []);
+
+  // GSAP scroll-driven timeline
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -58,19 +88,13 @@ export default function FragmentationV2() {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: container,
-        start: 'top top',
+        start: 'top 80%',
         end: 'bottom bottom',
         scrub: 1.5,
       },
     });
 
-    // PHASE 0 (t=0–8): Background white → dark
-    tl.to(bgRef.current, {
-      backgroundColor: '#080D19',
-      duration: 8,
-      ease: 'none',
-    }, 0);
-
+    // PHASE 0 (t=0–8): Grid fades in (body CSS transition handles bg color)
     tl.to(gridRef.current, {
       opacity: 0.06,
       duration: 8,
@@ -234,11 +258,17 @@ export default function FragmentationV2() {
       ease: 'power3.inOut',
     }, 96);
 
+    // Background transitions to violet tint for circle reveal
     tl.to(bgRef.current, {
       backgroundColor: '#F5F0FF',
       duration: 4,
       ease: 'none',
     }, 96);
+
+    // Also remove the dark theme class when circle expands
+    tl.call(() => {
+      document.body.classList.remove('frag-theme-dark');
+    }, [], 96);
 
     gsap.set(logoRef.current, { opacity: 0, xPercent: -50, yPercent: -50 });
     tl.to(logoRef.current, {
@@ -281,7 +311,7 @@ export default function FragmentationV2() {
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundColor: '#FFFFFF',
+            backgroundColor: 'transparent',
             zIndex: 0,
           }}
         />
