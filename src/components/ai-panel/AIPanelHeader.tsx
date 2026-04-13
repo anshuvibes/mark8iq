@@ -93,11 +93,7 @@ const AIPanelHeader = ({
   }, [searchActive]);
 
   const handleBack = () => {
-    if (hasActiveChat) {
-      setShowConfirm(true);
-    } else {
-      onNewChat();
-    }
+    onNewChat();
   };
 
   // Filter & sort chats
