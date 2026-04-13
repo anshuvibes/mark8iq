@@ -97,7 +97,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
 
           case 'context-pill':
             return (
-              <div key={msg.id} style={{
+              <div ref={isLastUserMsg ? lastUserMsgRef : undefined} key={msg.id} style={{
                 padding: '8px 12px',
                 borderRadius: 'var(--m8-radius-md)',
                 background: 'rgba(142,89,255,0.06)',
@@ -125,10 +125,6 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
                 </div>
               </div>
             );
-
-          case 'context-pill':
-            return (
-              <div ref={isLastUserMsg ? lastUserMsgRef : undefined} key={msg.id} style={{
 
           case 'ai-response':
             return msg.aiResponse ? (
