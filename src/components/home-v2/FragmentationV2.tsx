@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { useV2Theme } from './ThemeContext';
+
 
 const marketplacePills = [
   { label: 'Amazon',           x: -420, y: -190 },
@@ -64,6 +66,7 @@ const headingBase: React.CSSProperties = {
 };
 
 export default function FragmentationV2() {
+  const { setTheme } = useV2Theme();
   const containerRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
@@ -82,31 +85,27 @@ export default function FragmentationV2() {
   const logoRef = useRef<HTMLDivElement>(null);
   const subCopyRef = useRef<HTMLDivElement>(null);
 
-  // ScrollTrigger-based theme toggle
+  // Store setTheme in a ref so GSAP callbacks can access it without stale closures
+  const setThemeRef = useRef(setTheme);
+  setThemeRef.current = setTheme;
+
+  // ScrollTrigger-based theme toggle — uses global V2 theme context
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const container = containerRef.current;
-    const sticky = stickyRef.current;
-    if (!container || !sticky) return;
+    if (!container) return;
 
     const themeTrigger = ScrollTrigger.create({
       trigger: container,
       start: 'top 40%',
       end: 'bottom bottom',
-      onEnter: () => {
-        document.body.classList.add('frag-theme-dark');
-        sticky.classList.add('frag-scroll-dark');
-      },
-      onLeaveBack: () => {
-        document.body.classList.remove('frag-theme-dark');
-        sticky.classList.remove('frag-scroll-dark');
-      },
+      onEnter: () => setThemeRef.current('dark'),
+      onLeaveBack: () => setThemeRef.current('light'),
     });
 
     return () => {
       themeTrigger.kill();
-      document.body.classList.remove('frag-theme-dark');
-      sticky.classList.remove('frag-scroll-dark');
+      setThemeRef.current('light');
     };
   }, []);
 
@@ -291,10 +290,9 @@ export default function FragmentationV2() {
       ease: 'power3.inOut',
     }, 96);
 
-    // Remove scroll-dark class during reveal
+    // Switch back to light during logo reveal
     tl.call(() => {
-      document.body.classList.remove('frag-theme-dark');
-      sticky?.classList.remove('frag-scroll-dark');
+      setThemeRef.current('light');
     }, [], 96);
 
     gsap.set(logoRef.current, { opacity: 0, xPercent: -50, yPercent: -50 });

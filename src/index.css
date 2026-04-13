@@ -904,7 +904,7 @@ All colors MUST be HSL.
   background-color: var(--m8-grid-base, #F0F1F6) !important;
   background-image: none !important;
   position: relative !important;
-  transition: background-color 0.5s ease !important;
+  transition: background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 /* Grid SVG rendered as a pseudo-element ABOVE the gradient but below content */
@@ -943,13 +943,9 @@ All colors MUST be HSL.
   opacity: 0.18 !important;
 }
 
-/* ─── Fragmentation scroll-driven theme transition ─── */
+/* ─── Smooth body transition (legacy fallback) ─── */
 body {
-  transition: background-color 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-body.frag-theme-dark {
-  background-color: #080D19 !important;
+  transition: background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Navbar stays immune to body theme switch */
@@ -1029,26 +1025,19 @@ body.frag-theme-dark {
   --v2-frag-sub-text:       rgba(255,255,255,0.6);
 }
 
-/* Fragmentation scroll-driven dark overrides — applied during scroll animation */
-.frag-scroll-dark {
-  --v2-frag-bg:             #080D19;
-  --v2-frag-pill-bg:        rgba(255,255,255,0.08);
-  --v2-frag-pill-border:    rgba(255,255,255,0.15);
-  --v2-frag-pill-text:      rgba(255,255,255,0.85);
-  --v2-frag-dept-bg:        rgba(142,89,255,0.10);
-  --v2-frag-dept-border:    rgba(142,89,255,0.22);
-  --v2-frag-dept-text:      rgba(255,255,255,0.8);
-  --v2-frag-persona-text:   rgba(255,255,255,0.48);
-  --v2-frag-heading-text:   #FFFFFF;
-}
 
-/* V2 dark mode transitions */
-.v2-dark * {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+/* V2 dark mode — very subtle transition */
+.v2-dark *,
+.v2-dark *::before,
+.v2-dark *::after {
+  transition: background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              filter 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ─── V2 Dark Mode: Grid Background Overrides ─── */
-/* Dark base color for the grid container */
 .v2-dark .CustomBg_bg_image__RIwVy {
   background-color: #080D19 !important;
 }
@@ -1061,18 +1050,5 @@ body.frag-theme-dark {
 
 /* Adjust the mouse-follow gradient for dark mode */
 .v2-dark .CustomBg_bg_gradient__9nROB .gradient_circle {
-  opacity: 0.12 !important;
-}
-
-/* Also handle frag-theme-dark on body — darken the grid container */
-body.frag-theme-dark .CustomBg_bg_image__RIwVy {
-  background-color: #080D19 !important;
-}
-body.frag-theme-dark .CustomBg_bg_image__RIwVy::after {
-  filter: invert(1) brightness(0.25);
-  opacity: 0.35;
-  transition: filter 0.7s ease, opacity 0.7s ease;
-}
-body.frag-theme-dark .CustomBg_bg_gradient__9nROB .gradient_circle {
   opacity: 0.12 !important;
 }
