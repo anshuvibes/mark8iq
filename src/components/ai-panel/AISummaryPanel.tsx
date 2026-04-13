@@ -23,12 +23,13 @@ interface AISummaryPanelProps {
   currentPage: string;
   currentPageId: DashboardPageId;
   dateRange: string;
+  inline?: boolean;
 }
 
 let msgCounter = 0;
 const nextId = () => `msg-${++msgCounter}`;
 
-const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange }: AISummaryPanelProps) => {
+const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange, inline }: AISummaryPanelProps) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [haltsCollapsed, setHaltsCollapsed] = useState(false);
