@@ -1,4 +1,4 @@
-import { X, MessageSquarePlus } from 'lucide-react';
+import { X, MessageSquarePlus, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
@@ -7,9 +7,11 @@ interface AIPanelHeaderProps {
   hasActiveChat: boolean;
   onClose: () => void;
   onNewChat: () => void;
+  currentPage?: string;
+  dateRange?: string;
 }
 
-const AIPanelHeader = ({ userName, hasActiveChat, onClose, onNewChat }: AIPanelHeaderProps) => {
+const AIPanelHeader = ({ userName, hasActiveChat, onClose, onNewChat, currentPage, dateRange }: AIPanelHeaderProps) => {
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handleNewChat = () => {
@@ -22,16 +24,21 @@ const AIPanelHeader = ({ userName, hasActiveChat, onClose, onNewChat }: AIPanelH
 
   return (
     <div style={{ borderBottom: '1px solid rgba(18,24,43,0.06)' }}>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', padding: '16px 16px 12px' }}>
-        <div>
-          <div className="m8-p4" style={{ color: 'var(--color_text)' }}>
-            Hello, {userName}
-          </div>
-          <div className="m8-p6" style={{ color: 'rgba(18,24,43,0.45)', marginTop: 2 }}>
-            How can I help you today?
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
+          <Sparkles size={16} style={{ color: 'var(--color_primary)', flexShrink: 0 }} />
+          <div style={{ minWidth: 0 }}>
+            <div className="m8-p5" style={{ color: 'var(--color_text)', fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {currentPage || 'AI Insights'}
+            </div>
+            {dateRange && (
+              <div className="m8-p6" style={{ color: 'rgba(18,24,43,0.4)', marginTop: 1 }}>
+                {dateRange}
+              </div>
+            )}
           </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
           <button
             onClick={handleNewChat}
             title="New chat"
@@ -62,7 +69,6 @@ const AIPanelHeader = ({ userName, hasActiveChat, onClose, onNewChat }: AIPanelH
         </div>
       </div>
 
-      {/* New Chat confirmation */}
       {showConfirm && (
         <div style={{
           padding: '10px 16px 12px',
