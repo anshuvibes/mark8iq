@@ -44,14 +44,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         if (lastUserMsgRef.current) {
-          const el = lastUserMsgRef.current;
-          const scrollParent = el.closest('.ai-panel-scroll') as HTMLElement | null;
-          if (scrollParent) {
-            const elRect = el.getBoundingClientRect();
-            const parentRect = scrollParent.getBoundingClientRect();
-            const offset = elRect.top - parentRect.top + scrollParent.scrollTop;
-            scrollParent.scrollTo({ top: offset, behavior: 'smooth' });
-          }
+          lastUserMsgRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
     });
