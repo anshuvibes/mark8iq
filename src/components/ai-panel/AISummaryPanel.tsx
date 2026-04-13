@@ -116,49 +116,53 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
         onNewChat={handleNewChat}
       />
 
-      <HaltsSection
-        halts={mockHalts}
-        collapsed={haltsCollapsed}
-        hasActiveChat={hasActiveChat}
-        onAnalyse={handleHaltAnalyse}
-        onViewAll={() => setShowViewAll(true)}
-        onToggleCollapse={() => setHaltsCollapsed(!haltsCollapsed)}
-      />
-
-      {!haltsCollapsed && (
-        <SuggestionsSection
-          suggestions={mockSuggestions}
-          onSelect={handleSuggestionSelect}
-          isStale={false}
+      {/* Scrollable middle area */}
+      <div style={{ flex: 1, minHeight: 0, overflow: 'auto', display: 'flex', flexDirection: 'column' }}>
+        <HaltsSection
+          halts={mockHalts}
+          collapsed={haltsCollapsed}
+          hasActiveChat={hasActiveChat}
+          onAnalyse={handleHaltAnalyse}
+          onViewAll={() => setShowViewAll(true)}
+          onToggleCollapse={() => setHaltsCollapsed(!haltsCollapsed)}
         />
-      )}
 
-      {contextNotice && (
-        <div style={{
-          padding: '8px 16px',
-          background: 'rgba(142,89,255,0.04)',
-          borderBottom: '1px solid rgba(142,89,255,0.1)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 8,
-        }}>
-          <span className="m8-p6" style={{ color: 'var(--color_text)', flex: 1 }}>{contextNotice}</span>
-          <button
-            onClick={() => setContextNotice(null)}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: 'rgba(18,24,43,0.35)' }}
-          >
-            ×
-          </button>
-        </div>
-      )}
+        {!haltsCollapsed && (
+          <SuggestionsSection
+            suggestions={mockSuggestions}
+            onSelect={handleSuggestionSelect}
+            isStale={false}
+          />
+        )}
 
-      <ChatWindow
-        messages={messages}
-        showLoadPrevious={!previousLoaded && hasActiveChat}
-        onLoadPrevious={handleLoadPrevious}
-        onRetry={handleRetry}
-      />
+        {contextNotice && (
+          <div style={{
+            padding: '8px 16px',
+            background: 'rgba(142,89,255,0.04)',
+            borderBottom: '1px solid rgba(142,89,255,0.1)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+          }}>
+            <span className="m8-p6" style={{ color: 'var(--color_text)', flex: 1 }}>{contextNotice}</span>
+            <button
+              onClick={() => setContextNotice(null)}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: 'rgba(18,24,43,0.35)' }}
+            >
+              ×
+            </button>
+          </div>
+        )}
 
+        <ChatWindow
+          messages={messages}
+          showLoadPrevious={!previousLoaded && hasActiveChat}
+          onLoadPrevious={handleLoadPrevious}
+          onRetry={handleRetry}
+        />
+      </div>
+
+      {/* Pinned at bottom */}
       <ChatInputBar
         contextLabel={contextLabel}
         isLoading={isLoading}
