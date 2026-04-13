@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Bell, Sparkles, ChevronDown } from 'lucide-react';
+import { Bell, Sparkles, ChevronDown, Calendar } from 'lucide-react';
 import AISummaryPanel from '@/components/ai-panel/AISummaryPanel';
 import { dashboardPages, type DashboardPageId } from '@/data/aiPanelMockData';
 
@@ -21,91 +21,201 @@ const DashboardAdsPage = () => {
 
   return (
     <div style={{ fontFamily: 'var(--font_primary)', background: '#F8F9FC', minHeight: '100vh' }}>
-      {/* Dashboard Header */}
+      {/* ═══ TOP NAV BAR (dark) ═══ */}
       <header style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 24px',
-        height: 56,
-        background: '#FFFFFF',
-        borderBottom: '1px solid rgba(18,24,43,0.08)',
+        padding: '0 20px',
+        height: 52,
+        background: 'var(--color_neutral_dark)',
         position: 'sticky',
         top: 0,
         zIndex: 40,
       }}>
-        {/* Left: Logo */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <img src="/img/product-logos/black/mark8-ads.svg" alt="Mark8 Ads" style={{ height: 24 }} />
+        {/* Left: Logo + Brand selector */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <img src="/img/product-logos/white/mark8-ads.svg" alt="Mark8 Ads" style={{ height: 22 }} />
+
+          {/* Brand selector pill */}
+          <button style={{
+            display: 'flex', alignItems: 'center', gap: 8,
+            padding: '5px 14px',
+            borderRadius: 'var(--m8-radius-md)',
+            border: '1px solid rgba(255,255,255,0.15)',
+            background: 'rgba(255,255,255,0.08)',
+            color: '#FFFFFF',
+            cursor: 'pointer',
+            fontFamily: 'var(--font_primary)',
+          }}>
+            <span className="m8-p6" style={{ color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10, lineHeight: 1 }}>Brand</span>
+            <span className="m8-p6" style={{ color: '#FFFFFF' }}>Artment</span>
+            <ChevronDown size={12} style={{ color: 'rgba(255,255,255,0.5)' }} />
+          </button>
         </div>
 
-        {/* Center: Page tabs */}
-        <div style={{ display: 'flex', gap: 0 }}>
+        {/* Center: Date range */}
+        <button style={{
+          display: 'flex', alignItems: 'center', gap: 10,
+          padding: '6px 16px',
+          borderRadius: 'var(--m8-radius-md)',
+          border: '1px solid rgba(255,255,255,0.15)',
+          background: 'rgba(255,255,255,0.05)',
+          color: '#FFFFFF',
+          cursor: 'pointer',
+          fontFamily: 'var(--font_primary)',
+        }}>
+          <span className="m8-p6" style={{ color: '#FFFFFF' }}>06/04/2026 - 12/04/2026</span>
+          <span className="m8-p6" style={{ color: 'rgba(255,255,255,0.35)' }}>vs</span>
+          <span className="m8-p6" style={{ color: '#FFFFFF' }}>06/03/2026 - 12/03/2026</span>
+          <Calendar size={14} style={{ color: 'rgba(255,255,255,0.5)' }} />
+        </button>
+
+        {/* Right: Bell + AI + User */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <button
+            onClick={() => setPanelOpen(!panelOpen)}
+            title="AI Summary"
+            style={{
+              display: 'flex', alignItems: 'center', gap: 6,
+              padding: '6px 12px',
+              borderRadius: 'var(--m8-radius-md)',
+              border: 'none',
+              background: panelOpen ? 'var(--color_primary)' : 'rgba(142,89,255,0.25)',
+              color: '#FFFFFF',
+              cursor: 'pointer',
+              transition: 'background 0.15s',
+              fontFamily: 'var(--font_primary)',
+            }}
+          >
+            <Sparkles size={14} />
+            <span className="m8-p6" style={{ color: '#FFFFFF' }}>Ask AI</span>
+          </button>
+
+          <button style={{
+            background: 'none', border: 'none', cursor: 'pointer', padding: 8,
+            color: 'rgba(255,255,255,0.5)',
+          }}>
+            <Bell size={18} />
+          </button>
+
+          {/* User avatar */}
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 8, marginLeft: 4,
+            cursor: 'pointer',
+          }}>
+            <div style={{
+              width: 30, height: 30, borderRadius: '50%',
+              background: 'var(--color_primary)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: '#FFFFFF', fontSize: 13, fontFamily: 'var(--font_primary)',
+            }}>
+              S
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span className="m8-p6" style={{ color: '#FFFFFF', lineHeight: 1.2 }}>Satyam</span>
+              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: 10, fontFamily: 'var(--font_primary)', lineHeight: 1.2 }}>User</span>
+            </div>
+            <ChevronDown size={12} style={{ color: 'rgba(255,255,255,0.4)' }} />
+          </div>
+        </div>
+      </header>
+
+      {/* ═══ SUB-NAV BAR (light) ═══ */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 20px',
+        background: '#FFFFFF',
+        borderBottom: '1px solid rgba(18,24,43,0.08)',
+      }}>
+        {/* Left: Channel tab */}
+        <div style={{ display: 'flex' }}>
+          <button className="m8-p6" style={{
+            padding: '10px 16px',
+            border: 'none',
+            background: 'transparent',
+            color: 'var(--color_primary)',
+            cursor: 'pointer',
+            borderBottom: '2px solid var(--color_primary)',
+            fontFamily: 'var(--font_primary)',
+          }}>
+            Amazon
+          </button>
+        </div>
+
+        {/* Right: View mode + filters */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          {/* Comparison / Summary toggle */}
+          <div style={{ display: 'flex', borderRadius: 'var(--m8-radius-md)', overflow: 'hidden', border: '1px solid rgba(18,24,43,0.1)' }}>
+            <button className="m8-p6" style={{
+              padding: '5px 14px', border: 'none',
+              background: 'var(--color_primary)', color: '#FFFFFF',
+              cursor: 'pointer', fontFamily: 'var(--font_primary)',
+              textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: 11,
+            }}>
+              Comparison
+            </button>
+            <button className="m8-p6" style={{
+              padding: '5px 14px', border: 'none',
+              background: '#FFFFFF', color: 'rgba(18,24,43,0.5)',
+              cursor: 'pointer', fontFamily: 'var(--font_primary)',
+              textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: 11,
+            }}>
+              Summary
+            </button>
+          </div>
+
+          {/* Page tabs */}
           {dashboardPages.map((page) => (
             <button
               key={page.id}
               onClick={() => setCurrentPageId(page.id)}
               className="m8-p6"
               style={{
-                padding: '8px 16px',
+                padding: '10px 12px',
                 border: 'none',
-                background: currentPageId === page.id ? 'rgba(142,89,255,0.08)' : 'transparent',
-                color: currentPageId === page.id ? 'var(--color_primary)' : 'rgba(18,24,43,0.5)',
+                background: 'transparent',
+                color: currentPageId === page.id ? 'var(--color_primary)' : 'rgba(18,24,43,0.45)',
                 cursor: 'pointer',
                 borderBottom: currentPageId === page.id ? '2px solid var(--color_primary)' : '2px solid transparent',
-                transition: 'all 0.15s',
                 fontFamily: 'var(--font_primary)',
               }}
             >
               {page.label}
             </button>
           ))}
-        </div>
 
-        {/* Right: Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <button style={{
-            background: 'none', border: 'none', cursor: 'pointer', padding: 8,
-            color: 'rgba(18,24,43,0.45)',
-            borderRadius: 'var(--m8-radius-sm)',
-          }}>
-            <Bell size={18} />
-          </button>
-
-          <button
-            onClick={() => setPanelOpen(!panelOpen)}
-            title="AI Summary"
-            style={{
-              background: panelOpen ? 'rgba(142,89,255,0.08)' : 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: 8,
-              color: panelOpen ? 'var(--color_primary)' : 'rgba(18,24,43,0.45)',
-              borderRadius: 'var(--m8-radius-sm)',
-              transition: 'all 0.15s',
-            }}
-          >
-            <Sparkles size={18} />
-          </button>
-
-          {/* User avatar */}
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: 8, marginLeft: 8,
-            padding: '4px 8px', borderRadius: 'var(--m8-radius-md)',
+          {/* Filter dropdowns */}
+          <button className="m8-p6" style={{
+            display: 'flex', alignItems: 'center', gap: 6,
+            padding: '5px 12px',
+            borderRadius: 'var(--m8-radius-md)',
+            border: '1px solid rgba(18,24,43,0.12)',
+            background: '#FFFFFF',
+            color: 'var(--color_text)',
             cursor: 'pointer',
+            fontFamily: 'var(--font_primary)',
           }}>
-            <div style={{
-              width: 28, height: 28, borderRadius: '50%',
-              background: 'var(--color_primary)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: '#FFFFFF', fontSize: 12, fontFamily: 'var(--font_primary)',
-            }}>
-              ST
-            </div>
-            <span className="m8-p6" style={{ color: 'var(--color_text)' }}>Satyam T.</span>
-          </div>
+            Select Sub Brand
+            <ChevronDown size={12} style={{ color: 'rgba(18,24,43,0.35)' }} />
+          </button>
+          <button className="m8-p6" style={{
+            display: 'flex', alignItems: 'center', gap: 6,
+            padding: '5px 12px',
+            borderRadius: 'var(--m8-radius-md)',
+            border: '1px solid rgba(18,24,43,0.12)',
+            background: '#FFFFFF',
+            color: 'var(--color_text)',
+            cursor: 'pointer',
+            fontFamily: 'var(--font_primary)',
+          }}>
+            Select Panel
+            <ChevronDown size={12} style={{ color: 'rgba(18,24,43,0.35)' }} />
+          </button>
         </div>
-      </header>
+      </div>
 
       {/* Dashboard Content */}
       <div style={{
