@@ -71,6 +71,7 @@ const AIPanelHeader = ({
   const [showConfirm, setShowConfirm] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchActive, setSearchActive] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -82,15 +83,14 @@ const AIPanelHeader = ({
     return () => document.removeEventListener('keydown', handler);
   }, [drawerOpen]);
 
-  // Reset search when drawer closes
   useEffect(() => {
-    if (!drawerOpen) setSearchQuery('');
+    if (!drawerOpen) { setSearchQuery(''); setSearchActive(false); }
   }, [drawerOpen]);
 
-  // Focus search input when drawer opens
+  // Focus search input when search mode activates
   useEffect(() => {
-    if (drawerOpen) setTimeout(() => searchRef.current?.focus(), 300);
-  }, [drawerOpen]);
+    if (searchActive) setTimeout(() => searchRef.current?.focus(), 50);
+  }, [searchActive]);
 
   const handleBack = () => {
     if (hasActiveChat) {
