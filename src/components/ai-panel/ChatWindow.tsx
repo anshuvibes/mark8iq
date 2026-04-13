@@ -29,23 +29,33 @@ const LoadingDots = () => (
 
 const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: ChatWindowProps) => {
   const lastUserMsgRef = useRef<HTMLDivElement>(null);
+  const lastScrolledId = useRef<string | null>(null);
+
+  // Find the last user message id
+  const lastUserMsg = [...messages].reverse().find(
+    m => m.type === 'user-bubble' || m.type === 'context-pill'
+  );
 
   useEffect(() => {
-    // Use rAF to ensure DOM has laid out before measuring
-    const raf = requestAnimationFrame(() => {
-      if (lastUserMsgRef.current) {
-        const el = lastUserMsgRef.current;
-        const scrollParent = el.closest('.ai-panel-scroll') as HTMLElement | null;
-        if (scrollParent) {
-          const elRect = el.getBoundingClientRect();
-          const parentRect = scrollParent.getBoundingClientRect();
-          const offset = elRect.top - parentRect.top + scrollParent.scrollTop;
-          scrollParent.scrollTo({ top: offset, behavior: 'smooth' });
+    if (!lastUserMsg || lastUserMsg.id === lastScrolledId.current) return;
+    lastScrolledId.current = lastUserMsg.id;
+
+    // Double rAF to ensure layout is complete after React render
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (lastUserMsgRef.current) {
+          const el = lastUserMsgRef.current;
+          const scrollParent = el.closest('.ai-panel-scroll') as HTMLElement | null;
+          if (scrollParent) {
+            const elRect = el.getBoundingClientRect();
+            const parentRect = scrollParent.getBoundingClientRect();
+            const offset = elRect.top - parentRect.top + scrollParent.scrollTop;
+            scrollParent.scrollTo({ top: offset, behavior: 'smooth' });
+          }
         }
-      }
+      });
     });
-    return () => cancelAnimationFrame(raf);
-  }, [messages.length]);
+  }, [lastUserMsg?.id]);
 
   if (messages.length === 0) {
     return (
