@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 
 interface ChatInputBarProps {
