@@ -904,6 +904,7 @@ All colors MUST be HSL.
   background-color: var(--m8-grid-base, #F0F1F6) !important;
   background-image: none !important;
   position: relative !important;
+  transition: background-color 0.5s ease !important;
 }
 
 /* Grid SVG rendered as a pseudo-element ABOVE the gradient but below content */
