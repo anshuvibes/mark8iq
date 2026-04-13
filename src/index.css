@@ -1051,3 +1051,9 @@ body {
 .v2-dark .CustomBg_bg_gradient__9nROB .gradient_circle {
   opacity: 0.12 !important;
 }
+
+/* ── AI PANEL LOADING DOTS ─────────────────────────────────────── */
+@keyframes ai-panel-dot-pulse {
+  0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1.1); }
+}
