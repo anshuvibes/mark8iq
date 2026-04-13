@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import AIPanelHeader from './AIPanelHeader';
 import HaltsSection from './HaltsSection';
