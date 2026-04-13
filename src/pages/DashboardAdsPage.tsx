@@ -309,27 +309,26 @@ const DashboardAdsPage = () => {
         </div>
 
         {/* Right: AI Panel — inline, pushes dashboard */}
-        {panelOpen && (
-          <div style={{
-            width: 420,
-            flexShrink: 0,
-            borderLeft: '1px solid rgba(18,24,43,0.08)',
-            background: '#FFFFFF',
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-            height: 'calc(100vh - 52px)',
-          }}>
-            <AISummaryPanel
-              isOpen={panelOpen}
-              onClose={() => setPanelOpen(false)}
-              currentPage={currentPage.label}
-              currentPageId={currentPageId}
-              dateRange={dateRange}
-              inline
-            />
-          </div>
-        )}
+        <div style={{
+          width: panelOpen ? 420 : 0,
+          flexShrink: 0,
+          borderLeft: panelOpen ? '1px solid rgba(18,24,43,0.08)' : 'none',
+          background: '#FFFFFF',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+          height: 'calc(100vh - 52px)',
+          transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        }}>
+          <AISummaryPanel
+            isOpen={panelOpen}
+            onClose={() => setPanelOpen(false)}
+            currentPage={currentPage.label}
+            currentPageId={currentPageId}
+            dateRange={dateRange}
+            inline
+          />
+        </div>
       </div>
     </div>
   );

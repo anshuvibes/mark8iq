@@ -117,7 +117,6 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
       <AIPanelHeader
         hasActiveChat={hasActiveChat}
         chatTitle={chatTitle || undefined}
-        onClose={onClose}
         onNewChat={handleNewChat}
       />
 
