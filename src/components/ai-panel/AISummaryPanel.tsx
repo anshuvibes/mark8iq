@@ -96,6 +96,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
 
   const handleNewChat = useCallback(() => {
     setMessages([]);
+    setChatTitle(null);
     setHaltsCollapsed(false);
     setPreviousLoaded(false);
     setContextNotice(null);
