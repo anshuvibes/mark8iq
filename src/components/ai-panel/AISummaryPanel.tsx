@@ -23,12 +23,13 @@ interface AISummaryPanelProps {
   currentPage: string;
   currentPageId: DashboardPageId;
   dateRange: string;
+  inline?: boolean;
 }
 
 let msgCounter = 0;
 const nextId = () => `msg-${++msgCounter}`;
 
-const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange }: AISummaryPanelProps) => {
+const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange, inline }: AISummaryPanelProps) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [haltsCollapsed, setHaltsCollapsed] = useState(false);
@@ -106,6 +107,94 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
     simulateResponse('generic');
   }, [simulateResponse]);
 
+  const panelContent = (
+    <>
+      <AIPanelHeader
+        userName="Satyam"
+        hasActiveChat={hasActiveChat}
+        onClose={onClose}
+        onNewChat={handleNewChat}
+      />
+
+      <HaltsSection
+        halts={mockHalts}
+        collapsed={haltsCollapsed}
+        hasActiveChat={hasActiveChat}
+        onAnalyse={handleHaltAnalyse}
+        onViewAll={() => setShowViewAll(true)}
+        onToggleCollapse={() => setHaltsCollapsed(!haltsCollapsed)}
+      />
+
+      {!haltsCollapsed && (
+        <SuggestionsSection
+          suggestions={mockSuggestions}
+          onSelect={handleSuggestionSelect}
+          isStale={false}
+        />
+      )}
+
+      {contextNotice && (
+        <div style={{
+          padding: '8px 16px',
+          background: 'rgba(142,89,255,0.04)',
+          borderBottom: '1px solid rgba(142,89,255,0.1)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+        }}>
+          <span className="m8-p6" style={{ color: 'var(--color_text)', flex: 1 }}>{contextNotice}</span>
+          <button
+            onClick={() => setContextNotice(null)}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: 'rgba(18,24,43,0.35)' }}
+          >
+            ×
+          </button>
+        </div>
+      )}
+
+      <ChatWindow
+        messages={messages}
+        showLoadPrevious={!previousLoaded && hasActiveChat}
+        onLoadPrevious={handleLoadPrevious}
+        onRetry={handleRetry}
+      />
+
+      <ChatInputBar
+        contextLabel={contextLabel}
+        isLoading={isLoading}
+        onSend={handleSendMessage}
+      />
+    </>
+  );
+
+  // Inline mode: render content directly, parent controls the container
+  if (inline) {
+    return (
+      <>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1,
+          minHeight: 0,
+          fontFamily: 'var(--font_primary)',
+        }}>
+          {panelContent}
+        </div>
+
+        {showViewAll && (
+          <ViewAllInsightsModal
+            halts={mockHalts}
+            contextLabel={contextLabel}
+            hasActiveChat={hasActiveChat}
+            onAnalyse={handleHaltAnalyse}
+            onClose={() => setShowViewAll(false)}
+          />
+        )}
+      </>
+    );
+  }
+
+  // Fixed overlay mode (fallback)
   return (
     <>
       <AnimatePresence>
@@ -131,62 +220,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
               fontFamily: 'var(--font_primary)',
             }}
           >
-            <AIPanelHeader
-              userName="Satyam"
-              hasActiveChat={hasActiveChat}
-              onClose={onClose}
-              onNewChat={handleNewChat}
-            />
-
-            <HaltsSection
-              halts={mockHalts}
-              collapsed={haltsCollapsed}
-              hasActiveChat={hasActiveChat}
-              onAnalyse={handleHaltAnalyse}
-              onViewAll={() => setShowViewAll(true)}
-              onToggleCollapse={() => setHaltsCollapsed(!haltsCollapsed)}
-            />
-
-            {!haltsCollapsed && (
-              <SuggestionsSection
-                suggestions={mockSuggestions}
-                onSelect={handleSuggestionSelect}
-                isStale={false}
-              />
-            )}
-
-            {/* Context change notice */}
-            {contextNotice && (
-              <div style={{
-                padding: '8px 16px',
-                background: 'rgba(142,89,255,0.04)',
-                borderBottom: '1px solid rgba(142,89,255,0.1)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 8,
-              }}>
-                <span className="m8-p6" style={{ color: 'var(--color_text)', flex: 1 }}>{contextNotice}</span>
-                <button
-                  onClick={() => setContextNotice(null)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: 'rgba(18,24,43,0.35)' }}
-                >
-                  ×
-                </button>
-              </div>
-            )}
-
-            <ChatWindow
-              messages={messages}
-              showLoadPrevious={!previousLoaded && hasActiveChat}
-              onLoadPrevious={handleLoadPrevious}
-              onRetry={handleRetry}
-            />
-
-            <ChatInputBar
-              contextLabel={contextLabel}
-              isLoading={isLoading}
-              onSend={handleSendMessage}
-            />
+            {panelContent}
           </motion.div>
         )}
       </AnimatePresence>
