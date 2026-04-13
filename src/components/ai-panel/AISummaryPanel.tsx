@@ -1,0 +1,206 @@
+import { useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import AIPanelHeader from './AIPanelHeader';
+import HaltsSection from './HaltsSection';
+import SuggestionsSection from './SuggestionsSection';
+import ChatWindow from './ChatWindow';
+import ChatInputBar from './ChatInputBar';
+import ViewAllInsightsModal from './ViewAllInsightsModal';
+import {
+  mockHalts,
+  mockSuggestions,
+  mockResponses,
+  mockPreviousSession,
+  type ChatMessage,
+  type Halt,
+  type Suggestion,
+  type DashboardPageId,
+} from '@/data/aiPanelMockData';
+
+interface AISummaryPanelProps {
+  isOpen: boolean;
+  onClose: () => void;
+  currentPage: string;
+  currentPageId: DashboardPageId;
+  dateRange: string;
+}
+
+let msgCounter = 0;
+const nextId = () => `msg-${++msgCounter}`;
+
+const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange }: AISummaryPanelProps) => {
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [haltsCollapsed, setHaltsCollapsed] = useState(false);
+  const [showViewAll, setShowViewAll] = useState(false);
+  const [previousLoaded, setPreviousLoaded] = useState(false);
+  const [contextNotice, setContextNotice] = useState<string | null>(null);
+  const [lastPageId, setLastPageId] = useState<DashboardPageId>(currentPageId);
+
+  const hasActiveChat = messages.some(m => m.type !== 'date-separator' && m.type !== 'divider');
+  const contextLabel = `${currentPage}  ·  ${dateRange}`;
+
+  // Detect page change
+  if (currentPageId !== lastPageId && hasActiveChat) {
+    const pageName = currentPage;
+    setMessages(prev => [
+      ...prev,
+      { id: nextId(), type: 'divider', dividerPage: pageName },
+    ]);
+    setContextNotice(`You've moved to ${pageName}. New questions will be based on this page.`);
+    setLastPageId(currentPageId);
+  } else if (currentPageId !== lastPageId) {
+    setLastPageId(currentPageId);
+  }
+
+  const simulateResponse = useCallback((responseKey: string) => {
+    setIsLoading(true);
+    setMessages(prev => [...prev, { id: nextId(), type: 'loading' }]);
+
+    setTimeout(() => {
+      const response = mockResponses[responseKey] || mockResponses.generic;
+      setMessages(prev => {
+        const filtered = prev.filter(m => m.type !== 'loading');
+        return [...filtered, { id: nextId(), type: 'ai-response', aiResponse: response }];
+      });
+      setIsLoading(false);
+    }, 3000);
+  }, []);
+
+  const handleHaltAnalyse = useCallback((halt: Halt) => {
+    setMessages([
+      { id: nextId(), type: 'context-pill', pillVariant: 'halt', pillText: halt.statement },
+    ]);
+    setHaltsCollapsed(true);
+    simulateResponse(halt.id);
+  }, [simulateResponse]);
+
+  const handleSuggestionSelect = useCallback((suggestion: Suggestion) => {
+    setMessages([
+      { id: nextId(), type: 'context-pill', pillVariant: 'suggestion', pillText: suggestion.question },
+    ]);
+    setHaltsCollapsed(true);
+    simulateResponse(suggestion.id);
+  }, [simulateResponse]);
+
+  const handleSendMessage = useCallback((text: string) => {
+    setMessages(prev => [...prev, { id: nextId(), type: 'user-bubble', userText: text }]);
+    if (!haltsCollapsed) setHaltsCollapsed(true);
+    simulateResponse('generic');
+  }, [simulateResponse, haltsCollapsed]);
+
+  const handleNewChat = useCallback(() => {
+    setMessages([]);
+    setHaltsCollapsed(false);
+    setPreviousLoaded(false);
+    setContextNotice(null);
+  }, []);
+
+  const handleLoadPrevious = useCallback(() => {
+    setMessages(prev => [...mockPreviousSession, ...prev]);
+    setPreviousLoaded(true);
+  }, []);
+
+  const handleRetry = useCallback((messageId: string) => {
+    setMessages(prev => prev.filter(m => m.id !== messageId));
+    simulateResponse('generic');
+  }, [simulateResponse]);
+
+  return (
+    <>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            style={{
+              position: 'fixed',
+              top: 0,
+              right: 0,
+              bottom: 0,
+              width: 420,
+              background: '#FFFFFF',
+              borderLeft: '1px solid rgba(18,24,43,0.08)',
+              boxShadow: '-8px 0 30px rgba(8,13,25,0.08)',
+              display: 'flex',
+              flexDirection: 'column',
+              zIndex: 50,
+              fontFamily: 'var(--font_primary)',
+            }}
+          >
+            <AIPanelHeader
+              userName="Satyam"
+              hasActiveChat={hasActiveChat}
+              onClose={onClose}
+              onNewChat={handleNewChat}
+            />
+
+            <HaltsSection
+              halts={mockHalts}
+              collapsed={haltsCollapsed}
+              hasActiveChat={hasActiveChat}
+              onAnalyse={handleHaltAnalyse}
+              onViewAll={() => setShowViewAll(true)}
+              onToggleCollapse={() => setHaltsCollapsed(!haltsCollapsed)}
+            />
+
+            {!haltsCollapsed && (
+              <SuggestionsSection
+                suggestions={mockSuggestions}
+                onSelect={handleSuggestionSelect}
+                isStale={false}
+              />
+            )}
+
+            {/* Context change notice */}
+            {contextNotice && (
+              <div style={{
+                padding: '8px 16px',
+                background: 'rgba(142,89,255,0.04)',
+                borderBottom: '1px solid rgba(142,89,255,0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+              }}>
+                <span className="m8-p6" style={{ color: 'var(--color_text)', flex: 1 }}>{contextNotice}</span>
+                <button
+                  onClick={() => setContextNotice(null)}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: 'rgba(18,24,43,0.35)' }}
+                >
+                  ×
+                </button>
+              </div>
+            )}
+
+            <ChatWindow
+              messages={messages}
+              showLoadPrevious={!previousLoaded && hasActiveChat}
+              onLoadPrevious={handleLoadPrevious}
+              onRetry={handleRetry}
+            />
+
+            <ChatInputBar
+              contextLabel={contextLabel}
+              isLoading={isLoading}
+              onSend={handleSendMessage}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {showViewAll && (
+        <ViewAllInsightsModal
+          halts={mockHalts}
+          contextLabel={contextLabel}
+          hasActiveChat={hasActiveChat}
+          onAnalyse={handleHaltAnalyse}
+          onClose={() => setShowViewAll(false)}
+        />
+      )}
+    </>
+  );
+};
+
+export default AISummaryPanel;
