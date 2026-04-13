@@ -39,10 +39,9 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend }: ChatInputBarProps) =>
   const hasText = value.trim().length > 0;
   const canSend = hasText && !isLoading;
 
-  // States: default, focused-empty (intermediate), has-text, loading
+  // Only highlight the border when there's text, not on focus alone
   const getBorderColor = () => {
     if (isFocused && hasText) return 'var(--color_primary)';
-    if (isFocused) return 'rgba(142,89,255,0.35)';
     return 'rgba(18,24,43,0.12)';
   };
 
