@@ -113,7 +113,7 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend }: ChatInputBarProps) =>
           placeholder={isLoading ? 'Generating response...' : 'Ask about this page...'}
           disabled={isLoading}
           rows={1}
-          className="m8-p6"
+          className="m8-p6 ai-chat-textarea"
           style={{
             flex: 1,
             border: 'none',
