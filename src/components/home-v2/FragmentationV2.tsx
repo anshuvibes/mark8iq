@@ -70,7 +70,7 @@ export default function FragmentationV2() {
   const containerRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
+  
 
   const mktRefs = useRef<(HTMLDivElement | null)[]>([]);
   const deptRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -126,12 +126,6 @@ export default function FragmentationV2() {
       },
     });
 
-    // PHASE 0 (t=0–8): Grid fades in
-    tl.to(gridRef.current, {
-      opacity: 0.06,
-      duration: 8,
-      ease: 'none',
-    }, 0);
 
     // PHASE 1 (t=8–25): Marketplace pills bloom in
     mktRefs.current.forEach((el, i) => {
@@ -342,19 +336,6 @@ export default function FragmentationV2() {
           }}
         />
 
-        {/* Grid overlay */}
-        <div
-          ref={gridRef}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: 'url(/img/bg-pattern-reverse.svg)',
-            backgroundRepeat: 'repeat',
-            opacity: 0,
-            pointerEvents: 'none',
-            zIndex: 1,
-          }}
-        />
 
         {/* Marketplace pills */}
         {marketplacePills.map((pill, i) => (
