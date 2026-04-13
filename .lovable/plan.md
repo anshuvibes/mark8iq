@@ -1,51 +1,82 @@
 
 
-## Plan: Canopy-Style Scroll-Triggered Theme Switch for FragmentationV2
+## AI Summary Panel — Interactive Prototype
 
-### Problem
-When scrolling from the Hero/TrustStrip into FragmentationV2, there's nearly a full empty white screen before the dark transition begins. This happens because the GSAP ScrollTrigger is set to `start: 'top top'` -- the animation only starts when the 700vh container reaches the viewport top, meaning you scroll through ~100vh of white nothingness first.
+### What we are building
 
-### Solution
-Implement a two-layer approach inspired by the Canopy audit:
+A new route `/dashboard/ads` with a mock Mark8 Ads dashboard layout and a fully interactive AI Summary Panel (right-side drawer). This is a design prototype with mock data — no real backend or AI integration. All interactions (analyse, suggestions, free chat) will use hardcoded responses that follow the PRD's INSIGHTS / ROOT CAUSE / RECOMMENDATIONS format.
 
-1. **IntersectionObserver on FragmentationV2** toggles a theme class on the Layout wrapper (not `<body>`, since Layout wraps everything). When ~20% of the section enters the viewport, the wrapper transitions its background from white to dark over 0.7s via CSS transition.
+### Technical approach
 
-2. **Adjust GSAP ScrollTrigger start** from `'top top'` to `'top 80%'` so content animations (pills, text) begin as the section enters the viewport rather than after a full viewport of dead scroll.
+**New files to create:**
 
-3. **Make FragmentationV2's own background transparent** during the dark phase -- the parent's CSS transition handles the white-to-dark shift. Keep the internal `bgRef` only for Phase 12 (dark-to-violet transition at the end).
+1. **`src/pages/DashboardAdsPage.tsx`** — Page component with a minimal mock dashboard (header bar with bell icon, AI icon, user avatar; a fake "Targeting Analysis" table area). Registers at `/dashboard/ads`.
 
-### Files to edit (2 files)
+2. **`src/components/ai-panel/AISummaryPanel.tsx`** — Main drawer component (right-side, ~420px wide). Manages all panel state: default view, active chat, loading, error, confirmations.
 
-**File 1: `src/components/home-v2/FragmentationV2.tsx`**
-- Add a second `useEffect` with an `IntersectionObserver` (threshold ~0.15) watching `containerRef`
-- On intersect: add class `frag-theme-dark` to `document.body` (or closest Layout ancestor)
-- On exit: remove `frag-theme-dark`
-- Handle bidirectional scroll (check `isIntersecting` + `boundingClientRect` to know scroll direction)
-- Remove Phase 0's white-to-dark bg animation on `bgRef` -- body handles this now
-- Keep Phase 12's dark-to-violet animation on `bgRef` (circle expand still needs it)
-- Set `bgRef` initial backgroundColor to `transparent` instead of `#FFFFFF`
-- Change ScrollTrigger `start` from `'top top'` to `'top 80%'` so pills start appearing as user scrolls into the section
-- Cleanup: remove observer on unmount, remove body class on unmount
+3. **`src/components/ai-panel/AIPanelHeader.tsx`** — Persistent header with greeting, New Chat icon, Close (X). Inline confirmation prompt for new chat when active chat exists.
 
-**File 2: `src/index.css`** (append at bottom, per design rules)
-- Add CSS rules:
-```css
-/* Fragmentation scroll-driven theme transition */
-body {
-  transition: background-color 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-}
-body.frag-theme-dark {
-  background-color: #080D19;
-}
+4. **`src/components/ai-panel/HaltCard.tsx`** — Individual halt/highlight card with insight text and Analyse button. Inline conflict confirmation when active chat exists.
+
+5. **`src/components/ai-panel/HaltsSection.tsx`** — Section 1: renders 4-5 halt cards, "Generated at" timestamp, "View all insights" link. Collapses to mini strip when chat is active.
+
+6. **`src/components/ai-panel/SuggestionsSection.tsx`** — Section 2: renders 3 suggestion cards with stale filter label support.
+
+7. **`src/components/ai-panel/ChatWindow.tsx`** — Scrollable chat thread with context pills (halt/suggestion variants), user bubbles, AI response blocks (INSIGHTS/ROOT CAUSE/RECOMMENDATIONS), feedback rows, date separators, thread dividers, "Load previous chats" link.
+
+8. **`src/components/ai-panel/ChatInputBar.tsx`** — Input field with context label above it, send button, idle/disabled states.
+
+9. **`src/components/ai-panel/AIResponseBlock.tsx`** — Structured response renderer: three sections with uppercase headers, divider lines, feedback row (thumbs up/down).
+
+10. **`src/components/ai-panel/ViewAllInsightsModal.tsx`** — Modal listing all insight cards with Analyse CTAs and conflict warning.
+
+11. **`src/data/aiPanelMockData.ts`** — All mock halts, suggestions, responses, and chat history.
+
+**Route addition in `src/App.tsx`:**
 ```
-- Add `.ignore-color-override` escape hatch for Navbar so it stays unaffected
+<Route path="/dashboard/ads" element={<DashboardAdsPage />} />
+```
 
-### What stays untouched
-- All GSAP phases 1-12 (pills, text, convergence, circle reveal) remain identical
-- No changes to HomePageV2.tsx, Layout.tsx, HeroV2.tsx, TrustStripV2.tsx, or any other component
-- No new packages (IntersectionObserver is native browser API)
-- All copy unchanged
+### Design rules applied
 
-### Technical detail: Scroll direction handling
-The observer callback checks `entry.isIntersecting` to add the class, and checks `entry.boundingClientRect.top > 0` on exit to only remove the class when scrolling back up (not when scrolling past). This prevents the theme from flipping back when the user scrolls through the section entirely.
+- Font: Saira via `var(--font_primary)`, using `m8-p3` through `m8-p6` classes
+- Colors: `#8E59FF` (violet active state), `#080D19` (dark), `#12182B` (text), `#EDF0F7` (section bg), `#FC7459` (Ads accent)
+- Max font-weight: 500 (via `m8-p3-medium`)
+- Buttons: `Button` component with `m8-violet`, `m8-ghost`, `m8-outline-violet` variants
+- Animations: `motion/react` with standard scroll/mount patterns
+- No Tailwind color utility classes on brand copy
+
+### Screen states covered
+
+| # | State | Implementation |
+|---|-------|---------------|
+| 1 | Dashboard default (panel closed) | AI icon in header, tooltip |
+| 2 | Panel open, default | Halts + Suggestions + empty chat |
+| 3 | Halt → context pill + RCA response | Flow 1 |
+| 4 | Suggestion → context pill + response | Flow 2 |
+| 5 | Free chat → user bubble + response | Flow 3 |
+| 6 | Follow-up messages | Flow 4 |
+| 7 | Halts collapsed to mini strip | Active chat state |
+| 8 | Loading state | Pulsing dots, disabled input |
+| 9 | Error state | Error message + Try again |
+| 10 | Page nav mid-chat | Context change notice + divider |
+| 11 | Load previous chats | Date separator + session tag |
+| 12-13 | View All Insights popup | Default + conflict warning |
+| 14 | New Chat confirmation | Inline below header |
+| 15 | Analyse conflict confirmation | Inline in halts section |
+
+### Mock behavior
+
+- Clicking Analyse or a suggestion triggers a 3-second simulated loading state, then renders a hardcoded structured response
+- Free-typed questions get a generic but properly formatted mock response
+- Thumbs up/down toggle visual state only
+- "Load previous chats" shows one hardcoded previous session
+- Page navigation simulated via tabs (Targeting Analysis / Campaign / Placement) that update the context label and insert thread dividers
+
+### What is NOT included
+
+- No real AI/LLM integration (mock responses only)
+- No data persistence (session memory only via React state)
+- No Agent Mark connection
+- No mic input
 
