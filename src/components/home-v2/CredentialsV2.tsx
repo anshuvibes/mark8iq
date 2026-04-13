@@ -49,7 +49,7 @@ function BadgeIcon({ badge }: { badge: typeof credentials[0]['badge'] }) {
           <div style={{ height: '3px', background: '#138808', width: '100%' }} />
         </div>
       )}
-      <span style={{ fontSize: '9px', fontWeight: 600, fontFamily: 'Saira, sans-serif', color: 'rgba(8,13,25,0.55)', textAlign: 'center' }}>
+      <span style={{ fontSize: '9px', fontWeight: 500, fontFamily: 'Saira, sans-serif', color: 'var(--v2-text-subtle)', textAlign: 'center' }}>
         {badge.label}
       </span>
     </div>
@@ -58,7 +58,7 @@ function BadgeIcon({ badge }: { badge: typeof credentials[0]['badge'] }) {
 
 export default function CredentialsV2() {
   return (
-    <section style={{ padding: '80px 0', position: 'relative' }}>
+    <section style={{ padding: '80px 0', position: 'relative', background: 'var(--v2-bg)' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         {credentials.map((c, i) => (
           <motion.div
@@ -72,16 +72,16 @@ export default function CredentialsV2() {
               alignItems: 'center',
               gap: '24px',
               padding: '24px 0',
-              borderBottom: i < credentials.length - 1 ? '1px solid rgba(8,13,25,0.08)' : 'none',
+              borderBottom: i < credentials.length - 1 ? '1px solid var(--v2-border)' : 'none',
             }}
           >
             <div style={{
               width: '80px',
               height: '80px',
               borderRadius: '16px',
-              border: '1px solid rgba(8,13,25,0.10)',
-              background: '#fff',
-              boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+              border: '1px solid var(--v2-badge-border)',
+              background: 'var(--v2-bg-card)',
+              boxShadow: `0 2px 12px var(--v2-shadow)`,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -92,8 +92,8 @@ export default function CredentialsV2() {
               <BadgeIcon badge={c.badge} />
             </div>
             <div>
-              <h3 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: '4px' }}>{c.name}</h3>
-              <p className="m8-p5" style={{ color: 'rgba(8,13,25,0.5)' }}>{c.proof}</p>
+              <h3 className="m8-p3-medium" style={{ color: 'var(--v2-text)', marginBottom: '4px' }}>{c.name}</h3>
+              <p className="m8-p5" style={{ color: 'var(--v2-text-muted)' }}>{c.proof}</p>
             </div>
           </motion.div>
         ))}

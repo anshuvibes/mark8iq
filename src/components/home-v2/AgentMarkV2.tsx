@@ -8,7 +8,7 @@ const beats = [
 
 export default function AgentMarkV2() {
   return (
-    <section style={{ background: 'rgba(242,242,244,0.85)', padding: '100px 0', position: 'relative' }}>
+    <section style={{ background: 'var(--v2-bg-alt2)', padding: '100px 0', position: 'relative' }}>
       <div className="container" style={{ display: 'flex', gap: '64px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
         {/* Left column - text */}
         <div style={{ flex: '0 0 44%', maxWidth: '44%' }}>
@@ -30,7 +30,7 @@ export default function AgentMarkV2() {
 
           <motion.h2
             className="m8-h1-large"
-            style={{ color: '#080D19', marginBottom: '20px' }}
+            style={{ color: 'var(--v2-text)', marginBottom: '20px' }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
@@ -41,7 +41,7 @@ export default function AgentMarkV2() {
 
           <motion.p
             className="m8-p2"
-            style={{ color: 'rgba(8,13,25,0.65)', marginBottom: '40px' }}
+            style={{ color: 'var(--v2-text-secondary)', marginBottom: '40px' }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
@@ -71,14 +71,14 @@ export default function AgentMarkV2() {
               }}>
                 <span className="m8-p6" style={{ color: '#8E59FF', fontWeight: 500 }}>{beat.num}</span>
               </div>
-              <h4 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: '6px' }}>{beat.label}</h4>
-              <p className="m8-p5" style={{ color: 'rgba(8,13,25,0.55)' }}>{beat.desc}</p>
+              <h4 className="m8-p3-medium" style={{ color: 'var(--v2-text)', marginBottom: '6px' }}>{beat.label}</h4>
+              <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)' }}>{beat.desc}</p>
             </motion.div>
           ))}
 
           <motion.p
             className="m8-p4"
-            style={{ color: 'rgba(8,13,25,0.45)', fontStyle: 'italic', marginTop: '28px' }}
+            style={{ color: 'var(--v2-text-muted)', fontStyle: 'italic', marginTop: '28px' }}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: '-80px' }}
@@ -87,7 +87,7 @@ export default function AgentMarkV2() {
           </motion.p>
         </div>
 
-        {/* Right column - Chat UI */}
+        {/* Right column - Chat UI (stays dark themed always) */}
         <motion.div
           style={{ flex: '0 0 56%', maxWidth: '56%' }}
           initial={{ opacity: 0, x: 40 }}
@@ -100,9 +100,8 @@ export default function AgentMarkV2() {
             borderRadius: '16px',
             overflow: 'hidden',
             border: '1px solid rgba(255,255,255,0.06)',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+            boxShadow: `0 20px 60px var(--v2-shadow-strong)`,
           }}>
-            {/* Header */}
             <div style={{ padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '12px' }}>
               <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #8E59FF, #6C3AE0)' }} />
               <div style={{ flex: 1 }}>
@@ -115,9 +114,7 @@ export default function AgentMarkV2() {
               </div>
             </div>
 
-            {/* Messages */}
             <div style={{ padding: '24px 20px', minHeight: '300px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {/* User message */}
               <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <div style={{
                   background: '#8E59FF',
@@ -129,7 +126,6 @@ export default function AgentMarkV2() {
                 </div>
               </div>
 
-              {/* Agent response */}
               <div style={{ display: 'flex', gap: '10px' }}>
                 <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'linear-gradient(135deg, #8E59FF, #6C3AE0)', flexShrink: 0, marginTop: '4px' }} />
                 <div style={{ maxWidth: '80%' }}>
@@ -158,7 +154,6 @@ export default function AgentMarkV2() {
               </div>
             </div>
 
-            {/* Input bar */}
             <div style={{ padding: '12px 20px', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '12px' }}>
               <div style={{
                 flex: 1,

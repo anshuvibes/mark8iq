@@ -71,18 +71,17 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
   const data = mockupData[moduleKey];
   if (!data) return null;
 
-  const headerBg = accent + '14'; // ~8% opacity
-  const headerBorder = accent + '26'; // ~15% opacity
+  const headerBg = accent + '14';
+  const headerBorder = accent + '26';
 
   return (
     <div style={{
-      background: 'rgba(8,13,25,0.03)',
+      background: 'var(--v2-bg-subtle)',
       borderRadius: '10px',
-      border: '1px solid rgba(8,13,25,0.06)',
+      border: '1px solid var(--v2-border)',
       overflow: 'hidden',
       width: '100%',
     }}>
-      {/* Header */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: `repeat(${data.headers.length}, 1fr)`,
@@ -91,10 +90,9 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
         padding: '10px 16px',
       }}>
         {data.headers.map((h) => (
-          <span key={h} className="m8-p6" style={{ fontWeight: 600, color: 'rgba(8,13,25,0.6)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{h}</span>
+          <span key={h} className="m8-p6" style={{ fontWeight: 500, color: 'var(--v2-text-secondary)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{h}</span>
         ))}
       </div>
-      {/* Rows */}
       {data.rows.map((row, ri) => (
         <div
           key={ri}
@@ -102,14 +100,12 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
             display: 'grid',
             gridTemplateColumns: `repeat(${data.headers.length}, 1fr)`,
             padding: '10px 16px',
-            borderBottom: ri < data.rows.length - 1 ? '1px solid rgba(8,13,25,0.05)' : 'none',
+            borderBottom: ri < data.rows.length - 1 ? '1px solid var(--v2-border)' : 'none',
           }}
         >
           {data.headers.map((_, ci) => {
             const isLastCol = ci === data.headers.length - 1;
-            // Status/action column
             if (isLastCol && (row.statusLabel || row.cells[ci])) {
-              // For sight module, the change value is in cells
               if (moduleKey === 'sight') {
                 return (
                   <span key={ci} className="m8-p6" style={{ color: row.statusColor, fontWeight: 500 }}>
@@ -117,31 +113,28 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
                   </span>
                 );
               }
-              // For reco, show action button
               if (moduleKey === 'reco' && row.actionLabel) {
                 return (
                   <div key={ci} style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
                     <span className="m8-p6" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                       <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: row.statusColor, display: 'inline-block' }} />
-                      <span style={{ color: 'rgba(8,13,25,0.6)' }}>{row.statusLabel}</span>
+                      <span style={{ color: 'var(--v2-text-secondary)' }}>{row.statusLabel}</span>
                     </span>
                   </div>
                 );
               }
-              // Default status pill
               return (
                 <span key={ci} className="m8-p6" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: row.statusColor, display: 'inline-block' }} />
-                  <span style={{ color: 'rgba(8,13,25,0.6)' }}>{row.statusLabel}</span>
+                  <span style={{ color: 'var(--v2-text-secondary)' }}>{row.statusLabel}</span>
                 </span>
               );
             }
-            // For reco, column 3 (Status) is actually index 2
             if (moduleKey === 'reco' && ci === 2) {
               return (
                 <span key={ci} className="m8-p6" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: row.statusColor, display: 'inline-block' }} />
-                  <span style={{ color: 'rgba(8,13,25,0.6)' }}>{row.statusLabel}</span>
+                  <span style={{ color: 'var(--v2-text-secondary)' }}>{row.statusLabel}</span>
                 </span>
               );
             }
@@ -153,7 +146,7 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
               );
             }
             return (
-              <span key={ci} className="m8-p6" style={{ color: ci === 0 ? '#080D19' : 'rgba(8,13,25,0.6)' }}>
+              <span key={ci} className="m8-p6" style={{ color: ci === 0 ? 'var(--v2-text)' : 'var(--v2-text-secondary)' }}>
                 {row.cells[ci]}
               </span>
             );
@@ -173,9 +166,9 @@ function ModuleCard({ k, mod, active, onClick }: { k: string; mod: typeof module
       style={{
         padding: '18px 20px',
         borderRadius: '12px',
-        border: `1px solid ${active ? mod.accent + '40' : 'rgba(8,13,25,0.08)'}`,
+        border: `1px solid ${active ? mod.accent + '40' : 'var(--v2-border)'}`,
         borderLeft: `3px solid ${mod.accent}`,
-        backgroundColor: active ? mod.accent + '0d' : '#ffffff',
+        backgroundColor: active ? mod.accent + '0d' : 'var(--v2-bg-card)',
         cursor: 'pointer',
         boxShadow: active ? `0 4px 20px ${mod.accent}20` : 'none',
         transition: 'all 0.2s ease',
@@ -183,9 +176,9 @@ function ModuleCard({ k, mod, active, onClick }: { k: string; mod: typeof module
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
         <span className="m8-p6" style={{ color: mod.accent, fontWeight: 500 }}>{mod.abbr}</span>
-        <span className="m8-p5" style={{ fontWeight: 500, color: '#080D19' }}>{mod.name}</span>
+        <span className="m8-p5" style={{ fontWeight: 500, color: 'var(--v2-text)' }}>{mod.name}</span>
       </div>
-      <p className="m8-p6" style={{ color: 'rgba(8,13,25,0.55)' }}>{mod.pain}</p>
+      <p className="m8-p6" style={{ color: 'var(--v2-text-subtle)' }}>{mod.pain}</p>
     </motion.div>
   );
 }
@@ -195,11 +188,11 @@ export default function ProductSuiteV2() {
   const active = modules[activeModule];
 
   return (
-    <section style={{ padding: '100px 0', position: 'relative', zIndex: 1 }}>
+    <section style={{ padding: '100px 0', position: 'relative', zIndex: 1, background: 'var(--v2-bg)' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.h2
           className="m8-h1-large"
-          style={{ color: '#080D19', textAlign: 'center' }}
+          style={{ color: 'var(--v2-text)', textAlign: 'center' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
@@ -208,7 +201,7 @@ export default function ProductSuiteV2() {
         </motion.h2>
         <motion.p
           className="m8-p2"
-          style={{ color: 'rgba(8,13,25,0.6)', textAlign: 'center', maxWidth: '500px', margin: '0 auto 64px' }}
+          style={{ color: 'var(--v2-text-secondary)', textAlign: 'center', maxWidth: '500px', margin: '0 auto 64px' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
@@ -217,7 +210,6 @@ export default function ProductSuiteV2() {
           Every function your brand runs on. Built to work together.
         </motion.p>
 
-        {/* Hub-spoke grid */}
         <motion.div
           className="product-suite-grid"
           style={{ display: 'grid', gridTemplateColumns: '1fr 260px 1fr', gap: '16px', alignItems: 'start', marginBottom: '40px' }}
@@ -226,14 +218,12 @@ export default function ProductSuiteV2() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ delay: 0.2 }}
         >
-          {/* Left column */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {leftKeys.map((k) => (
               <ModuleCard key={k} k={k} mod={modules[k]} active={activeModule === k} onClick={() => setActiveModule(k)} />
             ))}
           </div>
 
-          {/* Market One center */}
           <div style={{
             background: '#080D19',
             borderRadius: '16px',
@@ -263,7 +253,6 @@ export default function ProductSuiteV2() {
             </div>
           </div>
 
-          {/* Right column */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {rightKeys.map((k) => (
               <ModuleCard key={k} k={k} mod={modules[k]} active={activeModule === k} onClick={() => setActiveModule(k)} />
@@ -271,7 +260,6 @@ export default function ProductSuiteV2() {
           </div>
         </motion.div>
 
-        {/* Active module detail */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeModule}
@@ -285,15 +273,15 @@ export default function ProductSuiteV2() {
               gridTemplateColumns: '1fr 1fr',
               gap: '32px',
               padding: '32px',
-              background: 'rgba(8,13,25,0.03)',
+              background: 'var(--v2-bg-subtle)',
               borderRadius: '16px',
-              border: '1px solid rgba(8,13,25,0.06)',
+              border: '1px solid var(--v2-border)',
               marginBottom: '48px',
             }}
           >
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <p className="m8-p2" style={{ color: '#080D19', marginBottom: '12px' }}>{active.pain}</p>
-              <p className="m8-p5" style={{ color: 'rgba(8,13,25,0.55)' }}>{active.metric}</p>
+              <p className="m8-p2" style={{ color: 'var(--v2-text)', marginBottom: '12px' }}>{active.pain}</p>
+              <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)' }}>{active.metric}</p>
             </div>
             <DataTable moduleKey={activeModule} accent={active.accent} />
           </motion.div>
@@ -301,7 +289,7 @@ export default function ProductSuiteV2() {
 
         <motion.p
           className="m8-p3"
-          style={{ color: 'rgba(8,13,25,0.55)', textAlign: 'center' }}
+          style={{ color: 'var(--v2-text-subtle)', textAlign: 'center' }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: '-80px' }}

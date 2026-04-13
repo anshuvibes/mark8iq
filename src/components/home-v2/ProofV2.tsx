@@ -47,11 +47,11 @@ const testimonials = [
 
 export default function ProofV2() {
   return (
-    <section style={{ background: 'rgba(237,240,247,0.85)', padding: '100px 0', position: 'relative' }}>
+    <section style={{ background: 'var(--v2-bg-alt)', padding: '100px 0', position: 'relative' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.h2
           className="m8-h1-large"
-          style={{ color: '#080D19', textAlign: 'center', marginBottom: '64px' }}
+          style={{ color: 'var(--v2-text)', textAlign: 'center', marginBottom: '64px' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
@@ -59,7 +59,6 @@ export default function ProofV2() {
           Real brands. Real numbers. Real outcomes.
         </motion.h2>
 
-        {/* Metrics strip */}
         <div style={{
           display: 'flex',
           justifyContent: 'space-evenly',
@@ -83,17 +82,16 @@ export default function ProofV2() {
               }}
             >
               <div>
-                <div className="m8-h2" style={{ color: '#080D19' }}>{m.value}</div>
-                <div className="m8-p6" style={{ color: 'rgba(8,13,25,0.5)' }}>{m.label}</div>
+                <div className="m8-h2" style={{ color: 'var(--v2-text)' }}>{m.value}</div>
+                <div className="m8-p6" style={{ color: 'var(--v2-text-muted)' }}>{m.label}</div>
               </div>
               {i < metrics.length - 1 && (
-                <div style={{ width: '1px', height: '60px', background: 'rgba(8,13,25,0.12)' }} />
+                <div style={{ width: '1px', height: '60px', background: 'var(--v2-border-strong)' }} />
               )}
             </motion.div>
           ))}
         </div>
 
-        {/* Brand journey cards */}
         <div style={{ display: 'flex', gap: '20px', marginBottom: '56px', flexWrap: 'wrap' }}>
           {journeys.map((j, i) => (
             <motion.div
@@ -105,22 +103,21 @@ export default function ProofV2() {
               style={{
                 flex: 1,
                 minWidth: '280px',
-                background: '#fff',
+                background: 'var(--v2-bg-card)',
                 borderRadius: '16px',
                 padding: '32px',
                 borderTop: '4px solid #8E59FF',
               }}
             >
-              <p className="m8-p6" style={{ color: 'rgba(8,13,25,0.45)', marginBottom: '8px' }}>{j.stage}</p>
-              <h3 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: '16px' }}>{j.brand}</h3>
-              <p className="m8-p5" style={{ color: '#080D19', marginBottom: '8px' }}>{j.whatChanged}</p>
+              <p className="m8-p6" style={{ color: 'var(--v2-text-muted)', marginBottom: '8px' }}>{j.stage}</p>
+              <h3 className="m8-p3-medium" style={{ color: 'var(--v2-text)', marginBottom: '16px' }}>{j.brand}</h3>
+              <p className="m8-p5" style={{ color: 'var(--v2-text)', marginBottom: '8px' }}>{j.whatChanged}</p>
               <p className="m8-p5" style={{ color: '#8E59FF', fontWeight: 500, marginBottom: '16px' }}>{j.outcome}</p>
-              <p className="m8-p6" style={{ color: 'rgba(8,13,25,0.45)', fontStyle: 'italic' }}>{j.oneLine}</p>
+              <p className="m8-p6" style={{ color: 'var(--v2-text-muted)', fontStyle: 'italic' }}>{j.oneLine}</p>
             </motion.div>
           ))}
         </div>
 
-        {/* Testimonials */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -131,14 +128,14 @@ export default function ProofV2() {
             <div
               key={t.name}
               style={{
-                background: '#fff',
+                background: 'var(--v2-bg-card)',
                 borderRadius: '16px',
                 padding: '40px 40px 32px',
                 position: 'relative',
               }}
             >
               <div style={{ fontSize: '64px', color: '#8E59FF', lineHeight: 0.8, marginBottom: '20px', fontFamily: 'Georgia, serif' }}>"</div>
-              <p className="m8-p2" style={{ color: 'rgba(8,13,25,0.7)', fontStyle: 'italic', marginBottom: '28px' }}>
+              <p className="m8-p2" style={{ color: 'var(--v2-text-secondary)', fontStyle: 'italic', marginBottom: '28px' }}>
                 {t.quote}
               </p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -150,8 +147,8 @@ export default function ProofV2() {
                   flexShrink: 0,
                 }} />
                 <div>
-                  <p className="m8-p5" style={{ color: '#080D19', fontWeight: 500 }}>{t.name}</p>
-                  <p className="m8-p6" style={{ color: 'rgba(8,13,25,0.45)' }}>{t.title}</p>
+                  <p className="m8-p5" style={{ color: 'var(--v2-text)', fontWeight: 500 }}>{t.name}</p>
+                  <p className="m8-p6" style={{ color: 'var(--v2-text-muted)' }}>{t.title}</p>
                 </div>
               </div>
             </div>
