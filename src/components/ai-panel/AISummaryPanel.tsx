@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import AIPanelHeader from './AIPanelHeader';
 import HaltsSection from './HaltsSection';
@@ -30,6 +30,7 @@ let msgCounter = 0;
 const nextId = () => `msg-${++msgCounter}`;
 
 const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange, inline }: AISummaryPanelProps) => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [chatTitle, setChatTitle] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -121,7 +122,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
       />
 
       {/* Scrollable middle area */}
-      <div className="ai-panel-scroll" data-lenis-prevent="" style={{ flex: 1, minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
+      <div ref={scrollContainerRef} className="ai-panel-scroll" data-lenis-prevent="" style={{ flex: 1, minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
         <HaltsSection
           halts={mockHalts}
           collapsed={haltsCollapsed}
@@ -163,6 +164,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
           showLoadPrevious={!previousLoaded && hasActiveChat}
           onLoadPrevious={handleLoadPrevious}
           onRetry={handleRetry}
+          scrollContainerRef={scrollContainerRef}
         />
       </div>
 

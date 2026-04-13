@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type RefObject } from 'react';
 import AIResponseBlock from './AIResponseBlock';
 import { Button } from '@/components/ui/button';
 import type { ChatMessage } from '@/data/aiPanelMockData';
@@ -8,6 +8,7 @@ interface ChatWindowProps {
   showLoadPrevious: boolean;
   onLoadPrevious: () => void;
   onRetry: (messageId: string) => void;
+  scrollContainerRef?: RefObject<HTMLDivElement>;
 }
 
 const LoadingDots = () => (
@@ -27,19 +28,31 @@ const LoadingDots = () => (
   </div>
 );
 
-const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: ChatWindowProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrollContainerRef }: ChatWindowProps) => {
   const lastUserMsgRef = useRef<HTMLDivElement>(null);
+  const lastScrolledId = useRef<string | null>(null);
+
+  const lastUserMsg = [...messages].reverse().find(
+    m => m.type === 'user-bubble' || m.type === 'context-pill'
+  );
 
   useEffect(() => {
-    // Scroll so the newest user message sits at the top of the visible area
-    if (lastUserMsgRef.current && containerRef.current) {
-      const container = containerRef.current;
-      const el = lastUserMsgRef.current;
-      const offset = el.offsetTop - container.offsetTop;
-      container.scrollTo({ top: offset, behavior: 'smooth' });
-    }
-  }, [messages.length]);
+    if (!lastUserMsg || lastUserMsg.id === lastScrolledId.current) return;
+    lastScrolledId.current = lastUserMsg.id;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = lastUserMsgRef.current;
+        const container = scrollContainerRef?.current;
+        if (el && container) {
+          const elRect = el.getBoundingClientRect();
+          const containerRect = container.getBoundingClientRect();
+          const scrollOffset = elRect.top - containerRect.top + container.scrollTop;
+          container.scrollTo({ top: scrollOffset, behavior: 'smooth' });
+        }
+      });
+    });
+  }, [lastUserMsg?.id, scrollContainerRef]);
 
   if (messages.length === 0) {
     return (
@@ -52,7 +65,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
   }
 
   return (
-    <div ref={containerRef} className="ai-panel-scroll" data-lenis-prevent="" style={{ flex: 1, minHeight: 0, overflow: 'auto', padding: '12px 16px' }}>
+    <div style={{ padding: '12px 16px' }}>
       {/* Load previous */}
       {showLoadPrevious && (
         <div style={{ textAlign: 'center', marginBottom: 12 }}>
