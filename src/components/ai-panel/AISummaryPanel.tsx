@@ -122,7 +122,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
       />
 
       {/* Scrollable middle area */}
-      <div className="ai-panel-scroll" style={{ flex: 1, minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
+      <div className="ai-panel-scroll" data-lenis-prevent="" style={{ flex: 1, minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
         <HaltsSection
           halts={mockHalts}
           collapsed={haltsCollapsed}
