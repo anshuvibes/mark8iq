@@ -28,10 +28,17 @@ const LoadingDots = () => (
 );
 
 const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: ChatWindowProps) => {
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const lastUserMsgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Scroll so the newest user message sits at the top of the visible area
+    if (lastUserMsgRef.current && containerRef.current) {
+      const container = containerRef.current;
+      const el = lastUserMsgRef.current;
+      const offset = el.offsetTop - container.offsetTop;
+      container.scrollTo({ top: offset, behavior: 'smooth' });
+    }
   }, [messages.length]);
 
   if (messages.length === 0) {
