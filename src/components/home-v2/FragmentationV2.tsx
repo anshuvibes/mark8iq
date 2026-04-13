@@ -49,31 +49,23 @@ export default function FragmentationV2() {
   const logoRef = useRef<HTMLDivElement>(null);
   const subCopyRef = useRef<HTMLDivElement>(null);
 
-  // IntersectionObserver — toggles body theme class for Canopy-style transition
+  // ScrollTrigger-based theme toggle — fires when ~15% into the section
+  // so pills appear in light mode first, then body transitions to dark
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
     const container = containerRef.current;
     if (!container) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            document.body.classList.add('frag-theme-dark');
-          } else {
-            // Only remove when scrolling back up (section exits bottom of viewport)
-            if (entry.boundingClientRect.top > 0) {
-              document.body.classList.remove('frag-theme-dark');
-            }
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    observer.observe(container);
+    const themeTrigger = ScrollTrigger.create({
+      trigger: container,
+      start: 'top 40%',   // dark kicks in when top of section reaches 40% viewport
+      end: 'bottom bottom',
+      onEnter: () => document.body.classList.add('frag-theme-dark'),
+      onLeaveBack: () => document.body.classList.remove('frag-theme-dark'),
+    });
 
     return () => {
-      observer.disconnect();
+      themeTrigger.kill();
       document.body.classList.remove('frag-theme-dark');
     };
   }, []);
