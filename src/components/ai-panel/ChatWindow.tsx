@@ -53,7 +53,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
   }
 
   return (
-    <div ref={containerRef} className="ai-panel-scroll" data-lenis-prevent="" style={{ flex: 1, minHeight: 0, overflow: 'auto', padding: '12px 16px' }}>
+    <div style={{ padding: '12px 16px' }}>
       {/* Load previous */}
       {showLoadPrevious && (
         <div style={{ textAlign: 'center', marginBottom: 12 }}>
