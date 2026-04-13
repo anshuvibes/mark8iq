@@ -115,12 +115,10 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   const panelContent = (
     <>
       <AIPanelHeader
-        userName="Satyam"
         hasActiveChat={hasActiveChat}
+        chatTitle={chatTitle || undefined}
         onClose={onClose}
         onNewChat={handleNewChat}
-        currentPage={currentPage}
-        dateRange={dateRange}
       />
 
       {/* Scrollable middle area */}
