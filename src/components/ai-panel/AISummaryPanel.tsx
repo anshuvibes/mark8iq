@@ -127,6 +127,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
               display: 'flex',
               flexDirection: 'column',
               overflow: 'hidden',
+              zIndex: 50,
               fontFamily: 'var(--font_primary)',
             }}
           >
