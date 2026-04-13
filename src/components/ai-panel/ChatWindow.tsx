@@ -65,7 +65,12 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
         </div>
       )}
 
-      {messages.map((msg) => {
+      {messages.map((msg, idx) => {
+        // Find if this is the last user-bubble or context-pill
+        const isLastUserMsg =
+          (msg.type === 'user-bubble' || msg.type === 'context-pill') &&
+          !messages.slice(idx + 1).some(m => m.type === 'user-bubble' || m.type === 'context-pill');
+
         switch (msg.type) {
           case 'date-separator':
             return (
