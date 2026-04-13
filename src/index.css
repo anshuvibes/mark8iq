@@ -945,7 +945,7 @@ All colors MUST be HSL.
 
 /* ─── Smooth body transition (legacy fallback) ─── */
 body {
-  transition: background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Navbar stays immune to body theme switch */
