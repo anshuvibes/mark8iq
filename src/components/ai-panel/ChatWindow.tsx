@@ -28,10 +28,17 @@ const LoadingDots = () => (
 );
 
 const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: ChatWindowProps) => {
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const lastUserMsgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Scroll so the newest user message sits at the top of the visible area
+    if (lastUserMsgRef.current && containerRef.current) {
+      const container = containerRef.current;
+      const el = lastUserMsgRef.current;
+      const offset = el.offsetTop - container.offsetTop;
+      container.scrollTo({ top: offset, behavior: 'smooth' });
+    }
   }, [messages.length]);
 
   if (messages.length === 0) {
@@ -45,7 +52,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
   }
 
   return (
-    <div className="ai-panel-scroll" data-lenis-prevent="" style={{ flex: 1, minHeight: 0, overflow: 'auto', padding: '12px 16px' }}>
+    <div ref={containerRef} className="ai-panel-scroll" data-lenis-prevent="" style={{ flex: 1, minHeight: 0, overflow: 'auto', padding: '12px 16px' }}>
       {/* Load previous */}
       {showLoadPrevious && (
         <div style={{ textAlign: 'center', marginBottom: 12 }}>
@@ -58,7 +65,12 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
         </div>
       )}
 
-      {messages.map((msg) => {
+      {messages.map((msg, idx) => {
+        // Find if this is the last user-bubble or context-pill
+        const isLastUserMsg =
+          (msg.type === 'user-bubble' || msg.type === 'context-pill') &&
+          !messages.slice(idx + 1).some(m => m.type === 'user-bubble' || m.type === 'context-pill');
+
         switch (msg.type) {
           case 'date-separator':
             return (
@@ -85,7 +97,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
 
           case 'context-pill':
             return (
-              <div key={msg.id} style={{
+              <div ref={isLastUserMsg ? lastUserMsgRef : undefined} key={msg.id} style={{
                 padding: '8px 12px',
                 borderRadius: 'var(--m8-radius-md)',
                 background: 'rgba(142,89,255,0.06)',
@@ -101,7 +113,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
 
           case 'user-bubble':
             return (
-              <div key={msg.id} style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
+              <div ref={isLastUserMsg ? lastUserMsgRef : undefined} key={msg.id} style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
                 <div style={{
                   maxWidth: '85%',
                   padding: '10px 14px',
@@ -155,7 +167,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
         }
       })}
 
-      <div ref={bottomRef} />
+      <div style={{ height: 1 }} />
     </div>
   );
 };
