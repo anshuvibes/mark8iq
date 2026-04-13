@@ -28,16 +28,17 @@ const LoadingDots = () => (
 );
 
 const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: ChatWindowProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const lastUserMsgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Scroll so the newest user message sits at the top of the visible area
-    if (lastUserMsgRef.current && containerRef.current) {
-      const container = containerRef.current;
+    // Scroll the nearest scrollable parent so the newest user message sits at the top
+    if (lastUserMsgRef.current) {
       const el = lastUserMsgRef.current;
-      const offset = el.offsetTop - container.offsetTop;
-      container.scrollTo({ top: offset, behavior: 'smooth' });
+      const scrollParent = el.closest('.ai-panel-scroll') as HTMLElement | null;
+      if (scrollParent) {
+        const offset = el.offsetTop - scrollParent.offsetTop;
+        scrollParent.scrollTo({ top: offset, behavior: 'smooth' });
+      }
     }
   }, [messages.length]);
 
