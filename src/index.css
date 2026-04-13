@@ -975,6 +975,20 @@ body.frag-theme-dark {
   --v2-badge-bg:        rgba(8,13,25,0.04);
   --v2-badge-border:    rgba(8,13,25,0.1);
   --v2-overlay:         rgba(8,13,25,0.06);
+
+  /* Fragmentation section colors */
+  --v2-frag-bg:             transparent;
+  --v2-frag-pill-bg:        rgba(8,13,25,0.06);
+  --v2-frag-pill-border:    rgba(8,13,25,0.12);
+  --v2-frag-pill-text:      rgba(8,13,25,0.75);
+  --v2-frag-dept-bg:        rgba(142,89,255,0.08);
+  --v2-frag-dept-border:    rgba(142,89,255,0.18);
+  --v2-frag-dept-text:      rgba(8,13,25,0.7);
+  --v2-frag-persona-text:   rgba(8,13,25,0.4);
+  --v2-frag-heading-text:   #080D19;
+  --v2-frag-reveal-bg:      #F5F0FF;
+  --v2-frag-logo-text:      #080D19;
+  --v2-frag-sub-text:       rgba(8,13,25,0.6);
 }
 
 .v2-dark {
@@ -997,6 +1011,33 @@ body.frag-theme-dark {
   --v2-badge-bg:        rgba(255,255,255,0.06);
   --v2-badge-border:    rgba(255,255,255,0.1);
   --v2-overlay:         rgba(255,255,255,0.04);
+
+  /* Fragmentation section colors — dark mode */
+  --v2-frag-bg:             transparent;
+  --v2-frag-pill-bg:        rgba(255,255,255,0.08);
+  --v2-frag-pill-border:    rgba(255,255,255,0.15);
+  --v2-frag-pill-text:      rgba(255,255,255,0.85);
+  --v2-frag-dept-bg:        rgba(142,89,255,0.10);
+  --v2-frag-dept-border:    rgba(142,89,255,0.22);
+  --v2-frag-dept-text:      rgba(255,255,255,0.8);
+  --v2-frag-persona-text:   rgba(255,255,255,0.48);
+  --v2-frag-heading-text:   #FFFFFF;
+  --v2-frag-reveal-bg:      #1A1030;
+  --v2-frag-logo-text:      #FFFFFF;
+  --v2-frag-sub-text:       rgba(255,255,255,0.6);
+}
+
+/* Fragmentation scroll-driven dark overrides — applied during scroll animation */
+.frag-scroll-dark {
+  --v2-frag-bg:             #080D19;
+  --v2-frag-pill-bg:        rgba(255,255,255,0.08);
+  --v2-frag-pill-border:    rgba(255,255,255,0.15);
+  --v2-frag-pill-text:      rgba(255,255,255,0.85);
+  --v2-frag-dept-bg:        rgba(142,89,255,0.10);
+  --v2-frag-dept-border:    rgba(142,89,255,0.22);
+  --v2-frag-dept-text:      rgba(255,255,255,0.8);
+  --v2-frag-persona-text:   rgba(255,255,255,0.48);
+  --v2-frag-heading-text:   #FFFFFF;
 }
 
 /* V2 dark mode transitions */
