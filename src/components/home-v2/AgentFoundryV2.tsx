@@ -15,7 +15,7 @@ const agents = [
 
 export default function AgentFoundryV2() {
   return (
-    <section style={{ padding: '100px 0', position: 'relative', background: 'var(--v2-bg)' }}>
+    <section style={{ padding: '100px 0', position: 'relative' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

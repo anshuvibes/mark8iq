@@ -58,7 +58,7 @@ function BadgeIcon({ badge }: { badge: typeof credentials[0]['badge'] }) {
 
 export default function CredentialsV2() {
   return (
-    <section style={{ padding: '80px 0', position: 'relative', background: 'var(--v2-bg)' }}>
+    <section style={{ padding: '80px 0', position: 'relative' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         {credentials.map((c, i) => (
           <motion.div

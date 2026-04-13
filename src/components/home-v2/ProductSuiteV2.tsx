@@ -188,7 +188,7 @@ export default function ProductSuiteV2() {
   const active = modules[activeModule];
 
   return (
-    <section style={{ padding: '100px 0', position: 'relative', zIndex: 1, background: 'var(--v2-bg)' }}>
+    <section style={{ padding: '100px 0', position: 'relative', zIndex: 1 }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.h2
           className="m8-h1-large"

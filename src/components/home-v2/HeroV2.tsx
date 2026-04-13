@@ -40,7 +40,7 @@ export default function HeroV2() {
   };
 
   return (
-    <section style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', background: 'var(--v2-bg)' }}>
+    <section style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column' }}>
       {/* Theme toggle — top right */}
       <div style={{ position: 'absolute', top: '80px', right: '40px', zIndex: 60 }}>
         <ThemeToggle />
