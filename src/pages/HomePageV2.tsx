@@ -20,7 +20,7 @@ export default function HomePageV2() {
       <main>
         <HeroV2 />
         <TrustStripV2 />
-        
+        <FragmentationV2 />
         <ProductSuiteV2 />
         <RoleBasedValueV2 />
         <AgentMarkV2 />
