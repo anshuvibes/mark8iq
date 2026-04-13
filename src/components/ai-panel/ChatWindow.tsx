@@ -36,7 +36,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
 
   if (messages.length === 0) {
     return (
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
+      <div style={{ flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
         <div className="m8-p6" style={{ color: 'rgba(18,24,43,0.35)', textAlign: 'center' }}>
           Ask anything about this page, or start from the highlights above.
         </div>
@@ -45,7 +45,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry }: Cha
   }
 
   return (
-    <div style={{ flex: 1, overflow: 'auto', padding: '12px 16px' }}>
+    <div style={{ flex: 1, minHeight: 0, overflow: 'auto', padding: '12px 16px' }}>
       {/* Load previous */}
       {showLoadPrevious && (
         <div style={{ textAlign: 'center', marginBottom: 12 }}>
