@@ -31,6 +31,7 @@ const nextId = () => `msg-${++msgCounter}`;
 
 const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange, inline }: AISummaryPanelProps) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [chatTitle, setChatTitle] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [haltsCollapsed, setHaltsCollapsed] = useState(false);
   const [showViewAll, setShowViewAll] = useState(false);
@@ -69,6 +70,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   }, []);
 
   const handleHaltAnalyse = useCallback((halt: Halt) => {
+    setChatTitle(halt.statement.length > 40 ? halt.statement.slice(0, 40) + '…' : halt.statement);
     setMessages([
       { id: nextId(), type: 'context-pill', pillVariant: 'halt', pillText: halt.statement },
     ]);
@@ -77,6 +79,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   }, [simulateResponse]);
 
   const handleSuggestionSelect = useCallback((suggestion: Suggestion) => {
+    setChatTitle(suggestion.question.length > 40 ? suggestion.question.slice(0, 40) + '…' : suggestion.question);
     setMessages([
       { id: nextId(), type: 'context-pill', pillVariant: 'suggestion', pillText: suggestion.question },
     ]);
@@ -85,13 +88,15 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   }, [simulateResponse]);
 
   const handleSendMessage = useCallback((text: string) => {
+    if (!chatTitle) setChatTitle(text.length > 40 ? text.slice(0, 40) + '…' : text);
     setMessages(prev => [...prev, { id: nextId(), type: 'user-bubble', userText: text }]);
     if (!haltsCollapsed) setHaltsCollapsed(true);
     simulateResponse('generic');
-  }, [simulateResponse, haltsCollapsed]);
+  }, [simulateResponse, haltsCollapsed, chatTitle]);
 
   const handleNewChat = useCallback(() => {
     setMessages([]);
+    setChatTitle(null);
     setHaltsCollapsed(false);
     setPreviousLoaded(false);
     setContextNotice(null);
@@ -110,12 +115,10 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   const panelContent = (
     <>
       <AIPanelHeader
-        userName="Satyam"
         hasActiveChat={hasActiveChat}
+        chatTitle={chatTitle || undefined}
         onClose={onClose}
         onNewChat={handleNewChat}
-        currentPage={currentPage}
-        dateRange={dateRange}
       />
 
       {/* Scrollable middle area */}
