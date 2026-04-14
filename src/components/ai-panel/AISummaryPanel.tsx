@@ -12,6 +12,7 @@ import {
   mockSuggestions,
   mockResponses,
   mockGoalFAQs,
+  mockLongChatHistory,
   type ChatMessage,
   type Halt,
   type Suggestion,
@@ -158,12 +159,17 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   }, []);
 
   const handleHaltAnalyse = useCallback((halt: Halt) => {
+    const isFirstInteraction = messages.length === 1 && messages[0].type === 'welcome';
+    const prefix = (isFirstInteraction && halt.id === 'h1') ? mockLongChatHistory : [];
+
     setMessages(prev => [
-      ...prev,
+      ...prev.filter(m => m.type !== 'welcome' || !isFirstInteraction),
+      ...prefix,
+      { id: nextId(), type: 'date-separator', date: '14 Apr 2026' },
       { id: nextId(), type: 'context-pill', pillVariant: 'halt', pillText: halt.statement },
     ]);
     simulateResponse(halt.id);
-  }, [simulateResponse]);
+  }, [messages, simulateResponse]);
 
   const handleInsightAnalyse = useCallback((halt: Halt, insightsMessageId: string) => {
     setMessages(prev => prev.filter(m => m.id !== insightsMessageId));
@@ -331,7 +337,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
 
             <ChatWindow
               messages={messages}
-              showLoadPrevious={false}
+              showLoadPrevious={messages.some(m => m.id?.startsWith('hist-'))}
               onLoadPrevious={() => {}}
               onRetry={handleRetry}
               scrollContainerRef={scrollContainerRef}

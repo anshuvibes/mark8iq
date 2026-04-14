@@ -3,7 +3,7 @@ import { Sparkles } from 'lucide-react';
 import AIResponseBlock from './AIResponseBlock';
 import { Button } from '@/components/ui/button';
 import type { ChatMessage, Halt, Suggestion } from '@/data/aiPanelMockData';
-import { mockSuggestions } from '@/data/aiPanelMockData';
+import { mockSuggestions, getDateLabel } from '@/data/aiPanelMockData';
 
 interface ChatWindowProps {
   messages: ChatMessage[];
@@ -292,6 +292,7 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
 const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrollContainerRef, onInsightAnalyse, onHaltSelect, onViewAll, onSuggestionInlineSelect, onWelcomeSuggestionSelect, onTypingComplete, onSuggestionSelect }: ChatWindowProps) => {
   const lastUserMsgRef = useRef<HTMLDivElement>(null);
   const lastScrolledId = useRef<string | null>(null);
+  const [visibleDate, setVisibleDate] = useState<string | null>(null);
 
   const lastUserMsg = [...messages].reverse().find(
     m => m.type === 'user-bubble' || m.type === 'context-pill'
@@ -315,20 +316,107 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
     });
   }, [lastUserMsg?.id, scrollContainerRef]);
 
+  // IntersectionObserver for sticky date pill
+  useEffect(() => {
+    const container = scrollContainerRef?.current;
+    if (!container) return;
+
+    const separators = container.querySelectorAll('[data-date]');
+    if (separators.length === 0) {
+      setVisibleDate(null);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      () => {
+        const allSeparators = Array.from(container.querySelectorAll('[data-date]')) as HTMLElement[];
+        const containerTop = container.getBoundingClientRect().top;
+        let current: string | null = null;
+        for (const sep of allSeparators) {
+          if (sep.getBoundingClientRect().top <= containerTop + 40) {
+            current = sep.dataset.date || null;
+          }
+        }
+        setVisibleDate(current ? getDateLabel(current) : null);
+      },
+      { root: container, threshold: 0 }
+    );
+
+    separators.forEach(sep => observer.observe(sep));
+
+    // Also listen to scroll for more responsive updates
+    const handleScroll = () => {
+      const allSeparators = Array.from(container.querySelectorAll('[data-date]')) as HTMLElement[];
+      const containerTop = container.getBoundingClientRect().top;
+      let current: string | null = null;
+      for (const sep of allSeparators) {
+        if (sep.getBoundingClientRect().top <= containerTop + 40) {
+          current = sep.dataset.date || null;
+        }
+      }
+      setVisibleDate(current ? getDateLabel(current) : null);
+    };
+    container.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      container.removeEventListener('scroll', handleScroll);
+    };
+  }, [messages, scrollContainerRef]);
+
   if (messages.length === 0) {
     return null;
   }
 
   return (
     <div style={{ padding: '12px 16px' }}>
+      {/* Sticky date pill */}
+      {visibleDate && (
+        <div style={{
+          position: 'sticky',
+          top: 8,
+          zIndex: 10,
+          display: 'flex',
+          justifyContent: 'center',
+          pointerEvents: 'none',
+          marginBottom: -28,
+        }}>
+          <div style={{
+            background: 'rgba(18,24,43,0.55)',
+            color: '#FFFFFF',
+            fontSize: 11,
+            fontWeight: 500,
+            padding: '4px 12px',
+            borderRadius: 999,
+            fontFamily: 'var(--font_primary)',
+            backdropFilter: 'blur(4px)',
+            letterSpacing: '0.02em',
+          }}>
+            {visibleDate}
+          </div>
+        </div>
+      )}
+
       {/* Load previous */}
       {showLoadPrevious && (
-        <div style={{ textAlign: 'center', marginBottom: 12 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '8px 0 16px' }}>
           <button
             onClick={onLoadPrevious}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color_primary)' }}
+            style={{
+              background: 'rgba(18,24,43,0.05)',
+              border: '1px solid rgba(18,24,43,0.1)',
+              borderRadius: 999,
+              padding: '6px 16px',
+              cursor: 'pointer',
+              fontFamily: 'var(--font_primary)',
+              fontSize: 12,
+              color: 'rgba(18,24,43,0.55)',
+              transition: 'background 0.15s',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.08)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.05)'; }}
           >
-            <span className="m8-p6">Load previous chats</span>
+            Load more chats
           </button>
         </div>
       )}
@@ -341,11 +429,20 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
         switch (msg.type) {
           case 'date-separator':
             return (
-              <div key={msg.id} style={{ textAlign: 'center', margin: '16px 0 4px' }}>
+              <div
+                key={msg.id}
+                data-date={msg.date}
+                style={{ textAlign: 'center', margin: '16px 0 4px' }}
+              >
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div style={{ flex: 1, height: 1, background: 'rgba(18,24,43,0.1)' }} />
-                  <span className="m8-p6" style={{ color: 'rgba(18,24,43,0.35)' }}>{msg.date}</span>
-                  <div style={{ flex: 1, height: 1, background: 'rgba(18,24,43,0.1)' }} />
+                  <div style={{ flex: 1, height: 1, background: 'rgba(18,24,43,0.08)' }} />
+                  <span style={{
+                    fontSize: 11, color: 'rgba(18,24,43,0.35)',
+                    fontFamily: 'var(--font_primary)', fontWeight: 500,
+                  }}>
+                    {getDateLabel(msg.date || '')}
+                  </span>
+                  <div style={{ flex: 1, height: 1, background: 'rgba(18,24,43,0.08)' }} />
                 </div>
                 {msg.sessionContext && (
                   <div className="m8-p6" style={{ color: 'rgba(18,24,43,0.3)', marginTop: 4 }}>{msg.sessionContext}</div>

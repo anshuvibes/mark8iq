@@ -166,23 +166,81 @@ export const mockPreviousSession: ChatMessage[] = [
   },
 ];
 
+export function getDateLabel(dateStr: string): string {
+  const map: Record<string, string> = {
+    '14 Apr 2026': 'Today',
+    '13 Apr 2026': 'Yesterday',
+    '12 Apr 2026': 'Saturday',
+    '11 Apr 2026': 'Friday',
+    '10 Apr 2026': 'Thursday',
+    '9 Apr 2026': 'Wednesday',
+    '8 Apr 2026': 'Tuesday',
+    '7 Apr 2026': 'Monday',
+  };
+  return map[dateStr] || dateStr;
+}
+
+export const mockLongChatHistory: ChatMessage[] = [
+  // 5 Apr 2026
+  { id: 'hist-d10', type: 'date-separator', date: '5 Apr 2026' },
+  { id: 'hist-1', type: 'context-pill', pillVariant: 'suggestion', pillText: 'Which campaigns are spending budget without converting?' },
+  { id: 'hist-2', type: 'ai-response', aiResponse: mockResponses.s1 },
+  { id: 'hist-3', type: 'user-bubble', userText: 'What about Home Décor specifically?' },
+  { id: 'hist-4', type: 'ai-response', aiResponse: mockResponses.generic },
+
+  // 6 Apr 2026
+  { id: 'hist-d9', type: 'date-separator', date: '6 Apr 2026' },
+  { id: 'hist-5', type: 'context-pill', pillVariant: 'halt', pillText: 'Beauty category ROAS declined 28% week-over-week' },
+  { id: 'hist-6', type: 'ai-response', aiResponse: mockResponses.h5 },
+  { id: 'hist-7', type: 'user-bubble', userText: 'How long has this trend been going on?' },
+  { id: 'hist-8', type: 'ai-response', aiResponse: mockResponses.generic },
+
+  // 7 Apr 2026 — Monday
+  { id: 'hist-d8', type: 'date-separator', date: '7 Apr 2026' },
+  { id: 'hist-9', type: 'context-pill', pillVariant: 'suggestion', pillText: 'Which ASINs have the highest spend but lowest ROAS?' },
+  { id: 'hist-10', type: 'ai-response', aiResponse: mockResponses.s3 },
+
+  // 8 Apr 2026 — Tuesday
+  { id: 'hist-d7', type: 'date-separator', date: '8 Apr 2026' },
+  { id: 'hist-11', type: 'user-bubble', userText: 'Can you compare this week vs last week for Home & Kitchen?' },
+  { id: 'hist-12', type: 'ai-response', aiResponse: mockResponses.h3 },
+  { id: 'hist-13', type: 'user-bubble', userText: 'What should I prioritise first?' },
+  { id: 'hist-14', type: 'ai-response', aiResponse: mockResponses.generic },
+
+  // 9 Apr 2026 — Wednesday
+  { id: 'hist-d6', type: 'date-separator', date: '9 Apr 2026' },
+  { id: 'hist-15', type: 'context-pill', pillVariant: 'halt', pillText: 'Ad Spend utilisation is below 45% across 6 campaigns' },
+  { id: 'hist-16', type: 'ai-response', aiResponse: mockResponses.h4 },
+
+  // 10 Apr 2026 — Thursday
+  { id: 'hist-d5', type: 'date-separator', date: '10 Apr 2026' },
+  { id: 'hist-17', type: 'user-bubble', userText: 'Why has ACoS increased for Home & Kitchen this week?' },
+  { id: 'hist-18', type: 'ai-response', aiResponse: mockResponses.s2 },
+  { id: 'hist-19', type: 'user-bubble', userText: 'Should I pause these campaigns?' },
+  { id: 'hist-20', type: 'ai-response', aiResponse: mockResponses.generic },
+
+  // 11 Apr 2026 — Friday
+  { id: 'hist-d4', type: 'date-separator', date: '11 Apr 2026' },
+  { id: 'hist-21', type: 'context-pill', pillVariant: 'halt', pillText: '3 campaigns with strong ACoS are under-spending' },
+  { id: 'hist-22', type: 'ai-response', aiResponse: mockResponses.h2 },
+
+  // 12 Apr 2026 — Saturday
+  { id: 'hist-d3', type: 'date-separator', date: '12 Apr 2026' },
+  { id: 'hist-23', type: 'user-bubble', userText: 'What are the top 3 actions I should take this week?' },
+  { id: 'hist-24', type: 'ai-response', aiResponse: mockResponses.generic },
+  { id: 'hist-25', type: 'user-bubble', userText: 'How do I track progress on these?' },
+  { id: 'hist-26', type: 'ai-response', aiResponse: mockResponses.generic },
+
+  // 13 Apr 2026 — Yesterday
+  { id: 'hist-d2', type: 'date-separator', date: '13 Apr 2026' },
+  { id: 'hist-27', type: 'context-pill', pillVariant: 'suggestion', pillText: 'Why has ACoS increased for Home & Kitchen this week?' },
+  { id: 'hist-28', type: 'ai-response', aiResponse: mockResponses.s2 },
+  { id: 'hist-29', type: 'user-bubble', userText: 'What is the expected recovery timeline?' },
+  { id: 'hist-30', type: 'ai-response', aiResponse: mockResponses.generic },
+];
+
 export const dashboardPages = [
   { id: 'targeting', label: 'Targeting Analysis' },
   { id: 'campaign', label: 'Campaign' },
   { id: 'placement', label: 'Placement' },
 ] as const;
-
-export type DashboardPageId = typeof dashboardPages[number]['id'];
-
-export interface GoalFAQ {
-  id: string;
-  question: string;
-}
-
-export const mockGoalFAQs: GoalFAQ[] = [
-  { id: 'gf1', question: 'How do I improve ROAS across my top campaigns?' },
-  { id: 'gf2', question: 'What is the best budget allocation strategy for peak season?' },
-  { id: 'gf3', question: 'How can I reduce ACoS without losing sales volume?' },
-  { id: 'gf4', question: 'Which campaign types perform best for new product launches?' },
-  { id: 'gf5', question: 'How do I identify and scale my best-performing ASINs?' },
-];
