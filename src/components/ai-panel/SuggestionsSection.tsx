@@ -108,7 +108,7 @@ const SuggestionsSection = ({ suggestions, onSelect, isStale, mode }: Suggestion
               whiteSpace: 'nowrap',
               fontFamily: 'var(--font_primary)',
               flexShrink: 0,
-              boxShadow: '0 1px 4px rgba(8,13,25,0.08)',
+              
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = 'rgba(142,89,255,0.04)';
