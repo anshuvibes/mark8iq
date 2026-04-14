@@ -256,7 +256,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
           </div>
         </div>
       ) : (
-        <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, overflow: 'hidden' }}>
+        <div key="chat" style={{ position: 'relative', display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, overflow: 'hidden' }}>
           <AIPanelHeader />
 
           {/* Scrollable middle area */}
