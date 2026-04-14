@@ -205,7 +205,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
           </div>
         </div>
       ) : (
-        <>
+        <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, overflow: 'hidden' }}>
           <AIPanelHeader />
 
           {/* Scrollable middle area */}
@@ -283,6 +283,129 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
             </div>
           )}
 
+          {/* Bottom sheet backdrop */}
+          {sheetOpen && (
+            <div
+              onClick={() => setSheetOpen(false)}
+              style={{
+                position: 'absolute',
+                top: 0, left: 0, right: 0, bottom: 0,
+                background: 'rgba(8,13,25,0.15)',
+                zIndex: 20,
+              }}
+            />
+          )}
+
+          {/* Bottom sheet panel */}
+          <div style={{
+            position: 'absolute',
+            bottom: 0, left: 0, right: 0,
+            background: '#FFFFFF',
+            borderRadius: '16px 16px 0 0',
+            boxShadow: '0 -4px 24px rgba(8,13,25,0.1)',
+            zIndex: 30,
+            transform: sheetOpen ? 'translateY(0)' : 'translateY(100%)',
+            transition: 'transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
+            display: 'flex',
+            flexDirection: 'column',
+            maxHeight: '70%',
+          }}>
+            {/* Sheet handle */}
+            <div style={{
+              display: 'flex', justifyContent: 'center',
+              padding: '10px 0 4px',
+              flexShrink: 0,
+            }}>
+              <div style={{
+                width: 32, height: 3,
+                borderRadius: 99,
+                background: 'rgba(18,24,43,0.15)',
+              }} />
+            </div>
+
+            {/* Sheet header */}
+            <div style={{
+              display: 'flex', alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '8px 16px 12px',
+              flexShrink: 0,
+            }}>
+              <span className="m8-p5" style={{
+                color: 'var(--color_text)', fontWeight: 500,
+              }}>
+                Highlights
+              </span>
+              <span className="m8-p6" style={{ color: 'rgba(18,24,43,0.35)' }}>
+                {mockHalts.length} total
+              </span>
+            </div>
+
+            {/* Top 3 highlights */}
+            <div style={{
+              padding: '0 16px',
+              display: 'flex', flexDirection: 'column', gap: 6,
+              flexShrink: 0,
+            }}>
+              {mockHalts.slice(0, 3).map((halt, i) => (
+                <div
+                  key={halt.id}
+                  onClick={() => {
+                    setSheetOpen(false);
+                    handleHaltAnalyse(halt);
+                  }}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 10,
+                    padding: '10px 12px',
+                    borderRadius: 'var(--m8-radius-md)',
+                    background: 'rgba(237,240,247,0.5)',
+                    border: '1px solid rgba(18,24,43,0.06)',
+                    cursor: 'pointer',
+                    transition: 'background 0.15s',
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(237,240,247,0.9)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(237,240,247,0.5)'; }}
+                >
+                  <span style={{
+                    color: 'rgba(18,24,43,0.25)', fontSize: 11,
+                    minWidth: 16, textAlign: 'center',
+                  }}>
+                    {i + 1}
+                  </span>
+                  <span className="m8-p6" style={{
+                    color: 'var(--color_text)', flex: 1, fontSize: 13,
+                  }}>
+                    {halt.statement}
+                  </span>
+                  <ChevronRight size={14} style={{ color: 'rgba(18,24,43,0.25)', flexShrink: 0 }} />
+                </div>
+              ))}
+            </div>
+
+            {/* View all row */}
+            <button
+              onClick={() => {
+                setSheetOpen(false);
+                setView('highlights');
+              }}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 8,
+                width: '100%', padding: '14px 16px',
+                border: 'none', background: 'transparent',
+                cursor: 'pointer', textAlign: 'left',
+                borderTop: '1px solid rgba(18,24,43,0.06)',
+                marginTop: 12,
+                fontFamily: 'var(--font_primary)',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.02)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+            >
+              <span className="m8-p6" style={{ color: 'var(--color_primary)', flex: 1 }}>
+                View all highlights
+              </span>
+              <ChevronRight size={14} style={{ color: 'var(--color_primary)' }} />
+            </button>
+          </div>
+
           {/* Chat input pinned at bottom */}
           <ChatInputBar
             contextLabel={contextLabel}
@@ -291,8 +414,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
             pageName={currentPage}
             onGetInsights={handleGetInsights}
           />
-        </>
-      )}
+        </div>
     </>
   );
 
