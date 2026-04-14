@@ -378,20 +378,46 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
               </div>
             )}
 
-            <ChatWindow
-              messages={messages}
-              showLoadPrevious={messages.some(m => m.id?.startsWith('hist-'))}
-              onLoadPrevious={() => {}}
-              onRetry={handleRetry}
-              scrollContainerRef={scrollContainerRef}
-              onInsightAnalyse={handleInsightAnalyse}
-              onHaltSelect={handleHaltSelect}
-              onViewAll={handleViewAll}
-              onSuggestionInlineSelect={handleSuggestionInlineSelect}
-              onWelcomeSuggestionSelect={handleSuggestionSelect}
-              onTypingComplete={() => setLastResponseComplete(true)}
-              onSuggestionSelect={handleSuggestionSelect}
-            />
+            {historyLoading ? (
+              <div style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 12,
+                color: 'rgba(18,24,43,0.35)',
+                minHeight: 200,
+              }}>
+                <div style={{ display: 'flex', gap: 4 }}>
+                  {[0, 1, 2].map(i => (
+                    <span key={i} style={{
+                      width: 6, height: 6, borderRadius: '50%',
+                      background: 'rgba(18,24,43,0.25)',
+                      animation: `m8-dot-pulse 1.2s ease-in-out ${i * 0.15}s infinite`,
+                    }} />
+                  ))}
+                </div>
+                <span className="m8-p6" style={{ fontSize: 12 }}>
+                  Loading chat history...
+                </span>
+              </div>
+            ) : (
+              <ChatWindow
+                messages={messages}
+                showLoadPrevious={messages.some(m => m.id?.startsWith('hist-'))}
+                onLoadPrevious={() => {}}
+                onRetry={handleRetry}
+                scrollContainerRef={scrollContainerRef}
+                onInsightAnalyse={handleInsightAnalyse}
+                onHaltSelect={handleHaltSelect}
+                onViewAll={handleViewAll}
+                onSuggestionInlineSelect={handleSuggestionInlineSelect}
+                onWelcomeSuggestionSelect={handleSuggestionSelect}
+                onTypingComplete={() => setLastResponseComplete(true)}
+                onSuggestionSelect={handleSuggestionSelect}
+              />
+            )}
           </div>
 
 
