@@ -26,14 +26,14 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
     onSend(trimmed);
     setValue('');
     if (textareaRef.current) {
-      textareaRef.current.style.height = '56px';
+      textareaRef.current.style.height = '36px';
     }
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
     const el = e.target;
-    el.style.height = '56px';
+    el.style.height = '36px';
     el.style.height = Math.min(el.scrollHeight, 160) + 'px';
   };
 
@@ -206,7 +206,7 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
             placeholder={isLoading ? 'Generating response...' : 'Ask about this page...'}
             disabled={isLoading}
             rows={1}
-            className="m8-p6 ai-chat-textarea"
+            className="m8-p6 ai-chat-textarea ai-panel-scroll"
             style={{
               width: '100%',
               border: 'none',
