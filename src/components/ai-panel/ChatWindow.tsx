@@ -374,8 +374,8 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
                   maxWidth: '85%',
                   padding: '10px 14px',
                   borderRadius: '12px 12px 2px 12px',
-                  background: 'var(--color_primary)',
-                  color: '#FFFFFF',
+                  background: 'rgba(18,24,43,0.06)',
+                  color: 'var(--color_text)',
                 }}>
                   <span className="m8-p6" style={{ fontWeight: 300 }}>{msg.userText}</span>
                 </div>
