@@ -134,12 +134,17 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   }, []);
 
   const handleHaltSelect = useCallback((halt: Halt) => {
+    const isFirstInteraction = messages.length === 1 && messages[0].type === 'welcome';
+    const prefix = (isFirstInteraction && halt.id === 'h1') ? mockLongChatHistory : [];
+
     setMessages(prev => [
-      ...prev,
-      { id: nextId(), type: 'context-pill', pillVariant: 'halt', pillText: halt.statement },
+      ...prev.filter(m => m.type !== 'welcome' || !isFirstInteraction),
+      ...prefix,
+      ...(isFirstInteraction ? [{ id: nextId(), type: 'date-separator' as const, date: '14 Apr 2026' }] : []),
+      { id: nextId(), type: 'context-pill' as const, pillVariant: 'halt' as const, pillText: halt.statement },
     ]);
     simulateResponse(halt.id);
-  }, [simulateResponse]);
+  }, [messages, simulateResponse]);
 
   const handleSuggestionSelect = useCallback((suggestion: Suggestion) => {
     setMessages(prev => [
