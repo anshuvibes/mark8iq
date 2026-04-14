@@ -341,6 +341,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
               onSuggestionInlineSelect={handleSuggestionInlineSelect}
               onWelcomeSuggestionSelect={handleSuggestionSelect}
               onTypingComplete={() => setLastResponseComplete(true)}
+              onSuggestionSelect={handleSuggestionSelect}
             />
           </div>
 
