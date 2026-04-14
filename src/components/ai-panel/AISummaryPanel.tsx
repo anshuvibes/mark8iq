@@ -415,6 +415,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
             onGetInsights={handleGetInsights}
           />
         </div>
+      )}
     </>
   );
 
