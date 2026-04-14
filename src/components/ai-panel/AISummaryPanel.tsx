@@ -325,12 +325,31 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
                 pointerEvents: 'none',
                 zIndex: 10,
               }} />
-              <SuggestionsSection
-                suggestions={mockSuggestions}
-                onSelect={handleSuggestionSelect}
-                isStale={false}
-                mode="horizontal"
-              />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '0 16px 8px' }}>
+                {mockSuggestions.slice(0, 2).map((s) => (
+                  <button
+                    key={s.id}
+                    onClick={() => handleSuggestionSelect(s)}
+                    style={{
+                      width: '100%',
+                      padding: '8px 14px',
+                      borderRadius: 'var(--m8-radius-md)',
+                      background: 'transparent',
+                      border: '1px solid rgba(18,24,43,0.06)',
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      fontFamily: 'var(--font_primary)',
+                      transition: 'background 0.15s',
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(142,89,255,0.04)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+                  >
+                    <span style={{ color: 'rgba(18,24,43,0.65)', fontSize: 12, fontWeight: 400, fontFamily: 'var(--font_primary)' }}>
+                      {s.question}
+                    </span>
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
