@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import AIPanelHeader from './AIPanelHeader';
-
+import SuggestionsSection from './SuggestionsSection';
 import ChatWindow from './ChatWindow';
 import ChatInputBar from './ChatInputBar';
 import {
@@ -172,6 +172,22 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
           onWelcomeSuggestionSelect={handleSuggestionSelect}
         />
       </div>
+
+      {/* Horizontal suggestion strip — visible once user has interacted */}
+      {messages.some(m => m.type === 'user-bubble' || m.type === 'context-pill') && (
+        <div
+          style={{ opacity: 0.7, transition: 'opacity 0.2s' }}
+          onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
+        >
+          <SuggestionsSection
+            suggestions={mockSuggestions}
+            onSelect={handleSuggestionSelect}
+            isStale={false}
+            mode="horizontal"
+          />
+        </div>
+      )}
 
       {/* Chat input pinned at bottom */}
       <ChatInputBar
