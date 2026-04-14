@@ -7,7 +7,7 @@ interface AIResponseBlockProps {
 }
 
 /** Splits text into words and reveals them one by one */
-const TypedText = ({ text, startDelay, speed = 30, onDone }: { text: string; startDelay: number; speed?: number; onDone?: () => void }) => {
+const TypedText = ({ text, startDelay, speed = 30, onDone, onStart }: { text: string; startDelay: number; speed?: number; onDone?: () => void; onStart?: () => void }) => {
   const words = text.split(' ');
   const [count, setCount] = useState(0);
   const started = useRef(false);
@@ -15,6 +15,7 @@ const TypedText = ({ text, startDelay, speed = 30, onDone }: { text: string; sta
   useEffect(() => {
     const startTimer = setTimeout(() => {
       started.current = true;
+      onStart?.();
       let i = 0;
       const tick = () => {
         i++;
@@ -49,6 +50,22 @@ const DelayedReveal = ({ delay, children, onDone }: { delay: number; children: R
     }}>
       {children}
     </div>
+  );
+};
+
+/** A list item that only renders once its typed text begins */
+const RecItem = ({ text, startDelay, speed }: { text: string; startDelay: number; speed: number }) => {
+  const [visible, setVisible] = useState(false);
+  return (
+    <li className="m8-p5" style={{
+      color: 'var(--color_text)',
+      marginBottom: 6,
+      listStyleType: visible ? undefined : 'none',
+      height: visible ? 'auto' : 0,
+      overflow: 'hidden',
+    }}>
+      <TypedText text={text} startDelay={startDelay} speed={speed} onStart={() => setVisible(true)} />
+    </li>
   );
 };
 
@@ -163,9 +180,7 @@ const AIResponseBlock = ({ response }: AIResponseBlockProps) => {
         <AnimatedDivider delay={recsDividerAt} />
         <ol style={{ margin: 0, paddingLeft: 18 }}>
           {response.recommendations.map((rec, i) => (
-            <li key={i} className="m8-p5" style={{ color: 'var(--color_text)', marginBottom: 6, minHeight: 18 }}>
-              <TypedText text={rec} startDelay={recTimings[i]} speed={WORD_SPEED} />
-            </li>
+            <RecItem key={i} text={rec} startDelay={recTimings[i]} speed={WORD_SPEED} />
           ))}
         </ol>
       </div>
