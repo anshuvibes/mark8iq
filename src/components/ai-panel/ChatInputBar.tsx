@@ -106,7 +106,7 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
             <img
               src={pageIcon || '/img/product-logos/black/mark8-ads.svg'}
               alt=""
-              style={{ height: 14, width: 'auto', flexShrink: 0, display: 'block' }}
+              style={{ height: 8, width: 'auto', flexShrink: 0, display: 'block' }}
             />
             <span className="m8-p6" style={{
               color: 'rgba(18,24,43,0.65)',
