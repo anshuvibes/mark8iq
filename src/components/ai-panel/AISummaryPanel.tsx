@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import AIPanelHeader from './AIPanelHeader';
-import SuggestionsSection from './SuggestionsSection';
+
 import ChatWindow from './ChatWindow';
 import ChatInputBar from './ChatInputBar';
 import {
@@ -41,10 +41,6 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
       setMessages([{ id: nextId(), type: 'welcome', welcomeHalts: mockHalts.slice(0, 3) }]);
     }
   }, []);
-
-  // Derive suggestions mode
-  const hasUserInteraction = messages.some(m => m.type === 'user-bubble' || m.type === 'context-pill');
-  const suggestionsMode = hasUserInteraction ? 'horizontal' : 'vertical';
 
   // Detect page change
   if (currentPageId !== lastPageId && messages.length > 0) {
@@ -176,14 +172,6 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
           onWelcomeSuggestionSelect={handleSuggestionSelect}
         />
       </div>
-
-      {/* Suggestions pinned above input */}
-      <SuggestionsSection
-        suggestions={mockSuggestions}
-        onSelect={handleSuggestionSelect}
-        isStale={false}
-        mode={suggestionsMode}
-      />
 
       {/* Chat input pinned at bottom */}
       <ChatInputBar
