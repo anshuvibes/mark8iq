@@ -41,7 +41,7 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend }: ChatInputBarProps) =>
 
   // Only highlight the border when there's text, not on focus alone
   const getBorderColor = () => {
-    if (isFocused && hasText) return 'var(--color_primary)';
+    if (isFocused) return 'rgba(142,89,255,0.5)';
     return 'rgba(18,24,43,0.12)';
   };
 
