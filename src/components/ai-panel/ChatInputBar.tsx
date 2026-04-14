@@ -18,6 +18,7 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
   const [plusMenuOpen, setPlusMenuOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const plusMenuRef = useRef<HTMLDivElement>(null);
+  const plusBtnRef = useRef<HTMLButtonElement>(null);
 
   const handleSend = () => {
     const trimmed = value.trim();
@@ -82,7 +83,6 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
   }, []);
 
   // Click outside handler for plus menu
-  const plusBtnRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (!plusMenuOpen) return;
     const handleClickOutside = (e: MouseEvent) => {
@@ -98,6 +98,12 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [plusMenuOpen]);
 
+  return (
+    <div style={{
+      padding: '6px 16px 12px',
+      borderTop: 'none',
+      background: '#FFFFFF',
+    }}>
       {/* Larger container */}
       <div style={{
         display: 'flex',
@@ -188,6 +194,108 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
             padding: '10px 12px',
             minHeight: 48,
           }}>
+            {/* Plus button */}
+            <div style={{ position: 'relative', flexShrink: 0, marginBottom: 2 }}>
+              <button
+                ref={plusBtnRef}
+                onClick={() => setPlusMenuOpen(!plusMenuOpen)}
+                style={{
+                  width: 28,
+                  height: 28,
+                  borderRadius: 'var(--m8-radius-md)',
+                  background: 'transparent',
+                  border: '1.5px solid rgba(18,24,43,0.12)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'rgba(18,24,43,0.45)',
+                  transition: 'border-color 0.15s, color 0.15s',
+                  fontSize: 18,
+                  lineHeight: 1,
+                  fontFamily: 'var(--font_primary)',
+                  padding: 0,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(142,89,255,0.5)';
+                  e.currentTarget.style.color = 'var(--color_primary)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(18,24,43,0.12)';
+                  e.currentTarget.style.color = 'rgba(18,24,43,0.45)';
+                }}
+              >
+                +
+              </button>
+
+              {/* Plus menu popup */}
+              {plusMenuOpen && (
+                <div
+                  ref={plusMenuRef}
+                  style={{
+                    position: 'absolute',
+                    bottom: '100%',
+                    left: 0,
+                    marginBottom: 8,
+                    minWidth: 200,
+                    background: '#FFFFFF',
+                    border: '1px solid rgba(18,24,43,0.1)',
+                    borderRadius: 'var(--m8-radius-md)',
+                    boxShadow: '0 4px 20px rgba(8,13,25,0.12)',
+                    padding: '4px 0',
+                    zIndex: 10,
+                  }}
+                >
+                  <button
+                    onClick={() => { setPlusMenuOpen(false); onGetInsights(); }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 10,
+                      width: '100%',
+                      padding: '9px 14px',
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontFamily: 'var(--font_primary)',
+                      fontSize: 13,
+                      color: 'var(--color_text)',
+                      textAlign: 'left',
+                      transition: 'background 0.15s',
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.04)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+                  >
+                    <Sparkles size={14} style={{ color: 'rgba(18,24,43,0.5)', flexShrink: 0 }} />
+                    Show highlights
+                  </button>
+                  <button
+                    onClick={() => { setPlusMenuOpen(false); onGetSuggestions(); }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 10,
+                      width: '100%',
+                      padding: '9px 14px',
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontFamily: 'var(--font_primary)',
+                      fontSize: 13,
+                      color: 'var(--color_text)',
+                      textAlign: 'left',
+                      transition: 'background 0.15s',
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.04)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+                  >
+                    <MessageSquare size={14} style={{ color: 'rgba(18,24,43,0.5)', flexShrink: 0 }} />
+                    Show suggestions
+                  </button>
+                </div>
+              )}
+            </div>
+
             <textarea
               ref={textareaRef}
               value={value}
