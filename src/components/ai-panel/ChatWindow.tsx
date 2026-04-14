@@ -90,6 +90,16 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
     return clearTimers;
   }, []);
 
+  // Beat 2.5 → 3 transition
+  useEffect(() => {
+    if (beat !== 2.5) return;
+    const t1 = addTimer(() => {
+      setThinkingFading(true);
+      addTimer(() => setBeat(3), 200);
+    }, 1800);
+    return () => clearTimeout(t1);
+  }, [beat]);
+
   // Beat 3: stagger cards after line types
   const startCardReveal = () => {
     halts.forEach((_, i) => {
