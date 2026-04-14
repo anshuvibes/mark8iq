@@ -381,7 +381,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
 
           case 'ai-response':
             return msg.aiResponse ? (
-              <div key={msg.id} style={{ marginBottom: 8 }}>
+              <div key={msg.id} style={{ marginBottom: 20 }}>
                 <AIResponseBlock response={msg.aiResponse} />
               </div>
             ) : null;
