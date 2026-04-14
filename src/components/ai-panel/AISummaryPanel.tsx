@@ -623,11 +623,11 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
           )}
 
           <div style={{
-            height: 32,
+            height: 48,
             flexShrink: 0,
             background: 'linear-gradient(to top, #FFFFFF 0%, transparent 100%)',
             pointerEvents: 'none',
-            marginTop: -32,
+            marginTop: -48,
             position: 'relative',
             zIndex: 2,
           }} />
