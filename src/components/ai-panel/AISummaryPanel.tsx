@@ -136,12 +136,30 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
 
   const handleHaltSelect = useCallback((halt: Halt) => {
     const isFirstInteraction = messages.length === 1 && messages[0].type === 'welcome';
-    const prefix = (isFirstInteraction && halt.id === 'h1') ? mockLongChatHistory : [];
+
+    if (isFirstInteraction && halt.id === 'h1') {
+      setHistoryLoading(true);
+      setTimeout(() => {
+        setMessages(prev => [
+          ...prev.filter(m => m.type !== 'welcome'),
+          ...mockLongChatHistory,
+          { id: nextId(), type: 'date-separator' as const, date: '14 Apr 2026' },
+          { id: nextId(), type: 'context-pill' as const, pillVariant: 'halt' as const, pillText: halt.statement },
+        ]);
+        setHistoryLoading(false);
+        simulateResponse(halt.id);
+        setTimeout(() => {
+          const container = scrollContainerRef.current;
+          if (container) {
+            container.scrollTo({ top: container.scrollHeight, behavior: 'instant' as ScrollBehavior });
+          }
+        }, 50);
+      }, 800);
+      return;
+    }
 
     setMessages(prev => [
       ...prev.filter(m => m.type !== 'welcome' || !isFirstInteraction),
-      ...prefix,
-      ...(isFirstInteraction ? [{ id: nextId(), type: 'date-separator' as const, date: '14 Apr 2026' }] : []),
       { id: nextId(), type: 'context-pill' as const, pillVariant: 'halt' as const, pillText: halt.statement },
     ]);
     simulateResponse(halt.id);
