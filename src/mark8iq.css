@@ -3051,3 +3051,13 @@ section { position: relative; }
 
 .PricingPlanTab_PricingPlanTab__2XaG2 .PricingPlanTab_tabs__Z8usX .PricingPlanTab_tab_menu__jQglV .PricingPlanTab_tab_menu_item__TrP8k.PricingPlanTab_active__ImdnR::before { opacity: 1; }
 
+@keyframes suggestionSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
