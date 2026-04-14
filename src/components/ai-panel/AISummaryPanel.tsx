@@ -173,6 +173,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
         contextLabel={contextLabel}
         isLoading={isLoading}
         onSend={handleSendMessage}
+        pageName={currentPage}
       />
     </>
   );
