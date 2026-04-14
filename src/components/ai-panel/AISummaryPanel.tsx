@@ -130,10 +130,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   }, [simulateResponse]);
 
   const handleViewAll = useCallback(() => {
-    setMessages(prev => [
-      ...prev,
-      { id: nextId(), type: 'insights-list', insightsList: mockHalts },
-    ]);
+    setView('highlights');
   }, []);
 
   const handleHaltAnalyse = useCallback((halt: Halt) => {

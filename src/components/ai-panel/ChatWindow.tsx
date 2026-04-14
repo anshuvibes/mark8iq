@@ -171,7 +171,7 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
         <>
           <div style={{ fontSize: 14, fontWeight: 400, color: 'rgba(18,24,43,0.65)', lineHeight: '1.5', marginBottom: 12, fontFamily: 'var(--font_primary)' }}>
             <TypedText
-              text="Here are a few things that need your attention."
+              text="Here are a few highlights that need your attention."
               speed={40}
               onDone={startCardReveal}
             />
@@ -221,7 +221,10 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
                 color: 'var(--color_primary)',
               }}
             >
-              <span className="m8-p6">+ View all insights ({5} total)</span>
+              <span className="m8-p6" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <Sparkles size={12} style={{ color: 'var(--color_primary)' }} />
+                View all highlights ({5} total)
+              </span>
             </button>
           </div>
         </>
@@ -428,7 +431,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
                   fontWeight: 500,
                   marginBottom: 10,
                 }}>
-                  Here are all your insights
+                  Here are all your highlights
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                   {msg.insightsList?.map((halt, i) => (
