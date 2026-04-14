@@ -215,7 +215,7 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
               color: 'var(--color_text)',
               fontFamily: 'var(--font_primary)',
               resize: 'none',
-              height: 56,
+              height: 36,
               maxHeight: 160,
               overflowY: 'auto',
               lineHeight: '22px',
