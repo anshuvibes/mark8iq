@@ -164,9 +164,7 @@ const AIResponseBlock = ({ response }: AIResponseBlockProps) => {
         <AnimatedDivider delay={recsDividerAt} />
         <ol style={{ margin: 0, paddingLeft: 18 }}>
           {response.recommendations.map((rec, i) => (
-            <li key={i} className="m8-p5" style={{ color: 'var(--color_text)', marginBottom: 6, minHeight: 18 }}>
-              <TypedText text={rec} startDelay={recTimings[i]} speed={WORD_SPEED} />
-            </li>
+            <RecItem key={i} text={rec} startDelay={recTimings[i]} speed={WORD_SPEED} />
           ))}
         </ol>
       </div>
