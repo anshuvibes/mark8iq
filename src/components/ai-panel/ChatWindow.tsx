@@ -62,6 +62,8 @@ const TypedText = ({ text, speed = 40, onDone }: { text: string; speed?: number;
 
 /* ─── WelcomeMessage ─── */
 
+let welcomeHasPlayed = false;
+
 interface WelcomeMessageProps {
   halts: Halt[];
   onHaltSelect: (halt: Halt) => void;
@@ -70,10 +72,11 @@ interface WelcomeMessageProps {
 }
 
 const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: WelcomeMessageProps) => {
-  const [beat, setBeat] = useState(0);
-  const [cardsRevealed, setCardsRevealed] = useState(0);
-  const [viewAllVisible, setViewAllVisible] = useState(false);
-  const [chipsRevealed, setChipsRevealed] = useState(0);
+  const [skipAnimation] = useState(() => welcomeHasPlayed);
+  const [beat, setBeat] = useState(skipAnimation ? 5 : 0);
+  const [cardsRevealed, setCardsRevealed] = useState(skipAnimation ? halts.length : 0);
+  const [viewAllVisible, setViewAllVisible] = useState(skipAnimation);
+  const [chipsRevealed, setChipsRevealed] = useState(skipAnimation ? mockSuggestions.length : 0);
   const [thinkingFading, setThinkingFading] = useState(false);
   const timerRefs = useRef<number[]>([]);
 
@@ -89,7 +92,10 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
   };
 
   useEffect(() => {
-    setBeat(1);
+    if (!skipAnimation) {
+      setBeat(1);
+    }
+    welcomeHasPlayed = true;
     return clearTimers;
   }, []);
 
