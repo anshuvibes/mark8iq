@@ -21,14 +21,14 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
     onSend(trimmed);
     setValue('');
     if (textareaRef.current) {
-      textareaRef.current.style.height = '44px';
+      textareaRef.current.style.height = '40px';
     }
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
     const el = e.target;
-    el.style.height = '44px';
+    el.style.height = '40px';
     el.style.height = Math.min(el.scrollHeight, 120) + 'px';
   };
 
@@ -47,24 +47,6 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
     return 'rgba(18,24,43,0.12)';
   };
 
-  const getSendButtonStyle = () => {
-    if (canSend) {
-      return {
-        background: 'var(--color_primary)',
-        border: '1.5px solid var(--color_primary)',
-        color: '#FFFFFF',
-        cursor: 'pointer' as const,
-      };
-    }
-    return {
-      background: 'rgba(18,24,43,0.08)',
-      border: '1.5px solid transparent',
-      color: 'rgba(18,24,43,0.25)',
-      cursor: 'not-allowed' as const,
-    };
-  };
-
-  const sendStyle = getSendButtonStyle();
   const displayName = pageName || 'Targeting Analysis';
 
   useEffect(() => {
@@ -72,7 +54,7 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
     if (!document.getElementById(id)) {
       const style = document.createElement('style');
       style.id = id;
-      style.textContent = `.ai-chat-textarea::placeholder { color: rgba(18,24,43,0.45) !important; }`;
+      style.textContent = `.ai-chat-textarea::placeholder { color: rgba(18,24,43,0.4) !important; }`;
       document.head.appendChild(style);
     }
   }, []);
@@ -83,77 +65,61 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
       borderTop: '1px solid rgba(18,24,43,0.06)',
       background: '#FFFFFF',
     }}>
-      {/* Input container */}
+      {/* Single container with border */}
       <div style={{
-        display: 'flex',
-        flexDirection: 'column',
         borderRadius: 'var(--m8-radius-md)',
         border: `1.5px solid ${getBorderColor()}`,
         background: isLoading ? 'rgba(237,240,247,0.5)' : '#FFFFFF',
         transition: 'border-color 0.2s',
         overflow: 'hidden',
       }}>
-        {/* Context chip row */}
+        {/* Context chip row — full width bar */}
         {showChip && (
           <div style={{
-            padding: '8px 12px 4px',
             display: 'flex',
             alignItems: 'center',
+            gap: 8,
+            padding: '8px 12px',
+            borderBottom: '1px solid rgba(18,24,43,0.08)',
+            background: 'rgba(18,24,43,0.025)',
           }}>
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 6,
-              padding: '4px 10px',
-              borderRadius: 999,
-              background: 'rgba(18,24,43,0.05)',
-              maxWidth: '100%',
+            <img
+              src={pageIcon || '/img/product-logos/black/mark8-ads.svg'}
+              alt=""
+              style={{ width: 16, height: 16, flexShrink: 0 }}
+            />
+            <span className="m8-p6" style={{
+              color: 'var(--color_text)',
+              flex: 1,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
             }}>
-              <img
-                src={pageIcon || '/img/product-logos/black/mark8-ads.svg'}
-                alt=""
-                style={{ width: 14, height: 14, flexShrink: 0 }}
-              />
-              <span className="m8-p6" style={{
-                color: 'rgba(18,24,43,0.65)',
-                fontSize: 12,
-                lineHeight: '16px',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}>
-                Reading "{displayName}"
-              </span>
-              <button
-                onClick={() => setShowChip(false)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  color: 'rgba(18,24,43,0.35)',
-                  flexShrink: 0,
-                  transition: 'color 0.15s',
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.6)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.35)'; }}
-              >
-                <X size={12} />
-              </button>
-            </div>
+              Reading "{displayName}"
+            </span>
+            <button
+              onClick={() => setShowChip(false)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: 2,
+                display: 'flex',
+                alignItems: 'center',
+                color: 'rgba(18,24,43,0.35)',
+                flexShrink: 0,
+                transition: 'color 0.15s',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.6)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.35)'; }}
+            >
+              <X size={14} />
+            </button>
           </div>
         )}
 
-        {/* Text input row */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'flex-end',
-          gap: 8,
-          padding: '10px 12px',
-          minHeight: 48,
-        }}>
+        {/* Text input area */}
+        <div style={{ padding: '8px 12px' }}>
           <textarea
             ref={textareaRef}
             value={value}
@@ -166,34 +132,45 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
             rows={1}
             className="m8-p6 ai-chat-textarea"
             style={{
-              flex: 1,
+              width: '100%',
               border: 'none',
               outline: 'none',
               background: 'transparent',
               color: 'var(--color_text)',
               fontFamily: 'var(--font_primary)',
               resize: 'none',
-              height: 44,
+              height: 40,
               maxHeight: 120,
               overflowY: 'auto',
               lineHeight: '22px',
               padding: 0,
             }}
           />
+        </div>
+
+        {/* Bottom row with send button */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          padding: '4px 12px 8px',
+        }}>
           <button
             onClick={handleSend}
             disabled={!canSend}
             style={{
-              width: 28,
-              height: 28,
+              width: 30,
+              height: 30,
               borderRadius: 'var(--m8-radius-md)',
-              ...sendStyle,
+              background: canSend ? 'var(--color_primary)' : 'rgba(18,24,43,0.08)',
+              border: canSend ? '1.5px solid var(--color_primary)' : '1.5px solid transparent',
+              color: canSend ? '#FFFFFF' : 'rgba(18,24,43,0.25)',
+              cursor: canSend ? 'pointer' : 'not-allowed',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               transition: 'all 0.15s',
               flexShrink: 0,
-              marginBottom: 2,
             }}
           >
             <ArrowUp size={14} />
