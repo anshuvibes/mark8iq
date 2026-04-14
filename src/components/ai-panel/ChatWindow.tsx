@@ -151,15 +151,7 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
         </div>
       )}
 
-      {/* Trigger beat 2.5 → 3 transition */}
-      {beat === 2.5 && (() => {
-        // Side-effect in render to kick off timer — runs once due to beat guard
-        addTimer(() => {
-          setThinkingFading(true);
-          addTimer(() => setBeat(3), 200);
-        }, 1800);
-        return null;
-      })()}
+      {/* nothing — beat 2.5→3 handled by effect below */}
 
       {/* Beat 3: Highlights line + cards */}
       {beat >= 3 && (
