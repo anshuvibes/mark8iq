@@ -123,14 +123,16 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
 
       {/* Scrollable middle area — halts + chat */}
       <div ref={scrollContainerRef} className="ai-panel-scroll" data-lenis-prevent="" style={{ flex: 1, minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
-        <HaltsSection
-          halts={mockHalts}
-          collapsed={haltsCollapsed}
-          hasActiveChat={hasActiveChat}
-          onAnalyse={handleHaltAnalyse}
-          onViewAll={() => setShowViewAll(true)}
-          onToggleCollapse={() => setHaltsCollapsed(!haltsCollapsed)}
-        />
+        {!hasActiveChat && (
+          <HaltsSection
+            halts={mockHalts}
+            collapsed={haltsCollapsed}
+            hasActiveChat={hasActiveChat}
+            onAnalyse={handleHaltAnalyse}
+            onViewAll={() => setShowViewAll(true)}
+            onToggleCollapse={() => setHaltsCollapsed(!haltsCollapsed)}
+          />
+        )}
 
         {contextNotice && (
           <div style={{
@@ -153,7 +155,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
 
         <ChatWindow
           messages={messages}
-          showLoadPrevious={!previousLoaded && hasActiveChat}
+          showLoadPrevious={false}
           onLoadPrevious={handleLoadPrevious}
           onRetry={handleRetry}
           scrollContainerRef={scrollContainerRef}
