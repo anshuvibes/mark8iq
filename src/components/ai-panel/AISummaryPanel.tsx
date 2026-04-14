@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Sparkles, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { gsap } from 'gsap';
 import AIPanelHeader from './AIPanelHeader';
@@ -11,9 +11,11 @@ import {
   mockHalts,
   mockSuggestions,
   mockResponses,
+  mockGoalFAQs,
   type ChatMessage,
   type Halt,
   type Suggestion,
+  type GoalFAQ,
   type DashboardPageId,
 } from '@/data/aiPanelMockData';
 
@@ -40,6 +42,10 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   const [lastPageId, setLastPageId] = useState<DashboardPageId>(currentPageId);
   const [view, setView] = useState<'chat' | 'highlights'>('chat');
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [goalFAQSheetOpen, setGoalFAQSheetOpen] = useState(false);
+  const [goalFAQView, setGoalFAQView] = useState(false);
+  const goalFAQsRef = useRef<HTMLDivElement>(null);
+  const goalFAQItemsRef = useRef<HTMLDivElement[]>([]);
 
   const handleHighlightsBack = useCallback(() => {
     if (highlightsRef.current) {
@@ -155,6 +161,20 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   const handleGetInsights = useCallback(() => {
     setSheetOpen(true);
   }, []);
+
+  const handleGetGoalFAQs = useCallback(() => {
+    setGoalFAQSheetOpen(true);
+  }, []);
+
+  const handleGoalFAQSelect = useCallback((faq: GoalFAQ) => {
+    setGoalFAQSheetOpen(false);
+    setGoalFAQView(false);
+    setMessages(prev => [
+      ...prev,
+      { id: nextId(), type: 'context-pill', pillVariant: 'suggestion', pillText: faq.question },
+    ]);
+    simulateResponse('generic');
+  }, [simulateResponse]);
 
   const handleSuggestionInlineSelect = useCallback((suggestion: Suggestion, messageId: string) => {
     setMessages(prev => prev.filter(m => m.id !== messageId));
