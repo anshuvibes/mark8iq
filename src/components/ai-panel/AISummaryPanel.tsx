@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { gsap } from 'gsap';
 import AIPanelHeader from './AIPanelHeader';
 import SuggestionsSection from './SuggestionsSection';
@@ -195,7 +196,9 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
             </button>
             <span className="m8-p6" style={{
               color: 'var(--color_text)', fontWeight: 500, flex: 1,
+              display: 'flex', alignItems: 'center', gap: 6,
             }}>
+              <Sparkles size={12} style={{ color: 'var(--color_primary)', flexShrink: 0 }} />
               All Highlights
             </span>
             <span className="m8-p6" style={{ color: 'rgba(18,24,43,0.35)' }}>
@@ -236,7 +239,18 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
                 <span className="m8-p6" style={{ color: 'var(--color_text)', flex: 1, fontSize: 13 }}>
                   {halt.statement}
                 </span>
-                <ChevronRight size={14} style={{ color: 'rgba(18,24,43,0.25)', flexShrink: 0 }} />
+                <Button
+                  variant="m8-outline-violet"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setView('chat');
+                    handleHaltAnalyse(halt);
+                  }}
+                  style={{ padding: '4px 12px', fontSize: 12, height: 'auto', minWidth: 'auto', flexShrink: 0 }}
+                >
+                  Get Insights
+                </Button>
               </div>
             ))}
           </div>
@@ -369,7 +383,9 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
             }}>
               <span className="m8-p5" style={{
                 color: 'var(--color_text)', fontWeight: 500,
+                display: 'flex', alignItems: 'center', gap: 6,
               }}>
+                <Sparkles size={12} style={{ color: 'var(--color_primary)', flexShrink: 0 }} />
                 Highlights
               </span>
               <span className="m8-p6" style={{ color: 'rgba(18,24,43,0.35)' }}>
