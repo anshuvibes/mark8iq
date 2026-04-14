@@ -222,7 +222,6 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
         onSend={handleSendMessage}
         pageName={currentPage}
         onGetInsights={handleGetInsights}
-        onGetSuggestions={handleGetSuggestions}
       />
     </>
   );
