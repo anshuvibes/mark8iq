@@ -88,57 +88,71 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
         display: 'flex',
         flexDirection: 'column',
         borderRadius: 'var(--m8-radius-md)',
-        background: showChip ? 'rgba(142,89,255,0.06)' : 'transparent',
+        background: 'rgba(142,89,255,0.06)',
         padding: 0,
-        transition: 'background 0.2s, padding 0.2s',
+        transition: 'background 0.2s',
       }}>
 
-        {/* Context chip row */}
-        {showChip && (
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-            padding: '4px 6px',
-            margin: '2px 0',
-            marginBottom: 0,
-          }}>
-            <img
-              src={pageIcon || '/img/product-logos/black/mark8-ads.svg'}
-              alt=""
-              style={{ height: 8, width: 'auto', flexShrink: 0, display: 'block' }}
-            />
+        {/* Context chip row — always visible, content changes on dismiss */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+          padding: '4px 6px',
+          margin: '2px 0',
+          marginBottom: 0,
+          cursor: showChip ? 'default' : 'pointer',
+        }}
+          onClick={!showChip ? () => setShowChip(true) : undefined}
+        >
+          {showChip ? (
+            <>
+              <img
+                src={pageIcon || '/img/product-logos/black/mark8-ads.svg'}
+                alt=""
+                style={{ height: 8, width: 'auto', flexShrink: 0, display: 'block' }}
+              />
+              <span className="m8-p6" style={{
+                color: 'rgba(18,24,43,0.65)',
+                fontSize: 12,
+                lineHeight: '16px',
+                flex: 1,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}>
+                Sharing "{displayName}"
+              </span>
+              <button
+                onClick={() => setShowChip(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: 'rgba(18,24,43,0.35)',
+                  flexShrink: 0,
+                  transition: 'color 0.15s',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.6)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.35)'; }}
+              >
+                <X size={14} />
+              </button>
+            </>
+          ) : (
             <span className="m8-p6" style={{
-              color: 'rgba(18,24,43,0.65)',
-              fontSize: 12,
+              color: 'rgba(18,24,43,0.4)',
+              fontSize: 11,
               lineHeight: '16px',
-              flex: 1,
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
+              transition: 'color 0.15s',
             }}>
-              Sharing "{displayName}"
+              + Add context
             </span>
-            <button
-              onClick={() => setShowChip(false)}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                padding: 0,
-                display: 'flex',
-                alignItems: 'center',
-                color: 'rgba(18,24,43,0.35)',
-                flexShrink: 0,
-                transition: 'color 0.15s',
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.6)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.35)'; }}
-            >
-              <X size={14} />
-            </button>
-          </div>
-        )}
+          )}
+        </div>
 
         {/* Input box with its own stroke */}
         <div style={{
@@ -205,29 +219,6 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
         </div>
       </div>
 
-      {/* Show context link when chip is dismissed */}
-      {!showChip && (
-        <button
-          onClick={() => setShowChip(true)}
-          style={{
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: '6px 0 0',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 4,
-            color: 'rgba(18,24,43,0.4)',
-            fontFamily: 'var(--font_primary)',
-            fontSize: 11,
-            transition: 'color 0.15s',
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color_primary)'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.4)'; }}
-        >
-          + Show context
-        </button>
-      )}
     </div>
   );
 };
