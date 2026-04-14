@@ -49,7 +49,7 @@ const SuggestionsSection = ({ suggestions, onSelect, isStale, mode }: Suggestion
               style={{
                 width: '100%',
                 padding: '8px 14px',
-                borderRadius: 999,
+                borderRadius: 'var(--m8-radius-md)',
                 background: 'transparent',
                 border: isStale ? '1px dashed rgba(18,24,43,0.15)' : '1px solid rgba(18,24,43,0.12)',
                 cursor: 'pointer',
@@ -100,7 +100,7 @@ const SuggestionsSection = ({ suggestions, onSelect, isStale, mode }: Suggestion
             onClick={() => onSelect(s)}
             style={{
               padding: '6px 12px',
-              borderRadius: 999,
+              borderRadius: 'var(--m8-radius-md)',
               background: '#FFFFFF',
               border: 'none',
               cursor: 'pointer',
