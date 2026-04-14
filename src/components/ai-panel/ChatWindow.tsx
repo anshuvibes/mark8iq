@@ -293,7 +293,31 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
   const lastUserMsgRef = useRef<HTMLDivElement>(null);
   const lastScrolledId = useRef<string | null>(null);
   const [visibleDate, setVisibleDate] = useState<string | null>(null);
+  const [scrollingUp, setScrollingUp] = useState(false);
+  const lastScrollTop = useRef(0);
 
+  // Hide sticky pill when at bottom, show only when scrolling up
+  useEffect(() => {
+    const container = scrollContainerRef?.current;
+    if (!container) return;
+
+    const handleScrollDir = () => {
+      const currentScrollTop = container.scrollTop;
+      const isAtBottom = container.scrollHeight - currentScrollTop - container.clientHeight < 40;
+
+      if (isAtBottom) {
+        setScrollingUp(false);
+      } else if (currentScrollTop < lastScrollTop.current) {
+        setScrollingUp(true);
+      } else {
+        setScrollingUp(false);
+      }
+      lastScrollTop.current = currentScrollTop;
+    };
+
+    container.addEventListener('scroll', handleScrollDir, { passive: true });
+    return () => container.removeEventListener('scroll', handleScrollDir);
+  }, [scrollContainerRef]);
   const lastUserMsg = [...messages].reverse().find(
     m => m.type === 'user-bubble' || m.type === 'context-pill'
   );
@@ -371,7 +395,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
   return (
     <div style={{ padding: '12px 16px' }}>
       {/* Sticky date pill */}
-      {visibleDate && (
+      {visibleDate && scrollingUp && (
         <div style={{
           position: 'sticky',
           top: 8,
@@ -382,14 +406,13 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
           marginBottom: -28,
         }}>
           <div style={{
-            background: 'rgba(18,24,43,0.55)',
-            color: '#FFFFFF',
+            background: 'rgba(18,24,43,0.12)',
+            color: 'rgba(18,24,43,0.55)',
             fontSize: 11,
             fontWeight: 500,
             padding: '4px 12px',
             borderRadius: 999,
             fontFamily: 'var(--font_primary)',
-            backdropFilter: 'blur(4px)',
             letterSpacing: '0.02em',
           }}>
             {visibleDate}
