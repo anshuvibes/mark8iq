@@ -1,7 +1,7 @@
 import { useEffect, useRef, type RefObject } from 'react';
 import AIResponseBlock from './AIResponseBlock';
 import { Button } from '@/components/ui/button';
-import type { ChatMessage } from '@/data/aiPanelMockData';
+import type { ChatMessage, Halt } from '@/data/aiPanelMockData';
 
 interface ChatWindowProps {
   messages: ChatMessage[];
@@ -9,6 +9,7 @@ interface ChatWindowProps {
   onLoadPrevious: () => void;
   onRetry: (messageId: string) => void;
   scrollContainerRef?: RefObject<HTMLDivElement>;
+  onInsightAnalyse?: (halt: Halt, insightsMessageId: string) => void;
 }
 
 const LoadingDots = () => (
@@ -28,7 +29,7 @@ const LoadingDots = () => (
   </div>
 );
 
-const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrollContainerRef }: ChatWindowProps) => {
+const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrollContainerRef, onInsightAnalyse }: ChatWindowProps) => {
   const lastUserMsgRef = useRef<HTMLDivElement>(null);
   const lastScrolledId = useRef<string | null>(null);
 
@@ -73,7 +74,6 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
       )}
 
       {messages.map((msg, idx) => {
-        // Find if this is the last user-bubble or context-pill
         const isLastUserMsg =
           (msg.type === 'user-bubble' || msg.type === 'context-pill') &&
           !messages.slice(idx + 1).some(m => m.type === 'user-bubble' || m.type === 'context-pill');
@@ -166,6 +166,45 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
                     Try again
                   </Button>
                 )}
+              </div>
+            );
+
+          case 'insights-list':
+            return (
+              <div key={msg.id} style={{ marginBottom: 8 }}>
+                <div className="m8-p6" style={{
+                  color: 'var(--color_primary)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                  fontWeight: 500,
+                  marginBottom: 10,
+                }}>
+                  Here are all your insights
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  {msg.insightsList?.map((halt, i) => (
+                    <div key={halt.id} style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 10,
+                      padding: '10px 12px',
+                      borderRadius: 'var(--m8-radius-md)',
+                      background: 'rgba(237,240,247,0.5)',
+                      border: '1px solid rgba(18,24,43,0.06)',
+                    }}>
+                      <span className="m8-p6" style={{ color: 'rgba(18,24,43,0.35)', minWidth: 16, textAlign: 'center' }}>{i + 1}</span>
+                      <span className="m8-p6" style={{ color: 'var(--color_text)', flex: 1 }}>{halt.statement}</span>
+                      <Button
+                        variant="m8-outline-violet"
+                        size="sm"
+                        onClick={() => onInsightAnalyse?.(halt, msg.id)}
+                        style={{ padding: '4px 12px', fontSize: 12, height: 'auto', minWidth: 'auto' }}
+                      >
+                        Analyse
+                      </Button>
+                    </div>
+                  ))}
+                </div>
               </div>
             );
 

@@ -5,12 +5,10 @@ import HaltsSection from './HaltsSection';
 import SuggestionsSection from './SuggestionsSection';
 import ChatWindow from './ChatWindow';
 import ChatInputBar from './ChatInputBar';
-import ViewAllInsightsModal from './ViewAllInsightsModal';
 import {
   mockHalts,
   mockSuggestions,
   mockResponses,
-  mockPreviousSession,
   type ChatMessage,
   type Halt,
   type Suggestion,
@@ -24,27 +22,37 @@ interface AISummaryPanelProps {
   currentPageId: DashboardPageId;
   dateRange: string;
   inline?: boolean;
+  isNewDay?: boolean;
 }
 
 let msgCounter = 0;
 const nextId = () => `msg-${++msgCounter}`;
 
-const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange, inline }: AISummaryPanelProps) => {
+const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange, inline, isNewDay = false }: AISummaryPanelProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [chatTitle, setChatTitle] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [haltsCollapsed, setHaltsCollapsed] = useState(false);
-  const [showViewAll, setShowViewAll] = useState(false);
-  const [previousLoaded, setPreviousLoaded] = useState(false);
   const [contextNotice, setContextNotice] = useState<string | null>(null);
   const [lastPageId, setLastPageId] = useState<DashboardPageId>(currentPageId);
+  const [homeCollapsed, setHomeCollapsed] = useState(false);
 
-  const hasActiveChat = messages.some(m => m.type !== 'date-separator' && m.type !== 'divider');
+  const hasMessages = messages.some(m => m.type !== 'date-separator' && m.type !== 'divider');
   const contextLabel = `${currentPage}  ·  ${dateRange}`;
 
+  // Derive chat title from first meaningful message
+  const firstMsg = messages.find(m => m.type === 'context-pill' || m.type === 'user-bubble');
+  const chatTitle = firstMsg
+    ? (firstMsg.type === 'context-pill' ? firstMsg.pillText : firstMsg.userText)?.slice(0, 40) + (((firstMsg.type === 'context-pill' ? firstMsg.pillText : firstMsg.userText)?.length || 0) > 40 ? '…' : '')
+    : undefined;
+
+  // Home state visibility:
+  // State A: no messages → show home
+  // State B2: isNewDay && !homeCollapsed → show home above history
+  // Otherwise: hidden
+  const homeStateVisible = !hasMessages || (isNewDay && !homeCollapsed && !hasMessages) ? true : (isNewDay && !homeCollapsed);
+
   // Detect page change
-  if (currentPageId !== lastPageId && hasActiveChat) {
+  if (currentPageId !== lastPageId && hasMessages) {
     const pageName = currentPage;
     setMessages(prev => [
       ...prev,
@@ -55,6 +63,10 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   } else if (currentPageId !== lastPageId) {
     setLastPageId(currentPageId);
   }
+
+  const collapseHome = useCallback(() => {
+    setHomeCollapsed(true);
+  }, []);
 
   const simulateResponse = useCallback((responseKey: string) => {
     setIsLoading(true);
@@ -71,42 +83,47 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   }, []);
 
   const handleHaltAnalyse = useCallback((halt: Halt) => {
-    setChatTitle(halt.statement.length > 40 ? halt.statement.slice(0, 40) + '…' : halt.statement);
-    setMessages([
+    collapseHome();
+    setMessages(prev => [
+      ...prev,
       { id: nextId(), type: 'context-pill', pillVariant: 'halt', pillText: halt.statement },
     ]);
-    setHaltsCollapsed(true);
     simulateResponse(halt.id);
-  }, [simulateResponse]);
+  }, [simulateResponse, collapseHome]);
 
   const handleSuggestionSelect = useCallback((suggestion: Suggestion) => {
-    setChatTitle(suggestion.question.length > 40 ? suggestion.question.slice(0, 40) + '…' : suggestion.question);
-    setMessages([
+    collapseHome();
+    setMessages(prev => [
+      ...prev,
       { id: nextId(), type: 'context-pill', pillVariant: 'suggestion', pillText: suggestion.question },
     ]);
-    setHaltsCollapsed(true);
     simulateResponse(suggestion.id);
-  }, [simulateResponse]);
+  }, [simulateResponse, collapseHome]);
 
   const handleSendMessage = useCallback((text: string) => {
-    if (!chatTitle) setChatTitle(text.length > 40 ? text.slice(0, 40) + '…' : text);
+    collapseHome();
     setMessages(prev => [...prev, { id: nextId(), type: 'user-bubble', userText: text }]);
-    if (!haltsCollapsed) setHaltsCollapsed(true);
     simulateResponse('generic');
-  }, [simulateResponse, haltsCollapsed, chatTitle]);
+  }, [simulateResponse, collapseHome]);
 
-  const handleNewChat = useCallback(() => {
-    setMessages([]);
-    setChatTitle(null);
-    setHaltsCollapsed(false);
-    setPreviousLoaded(false);
-    setContextNotice(null);
-  }, []);
+  const handleViewAll = useCallback(() => {
+    collapseHome();
+    setMessages(prev => [
+      ...prev,
+      { id: nextId(), type: 'insights-list', insightsList: mockHalts },
+    ]);
+  }, [collapseHome]);
 
-  const handleLoadPrevious = useCallback(() => {
-    setMessages(prev => [...mockPreviousSession, ...prev]);
-    setPreviousLoaded(true);
-  }, []);
+  const handleInsightAnalyse = useCallback((halt: Halt, insightsMessageId: string) => {
+    // Remove the insights-list message
+    setMessages(prev => prev.filter(m => m.id !== insightsMessageId));
+    // Add context pill and simulate response
+    setMessages(prev => [
+      ...prev,
+      { id: nextId(), type: 'context-pill', pillVariant: 'halt', pillText: halt.statement },
+    ]);
+    simulateResponse(halt.id);
+  }, [simulateResponse]);
 
   const handleRetry = useCallback((messageId: string) => {
     setMessages(prev => prev.filter(m => m.id !== messageId));
@@ -115,23 +132,24 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
 
   const panelContent = (
     <>
-      <AIPanelHeader
-        hasActiveChat={hasActiveChat}
-        chatTitle={chatTitle || undefined}
-        onNewChat={handleNewChat}
-      />
+      <AIPanelHeader chatTitle={chatTitle} />
 
-      {/* Scrollable middle area — halts + chat */}
+      {/* Scrollable middle area */}
       <div ref={scrollContainerRef} className="ai-panel-scroll" data-lenis-prevent="" style={{ flex: 1, minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
-        {!hasActiveChat && (
-          <HaltsSection
-            halts={mockHalts}
-            collapsed={haltsCollapsed}
-            hasActiveChat={hasActiveChat}
-            onAnalyse={handleHaltAnalyse}
-            onViewAll={() => setShowViewAll(true)}
-            onToggleCollapse={() => setHaltsCollapsed(!haltsCollapsed)}
-          />
+        {homeStateVisible && (
+          <>
+            <HaltsSection
+              halts={mockHalts}
+              hasActiveChat={hasMessages}
+              onAnalyse={handleHaltAnalyse}
+              onViewAll={handleViewAll}
+            />
+            <SuggestionsSection
+              suggestions={mockSuggestions}
+              onSelect={handleSuggestionSelect}
+              isStale={false}
+            />
+          </>
         )}
 
         {contextNotice && (
@@ -156,20 +174,12 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
         <ChatWindow
           messages={messages}
           showLoadPrevious={false}
-          onLoadPrevious={handleLoadPrevious}
+          onLoadPrevious={() => {}}
           onRetry={handleRetry}
           scrollContainerRef={scrollContainerRef}
+          onInsightAnalyse={handleInsightAnalyse}
         />
       </div>
-
-      {/* Suggestion chips pinned to bottom */}
-      {!haltsCollapsed && (
-        <SuggestionsSection
-          suggestions={mockSuggestions}
-          onSelect={handleSuggestionSelect}
-          isStale={false}
-        />
-      )}
 
       {/* Chat input pinned at bottom */}
       <ChatInputBar
@@ -181,74 +191,50 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
     </>
   );
 
-  // Inline mode: render content directly, parent controls the container
+  // Inline mode
   if (inline) {
     return (
-      <>
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          flex: 1,
-          minHeight: 0,
-          fontFamily: 'var(--font_primary)',
-        }}>
-          {panelContent}
-        </div>
-
-        {showViewAll && (
-          <ViewAllInsightsModal
-            halts={mockHalts}
-            contextLabel={contextLabel}
-            hasActiveChat={hasActiveChat}
-            onAnalyse={handleHaltAnalyse}
-            onClose={() => setShowViewAll(false)}
-          />
-        )}
-      </>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
+        minHeight: 0,
+        fontFamily: 'var(--font_primary)',
+      }}>
+        {panelContent}
+      </div>
     );
   }
 
-  // Fixed overlay mode (fallback)
+  // Fixed overlay mode
   return (
-    <>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            style={{
-              position: 'fixed',
-              top: 0,
-              right: 0,
-              bottom: 0,
-              width: 420,
-              background: '#FFFFFF',
-              borderLeft: '1px solid rgba(18,24,43,0.08)',
-              boxShadow: '-8px 0 30px rgba(8,13,25,0.08)',
-              display: 'flex',
-              flexDirection: 'column',
-              overflow: 'hidden',
-              zIndex: 50,
-              fontFamily: 'var(--font_primary)',
-            }}
-          >
-            {panelContent}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {showViewAll && (
-        <ViewAllInsightsModal
-          halts={mockHalts}
-          contextLabel={contextLabel}
-          hasActiveChat={hasActiveChat}
-          onAnalyse={handleHaltAnalyse}
-          onClose={() => setShowViewAll(false)}
-        />
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ x: '100%' }}
+          animate={{ x: 0 }}
+          exit={{ x: '100%' }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          style={{
+            position: 'fixed',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            width: 420,
+            background: '#FFFFFF',
+            borderLeft: '1px solid rgba(18,24,43,0.08)',
+            boxShadow: '-8px 0 30px rgba(8,13,25,0.08)',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            zIndex: 50,
+            fontFamily: 'var(--font_primary)',
+          }}
+        >
+          {panelContent}
+        </motion.div>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 
