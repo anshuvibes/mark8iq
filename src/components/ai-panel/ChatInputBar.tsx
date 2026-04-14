@@ -219,29 +219,6 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
         </div>
       </div>
 
-      {/* Show context link when chip is dismissed */}
-      {!showChip && (
-        <button
-          onClick={() => setShowChip(true)}
-          style={{
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: '6px 0 0',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 4,
-            color: 'rgba(18,24,43,0.4)',
-            fontFamily: 'var(--font_primary)',
-            fontSize: 11,
-            transition: 'color 0.15s',
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color_primary)'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.4)'; }}
-        >
-          + Show context
-        </button>
-      )}
     </div>
   );
 };
