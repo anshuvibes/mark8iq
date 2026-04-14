@@ -192,14 +192,41 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
           background: isLoading ? 'rgba(237,240,247,0.5)' : '#FFFFFF',
           transition: 'border-color 0.2s',
           overflow: 'hidden',
+          padding: '10px 12px',
+          gap: 8,
         }}>
+          {/* Row 1: Textarea — full width */}
+          <textarea
+            ref={textareaRef}
+            value={value}
+            onChange={handleInput}
+            onKeyDown={handleKeyDown}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            placeholder={isLoading ? 'Generating response...' : 'Ask about this page...'}
+            disabled={isLoading}
+            rows={1}
+            className="m8-p6 ai-chat-textarea"
+            style={{
+              width: '100%',
+              border: 'none',
+              outline: 'none',
+              background: 'transparent',
+              color: 'var(--color_text)',
+              fontFamily: 'var(--font_primary)',
+              resize: 'none',
+              height: 56,
+              maxHeight: 160,
+              overflowY: 'auto',
+              lineHeight: '22px',
+              padding: 0,
+            }}
+          />
+          {/* Row 2: Controls — space between */}
           <div style={{
             display: 'flex',
-            alignItems: 'flex-end',
+            alignItems: 'center',
             justifyContent: 'space-between',
-            gap: 8,
-            padding: '10px 12px',
-            minHeight: 48,
           }}>
             <button
               ref={plusButtonRef}
@@ -207,49 +234,28 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
               style={{
                 width: 28,
                 height: 28,
-                borderRadius: 'var(--m8-radius-md)',
+                borderRadius: 'var(--m8-radius-sm)',
                 background: 'transparent',
-                border: 'none',
+                border: '1px solid rgba(18,24,43,0.15)',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: 'rgba(18,24,43,0.4)',
                 flexShrink: 0,
-                transition: 'color 0.15s',
-                marginBottom: 2,
+                transition: 'border-color 0.15s, color 0.15s',
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.7)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.4)'; }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(18,24,43,0.3)';
+                e.currentTarget.style.color = 'rgba(18,24,43,0.7)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(18,24,43,0.15)';
+                e.currentTarget.style.color = 'rgba(18,24,43,0.4)';
+              }}
             >
               <Plus size={14} />
             </button>
-            <textarea
-              ref={textareaRef}
-              value={value}
-              onChange={handleInput}
-              onKeyDown={handleKeyDown}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              placeholder={isLoading ? 'Generating response...' : 'Ask about this page...'}
-              disabled={isLoading}
-              rows={1}
-              className="m8-p6 ai-chat-textarea"
-              style={{
-                flex: 1,
-                border: 'none',
-                outline: 'none',
-                background: 'transparent',
-                color: 'var(--color_text)',
-                fontFamily: 'var(--font_primary)',
-                resize: 'none',
-                height: 56,
-                maxHeight: 160,
-                overflowY: 'auto',
-                lineHeight: '22px',
-                padding: 0,
-              }}
-            />
             <button
               onClick={handleSend}
               disabled={!canSend}
@@ -263,7 +269,6 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
                 justifyContent: 'center',
                 transition: 'all 0.15s',
                 flexShrink: 0,
-                marginBottom: 2,
               }}
             >
               <ArrowUp size={14} />
