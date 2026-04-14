@@ -188,7 +188,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
       {/* Horizontal suggestion strip — visible once user has interacted */}
       {messages.some(m => m.type === 'user-bubble' || m.type === 'context-pill') && (
         <div
-          style={{ position: 'relative', paddingTop: 8, paddingBottom: 8, opacity: 0.7, transition: 'opacity 0.2s' }}
+          style={{ position: 'relative', paddingTop: 8, paddingBottom: 0, marginBottom: 0, opacity: 0.7, transition: 'opacity 0.2s' }}
           onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
           onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
         >

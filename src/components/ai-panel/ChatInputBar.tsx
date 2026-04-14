@@ -95,7 +95,7 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
 
   return (
     <div style={{
-      padding: '12px 16px 16px',
+      padding: '6px 16px 12px',
       borderTop: 'none',
       background: '#FFFFFF',
       position: 'relative',
