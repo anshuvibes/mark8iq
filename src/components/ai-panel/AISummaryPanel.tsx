@@ -184,11 +184,30 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
 
   const handleHaltAnalyse = useCallback((halt: Halt) => {
     const isFirstInteraction = messages.length === 1 && messages[0].type === 'welcome';
-    const prefix = (isFirstInteraction && halt.id === 'h1') ? mockLongChatHistory : [];
+
+    if (isFirstInteraction && halt.id === 'h1') {
+      setHistoryLoading(true);
+      setTimeout(() => {
+        setMessages(prev => [
+          ...prev.filter(m => m.type !== 'welcome'),
+          ...mockLongChatHistory,
+          { id: nextId(), type: 'date-separator', date: '14 Apr 2026' },
+          { id: nextId(), type: 'context-pill', pillVariant: 'halt', pillText: halt.statement },
+        ]);
+        setHistoryLoading(false);
+        simulateResponse(halt.id);
+        setTimeout(() => {
+          const container = scrollContainerRef.current;
+          if (container) {
+            container.scrollTo({ top: container.scrollHeight, behavior: 'instant' as ScrollBehavior });
+          }
+        }, 50);
+      }, 800);
+      return;
+    }
 
     setMessages(prev => [
       ...prev.filter(m => m.type !== 'welcome' || !isFirstInteraction),
-      ...prefix,
       { id: nextId(), type: 'date-separator', date: '14 Apr 2026' },
       { id: nextId(), type: 'context-pill', pillVariant: 'halt', pillText: halt.statement },
     ]);
