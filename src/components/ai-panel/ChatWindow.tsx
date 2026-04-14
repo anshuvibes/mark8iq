@@ -14,6 +14,7 @@ interface ChatWindowProps {
   onHaltSelect?: (halt: Halt) => void;
   onViewAll?: () => void;
   onSuggestionInlineSelect?: (suggestion: Suggestion, messageId: string) => void;
+  onWelcomeSuggestionSelect?: (suggestion: Suggestion) => void;
 }
 
 const LoadingDots = () => (
