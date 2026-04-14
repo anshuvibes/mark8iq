@@ -54,15 +54,12 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend }: ChatInputBarProps) =>
         cursor: 'pointer' as const,
       };
     }
-    if (isFocused && !hasText && !isLoading) {
-      // Intermediate: violet stroke, no fill
-      return {
-        background: 'transparent',
-        border: '1.5px solid rgba(142,89,255,0.5)',
-        color: 'rgba(142,89,255,0.5)',
-        cursor: 'default' as const,
-      };
-    }
+    return {
+      background: 'rgba(18,24,43,0.08)',
+      border: '1.5px solid transparent',
+      color: 'rgba(18,24,43,0.25)',
+      cursor: 'not-allowed' as const,
+    };
     return {
       background: 'rgba(18,24,43,0.08)',
       border: '1.5px solid transparent',
