@@ -153,7 +153,7 @@ const AIResponseBlock = ({ response }: AIResponseBlockProps) => {
           </div>
         </DelayedReveal>
         <AnimatedDivider delay={insightsDividerAt} />
-        <div style={{ color: 'var(--color_text)', minHeight: 20, fontSize: 14, fontWeight: 400, lineHeight: '1.6', fontFamily: 'var(--font_primary)' }}>
+        <div style={{ color: 'var(--color_text)', minHeight: 20, fontSize: 13, fontWeight: 400, lineHeight: '1.6', fontFamily: 'var(--font_primary)' }}>
           <TypedText text={response.insights} startDelay={insightsBodyAt} speed={WORD_SPEED} />
         </div>
       </div>
@@ -166,7 +166,7 @@ const AIResponseBlock = ({ response }: AIResponseBlockProps) => {
           </div>
         </DelayedReveal>
         <AnimatedDivider delay={rootCauseDividerAt} />
-        <div style={{ color: 'var(--color_text)', minHeight: 20, fontSize: 14, fontWeight: 400, lineHeight: '1.6', fontFamily: 'var(--font_primary)' }}>
+        <div style={{ color: 'var(--color_text)', minHeight: 20, fontSize: 13, fontWeight: 400, lineHeight: '1.6', fontFamily: 'var(--font_primary)' }}>
           <TypedText text={response.rootCause} startDelay={rootCauseBodyAt} speed={WORD_SPEED} />
         </div>
       </div>

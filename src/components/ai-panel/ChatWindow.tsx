@@ -247,20 +247,19 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
                   padding: '8px 14px',
                   borderRadius: 999,
                   background: 'transparent',
-                  border: '1px solid rgba(18,24,43,0.12)',
+                  border: 'none',
+                  outline: 'none',
                   cursor: 'pointer',
                   textAlign: 'left',
                   fontFamily: 'var(--font_primary)',
                   opacity: chipsRevealed > i ? 1 : 0,
                   transform: chipsRevealed > i ? 'translateY(0)' : 'translateY(12px)',
-                  transition: 'opacity 0.25s ease-out, transform 0.25s ease-out, border-color 0.15s, background 0.15s',
+                  transition: 'opacity 0.25s ease-out, transform 0.25s ease-out, background 0.15s',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(142,89,255,0.5)';
                   e.currentTarget.style.background = 'rgba(142,89,255,0.04)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(18,24,43,0.12)';
                   e.currentTarget.style.background = 'transparent';
                 }}
               >
@@ -382,7 +381,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
 
           case 'ai-response':
             return msg.aiResponse ? (
-              <div key={msg.id} style={{ marginBottom: 8 }}>
+              <div key={msg.id} style={{ marginBottom: 20 }}>
                 <AIResponseBlock response={msg.aiResponse} />
               </div>
             ) : null;
