@@ -461,10 +461,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
                 halts={msg.welcomeHalts || []}
                 onHaltSelect={(halt) => onHaltSelect?.(halt)}
                 onViewAll={() => onViewAll?.()}
-                onSuggestionSelect={(s) => {
-                  // For welcome suggestions, treat like a regular suggestion select
-                  onSuggestionInlineSelect?.(s, msg.id);
-                }}
+                onSuggestionSelect={(s) => onWelcomeSuggestionSelect?.(s)}
               />
             );
 
