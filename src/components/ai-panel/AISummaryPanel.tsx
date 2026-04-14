@@ -326,10 +326,10 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
                 zIndex: 10,
               }} />
               <SuggestionsSection
-                suggestions={mockSuggestions}
+                suggestions={mockSuggestions.slice(0, 2)}
                 onSelect={handleSuggestionSelect}
                 isStale={false}
-                mode="horizontal"
+                mode="vertical"
               />
             </div>
           )}
