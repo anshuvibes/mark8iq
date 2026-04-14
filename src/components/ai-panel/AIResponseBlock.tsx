@@ -53,18 +53,19 @@ const DelayedReveal = ({ delay, children, onDone }: { delay: number; children: R
   );
 };
 
-/** A list item that only renders once its typed text begins */
+/** A list item hidden until typing starts */
 const RecItem = ({ text, startDelay, speed }: { text: string; startDelay: number; speed: number }) => {
   const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), startDelay);
+    return () => clearTimeout(t);
+  }, [startDelay]);
+
+  if (!visible) return null;
+
   return (
-    <li className="m8-p5" style={{
-      color: 'var(--color_text)',
-      marginBottom: 6,
-      listStyleType: visible ? undefined : 'none',
-      height: visible ? 'auto' : 0,
-      overflow: 'hidden',
-    }}>
-      <TypedText text={text} startDelay={startDelay} speed={speed} onStart={() => setVisible(true)} />
+    <li className="m8-p5" style={{ color: 'var(--color_text)', marginBottom: 6 }}>
+      <TypedText text={text} startDelay={0} speed={speed} />
     </li>
   );
 };
