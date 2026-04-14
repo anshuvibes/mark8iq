@@ -89,7 +89,7 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
         flexDirection: 'column',
         borderRadius: 'var(--m8-radius-md)',
         background: showChip ? 'rgba(142,89,255,0.06)' : 'transparent',
-        padding: showChip ? '6px' : 0,
+        padding: 0,
         transition: 'background 0.2s, padding 0.2s',
       }}>
 
