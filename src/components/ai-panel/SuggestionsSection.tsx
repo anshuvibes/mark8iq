@@ -117,7 +117,7 @@ const SuggestionsSection = ({ suggestions, onSelect, isStale, mode }: Suggestion
               e.currentTarget.style.background = 'transparent';
             }}
           >
-            <span className="m8-p6" style={{ color: 'var(--color_text)', fontSize: 12 }}>{s.question}</span>
+            <span style={{ color: 'rgba(18,24,43,0.65)', fontSize: 12, fontWeight: 400, fontFamily: 'var(--font_primary)' }}>{s.question}</span>
           </button>
         ))}
       </div>
