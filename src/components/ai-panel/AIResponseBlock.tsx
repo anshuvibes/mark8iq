@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { ThumbsUp, ThumbsDown } from 'lucide-react';
-import type { AIResponse } from '@/data/aiPanelMockData';
+import type { AIResponse, Suggestion } from '@/data/aiPanelMockData';
 
 interface AIResponseBlockProps {
   response: AIResponse;
   onTypingComplete?: () => void;
+  suggestions?: Suggestion[];
+  onSuggestionSelect?: (suggestion: Suggestion) => void;
 }
 
 /** Splits text into words and reveals them one by one */
@@ -93,7 +95,7 @@ const AnimatedDivider = ({ delay }: { delay: number }) => {
 const WORD_SPEED = 25; // ms per word
 const SECTION_GAP = 80; // ms pause between sections
 
-const AIResponseBlock = ({ response, onTypingComplete }: AIResponseBlockProps) => {
+const AIResponseBlock = ({ response, onTypingComplete, suggestions, onSuggestionSelect }: AIResponseBlockProps) => {
   const [feedback, setFeedback] = useState<'up' | 'down' | null>(null);
   const [phase, setPhase] = useState(0);
   // Phases:
@@ -213,6 +215,37 @@ const AIResponseBlock = ({ response, onTypingComplete }: AIResponseBlockProps) =
           </button>
         </div>
       </DelayedReveal>
+
+      {/* SUGGESTION CHIPS */}
+      {suggestions && suggestions.length > 0 && (
+        <DelayedReveal delay={feedbackAt + 400}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 12 }}>
+            {suggestions.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => onSuggestionSelect?.(s)}
+                style={{
+                  width: '100%',
+                  padding: '8px 14px',
+                  borderRadius: 'var(--m8-radius-md)',
+                  background: 'transparent',
+                  border: '1px solid rgba(18,24,43,0.06)',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  fontFamily: 'var(--font_primary)',
+                  transition: 'background 0.15s',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(142,89,255,0.04)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+              >
+                <span style={{ color: 'rgba(18,24,43,0.65)', fontSize: 12, fontWeight: 400, fontFamily: 'var(--font_primary)' }}>
+                  {s.question}
+                </span>
+              </button>
+            ))}
+          </div>
+        </DelayedReveal>
+      )}
     </div>
   );
 };

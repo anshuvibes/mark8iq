@@ -4,7 +4,7 @@ import { ArrowLeft, ChevronRight, Sparkles, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { gsap } from 'gsap';
 import AIPanelHeader from './AIPanelHeader';
-import SuggestionsSection from './SuggestionsSection';
+
 import ChatWindow from './ChatWindow';
 import ChatInputBar from './ChatInputBar';
 import {
@@ -341,54 +341,10 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
               onSuggestionInlineSelect={handleSuggestionInlineSelect}
               onWelcomeSuggestionSelect={handleSuggestionSelect}
               onTypingComplete={() => setLastResponseComplete(true)}
+              onSuggestionSelect={handleSuggestionSelect}
             />
           </div>
 
-          {/* Horizontal suggestion strip */}
-          {messages.some(m => m.type === 'user-bubble' || m.type === 'context-pill') && !messages.some(m => m.type === 'suggestions-inline') && !isLoading && lastResponseComplete && (
-            <div
-              key={`strip-${messages.length}`}
-              style={{ position: 'relative', paddingTop: 8, paddingBottom: 0, marginBottom: 0, animation: 'suggestionSlideUp 0.4s ease-out' }}
-              onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
-            >
-              <div style={{
-                position: 'absolute',
-                top: -32,
-                left: 0,
-                right: 0,
-                height: 32,
-                background: 'linear-gradient(to bottom, transparent 0%, #FFFFFF 100%)',
-                pointerEvents: 'none',
-                zIndex: 10,
-              }} />
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '0 16px 8px' }}>
-                {mockSuggestions.slice(0, 2).map((s) => (
-                  <button
-                    key={s.id}
-                    onClick={() => handleSuggestionSelect(s)}
-                    style={{
-                      width: '100%',
-                      padding: '8px 14px',
-                      borderRadius: 'var(--m8-radius-md)',
-                      background: 'transparent',
-                      border: '1px solid rgba(18,24,43,0.06)',
-                      cursor: 'pointer',
-                      textAlign: 'left',
-                      fontFamily: 'var(--font_primary)',
-                      transition: 'background 0.15s',
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(142,89,255,0.04)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
-                  >
-                    <span style={{ color: 'rgba(18,24,43,0.65)', fontSize: 12, fontWeight: 400, fontFamily: 'var(--font_primary)' }}>
-                      {s.question}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* Bottom sheet backdrop */}
           {sheetOpen && (
