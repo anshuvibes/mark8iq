@@ -189,7 +189,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
       </div>
 
       {/* Horizontal suggestion strip — visible once user has interacted */}
-      {messages.some(m => m.type === 'user-bubble' || m.type === 'context-pill') && !messages.some(m => m.type === 'suggestions-inline') && !isLoading && (
+      {messages.some(m => m.type === 'user-bubble' || m.type === 'context-pill') && !messages.some(m => m.type === 'suggestions-inline') && !isLoading && lastResponseComplete && (
         <div
           key={`strip-${messages.length}`}
           style={{ position: 'relative', paddingTop: 8, paddingBottom: 0, marginBottom: 0, animation: 'suggestionSlideUp 0.4s ease-out' }}
