@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, type RefObject } from 'react';
+import { Sparkles } from 'lucide-react';
 import AIResponseBlock from './AIResponseBlock';
 import { Button } from '@/components/ui/button';
 import type { ChatMessage, Halt, Suggestion } from '@/data/aiPanelMockData';
