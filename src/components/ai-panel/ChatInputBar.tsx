@@ -83,17 +83,16 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
       borderTop: '1px solid rgba(18,24,43,0.06)',
       background: '#FFFFFF',
     }}>
-      {/* Context chip bar */}
+      {/* Context chip bar - no border, sits above the input box */}
       {showChip && (
         <div style={{
           display: 'flex',
           alignItems: 'center',
           gap: 8,
-          padding: '8px 12px',
-          borderRadius: 'var(--m8-radius-md) var(--m8-radius-md) 0 0',
+          padding: '6px 12px',
           background: 'rgba(142,89,255,0.06)',
-          border: `1.5px solid rgba(142,89,255,0.15)`,
-          borderBottom: 'none',
+          borderRadius: 0,
+          marginBottom: 6,
         }}>
           <img
             src={pageIcon || '/img/product-logos/black/mark8-ads.svg'}
@@ -132,13 +131,12 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
         </div>
       )}
 
-      {/* Input container */}
+      {/* Input container - always fully rounded */}
       <div style={{
         display: 'flex',
         flexDirection: 'column',
-        borderRadius: showChip ? '0 0 var(--m8-radius-md) var(--m8-radius-md)' : 'var(--m8-radius-md)',
+        borderRadius: 'var(--m8-radius-md)',
         border: `1.5px solid ${getBorderColor()}`,
-        borderTop: showChip ? `1px solid rgba(18,24,43,0.08)` : undefined,
         background: isLoading ? 'rgba(237,240,247,0.5)' : '#FFFFFF',
         transition: 'border-color 0.2s',
         overflow: 'hidden',
