@@ -102,7 +102,7 @@ const SuggestionsSection = ({ suggestions, onSelect, isStale, mode }: Suggestion
               padding: '6px 12px',
               borderRadius: 'var(--m8-radius-md)',
               background: 'transparent',
-              border: '1px solid rgba(18,24,43,0.10)',
+              border: '1px solid rgba(18,24,43,0.06)',
               cursor: 'pointer',
               transition: 'background 0.15s',
               whiteSpace: 'nowrap',
