@@ -312,12 +312,24 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
             <div
               key={`strip-${messages.length}`}
               style={{ position: 'relative', paddingTop: 8, paddingBottom: 0, marginBottom: 0, animation: 'suggestionSlideUp 0.4s ease-out' }}
+              onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
             >
+              <div style={{
+                position: 'absolute',
+                top: -32,
+                left: 0,
+                right: 0,
+                height: 32,
+                background: 'linear-gradient(to bottom, transparent 0%, #FFFFFF 100%)',
+                pointerEvents: 'none',
+                zIndex: 10,
+              }} />
               <SuggestionsSection
-                suggestions={mockSuggestions.slice(0, 2)}
+                suggestions={mockSuggestions}
                 onSelect={handleSuggestionSelect}
                 isStale={false}
-                mode="vertical"
+                mode="horizontal"
               />
             </div>
           )}
