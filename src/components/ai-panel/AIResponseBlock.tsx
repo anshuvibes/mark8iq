@@ -6,129 +6,196 @@ interface AIResponseBlockProps {
   response: AIResponse;
 }
 
-/**
- * Builds an ordered list of "reveal steps" from the response,
- * then reveals them one-by-one with a fast typing cadence.
- */
-const AIResponseBlock = ({ response }: AIResponseBlockProps) => {
-  const [feedback, setFeedback] = useState<'up' | 'down' | null>(null);
-
-  // Each step index corresponds to a piece of content that becomes visible
-  // 0  = "Insights" heading
-  // 1  = insights divider
-  // 2  = insights body
-  // 3  = "Root Cause" heading
-  // 4  = root cause divider
-  // 5  = root cause body
-  // 6  = "Recommendations" heading
-  // 7  = recommendations divider
-  // 8..8+N-1 = each recommendation
-  // last = feedback row
-  const totalSteps =
-    3 + // insights heading + divider + body
-    3 + // root cause heading + divider + body
-    2 + // recommendations heading + divider
-    response.recommendations.length +
-    1;  // feedback row
-
-  const [visibleStep, setVisibleStep] = useState(-1);
-  const timerRef = useRef<number | null>(null);
+/** Splits text into words and reveals them one by one */
+const TypedText = ({ text, startDelay, speed = 30, onDone }: { text: string; startDelay: number; speed?: number; onDone?: () => void }) => {
+  const words = text.split(' ');
+  const [count, setCount] = useState(0);
+  const started = useRef(false);
 
   useEffect(() => {
-    let step = -1;
-    const tick = () => {
-      step++;
-      setVisibleStep(step);
-      if (step < totalSteps - 1) {
-        timerRef.current = window.setTimeout(tick, 60);
-      }
-    };
-    timerRef.current = window.setTimeout(tick, 80);
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, [totalSteps]);
+    const startTimer = setTimeout(() => {
+      started.current = true;
+      let i = 0;
+      const tick = () => {
+        i++;
+        setCount(i);
+        if (i < words.length) {
+          setTimeout(tick, speed);
+        } else {
+          onDone?.();
+        }
+      };
+      tick();
+    }, startDelay);
+    return () => clearTimeout(startTimer);
+  }, []);
 
-  const itemStyle = (stepIndex: number): React.CSSProperties => ({
-    opacity: visibleStep >= stepIndex ? 1 : 0,
-    transform: visibleStep >= stepIndex ? 'translateY(0)' : 'translateY(4px)',
-    transition: 'opacity 0.15s ease-out, transform 0.15s ease-out',
-  });
+  if (count === 0) return null;
+  return <>{words.slice(0, count).join(' ')}</>;
+};
 
-  const dividerStyle = (stepIndex: number): React.CSSProperties => ({
-    height: 1,
-    background: 'rgba(142,89,255,0.15)',
-    marginBottom: 10,
-    transform: visibleStep >= stepIndex ? 'scaleX(1)' : 'scaleX(0)',
-    transformOrigin: 'left',
-    transition: 'transform 0.2s ease-out',
-  });
+/** Reveals element after a delay with a subtle fade */
+const DelayedReveal = ({ delay, children, onDone }: { delay: number; children: React.ReactNode; onDone?: () => void }) => {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => { setVisible(true); onDone?.(); }, delay);
+    return () => clearTimeout(t);
+  }, []);
+  return (
+    <div style={{
+      opacity: visible ? 1 : 0,
+      transform: visible ? 'translateY(0)' : 'translateY(3px)',
+      transition: 'opacity 0.12s ease-out, transform 0.12s ease-out',
+    }}>
+      {children}
+    </div>
+  );
+};
 
-  let recStartIndex = 8;
+/** Draws a divider line from left to right */
+const AnimatedDivider = ({ delay }: { delay: number }) => {
+  const [drawn, setDrawn] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setDrawn(true), delay);
+    return () => clearTimeout(t);
+  }, []);
+  return (
+    <div style={{
+      height: 1,
+      background: 'rgba(142,89,255,0.15)',
+      marginBottom: 10,
+      transform: drawn ? 'scaleX(1)' : 'scaleX(0)',
+      transformOrigin: 'left',
+      transition: 'transform 0.2s ease-out',
+    }} />
+  );
+};
+
+const WORD_SPEED = 25; // ms per word
+const SECTION_GAP = 80; // ms pause between sections
+
+const AIResponseBlock = ({ response }: AIResponseBlockProps) => {
+  const [feedback, setFeedback] = useState<'up' | 'down' | null>(null);
+  const [phase, setPhase] = useState(0);
+  // Phases:
+  // 0 = start
+  // 1 = insights heading visible
+  // 2 = insights divider drawn
+  // 3 = insights body typing
+  // 4 = insights body done
+  // 5 = root cause heading
+  // 6 = root cause divider
+  // 7 = root cause body typing
+  // 8 = root cause body done
+  // 9 = recommendations heading
+  // 10 = recommendations divider
+  // 11..11+N-1 = each recommendation typing
+  // 11+N = feedback row
+
+  const insightsWords = response.insights.split(' ').length;
+  const rootCauseWords = response.rootCause.split(' ').length;
+  const recCount = response.recommendations.length;
+
+  // Calculate timing offsets
+  let t = 0;
+
+  // Insights heading
+  const insightsHeadingAt = t; t += 60;
+  // Insights divider
+  const insightsDividerAt = t; t += 200;
+  // Insights body
+  const insightsBodyAt = t; t += insightsWords * WORD_SPEED + SECTION_GAP;
+  // Root cause heading
+  const rootCauseHeadingAt = t; t += 60;
+  // Root cause divider
+  const rootCauseDividerAt = t; t += 200;
+  // Root cause body
+  const rootCauseBodyAt = t; t += rootCauseWords * WORD_SPEED + SECTION_GAP;
+  // Recommendations heading
+  const recsHeadingAt = t; t += 60;
+  // Recommendations divider
+  const recsDividerAt = t; t += 200;
+  // Each recommendation
+  const recTimings: number[] = [];
+  for (let i = 0; i < recCount; i++) {
+    recTimings.push(t);
+    const words = response.recommendations[i].split(' ').length;
+    t += words * WORD_SPEED + 40;
+  }
+  // Feedback row
+  const feedbackAt = t + 100;
 
   return (
     <div className="ai-panel-response-block" style={{ padding: '16px 0' }}>
       {/* INSIGHTS */}
       <div style={{ marginBottom: 16 }}>
-        <div className="m8-p6" style={{ color: 'var(--color_primary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6, fontWeight: 500, ...itemStyle(0) }}>
-          Insights
-        </div>
-        <div style={dividerStyle(1)} />
-        <div className="m8-p5" style={{ color: 'var(--color_text)', ...itemStyle(2) }}>
-          {response.insights}
+        <DelayedReveal delay={insightsHeadingAt}>
+          <div className="m8-p6" style={{ color: 'var(--color_primary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6, fontWeight: 500 }}>
+            Insights
+          </div>
+        </DelayedReveal>
+        <AnimatedDivider delay={insightsDividerAt} />
+        <div className="m8-p5" style={{ color: 'var(--color_text)', minHeight: 20 }}>
+          <TypedText text={response.insights} startDelay={insightsBodyAt} speed={WORD_SPEED} />
         </div>
       </div>
 
       {/* ROOT CAUSE */}
       <div style={{ marginBottom: 16 }}>
-        <div className="m8-p6" style={{ color: 'var(--color_primary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6, fontWeight: 500, ...itemStyle(3) }}>
-          Root Cause
-        </div>
-        <div style={dividerStyle(4)} />
-        <div className="m8-p5" style={{ color: 'var(--color_text)', ...itemStyle(5) }}>
-          {response.rootCause}
+        <DelayedReveal delay={rootCauseHeadingAt}>
+          <div className="m8-p6" style={{ color: 'var(--color_primary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6, fontWeight: 500 }}>
+            Root Cause
+          </div>
+        </DelayedReveal>
+        <AnimatedDivider delay={rootCauseDividerAt} />
+        <div className="m8-p5" style={{ color: 'var(--color_text)', minHeight: 20 }}>
+          <TypedText text={response.rootCause} startDelay={rootCauseBodyAt} speed={WORD_SPEED} />
         </div>
       </div>
 
       {/* RECOMMENDATIONS */}
       <div style={{ marginBottom: 12 }}>
-        <div className="m8-p6" style={{ color: 'var(--color_primary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6, fontWeight: 500, ...itemStyle(6) }}>
-          Recommendations
-        </div>
-        <div style={dividerStyle(7)} />
+        <DelayedReveal delay={recsHeadingAt}>
+          <div className="m8-p6" style={{ color: 'var(--color_primary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6, fontWeight: 500 }}>
+            Recommendations
+          </div>
+        </DelayedReveal>
+        <AnimatedDivider delay={recsDividerAt} />
         <ol style={{ margin: 0, paddingLeft: 18 }}>
           {response.recommendations.map((rec, i) => (
-            <li key={i} className="m8-p5" style={{ color: 'var(--color_text)', marginBottom: 6, ...itemStyle(recStartIndex + i) }}>
-              {rec}
+            <li key={i} className="m8-p5" style={{ color: 'var(--color_text)', marginBottom: 6, minHeight: 18 }}>
+              <TypedText text={rec} startDelay={recTimings[i]} speed={WORD_SPEED} />
             </li>
           ))}
         </ol>
       </div>
 
       {/* FEEDBACK ROW */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingTop: 8, ...itemStyle(totalSteps - 1) }}>
-        <span className="m8-p6" style={{ color: 'rgba(18,24,43,0.45)' }}>Was this helpful?</span>
-        <button
-          onClick={() => setFeedback(feedback === 'up' ? null : 'up')}
-          style={{
-            background: 'none', border: 'none', cursor: 'pointer', padding: 4,
-            color: feedback === 'up' ? 'var(--color_primary)' : 'rgba(18,24,43,0.3)',
-            transition: 'color 0.15s',
-          }}
-        >
-          <ThumbsUp size={14} fill={feedback === 'up' ? 'currentColor' : 'none'} />
-        </button>
-        <button
-          onClick={() => setFeedback(feedback === 'down' ? null : 'down')}
-          style={{
-            background: 'none', border: 'none', cursor: 'pointer', padding: 4,
-            color: feedback === 'down' ? '#FC7459' : 'rgba(18,24,43,0.3)',
-            transition: 'color 0.15s',
-          }}
-        >
-          <ThumbsDown size={14} fill={feedback === 'down' ? 'currentColor' : 'none'} />
-        </button>
-      </div>
+      <DelayedReveal delay={feedbackAt}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingTop: 8 }}>
+          <span className="m8-p6" style={{ color: 'rgba(18,24,43,0.45)' }}>Was this helpful?</span>
+          <button
+            onClick={() => setFeedback(feedback === 'up' ? null : 'up')}
+            style={{
+              background: 'none', border: 'none', cursor: 'pointer', padding: 4,
+              color: feedback === 'up' ? 'var(--color_primary)' : 'rgba(18,24,43,0.3)',
+              transition: 'color 0.15s',
+            }}
+          >
+            <ThumbsUp size={14} fill={feedback === 'up' ? 'currentColor' : 'none'} />
+          </button>
+          <button
+            onClick={() => setFeedback(feedback === 'down' ? null : 'down')}
+            style={{
+              background: 'none', border: 'none', cursor: 'pointer', padding: 4,
+              color: feedback === 'down' ? '#FC7459' : 'rgba(18,24,43,0.3)',
+              transition: 'color 0.15s',
+            }}
+          >
+            <ThumbsDown size={14} fill={feedback === 'down' ? 'currentColor' : 'none'} />
+          </button>
+        </div>
+      </DelayedReveal>
     </div>
   );
 };
