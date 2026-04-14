@@ -124,7 +124,7 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
     <div style={{ marginBottom: 12 }}>
       {/* Beat 1: Line 1 */}
       {beat >= 1 && (
-        <div className="m8-p5" style={{ color: 'var(--color_text)', lineHeight: '1.5', marginBottom: 8 }}>
+        <div style={{ fontSize: 18, fontWeight: 500, color: 'var(--color_text)', lineHeight: '1.4', marginBottom: 4, fontFamily: 'var(--font_primary)' }}>
           <TypedText
             text="Hey Satyam..."
             speed={40}
@@ -135,7 +135,7 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
 
       {/* Beat 2: Line 2 */}
       {beat >= 2 && (
-        <div className="m8-p5" style={{ color: 'var(--color_text)', lineHeight: '1.5', marginBottom: 8 }}>
+        <div style={{ fontSize: 14, fontWeight: 400, color: 'rgba(18,24,43,0.65)', lineHeight: '1.5', marginBottom: 8, fontFamily: 'var(--font_primary)' }}>
           <TypedText
             text="I've been going through your Targeting Analysis."
             speed={40}
@@ -150,7 +150,8 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
           opacity: thinkingFading ? 0 : 1,
           transition: 'opacity 0.2s ease-out',
         }}>
-          <div className="m8-p5" style={{
+          <div style={{
+            fontSize: 14, fontWeight: 400,
             color: 'rgba(18,24,43,0.45)',
             fontStyle: 'italic',
             lineHeight: '1.5',
@@ -167,7 +168,7 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
       {/* Beat 3: Highlights line + cards */}
       {beat >= 3 && (
         <>
-          <div className="m8-p5" style={{ color: 'var(--color_text)', lineHeight: '1.5', marginBottom: 12 }}>
+          <div style={{ fontSize: 14, fontWeight: 400, color: 'rgba(18,24,43,0.65)', lineHeight: '1.5', marginBottom: 12, fontFamily: 'var(--font_primary)' }}>
             <TypedText
               text="Here are a few things that need your attention."
               speed={40}
@@ -175,7 +176,7 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
             />
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 16 }}>
             {halts.map((halt, i) => (
               <div
                 key={halt.id}
@@ -192,8 +193,8 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
                   transition: 'opacity 0.25s ease-out, transform 0.25s ease-out',
                 }}
               >
-                <span className="m8-p6" style={{ color: 'rgba(18,24,43,0.35)', minWidth: 16, textAlign: 'center' }}>{i + 1}</span>
-                <span className="m8-p6" style={{ color: 'var(--color_text)', flex: 1 }}>{halt.statement}</span>
+                <span style={{ fontSize: 11, fontWeight: 400, color: 'rgba(18,24,43,0.25)', minWidth: 16, textAlign: 'center', fontFamily: 'var(--font_primary)' }}>{i + 1}</span>
+                <span style={{ fontSize: 13, fontWeight: 400, color: 'var(--color_text)', flex: 1, fontFamily: 'var(--font_primary)' }}>{halt.statement}</span>
                 <Button
                   variant="m8-outline-violet"
                   size="sm"
@@ -228,7 +229,7 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
       {/* Beat 4: Suggestions line + chips */}
       {beat >= 4 && (
         <>
-          <div className="m8-p5" style={{ color: 'var(--color_text)', lineHeight: '1.5', marginTop: 16, marginBottom: 10 }}>
+          <div style={{ fontSize: 14, fontWeight: 400, color: 'rgba(18,24,43,0.65)', lineHeight: '1.5', marginTop: 14, marginBottom: 10, fontFamily: 'var(--font_primary)' }}>
             <TypedText
               text="Here are a few questions worth asking."
               speed={40}
@@ -263,7 +264,7 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
                   e.currentTarget.style.background = 'transparent';
                 }}
               >
-                <span className="m8-p6" style={{ color: 'var(--color_text)', fontSize: 12 }}>{s.question}</span>
+                <span style={{ fontSize: 13, fontWeight: 400, color: 'var(--color_text)', fontFamily: 'var(--font_primary)' }}>{s.question}</span>
               </button>
             ))}
           </div>
@@ -357,10 +358,10 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
                 border: '1px solid rgba(142,89,255,0.1)',
                 marginBottom: 8,
               }}>
-                <div className="m8-p6" style={{ color: 'rgba(18,24,43,0.4)', marginBottom: 2 }}>
+                <div style={{ fontSize: 11, fontWeight: 400, color: 'rgba(18,24,43,0.35)', marginBottom: 2, fontFamily: 'var(--font_primary)' }}>
                   Starting from {msg.pillVariant === 'halt' ? 'highlight' : 'suggestion'}:
                 </div>
-                <div className="m8-p6" style={{ color: 'var(--color_text)' }}>{msg.pillText}</div>
+                <div style={{ fontSize: 13, fontWeight: 400, color: 'var(--color_text)', fontFamily: 'var(--font_primary)' }}>{msg.pillText}</div>
               </div>
             );
 

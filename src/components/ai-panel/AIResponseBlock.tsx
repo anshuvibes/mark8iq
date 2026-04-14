@@ -64,7 +64,7 @@ const RecItem = ({ text, startDelay, speed }: { text: string; startDelay: number
   if (!visible) return null;
 
   return (
-    <li className="m8-p5" style={{ color: 'var(--color_text)', marginBottom: 6 }}>
+    <li style={{ color: 'var(--color_text)', marginBottom: 6, fontSize: 13, fontWeight: 400, lineHeight: '1.5', fontFamily: 'var(--font_primary)' }}>
       <TypedText text={text} startDelay={0} speed={speed} />
     </li>
   );
@@ -148,12 +148,12 @@ const AIResponseBlock = ({ response }: AIResponseBlockProps) => {
       {/* INSIGHTS */}
       <div style={{ marginBottom: 16 }}>
         <DelayedReveal delay={insightsHeadingAt}>
-          <div className="m8-p6" style={{ color: 'var(--color_primary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6, fontWeight: 500 }}>
+          <div style={{ color: 'var(--color_primary)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6, fontWeight: 500, fontSize: 10, fontFamily: 'var(--font_primary)' }}>
             Insights
           </div>
         </DelayedReveal>
         <AnimatedDivider delay={insightsDividerAt} />
-        <div className="m8-p5" style={{ color: 'var(--color_text)', minHeight: 20 }}>
+        <div style={{ color: 'var(--color_text)', minHeight: 20, fontSize: 14, fontWeight: 400, lineHeight: '1.6', fontFamily: 'var(--font_primary)' }}>
           <TypedText text={response.insights} startDelay={insightsBodyAt} speed={WORD_SPEED} />
         </div>
       </div>
@@ -161,12 +161,12 @@ const AIResponseBlock = ({ response }: AIResponseBlockProps) => {
       {/* ROOT CAUSE */}
       <div style={{ marginBottom: 16 }}>
         <DelayedReveal delay={rootCauseHeadingAt}>
-          <div className="m8-p6" style={{ color: 'var(--color_primary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6, fontWeight: 500 }}>
+          <div style={{ color: 'var(--color_primary)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6, fontWeight: 500, fontSize: 10, fontFamily: 'var(--font_primary)' }}>
             Root Cause
           </div>
         </DelayedReveal>
         <AnimatedDivider delay={rootCauseDividerAt} />
-        <div className="m8-p5" style={{ color: 'var(--color_text)', minHeight: 20 }}>
+        <div style={{ color: 'var(--color_text)', minHeight: 20, fontSize: 14, fontWeight: 400, lineHeight: '1.6', fontFamily: 'var(--font_primary)' }}>
           <TypedText text={response.rootCause} startDelay={rootCauseBodyAt} speed={WORD_SPEED} />
         </div>
       </div>
@@ -174,7 +174,7 @@ const AIResponseBlock = ({ response }: AIResponseBlockProps) => {
       {/* RECOMMENDATIONS */}
       <div style={{ marginBottom: 12 }}>
         <DelayedReveal delay={recsHeadingAt}>
-          <div className="m8-p6" style={{ color: 'var(--color_primary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6, fontWeight: 500 }}>
+          <div style={{ color: 'var(--color_primary)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6, fontWeight: 500, fontSize: 10, fontFamily: 'var(--font_primary)' }}>
             Recommendations
           </div>
         </DelayedReveal>
