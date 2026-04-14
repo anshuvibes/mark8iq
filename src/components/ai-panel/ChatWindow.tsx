@@ -17,6 +17,7 @@ interface ChatWindowProps {
   onSuggestionInlineSelect?: (suggestion: Suggestion, messageId: string) => void;
   onWelcomeSuggestionSelect?: (suggestion: Suggestion) => void;
   onTypingComplete?: () => void;
+  onSuggestionSelect?: (suggestion: Suggestion) => void;
 }
 
 const LoadingDots = () => (
@@ -288,7 +289,7 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
 
 /* ─── ChatWindow ─── */
 
-const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrollContainerRef, onInsightAnalyse, onHaltSelect, onViewAll, onSuggestionInlineSelect, onWelcomeSuggestionSelect, onTypingComplete }: ChatWindowProps) => {
+const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrollContainerRef, onInsightAnalyse, onHaltSelect, onViewAll, onSuggestionInlineSelect, onWelcomeSuggestionSelect, onTypingComplete, onSuggestionSelect }: ChatWindowProps) => {
   const lastUserMsgRef = useRef<HTMLDivElement>(null);
   const lastScrolledId = useRef<string | null>(null);
 
@@ -392,12 +393,20 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
               </div>
             );
 
-          case 'ai-response':
+          case 'ai-response': {
+            const isLastAIResponse = msg.type === 'ai-response' &&
+              !messages.slice(idx + 1).some(m => m.type === 'ai-response' || m.type === 'loading');
             return msg.aiResponse ? (
               <div key={msg.id} style={{ marginBottom: 20 }}>
-                <AIResponseBlock response={msg.aiResponse} onTypingComplete={onTypingComplete} />
+                <AIResponseBlock
+                  response={msg.aiResponse}
+                  onTypingComplete={onTypingComplete}
+                  suggestions={isLastAIResponse ? mockSuggestions.slice(0, 2) : undefined}
+                  onSuggestionSelect={onSuggestionSelect}
+                />
               </div>
             ) : null;
+          }
 
           case 'loading':
             return (
