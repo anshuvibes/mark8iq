@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { ArrowLeft, ChevronRight } from 'lucide-react';
 import AIPanelHeader from './AIPanelHeader';
 import SuggestionsSection from './SuggestionsSection';
 import ChatWindow from './ChatWindow';
@@ -33,6 +34,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   const [lastResponseComplete, setLastResponseComplete] = useState(true);
   const [contextNotice, setContextNotice] = useState<string | null>(null);
   const [lastPageId, setLastPageId] = useState<DashboardPageId>(currentPageId);
+  const [view, setView] = useState<'chat' | 'highlights'>('chat');
 
   const contextLabel = `${currentPage}  ·  ${dateRange}`;
 
@@ -99,8 +101,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
     ]);
   }, []);
 
-  const handleInsightAnalyse = useCallback((halt: Halt, insightsMessageId: string) => {
-    setMessages(prev => prev.filter(m => m.id !== insightsMessageId));
+  const handleHaltAnalyse = useCallback((halt: Halt) => {
     setMessages(prev => [
       ...prev,
       { id: nextId(), type: 'context-pill', pillVariant: 'halt', pillText: halt.statement },
@@ -108,23 +109,18 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
     simulateResponse(halt.id);
   }, [simulateResponse]);
 
+  const handleInsightAnalyse = useCallback((halt: Halt, insightsMessageId: string) => {
+    setMessages(prev => prev.filter(m => m.id !== insightsMessageId));
+    handleHaltAnalyse(halt);
+  }, [handleHaltAnalyse]);
+
   const handleRetry = useCallback((messageId: string) => {
     setMessages(prev => prev.filter(m => m.id !== messageId));
     simulateResponse('generic');
   }, [simulateResponse]);
 
   const handleGetInsights = useCallback(() => {
-    setMessages(prev => [
-      ...prev,
-      { id: nextId(), type: 'insights-list', insightsList: mockHalts },
-    ]);
-  }, []);
-
-  const handleGetSuggestions = useCallback(() => {
-    setMessages(prev => [
-      ...prev,
-      { id: nextId(), type: 'suggestions-inline', suggestionsList: mockSuggestions },
-    ]);
+    setView('highlights');
   }, []);
 
   const handleSuggestionInlineSelect = useCallback((suggestion: Suggestion, messageId: string) => {
@@ -138,91 +134,164 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
 
   const panelContent = (
     <>
-      <AIPanelHeader />
-
-      {/* Scrollable middle area */}
-      <div ref={scrollContainerRef} className="ai-panel-scroll" data-lenis-prevent="" style={{ flex: 1, minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch', position: 'relative' }}>
-        <div style={{
-          position: 'sticky',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 32,
-          background: 'linear-gradient(to top, transparent 0%, #FFFFFF 100%)',
-          pointerEvents: 'none',
-          zIndex: 1,
-          marginBottom: -32,
-          flexShrink: 0,
-        }} />
-        {contextNotice && (
+      {view === 'highlights' ? (
+        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
+          {/* Header */}
           <div style={{
-            padding: '8px 16px',
-            background: 'rgba(142,89,255,0.04)',
-            borderBottom: '1px solid rgba(142,89,255,0.1)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
+            display: 'flex', alignItems: 'center', gap: 8,
+            padding: '10px 16px',
+            borderBottom: '1px solid rgba(18,24,43,0.06)',
+            flexShrink: 0,
           }}>
-            <span className="m8-p6" style={{ color: 'var(--color_text)', flex: 1 }}>{contextNotice}</span>
             <button
-              onClick={() => setContextNotice(null)}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: 'rgba(18,24,43,0.35)' }}
+              onClick={() => setView('chat')}
+              style={{
+                background: 'none', border: 'none', cursor: 'pointer',
+                padding: 4, color: 'rgba(18,24,43,0.4)',
+                borderRadius: 'var(--m8-radius-sm)',
+                display: 'flex', alignItems: 'center',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.05)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'none'; }}
             >
-              ×
+              <ArrowLeft size={16} />
             </button>
+            <span className="m8-p6" style={{
+              color: 'var(--color_text)', fontWeight: 500, flex: 1,
+            }}>
+              All Highlights
+            </span>
+            <span className="m8-p6" style={{ color: 'rgba(18,24,43,0.35)' }}>
+              {mockHalts.length} total
+            </span>
           </div>
-        )}
 
-        <ChatWindow
-          messages={messages}
-          showLoadPrevious={false}
-          onLoadPrevious={() => {}}
-          onRetry={handleRetry}
-          scrollContainerRef={scrollContainerRef}
-          onInsightAnalyse={handleInsightAnalyse}
-          onHaltSelect={handleHaltSelect}
-          onViewAll={handleViewAll}
-          onSuggestionInlineSelect={handleSuggestionInlineSelect}
-          onWelcomeSuggestionSelect={handleSuggestionSelect}
-          onTypingComplete={() => setLastResponseComplete(true)}
-        />
-      </div>
-
-      {/* Horizontal suggestion strip — visible once user has interacted */}
-      {messages.some(m => m.type === 'user-bubble' || m.type === 'context-pill') && !messages.some(m => m.type === 'suggestions-inline') && !isLoading && lastResponseComplete && (
-        <div
-          key={`strip-${messages.length}`}
-          style={{ position: 'relative', paddingTop: 8, paddingBottom: 0, marginBottom: 0, animation: 'suggestionSlideUp 0.4s ease-out' }}
-          onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
-        >
-          <div style={{
-            position: 'absolute',
-            top: -32,
-            left: 0,
-            right: 0,
-            height: 32,
-            background: 'linear-gradient(to bottom, transparent 0%, #FFFFFF 100%)',
-            pointerEvents: 'none',
-            zIndex: 10,
-          }} />
-          <SuggestionsSection
-            suggestions={mockSuggestions}
-            onSelect={handleSuggestionSelect}
-            isStale={false}
-            mode="horizontal"
-          />
+          {/* Scrollable list */}
+          <div className="ai-panel-scroll" data-lenis-prevent="" style={{
+            flex: 1, minHeight: 0, overflowY: 'auto', padding: '12px 16px',
+            display: 'flex', flexDirection: 'column', gap: 6,
+          }}>
+            {mockHalts.map((halt, i) => (
+              <div
+                key={halt.id}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 10,
+                  padding: '10px 12px',
+                  borderRadius: 'var(--m8-radius-md)',
+                  background: 'rgba(237,240,247,0.5)',
+                  border: '1px solid rgba(18,24,43,0.06)',
+                  cursor: 'pointer',
+                  transition: 'background 0.15s',
+                }}
+                onClick={() => {
+                  setView('chat');
+                  handleHaltAnalyse(halt);
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(237,240,247,0.9)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(237,240,247,0.5)'; }}
+              >
+                <span className="m8-p6" style={{
+                  color: 'rgba(18,24,43,0.25)', minWidth: 16, textAlign: 'center', fontSize: 11,
+                }}>
+                  {i + 1}
+                </span>
+                <span className="m8-p6" style={{ color: 'var(--color_text)', flex: 1, fontSize: 13 }}>
+                  {halt.statement}
+                </span>
+                <ChevronRight size={14} style={{ color: 'rgba(18,24,43,0.25)', flexShrink: 0 }} />
+              </div>
+            ))}
+          </div>
         </div>
-      )}
+      ) : (
+        <>
+          <AIPanelHeader />
 
-      {/* Chat input pinned at bottom */}
-      <ChatInputBar
-        contextLabel={contextLabel}
-        isLoading={isLoading}
-        onSend={handleSendMessage}
-        pageName={currentPage}
-        onGetInsights={handleGetInsights}
-      />
+          {/* Scrollable middle area */}
+          <div ref={scrollContainerRef} className="ai-panel-scroll" data-lenis-prevent="" style={{ flex: 1, minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch', position: 'relative' }}>
+            <div style={{
+              position: 'sticky',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 32,
+              background: 'linear-gradient(to top, transparent 0%, #FFFFFF 100%)',
+              pointerEvents: 'none',
+              zIndex: 1,
+              marginBottom: -32,
+              flexShrink: 0,
+            }} />
+            {contextNotice && (
+              <div style={{
+                padding: '8px 16px',
+                background: 'rgba(142,89,255,0.04)',
+                borderBottom: '1px solid rgba(142,89,255,0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+              }}>
+                <span className="m8-p6" style={{ color: 'var(--color_text)', flex: 1 }}>{contextNotice}</span>
+                <button
+                  onClick={() => setContextNotice(null)}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: 'rgba(18,24,43,0.35)' }}
+                >
+                  ×
+                </button>
+              </div>
+            )}
+
+            <ChatWindow
+              messages={messages}
+              showLoadPrevious={false}
+              onLoadPrevious={() => {}}
+              onRetry={handleRetry}
+              scrollContainerRef={scrollContainerRef}
+              onInsightAnalyse={handleInsightAnalyse}
+              onHaltSelect={handleHaltSelect}
+              onViewAll={handleViewAll}
+              onSuggestionInlineSelect={handleSuggestionInlineSelect}
+              onWelcomeSuggestionSelect={handleSuggestionSelect}
+              onTypingComplete={() => setLastResponseComplete(true)}
+            />
+          </div>
+
+          {/* Horizontal suggestion strip */}
+          {messages.some(m => m.type === 'user-bubble' || m.type === 'context-pill') && !messages.some(m => m.type === 'suggestions-inline') && !isLoading && lastResponseComplete && (
+            <div
+              key={`strip-${messages.length}`}
+              style={{ position: 'relative', paddingTop: 8, paddingBottom: 0, marginBottom: 0, animation: 'suggestionSlideUp 0.4s ease-out' }}
+              onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
+            >
+              <div style={{
+                position: 'absolute',
+                top: -32,
+                left: 0,
+                right: 0,
+                height: 32,
+                background: 'linear-gradient(to bottom, transparent 0%, #FFFFFF 100%)',
+                pointerEvents: 'none',
+                zIndex: 10,
+              }} />
+              <SuggestionsSection
+                suggestions={mockSuggestions}
+                onSelect={handleSuggestionSelect}
+                isStale={false}
+                mode="horizontal"
+              />
+            </div>
+          )}
+
+          {/* Chat input pinned at bottom */}
+          <ChatInputBar
+            contextLabel={contextLabel}
+            isLoading={isLoading}
+            onSend={handleSendMessage}
+            pageName={currentPage}
+            onGetInsights={handleGetInsights}
+          />
+        </>
+      )}
     </>
   );
 
