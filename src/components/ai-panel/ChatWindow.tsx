@@ -55,13 +55,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
   }, [lastUserMsg?.id, scrollContainerRef]);
 
   if (messages.length === 0) {
-    return (
-      <div style={{ flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
-        <div className="m8-p6" style={{ color: 'rgba(18,24,43,0.35)', textAlign: 'center' }}>
-          Ask anything about this page, or start from the highlights above.
-        </div>
-      </div>
-    );
+    return null;
   }
 
   return (
