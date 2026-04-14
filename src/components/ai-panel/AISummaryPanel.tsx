@@ -4,7 +4,7 @@ import { ArrowLeft, ChevronRight, Sparkles, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { gsap } from 'gsap';
 import AIPanelHeader from './AIPanelHeader';
-import SuggestionsSection from './SuggestionsSection';
+
 import ChatWindow from './ChatWindow';
 import ChatInputBar from './ChatInputBar';
 import {
