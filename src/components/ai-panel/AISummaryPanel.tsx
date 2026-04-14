@@ -622,6 +622,22 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
             </div>
           )}
 
+          <div style={{
+            position: 'relative',
+            height: 32,
+            pointerEvents: 'none',
+            flexShrink: 0,
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: 'linear-gradient(to bottom, transparent 0%, #FFFFFF 100%)',
+            }} />
+          </div>
+
           {/* Chat input pinned at bottom */}
           <ChatInputBar
             contextLabel={contextLabel}
