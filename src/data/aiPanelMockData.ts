@@ -244,3 +244,18 @@ export const dashboardPages = [
   { id: 'campaign', label: 'Campaign' },
   { id: 'placement', label: 'Placement' },
 ] as const;
+
+export type DashboardPageId = typeof dashboardPages[number]['id'];
+
+export interface GoalFAQ {
+  id: string;
+  question: string;
+}
+
+export const mockGoalFAQs: GoalFAQ[] = [
+  { id: 'gf1', question: 'How do I improve ROAS across my top campaigns?' },
+  { id: 'gf2', question: 'What is the best budget allocation strategy for peak season?' },
+  { id: 'gf3', question: 'How can I reduce ACoS without losing sales volume?' },
+  { id: 'gf4', question: 'Which campaign types perform best for new product launches?' },
+  { id: 'gf5', question: 'How do I identify and scale my best-performing ASINs?' },
+];
