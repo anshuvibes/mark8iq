@@ -122,7 +122,6 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   const handleGetInsights = useCallback(() => {
     setView('highlights');
   }, []);
-  }, []);
 
   const handleSuggestionInlineSelect = useCallback((suggestion: Suggestion, messageId: string) => {
     setMessages(prev => prev.filter(m => m.id !== messageId));
