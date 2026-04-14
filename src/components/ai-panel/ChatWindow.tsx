@@ -406,8 +406,10 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
           marginBottom: -28,
         }}>
           <div style={{
-            background: 'rgba(18,24,43,0.12)',
-            color: 'rgba(18,24,43,0.55)',
+            background: 'rgba(237,240,247,0.85)',
+            color: 'rgba(18,24,43,0.6)',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
             fontSize: 11,
             fontWeight: 500,
             padding: '4px 12px',
