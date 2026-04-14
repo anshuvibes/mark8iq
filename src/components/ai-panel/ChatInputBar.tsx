@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ArrowUp, X, Sparkles, MessageSquare } from 'lucide-react';
+import { ArrowUp, X, Sparkles, MessageSquare, Plus } from 'lucide-react';
 
 interface ChatInputBarProps {
   contextLabel: string;
@@ -17,7 +17,7 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
   const [showChip, setShowChip] = useState(true);
   const [plusMenuOpen, setPlusMenuOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const plusMenuRef = useRef<HTMLDivElement>(null);
+  const plusButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleSend = () => {
     const trimmed = value.trim();
@@ -25,15 +25,15 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
     onSend(trimmed);
     setValue('');
     if (textareaRef.current) {
-      textareaRef.current.style.height = '44px';
+      textareaRef.current.style.height = '56px';
     }
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
     const el = e.target;
-    el.style.height = '44px';
-    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+    el.style.height = '56px';
+    el.style.height = Math.min(el.scrollHeight, 160) + 'px';
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -83,14 +83,13 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
 
   // Click outside handler for plus menu
   useEffect(() => {
-    if (!plusMenuOpen) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      if (plusMenuRef.current && !plusMenuRef.current.contains(e.target as Node)) {
+    const handler = (e: MouseEvent) => {
+      if (plusButtonRef.current && !plusButtonRef.current.contains(e.target as Node)) {
         setPlusMenuOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    if (plusMenuOpen) document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
   }, [plusMenuOpen]);
 
   return (
@@ -100,69 +99,6 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
       background: '#FFFFFF',
       position: 'relative',
     }}>
-      {/* Plus menu popup */}
-      {plusMenuOpen && (
-        <div
-          ref={plusMenuRef}
-          style={{
-            position: 'absolute',
-            bottom: '100%',
-            left: 16,
-            width: 200,
-            background: '#FFFFFF',
-            border: '1px solid rgba(18,24,43,0.1)',
-            borderRadius: 'var(--m8-radius-md)',
-            boxShadow: '0 4px 16px rgba(8,13,25,0.1)',
-            padding: '4px 0',
-            zIndex: 10,
-          }}
-        >
-          <button
-            onClick={() => { setPlusMenuOpen(false); onGetInsights(); }}
-            className="m8-p6"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 10,
-              width: '100%',
-              padding: '8px 14px',
-              background: 'transparent',
-              border: 'none',
-              cursor: 'pointer',
-              fontFamily: 'var(--font_primary)',
-              color: 'var(--color_text)',
-              transition: 'background 0.15s',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.03)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
-          >
-            <Sparkles size={14} style={{ color: 'var(--color_primary)', flexShrink: 0 }} />
-            Get Insights
-          </button>
-          <button
-            onClick={() => { setPlusMenuOpen(false); onGetSuggestions(); }}
-            className="m8-p6"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 10,
-              width: '100%',
-              padding: '8px 14px',
-              background: 'transparent',
-              border: 'none',
-              cursor: 'pointer',
-              fontFamily: 'var(--font_primary)',
-              color: 'var(--color_text)',
-              transition: 'background 0.15s',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.03)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
-          >
-            <MessageSquare size={14} style={{ color: 'var(--color_primary)', flexShrink: 0 }} />
-            Get Suggestions
-          </button>
-        </div>
-      )}
 
       {/* Larger container */}
       <div style={{
@@ -229,9 +165,7 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
               fontSize: 11,
               lineHeight: '16px',
               transition: 'color 0.15s',
-            }}
-              onClick={() => { setPlusMenuOpen(!plusMenuOpen); }}
-            >
+            }}>
               + Add context
             </span>
           )}
@@ -273,13 +207,77 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
                 color: 'var(--color_text)',
                 fontFamily: 'var(--font_primary)',
                 resize: 'none',
-                height: 44,
-                maxHeight: 120,
+                height: 56,
+                maxHeight: 160,
                 overflowY: 'auto',
                 lineHeight: '22px',
                 padding: 0,
               }}
             />
+            <div style={{ position: 'relative', flexShrink: 0 }}>
+              <button
+                ref={plusButtonRef}
+                onClick={() => setPlusMenuOpen(prev => !prev)}
+                style={{
+                  width: 28,
+                  height: 28,
+                  borderRadius: 'var(--m8-radius-md)',
+                  background: 'rgba(18,24,43,0.06)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'rgba(18,24,43,0.45)',
+                  flexShrink: 0,
+                  transition: 'background 0.15s',
+                  position: 'relative',
+                  marginBottom: 2,
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.1)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.06)'; }}
+              >
+                {plusMenuOpen ? <X size={14} /> : <Plus size={14} />}
+              </button>
+              {plusMenuOpen && (
+                <div style={{
+                  position: 'absolute',
+                  bottom: 'calc(100% + 8px)',
+                  right: 0,
+                  background: '#FFFFFF',
+                  border: '1px solid rgba(18,24,43,0.1)',
+                  borderRadius: 'var(--m8-radius-md)',
+                  boxShadow: '0 4px 20px rgba(8,13,25,0.1)',
+                  padding: '4px 0',
+                  minWidth: 200,
+                  zIndex: 50,
+                }}>
+                  {[
+                    { icon: <Sparkles size={14} />, label: 'Show highlights', action: onGetInsights },
+                    { icon: <MessageSquare size={14} />, label: 'Show suggestions', action: onGetSuggestions },
+                  ].map((item) => (
+                    <button
+                      key={item.label}
+                      onClick={() => { setPlusMenuOpen(false); item.action?.(); }}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 10,
+                        width: '100%', padding: '9px 14px',
+                        border: 'none', background: 'transparent',
+                        cursor: 'pointer', textAlign: 'left',
+                        fontFamily: 'var(--font_primary)',
+                        fontSize: 13, color: 'var(--color_text)',
+                        transition: 'background 0.1s',
+                      }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.04)'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+                    >
+                      <span style={{ color: 'rgba(18,24,43,0.45)', display: 'flex' }}>{item.icon}</span>
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
             <button
               onClick={handleSend}
               disabled={!canSend}
