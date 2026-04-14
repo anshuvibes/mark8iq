@@ -173,6 +173,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
           onHaltSelect={handleHaltSelect}
           onViewAll={handleViewAll}
           onSuggestionInlineSelect={handleSuggestionInlineSelect}
+          onWelcomeSuggestionSelect={handleSuggestionSelect}
         />
       </div>
 
