@@ -38,6 +38,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   const highlightsItemsRef = useRef<HTMLDivElement[]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [historyLoading, setHistoryLoading] = useState(false);
   const [lastResponseComplete, setLastResponseComplete] = useState(true);
   const [contextNotice, setContextNotice] = useState<string | null>(null);
   const [lastPageId, setLastPageId] = useState<DashboardPageId>(currentPageId);
@@ -135,12 +136,30 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
 
   const handleHaltSelect = useCallback((halt: Halt) => {
     const isFirstInteraction = messages.length === 1 && messages[0].type === 'welcome';
-    const prefix = (isFirstInteraction && halt.id === 'h1') ? mockLongChatHistory : [];
+
+    if (isFirstInteraction && halt.id === 'h1') {
+      setHistoryLoading(true);
+      setTimeout(() => {
+        setMessages(prev => [
+          ...prev.filter(m => m.type !== 'welcome'),
+          ...mockLongChatHistory,
+          { id: nextId(), type: 'date-separator' as const, date: '14 Apr 2026' },
+          { id: nextId(), type: 'context-pill' as const, pillVariant: 'halt' as const, pillText: halt.statement },
+        ]);
+        setHistoryLoading(false);
+        simulateResponse(halt.id);
+        setTimeout(() => {
+          const container = scrollContainerRef.current;
+          if (container) {
+            container.scrollTo({ top: container.scrollHeight, behavior: 'instant' as ScrollBehavior });
+          }
+        }, 50);
+      }, 800);
+      return;
+    }
 
     setMessages(prev => [
       ...prev.filter(m => m.type !== 'welcome' || !isFirstInteraction),
-      ...prefix,
-      ...(isFirstInteraction ? [{ id: nextId(), type: 'date-separator' as const, date: '14 Apr 2026' }] : []),
       { id: nextId(), type: 'context-pill' as const, pillVariant: 'halt' as const, pillText: halt.statement },
     ]);
     simulateResponse(halt.id);
@@ -165,11 +184,30 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
 
   const handleHaltAnalyse = useCallback((halt: Halt) => {
     const isFirstInteraction = messages.length === 1 && messages[0].type === 'welcome';
-    const prefix = (isFirstInteraction && halt.id === 'h1') ? mockLongChatHistory : [];
+
+    if (isFirstInteraction && halt.id === 'h1') {
+      setHistoryLoading(true);
+      setTimeout(() => {
+        setMessages(prev => [
+          ...prev.filter(m => m.type !== 'welcome'),
+          ...mockLongChatHistory,
+          { id: nextId(), type: 'date-separator', date: '14 Apr 2026' },
+          { id: nextId(), type: 'context-pill', pillVariant: 'halt', pillText: halt.statement },
+        ]);
+        setHistoryLoading(false);
+        simulateResponse(halt.id);
+        setTimeout(() => {
+          const container = scrollContainerRef.current;
+          if (container) {
+            container.scrollTo({ top: container.scrollHeight, behavior: 'instant' as ScrollBehavior });
+          }
+        }, 50);
+      }, 800);
+      return;
+    }
 
     setMessages(prev => [
       ...prev.filter(m => m.type !== 'welcome' || !isFirstInteraction),
-      ...prefix,
       { id: nextId(), type: 'date-separator', date: '14 Apr 2026' },
       { id: nextId(), type: 'context-pill', pillVariant: 'halt', pillText: halt.statement },
     ]);
@@ -340,20 +378,46 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
               </div>
             )}
 
-            <ChatWindow
-              messages={messages}
-              showLoadPrevious={messages.some(m => m.id?.startsWith('hist-'))}
-              onLoadPrevious={() => {}}
-              onRetry={handleRetry}
-              scrollContainerRef={scrollContainerRef}
-              onInsightAnalyse={handleInsightAnalyse}
-              onHaltSelect={handleHaltSelect}
-              onViewAll={handleViewAll}
-              onSuggestionInlineSelect={handleSuggestionInlineSelect}
-              onWelcomeSuggestionSelect={handleSuggestionSelect}
-              onTypingComplete={() => setLastResponseComplete(true)}
-              onSuggestionSelect={handleSuggestionSelect}
-            />
+            {historyLoading ? (
+              <div style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 12,
+                color: 'rgba(18,24,43,0.35)',
+                minHeight: 200,
+              }}>
+                <div style={{ display: 'flex', gap: 4 }}>
+                  {[0, 1, 2].map(i => (
+                    <span key={i} style={{
+                      width: 6, height: 6, borderRadius: '50%',
+                      background: 'rgba(18,24,43,0.25)',
+                      animation: `m8-dot-pulse 1.2s ease-in-out ${i * 0.15}s infinite`,
+                    }} />
+                  ))}
+                </div>
+                <span className="m8-p6" style={{ fontSize: 12 }}>
+                  Loading chat history...
+                </span>
+              </div>
+            ) : (
+              <ChatWindow
+                messages={messages}
+                showLoadPrevious={messages.some(m => m.id?.startsWith('hist-'))}
+                onLoadPrevious={() => {}}
+                onRetry={handleRetry}
+                scrollContainerRef={scrollContainerRef}
+                onInsightAnalyse={handleInsightAnalyse}
+                onHaltSelect={handleHaltSelect}
+                onViewAll={handleViewAll}
+                onSuggestionInlineSelect={handleSuggestionInlineSelect}
+                onWelcomeSuggestionSelect={handleSuggestionSelect}
+                onTypingComplete={() => setLastResponseComplete(true)}
+                onSuggestionSelect={handleSuggestionSelect}
+              />
+            )}
           </div>
 
 
