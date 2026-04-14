@@ -395,7 +395,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
   return (
     <div style={{ padding: '12px 16px' }}>
       {/* Sticky date pill */}
-      {visibleDate && (
+      {visibleDate && scrollingUp && (
         <div style={{
           position: 'sticky',
           top: 8,
@@ -406,14 +406,13 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
           marginBottom: -28,
         }}>
           <div style={{
-            background: 'rgba(18,24,43,0.55)',
-            color: '#FFFFFF',
+            background: 'rgba(18,24,43,0.12)',
+            color: 'rgba(18,24,43,0.55)',
             fontSize: 11,
             fontWeight: 500,
             padding: '4px 12px',
             borderRadius: 999,
             fontFamily: 'var(--font_primary)',
-            backdropFilter: 'blur(4px)',
             letterSpacing: '0.02em',
           }}>
             {visibleDate}
