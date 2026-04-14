@@ -145,16 +145,23 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   const panelContent = (
     <>
       {view === 'highlights' ? (
-        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
+        <div style={{
+          display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0,
+          animation: highlightsExiting
+            ? 'slideOutToRight 0.35s cubic-bezier(0.4, 0, 1, 1) forwards'
+            : 'slideInFromRight 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+        }}>
           {/* Header */}
           <div style={{
             display: 'flex', alignItems: 'center', gap: 8,
             padding: '10px 16px',
             borderBottom: '1px solid rgba(18,24,43,0.06)',
             flexShrink: 0,
+            opacity: 0,
+            animation: 'fadeUpItem 0.3s cubic-bezier(0.22, 1, 0.36, 1) 0ms forwards',
           }}>
             <button
-              onClick={() => setView('chat')}
+              onClick={handleHighlightsBack}
               style={{
                 background: 'none', border: 'none', cursor: 'pointer',
                 padding: 4, color: 'rgba(18,24,43,0.4)',
@@ -192,6 +199,8 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
                   border: '1px solid rgba(18,24,43,0.06)',
                   cursor: 'pointer',
                   transition: 'background 0.15s',
+                  opacity: 0,
+                  animation: `fadeUpItem 0.3s cubic-bezier(0.22, 1, 0.36, 1) ${i * 50}ms forwards`,
                 }}
                 onClick={() => {
                   setView('chat');
