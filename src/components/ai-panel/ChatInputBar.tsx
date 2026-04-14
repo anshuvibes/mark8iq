@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ArrowUp, X, Sparkles } from 'lucide-react';
+import { ArrowUp, X, Sparkles, Target } from 'lucide-react';
 
 interface ChatInputBarProps {
   contextLabel: string;
@@ -8,9 +8,10 @@ interface ChatInputBarProps {
   pageName?: string;
   pageIcon?: string;
   onGetInsights: () => void;
+  onGetGoalFAQs: () => void;
 }
 
-const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onGetInsights }: ChatInputBarProps) => {
+const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onGetInsights, onGetGoalFAQs }: ChatInputBarProps) => {
   const [value, setValue] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [showChip, setShowChip] = useState(true);
@@ -202,34 +203,65 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
             alignItems: 'center',
             justifyContent: 'space-between',
           }}>
-            <button
-              onClick={onGetInsights}
-              style={{
-                background: 'transparent',
-                border: '1px solid rgba(18,24,43,0.15)',
-                borderRadius: 'var(--m8-radius-sm)',
-                padding: '4px 10px',
-                cursor: 'pointer',
-                fontFamily: 'var(--font_primary)',
-                fontSize: 12,
-                color: 'rgba(18,24,43,0.5)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                transition: 'border-color 0.15s, color 0.15s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(18,24,43,0.3)';
-                e.currentTarget.style.color = 'rgba(18,24,43,0.8)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(18,24,43,0.15)';
-                e.currentTarget.style.color = 'rgba(18,24,43,0.5)';
-              }}
-            >
-              <Sparkles size={12} />
-              Highlights
-            </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <button
+                onClick={onGetInsights}
+                style={{
+                  background: 'transparent',
+                  border: '1px solid rgba(18,24,43,0.15)',
+                  borderRadius: 'var(--m8-radius-sm)',
+                  padding: '4px 10px',
+                  cursor: 'pointer',
+                  fontFamily: 'var(--font_primary)',
+                  fontSize: 12,
+                  color: 'rgba(18,24,43,0.5)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  transition: 'border-color 0.15s, color 0.15s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(18,24,43,0.3)';
+                  e.currentTarget.style.color = 'rgba(18,24,43,0.8)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(18,24,43,0.15)';
+                  e.currentTarget.style.color = 'rgba(18,24,43,0.5)';
+                }}
+              >
+                <Sparkles size={12} />
+                Highlights
+              </button>
+
+              <button
+                onClick={onGetGoalFAQs}
+                style={{
+                  background: 'transparent',
+                  border: '1px solid rgba(18,24,43,0.15)',
+                  borderRadius: 'var(--m8-radius-sm)',
+                  padding: '4px 10px',
+                  cursor: 'pointer',
+                  fontFamily: 'var(--font_primary)',
+                  fontSize: 12,
+                  color: 'rgba(18,24,43,0.5)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  transition: 'border-color 0.15s, color 0.15s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(18,24,43,0.3)';
+                  e.currentTarget.style.color = 'rgba(18,24,43,0.8)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(18,24,43,0.15)';
+                  e.currentTarget.style.color = 'rgba(18,24,43,0.5)';
+                }}
+              >
+                <Target size={12} />
+                Goal FAQs
+              </button>
+            </div>
             <button
               onClick={handleSend}
               disabled={!canSend}
