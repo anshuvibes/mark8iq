@@ -82,87 +82,21 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onG
   }, []);
 
   // Click outside handler for plus menu
+  const plusBtnRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (!plusMenuOpen) return;
     const handleClickOutside = (e: MouseEvent) => {
-      if (plusMenuRef.current && !plusMenuRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      if (
+        plusMenuRef.current && !plusMenuRef.current.contains(target) &&
+        plusBtnRef.current && !plusBtnRef.current.contains(target)
+      ) {
         setPlusMenuOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [plusMenuOpen]);
-
-  return (
-    <div style={{
-      padding: '6px 16px 12px',
-      borderTop: 'none',
-      background: '#FFFFFF',
-      position: 'relative',
-    }}>
-      {/* Plus menu popup */}
-      {plusMenuOpen && (
-        <div
-          ref={plusMenuRef}
-          style={{
-            position: 'absolute',
-            bottom: '100%',
-            left: 16,
-            width: 200,
-            background: '#FFFFFF',
-            border: '1px solid rgba(18,24,43,0.1)',
-            borderRadius: 'var(--m8-radius-md)',
-            boxShadow: '0 4px 16px rgba(8,13,25,0.1)',
-            padding: '4px 0',
-            zIndex: 10,
-          }}
-        >
-          <button
-            onClick={() => { setPlusMenuOpen(false); onGetInsights(); }}
-            className="m8-p6"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 10,
-              width: '100%',
-              padding: '8px 14px',
-              background: 'transparent',
-              border: 'none',
-              cursor: 'pointer',
-              fontFamily: 'var(--font_primary)',
-              color: 'var(--color_text)',
-              transition: 'background 0.15s',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.03)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
-          >
-            <Sparkles size={14} style={{ color: 'var(--color_primary)', flexShrink: 0 }} />
-            Get Insights
-          </button>
-          <button
-            onClick={() => { setPlusMenuOpen(false); onGetSuggestions(); }}
-            className="m8-p6"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 10,
-              width: '100%',
-              padding: '8px 14px',
-              background: 'transparent',
-              border: 'none',
-              cursor: 'pointer',
-              fontFamily: 'var(--font_primary)',
-              color: 'var(--color_text)',
-              transition: 'background 0.15s',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.03)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
-          >
-            <MessageSquare size={14} style={{ color: 'var(--color_primary)', flexShrink: 0 }} />
-            Get Suggestions
-          </button>
-        </div>
-      )}
 
       {/* Larger container */}
       <div style={{
