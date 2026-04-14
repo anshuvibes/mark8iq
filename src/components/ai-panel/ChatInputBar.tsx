@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ArrowUp, X, Sparkles } from 'lucide-react';
+import { ArrowUp, X, Sparkles, Target } from 'lucide-react';
 
 interface ChatInputBarProps {
   contextLabel: string;
