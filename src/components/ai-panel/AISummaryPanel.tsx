@@ -42,10 +42,6 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
     }
   }, []);
 
-  // Derive suggestions mode
-  const hasUserInteraction = messages.some(m => m.type === 'user-bubble' || m.type === 'context-pill');
-  const suggestionsMode = hasUserInteraction ? 'horizontal' : 'vertical';
-
   // Detect page change
   if (currentPageId !== lastPageId && messages.length > 0) {
     const pageName = currentPage;
@@ -176,14 +172,6 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
           onWelcomeSuggestionSelect={handleSuggestionSelect}
         />
       </div>
-
-      {/* Suggestions pinned above input */}
-      <SuggestionsSection
-        suggestions={mockSuggestions}
-        onSelect={handleSuggestionSelect}
-        isStale={false}
-        mode={suggestionsMode}
-      />
 
       {/* Chat input pinned at bottom */}
       <ChatInputBar
