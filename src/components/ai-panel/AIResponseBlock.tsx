@@ -7,7 +7,7 @@ interface AIResponseBlockProps {
 }
 
 /** Splits text into words and reveals them one by one */
-const TypedText = ({ text, startDelay, speed = 30, onDone }: { text: string; startDelay: number; speed?: number; onDone?: () => void }) => {
+const TypedText = ({ text, startDelay, speed = 30, onDone, onStart }: { text: string; startDelay: number; speed?: number; onDone?: () => void; onStart?: () => void }) => {
   const words = text.split(' ');
   const [count, setCount] = useState(0);
   const started = useRef(false);
