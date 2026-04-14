@@ -36,6 +36,15 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   const [lastPageId, setLastPageId] = useState<DashboardPageId>(currentPageId);
   const [view, setView] = useState<'chat' | 'highlights'>('chat');
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [highlightsExiting, setHighlightsExiting] = useState(false);
+
+  const handleHighlightsBack = useCallback(() => {
+    setHighlightsExiting(true);
+    setTimeout(() => {
+      setView('chat');
+      setHighlightsExiting(false);
+    }, 350);
+  }, []);
 
   const contextLabel = `${currentPage}  ·  ${dateRange}`;
 
