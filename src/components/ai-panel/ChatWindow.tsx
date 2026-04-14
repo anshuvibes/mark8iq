@@ -174,7 +174,8 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
         }
       })}
 
-      <div style={{ height: 1 }} />
+      {/* Spacer to push user message to top of viewport */}
+      <div style={{ minHeight: scrollContainerRef?.current ? scrollContainerRef.current.clientHeight * 0.75 : '70vh' }} />
     </div>
   );
 };
