@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import AIPanelHeader from './AIPanelHeader';
-import SuggestionsSection from './SuggestionsSection';
+
 import ChatWindow from './ChatWindow';
 import ChatInputBar from './ChatInputBar';
 import {
