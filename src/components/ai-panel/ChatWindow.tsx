@@ -293,7 +293,31 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
   const lastUserMsgRef = useRef<HTMLDivElement>(null);
   const lastScrolledId = useRef<string | null>(null);
   const [visibleDate, setVisibleDate] = useState<string | null>(null);
+  const [scrollingUp, setScrollingUp] = useState(false);
+  const lastScrollTop = useRef(0);
 
+  // Hide sticky pill when at bottom, show only when scrolling up
+  useEffect(() => {
+    const container = scrollContainerRef?.current;
+    if (!container) return;
+
+    const handleScrollDir = () => {
+      const currentScrollTop = container.scrollTop;
+      const isAtBottom = container.scrollHeight - currentScrollTop - container.clientHeight < 40;
+
+      if (isAtBottom) {
+        setScrollingUp(false);
+      } else if (currentScrollTop < lastScrollTop.current) {
+        setScrollingUp(true);
+      } else {
+        setScrollingUp(false);
+      }
+      lastScrollTop.current = currentScrollTop;
+    };
+
+    container.addEventListener('scroll', handleScrollDir, { passive: true });
+    return () => container.removeEventListener('scroll', handleScrollDir);
+  }, [scrollContainerRef]);
   const lastUserMsg = [...messages].reverse().find(
     m => m.type === 'user-bubble' || m.type === 'context-pill'
   );
