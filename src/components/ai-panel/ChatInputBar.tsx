@@ -8,9 +8,10 @@ interface ChatInputBarProps {
   pageName?: string;
   pageIcon?: string;
   onGetInsights: () => void;
+  onGetGoalFAQs: () => void;
 }
 
-const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onGetInsights }: ChatInputBarProps) => {
+const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onGetInsights, onGetGoalFAQs }: ChatInputBarProps) => {
   const [value, setValue] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [showChip, setShowChip] = useState(true);
