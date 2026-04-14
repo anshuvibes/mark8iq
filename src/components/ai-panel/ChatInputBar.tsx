@@ -83,53 +83,6 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
       borderTop: '1px solid rgba(18,24,43,0.06)',
       background: '#FFFFFF',
     }}>
-      {/* Context chip bar */}
-      {showChip && (
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 8,
-          padding: '8px 12px',
-          background: 'rgba(142,89,255,0.06)',
-          border: 'none',
-        }}>
-          <img
-            src={pageIcon || '/img/product-logos/black/mark8-ads.svg'}
-            alt=""
-            style={{ width: 16, height: 16, flexShrink: 0 }}
-          />
-          <span className="m8-p6" style={{
-            color: 'rgba(18,24,43,0.65)',
-            fontSize: 12,
-            lineHeight: '16px',
-            flex: 1,
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}>
-            Sharing "{displayName}"
-          </span>
-          <button
-            onClick={() => setShowChip(false)}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: 0,
-              display: 'flex',
-              alignItems: 'center',
-              color: 'rgba(18,24,43,0.35)',
-              flexShrink: 0,
-              transition: 'color 0.15s',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.6)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.35)'; }}
-          >
-            <X size={14} />
-          </button>
-        </div>
-      )}
-
       {/* Input container */}
       <div style={{
         display: 'flex',
@@ -140,6 +93,53 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
         transition: 'border-color 0.2s',
         overflow: 'hidden',
       }}>
+
+        {/* Context chip inside the input box */}
+        {showChip && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            padding: '8px 12px',
+            background: 'rgba(142,89,255,0.06)',
+            borderBottom: '1px solid rgba(18,24,43,0.06)',
+          }}>
+            <img
+              src={pageIcon || '/img/product-logos/black/mark8-ads.svg'}
+              alt=""
+              style={{ width: 16, height: 16, flexShrink: 0 }}
+            />
+            <span className="m8-p6" style={{
+              color: 'rgba(18,24,43,0.65)',
+              fontSize: 12,
+              lineHeight: '16px',
+              flex: 1,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}>
+              Sharing "{displayName}"
+            </span>
+            <button
+              onClick={() => setShowChip(false)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: 0,
+                display: 'flex',
+                alignItems: 'center',
+                color: 'rgba(18,24,43,0.35)',
+                flexShrink: 0,
+                transition: 'color 0.15s',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.6)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.35)'; }}
+            >
+              <X size={14} />
+            </button>
+          </div>
+        )}
 
         {/* Text input row */}
         <div style={{
