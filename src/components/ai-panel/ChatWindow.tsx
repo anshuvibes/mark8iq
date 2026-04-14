@@ -1,7 +1,8 @@
-import { useEffect, useRef, type RefObject } from 'react';
+import { useState, useEffect, useRef, type RefObject } from 'react';
 import AIResponseBlock from './AIResponseBlock';
 import { Button } from '@/components/ui/button';
 import type { ChatMessage, Halt, Suggestion } from '@/data/aiPanelMockData';
+import { mockSuggestions } from '@/data/aiPanelMockData';
 
 interface ChatWindowProps {
   messages: ChatMessage[];
@@ -13,6 +14,7 @@ interface ChatWindowProps {
   onHaltSelect?: (halt: Halt) => void;
   onViewAll?: () => void;
   onSuggestionInlineSelect?: (suggestion: Suggestion, messageId: string) => void;
+  onWelcomeSuggestionSelect?: (suggestion: Suggestion) => void;
 }
 
 const LoadingDots = () => (
@@ -32,7 +34,248 @@ const LoadingDots = () => (
   </div>
 );
 
-const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrollContainerRef, onInsightAnalyse, onHaltSelect, onViewAll, onSuggestionInlineSelect }: ChatWindowProps) => {
+/** Minimal TypedText — reveals words one at a time */
+const TypedText = ({ text, speed = 40, onDone }: { text: string; speed?: number; onDone?: () => void }) => {
+  const words = text.split(' ');
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let i = 0;
+    const tick = () => {
+      i++;
+      setCount(i);
+      if (i < words.length) {
+        setTimeout(tick, speed);
+      } else {
+        onDone?.();
+      }
+    };
+    tick();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (count === 0) return null;
+  return <>{words.slice(0, count).join(' ')}</>;
+};
+
+/* ─── WelcomeMessage ─── */
+
+interface WelcomeMessageProps {
+  halts: Halt[];
+  onHaltSelect: (halt: Halt) => void;
+  onViewAll: () => void;
+  onSuggestionSelect: (suggestion: Suggestion) => void;
+}
+
+const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: WelcomeMessageProps) => {
+  const [beat, setBeat] = useState(0);
+  const [cardsRevealed, setCardsRevealed] = useState(0);
+  const [viewAllVisible, setViewAllVisible] = useState(false);
+  const [chipsRevealed, setChipsRevealed] = useState(0);
+  const [thinkingFading, setThinkingFading] = useState(false);
+  const timerRefs = useRef<number[]>([]);
+
+  const clearTimers = () => {
+    timerRefs.current.forEach(t => clearTimeout(t));
+    timerRefs.current = [];
+  };
+
+  const addTimer = (fn: () => void, ms: number) => {
+    const t = window.setTimeout(fn, ms);
+    timerRefs.current.push(t);
+    return t;
+  };
+
+  useEffect(() => {
+    setBeat(1);
+    return clearTimers;
+  }, []);
+
+  // Beat 2.5 → 3 transition
+  useEffect(() => {
+    if (beat !== 2.5) return;
+    const t1 = addTimer(() => {
+      setThinkingFading(true);
+      addTimer(() => setBeat(3), 200);
+    }, 1800);
+    return () => clearTimeout(t1);
+  }, [beat]);
+
+  // Beat 3: stagger cards after line types
+  const startCardReveal = () => {
+    halts.forEach((_, i) => {
+      addTimer(() => setCardsRevealed(i + 1), i * 350);
+    });
+    // After last card + 300ms → show view all
+    addTimer(() => setViewAllVisible(true), halts.length * 350 + 300);
+    // After view all → beat 4
+    addTimer(() => setBeat(4), halts.length * 350 + 300 + 100);
+  };
+
+  // Beat 4: stagger suggestion chips
+  const startChipReveal = () => {
+    mockSuggestions.forEach((_, i) => {
+      addTimer(() => setChipsRevealed(i + 1), i * 250);
+    });
+    addTimer(() => setBeat(5), mockSuggestions.length * 250 + 100);
+  };
+
+  return (
+    <div style={{ marginBottom: 12 }}>
+      {/* Beat 1: Line 1 */}
+      {beat >= 1 && (
+        <div className="m8-p5" style={{ color: 'var(--color_text)', lineHeight: '1.5', marginBottom: 8 }}>
+          <TypedText
+            text="Hey Satyam..."
+            speed={40}
+            onDone={() => addTimer(() => setBeat(2), 400)}
+          />
+        </div>
+      )}
+
+      {/* Beat 2: Line 2 */}
+      {beat >= 2 && (
+        <div className="m8-p5" style={{ color: 'var(--color_text)', lineHeight: '1.5', marginBottom: 8 }}>
+          <TypedText
+            text="I've been going through your Targeting Analysis."
+            speed={40}
+            onDone={() => addTimer(() => setBeat(2.5), 300)}
+          />
+        </div>
+      )}
+
+      {/* Beat 2.5: Thinking state */}
+      {beat >= 2.5 && beat < 3 && (
+        <div style={{
+          opacity: thinkingFading ? 0 : 1,
+          transition: 'opacity 0.2s ease-out',
+        }}>
+          <div className="m8-p5" style={{
+            color: 'rgba(18,24,43,0.45)',
+            fontStyle: 'italic',
+            lineHeight: '1.5',
+            marginBottom: 4,
+          }}>
+            Give me a moment.
+          </div>
+          <LoadingDots />
+        </div>
+      )}
+
+      {/* nothing — beat 2.5→3 handled by effect below */}
+
+      {/* Beat 3: Highlights line + cards */}
+      {beat >= 3 && (
+        <>
+          <div className="m8-p5" style={{ color: 'var(--color_text)', lineHeight: '1.5', marginBottom: 12 }}>
+            <TypedText
+              text="Here are a few things that need your attention."
+              speed={40}
+              onDone={startCardReveal}
+            />
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            {halts.map((halt, i) => (
+              <div
+                key={halt.id}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  padding: '10px 12px',
+                  borderRadius: 'var(--m8-radius-md)',
+                  background: 'rgba(237,240,247,0.5)',
+                  border: '1px solid rgba(18,24,43,0.06)',
+                  opacity: cardsRevealed > i ? 1 : 0,
+                  transform: cardsRevealed > i ? 'translateY(0)' : 'translateY(12px)',
+                  transition: 'opacity 0.25s ease-out, transform 0.25s ease-out',
+                }}
+              >
+                <span className="m8-p6" style={{ color: 'rgba(18,24,43,0.35)', minWidth: 16, textAlign: 'center' }}>{i + 1}</span>
+                <span className="m8-p6" style={{ color: 'var(--color_text)', flex: 1 }}>{halt.statement}</span>
+                <Button
+                  variant="m8-outline-violet"
+                  size="sm"
+                  onClick={() => onHaltSelect(halt)}
+                  style={{ padding: '4px 12px', fontSize: 12, height: 'auto', minWidth: 'auto' }}
+                >
+                  Get Insights
+                </Button>
+              </div>
+            ))}
+          </div>
+
+          {/* View all insights link */}
+          <div style={{
+            opacity: viewAllVisible ? 1 : 0,
+            transition: 'opacity 0.25s ease-out',
+          }}>
+            <button
+              onClick={onViewAll}
+              style={{
+                background: 'none', border: 'none', cursor: 'pointer',
+                padding: '8px 0 0',
+                color: 'var(--color_primary)',
+              }}
+            >
+              <span className="m8-p6">+ View all insights ({5} total)</span>
+            </button>
+          </div>
+        </>
+      )}
+
+      {/* Beat 4: Suggestions line + chips */}
+      {beat >= 4 && (
+        <>
+          <div className="m8-p5" style={{ color: 'var(--color_text)', lineHeight: '1.5', marginTop: 16, marginBottom: 10 }}>
+            <TypedText
+              text="Here are a few questions worth asking."
+              speed={40}
+              onDone={startChipReveal}
+            />
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            {mockSuggestions.map((s, i) => (
+              <button
+                key={s.id}
+                onClick={() => onSuggestionSelect(s)}
+                style={{
+                  width: '100%',
+                  padding: '8px 14px',
+                  borderRadius: 999,
+                  background: 'transparent',
+                  border: '1px solid rgba(18,24,43,0.12)',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  fontFamily: 'var(--font_primary)',
+                  opacity: chipsRevealed > i ? 1 : 0,
+                  transform: chipsRevealed > i ? 'translateY(0)' : 'translateY(12px)',
+                  transition: 'opacity 0.25s ease-out, transform 0.25s ease-out, border-color 0.15s, background 0.15s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(142,89,255,0.5)';
+                  e.currentTarget.style.background = 'rgba(142,89,255,0.04)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(18,24,43,0.12)';
+                  e.currentTarget.style.background = 'transparent';
+                }}
+              >
+                <span className="m8-p6" style={{ color: 'var(--color_text)', fontSize: 12 }}>{s.question}</span>
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+/* ─── ChatWindow ─── */
+
+const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrollContainerRef, onInsightAnalyse, onHaltSelect, onViewAll, onSuggestionInlineSelect, onWelcomeSuggestionSelect }: ChatWindowProps) => {
   const lastUserMsgRef = useRef<HTMLDivElement>(null);
   const lastScrolledId = useRef<string | null>(null);
 
@@ -213,46 +456,13 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
 
           case 'welcome':
             return (
-              <div key={msg.id} style={{ marginBottom: 12 }}>
-                <div className="m8-p5" style={{ color: 'var(--color_text)', marginBottom: 14, lineHeight: '1.5' }}>
-                  Hey Satyam, I've been looking at your Targeting Analysis data. Here are a few highlights I found for you.
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  {msg.welcomeHalts?.map((halt, i) => (
-                    <div key={halt.id} style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 10,
-                      padding: '10px 12px',
-                      borderRadius: 'var(--m8-radius-md)',
-                      background: 'rgba(237,240,247,0.5)',
-                      border: '1px solid rgba(18,24,43,0.06)',
-                    }}>
-                      <span className="m8-p6" style={{ color: 'rgba(18,24,43,0.35)', minWidth: 16, textAlign: 'center' }}>{i + 1}</span>
-                      <span className="m8-p6" style={{ color: 'var(--color_text)', flex: 1 }}>{halt.statement}</span>
-                      <Button
-                        variant="m8-outline-violet"
-                        size="sm"
-                        onClick={() => onHaltSelect?.(halt)}
-                        style={{ padding: '4px 12px', fontSize: 12, height: 'auto', minWidth: 'auto' }}
-                      >
-                        Get Insights
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-                {/* View all insights link */}
-                <button
-                  onClick={() => onViewAll?.()}
-                  style={{
-                    background: 'none', border: 'none', cursor: 'pointer',
-                    padding: '8px 0 0',
-                    color: 'var(--color_primary)',
-                  }}
-                >
-                  <span className="m8-p6">+ View all insights ({5} total)</span>
-                </button>
-              </div>
+              <WelcomeMessage
+                key={msg.id}
+                halts={msg.welcomeHalts || []}
+                onHaltSelect={(halt) => onHaltSelect?.(halt)}
+                onViewAll={() => onViewAll?.()}
+                onSuggestionSelect={(s) => onWelcomeSuggestionSelect?.(s)}
+              />
             );
 
           case 'suggestions-inline':
