@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ArrowUp, X } from 'lucide-react';
+import { ArrowUp, X, Plus } from 'lucide-react';
 
 interface ChatInputBarProps {
   contextLabel: string;
@@ -9,44 +9,20 @@ interface ChatInputBarProps {
   pageIcon?: string;
 }
 
-const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: ChatInputBarProps) => {
+const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName }: ChatInputBarProps) => {
   const [value, setValue] = useState('');
-  const [isFocused, setIsFocused] = useState(false);
   const [showChip, setShowChip] = useState(true);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSend = () => {
     const trimmed = value.trim();
     if (!trimmed || isLoading) return;
     onSend(trimmed);
     setValue('');
-    if (textareaRef.current) {
-      textareaRef.current.style.height = '40px';
-    }
-  };
-
-  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.target.value);
-    const el = e.target;
-    el.style.height = '40px';
-    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
   };
 
   const hasText = value.trim().length > 0;
   const canSend = hasText && !isLoading;
-
-  const getBorderColor = () => {
-    if (isFocused) return 'rgba(142,89,255,0.5)';
-    return 'rgba(18,24,43,0.12)';
-  };
-
   const displayName = pageName || 'Targeting Analysis';
 
   useEffect(() => {
@@ -54,7 +30,7 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
     if (!document.getElementById(id)) {
       const style = document.createElement('style');
       style.id = id;
-      style.textContent = `.ai-chat-textarea::placeholder { color: rgba(18,24,43,0.4) !important; }`;
+      style.textContent = `.ai-chat-input::placeholder { color: rgba(18,24,43,0.4) !important; }`;
       document.head.appendChild(style);
     }
   }, []);
@@ -65,72 +41,100 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
       borderTop: '1px solid rgba(18,24,43,0.06)',
       background: '#FFFFFF',
     }}>
-      {/* Single container with border */}
+      {/* Single rounded container */}
       <div style={{
-        borderRadius: 'var(--m8-radius-md)',
-        border: `1.5px solid ${getBorderColor()}`,
-        background: isLoading ? 'rgba(237,240,247,0.5)' : '#FFFFFF',
-        transition: 'border-color 0.2s',
+        borderRadius: 16,
+        border: '1px solid rgba(18,24,43,0.10)',
+        background: '#FFFFFF',
         overflow: 'hidden',
       }}>
-        {/* Context chip row — full width bar */}
+        {/* Row 1: Context strip */}
         {showChip && (
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-            padding: '8px 12px',
-            borderBottom: '1px solid rgba(18,24,43,0.08)',
-            background: 'rgba(18,24,43,0.025)',
-          }}>
-            <img
-              src={pageIcon || '/img/product-logos/black/mark8-ads.svg'}
-              alt=""
-              style={{ width: 16, height: 16, flexShrink: 0 }}
-            />
-            <span className="m8-p6" style={{
-              color: 'var(--color_text)',
-              flex: 1,
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
+          <>
+            <div style={{
+              height: 44,
+              paddingLeft: 16,
+              paddingRight: 12,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}>
-              Reading "{displayName}"
-            </span>
-            <button
-              onClick={() => setShowChip(false)}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                padding: 2,
+              {/* Left side */}
+              <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                color: 'rgba(18,24,43,0.35)',
-                flexShrink: 0,
-                transition: 'color 0.15s',
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.6)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.35)'; }}
-            >
-              <X size={14} />
-            </button>
-          </div>
+                gap: 10,
+                minWidth: 0,
+                flex: 1,
+              }}>
+                {/* Product icon square */}
+                <div style={{
+                  width: 16,
+                  height: 16,
+                  borderRadius: 4,
+                  background: '#FC7459',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}>
+                  <span style={{ color: '#FFFFFF', fontSize: 10, lineHeight: 1 }}>✦</span>
+                </div>
+                <span className="m8-p6" style={{
+                  color: 'rgba(18,24,43,0.55)',
+                  fontSize: 13,
+                  fontWeight: 400,
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  minWidth: 0,
+                }}>
+                  Reading "{displayName}"
+                </span>
+              </div>
+
+              {/* Right side: close */}
+              <button
+                onClick={() => setShowChip(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: 4,
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: 'rgba(18,24,43,0.35)',
+                  flexShrink: 0,
+                  transition: 'color 0.15s',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.6)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.35)'; }}
+              >
+                <X size={14} />
+              </button>
+            </div>
+
+            {/* Divider */}
+            <div style={{ height: 1, background: 'rgba(18,24,43,0.08)' }} />
+          </>
         )}
 
-        {/* Text input area */}
-        <div style={{ padding: '8px 12px' }}>
-          <textarea
-            ref={textareaRef}
+        {/* Row 2: Input area */}
+        <div style={{
+          padding: '12px 16px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 10,
+        }}>
+          {/* Text input */}
+          <input
+            ref={inputRef}
+            type="text"
             value={value}
-            onChange={handleInput}
-            onKeyDown={handleKeyDown}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
+            onChange={(e) => setValue(e.target.value)}
             placeholder={isLoading ? 'Generating response...' : 'Ask about this page...'}
             disabled={isLoading}
-            rows={1}
-            className="m8-p6 ai-chat-textarea"
+            className="m8-p6 ai-chat-input"
             style={{
               width: '100%',
               border: 'none',
@@ -138,50 +142,70 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
               background: 'transparent',
               color: 'var(--color_text)',
               fontFamily: 'var(--font_primary)',
-              resize: 'none',
-              height: 40,
-              maxHeight: 120,
-              overflowY: 'auto',
+              fontSize: 15,
+              fontWeight: 400,
               lineHeight: '22px',
               padding: 0,
             }}
           />
-        </div>
 
-        {/* Bottom row with send button */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          padding: '4px 12px 8px',
-        }}>
-          <button
-            onClick={handleSend}
-            disabled={!canSend}
-            style={{
-              width: 30,
-              height: 30,
-              borderRadius: 'var(--m8-radius-md)',
-              background: canSend ? 'var(--color_primary)' : 'rgba(18,24,43,0.08)',
-              border: canSend ? '1.5px solid var(--color_primary)' : '1.5px solid transparent',
-              color: canSend ? '#FFFFFF' : 'rgba(18,24,43,0.25)',
-              cursor: canSend ? 'pointer' : 'not-allowed',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'all 0.15s',
-              flexShrink: 0,
-            }}
-          >
-            <ArrowUp size={14} />
-          </button>
+          {/* Bottom row: + and send */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+            {/* Plus button */}
+            <button
+              style={{
+                width: 28,
+                height: 28,
+                borderRadius: '50%',
+                background: 'rgba(18,24,43,0.06)',
+                border: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                color: 'rgba(18,24,43,0.4)',
+                transition: 'background 0.15s',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.10)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.06)'; }}
+            >
+              <Plus size={14} />
+            </button>
+
+            {/* Send button */}
+            <button
+              onClick={handleSend}
+              disabled={!canSend}
+              style={{
+                height: 34,
+                padding: '0 14px',
+                borderRadius: 20,
+                background: canSend ? 'var(--color_primary)' : 'rgba(142,89,255,0.25)',
+                border: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: canSend ? 'pointer' : 'not-allowed',
+                transition: 'background 0.15s',
+              }}
+              onMouseEnter={(e) => { if (canSend) e.currentTarget.style.background = 'rgba(142,89,255,0.8)'; }}
+              onMouseLeave={(e) => { if (canSend) e.currentTarget.style.background = 'var(--color_primary)'; }}
+            >
+              <ArrowUp size={16} style={{ color: '#FFFFFF' }} />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Show context link when chip is dismissed */}
+      {/* Show context link when dismissed */}
       {!showChip && (
         <button
           onClick={() => setShowChip(true)}
+          className="m8-p6"
           style={{
             background: 'none',
             border: 'none',
