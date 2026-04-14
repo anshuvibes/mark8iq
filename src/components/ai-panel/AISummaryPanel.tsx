@@ -78,6 +78,23 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
     }
   }, [view]);
 
+  useEffect(() => {
+    if (goalFAQView && goalFAQsRef.current) {
+      gsap.fromTo(
+        goalFAQsRef.current,
+        { x: '100%', opacity: 0.5 },
+        { x: '0%', opacity: 1, duration: 0.5, ease: 'expo.out' }
+      );
+
+      const items = goalFAQItemsRef.current.filter(Boolean);
+      gsap.fromTo(
+        items,
+        { y: 10, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.35, ease: 'power3.out', stagger: 0.04, delay: 0.15 }
+      );
+    }
+  }, [goalFAQView]);
+
   const contextLabel = `${currentPage}  ·  ${dateRange}`;
 
   // Auto-generate welcome message on mount
