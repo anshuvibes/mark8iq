@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { gsap } from 'gsap';
 import AIPanelHeader from './AIPanelHeader';
 import SuggestionsSection from './SuggestionsSection';
 import ChatWindow from './ChatWindow';
@@ -29,6 +30,8 @@ const nextId = () => `msg-${++msgCounter}`;
 
 const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange, inline }: AISummaryPanelProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const highlightsRef = useRef<HTMLDivElement>(null);
+  const highlightsItemsRef = useRef<HTMLDivElement[]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [lastResponseComplete, setLastResponseComplete] = useState(true);
@@ -36,15 +39,37 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   const [lastPageId, setLastPageId] = useState<DashboardPageId>(currentPageId);
   const [view, setView] = useState<'chat' | 'highlights'>('chat');
   const [sheetOpen, setSheetOpen] = useState(false);
-  const [highlightsExiting, setHighlightsExiting] = useState(false);
 
   const handleHighlightsBack = useCallback(() => {
-    setHighlightsExiting(true);
-    setTimeout(() => {
+    if (highlightsRef.current) {
+      gsap.to(highlightsRef.current, {
+        x: '100%',
+        opacity: 0.5,
+        duration: 0.35,
+        ease: 'expo.in',
+        onComplete: () => setView('chat'),
+      });
+    } else {
       setView('chat');
-      setHighlightsExiting(false);
-    }, 350);
+    }
   }, []);
+
+  useEffect(() => {
+    if (view === 'highlights' && highlightsRef.current) {
+      gsap.fromTo(
+        highlightsRef.current,
+        { x: '100%', opacity: 0.5 },
+        { x: '0%', opacity: 1, duration: 0.5, ease: 'expo.out' }
+      );
+
+      const items = highlightsItemsRef.current.filter(Boolean);
+      gsap.fromTo(
+        items,
+        { y: 10, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.35, ease: 'power3.out', stagger: 0.04, delay: 0.15 }
+      );
+    }
+  }, [view]);
 
   const contextLabel = `${currentPage}  ·  ${dateRange}`;
 
@@ -145,21 +170,19 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   const panelContent = (
     <>
       {view === 'highlights' ? (
-        <div style={{
+        <div ref={highlightsRef} style={{
           display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0,
-          animation: highlightsExiting
-            ? 'slideOutToRight 0.35s cubic-bezier(0.4, 0, 1, 1) forwards'
-            : 'slideInFromRight 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards',
         }}>
           {/* Header */}
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: 8,
-            padding: '10px 16px',
-            borderBottom: '1px solid rgba(18,24,43,0.06)',
-            flexShrink: 0,
-            opacity: 0,
-            animation: 'fadeUpItem 0.3s cubic-bezier(0.22, 1, 0.36, 1) 0ms forwards',
-          }}>
+          <div
+            ref={(el) => { if (el) highlightsItemsRef.current[0] = el; }}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 8,
+              padding: '10px 16px',
+              borderBottom: '1px solid rgba(18,24,43,0.06)',
+              flexShrink: 0,
+            }}
+          >
             <button
               onClick={handleHighlightsBack}
               style={{
@@ -191,6 +214,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
             {mockHalts.map((halt, i) => (
               <div
                 key={halt.id}
+                ref={(el) => { if (el) highlightsItemsRef.current[i + 1] = el; }}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 10,
                   padding: '10px 12px',
@@ -199,8 +223,6 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
                   border: '1px solid rgba(18,24,43,0.06)',
                   cursor: 'pointer',
                   transition: 'background 0.15s',
-                  opacity: 0,
-                  animation: `fadeUpItem 0.3s cubic-bezier(0.22, 1, 0.36, 1) ${i * 50}ms forwards`,
                 }}
                 onClick={() => {
                   setView('chat');
