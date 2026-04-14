@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { ArrowLeft, ChevronRight } from 'lucide-react';
 import AIPanelHeader from './AIPanelHeader';
 import SuggestionsSection from './SuggestionsSection';
 import ChatWindow from './ChatWindow';
