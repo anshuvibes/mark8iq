@@ -100,6 +100,7 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
             alignItems: 'center',
             gap: 8,
             padding: '4px 6px',
+            margin: '2px 0',
             marginBottom: 0,
           }}>
             <img
