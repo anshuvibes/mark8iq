@@ -106,7 +106,7 @@ const DashboardAdsPage = () => {
             onClick={() => setPanelOpen(!panelOpen)}
             title="AI Summary"
             style={{
-              display: 'flex', alignItems: 'center', gap: 6,
+              display: 'flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap', flexShrink: 0,
               padding: '6px 14px',
               borderRadius: 'var(--m8-radius-md)',
               border: 'none',
