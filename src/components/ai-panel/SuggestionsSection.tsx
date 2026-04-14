@@ -82,7 +82,7 @@ const SuggestionsSection = ({ suggestions, onSelect, isStale, mode }: Suggestion
 
   // Horizontal mode
   return (
-    <div style={{ padding: '8px 16px', borderTop: '1px solid rgba(18,24,43,0.06)', position: 'relative' }}>
+    <div style={{ padding: '8px 16px', position: 'relative' }}>
       <div
         ref={scrollRef}
         style={{
