@@ -83,26 +83,24 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
       borderTop: '1px solid rgba(18,24,43,0.06)',
       background: '#FFFFFF',
     }}>
-      {/* Input container */}
+      {/* Larger container */}
       <div style={{
         display: 'flex',
         flexDirection: 'column',
         borderRadius: 'var(--m8-radius-md)',
-        border: `1.5px solid ${getBorderColor()}`,
-        background: isLoading ? 'rgba(237,240,247,0.5)' : '#FFFFFF',
-        transition: 'border-color 0.2s',
-        overflow: 'hidden',
+        background: showChip ? 'rgba(142,89,255,0.06)' : 'transparent',
+        padding: showChip ? '6px' : 0,
+        transition: 'background 0.2s, padding 0.2s',
       }}>
 
-        {/* Context chip inside the input box */}
+        {/* Context chip row */}
         {showChip && (
           <div style={{
             display: 'flex',
             alignItems: 'center',
             gap: 8,
-            padding: '8px 12px',
-            background: 'rgba(142,89,255,0.06)',
-            borderBottom: '1px solid rgba(18,24,43,0.06)',
+            padding: '4px 6px',
+            marginBottom: 4,
           }}>
             <img
               src={pageIcon || '/img/product-logos/black/mark8-ads.svg'}
@@ -141,58 +139,68 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
           </div>
         )}
 
-        {/* Text input row */}
+        {/* Input box with its own stroke */}
         <div style={{
           display: 'flex',
-          alignItems: 'flex-end',
-          gap: 8,
-          padding: '10px 12px',
-          minHeight: 48,
+          flexDirection: 'column',
+          borderRadius: 'var(--m8-radius-md)',
+          border: `1.5px solid ${getBorderColor()}`,
+          background: isLoading ? 'rgba(237,240,247,0.5)' : '#FFFFFF',
+          transition: 'border-color 0.2s',
+          overflow: 'hidden',
         }}>
-          <textarea
-            ref={textareaRef}
-            value={value}
-            onChange={handleInput}
-            onKeyDown={handleKeyDown}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            placeholder={isLoading ? 'Generating response...' : 'Ask about this page...'}
-            disabled={isLoading}
-            rows={1}
-            className="m8-p6 ai-chat-textarea"
-            style={{
-              flex: 1,
-              border: 'none',
-              outline: 'none',
-              background: 'transparent',
-              color: 'var(--color_text)',
-              fontFamily: 'var(--font_primary)',
-              resize: 'none',
-              height: 44,
-              maxHeight: 120,
-              overflowY: 'auto',
-              lineHeight: '22px',
-              padding: 0,
-            }}
-          />
-          <button
-            onClick={handleSend}
-            disabled={!canSend}
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: 'var(--m8-radius-md)',
-              ...sendStyle,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'all 0.15s',
-              flexShrink: 0,
-              marginBottom: 2,
-            }}
-          >
-            <ArrowUp size={14} />
-          </button>
+          <div style={{
+            display: 'flex',
+            alignItems: 'flex-end',
+            gap: 8,
+            padding: '10px 12px',
+            minHeight: 48,
+          }}>
+            <textarea
+              ref={textareaRef}
+              value={value}
+              onChange={handleInput}
+              onKeyDown={handleKeyDown}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              placeholder={isLoading ? 'Generating response...' : 'Ask about this page...'}
+              disabled={isLoading}
+              rows={1}
+              className="m8-p6 ai-chat-textarea"
+              style={{
+                flex: 1,
+                border: 'none',
+                outline: 'none',
+                background: 'transparent',
+                color: 'var(--color_text)',
+                fontFamily: 'var(--font_primary)',
+                resize: 'none',
+                height: 44,
+                maxHeight: 120,
+                overflowY: 'auto',
+                lineHeight: '22px',
+                padding: 0,
+              }}
+            />
+            <button
+              onClick={handleSend}
+              disabled={!canSend}
+              style={{
+                width: 28,
+                height: 28,
+                borderRadius: 'var(--m8-radius-md)',
+                ...sendStyle,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.15s',
+                flexShrink: 0,
+                marginBottom: 2,
+              }}
+            >
+              <ArrowUp size={14} />
+            </button>
+          </div>
         </div>
       </div>
 
