@@ -15,6 +15,7 @@ const TypedText = ({ text, startDelay, speed = 30, onDone, onStart }: { text: st
   useEffect(() => {
     const startTimer = setTimeout(() => {
       started.current = true;
+      onStart?.();
       let i = 0;
       const tick = () => {
         i++;
