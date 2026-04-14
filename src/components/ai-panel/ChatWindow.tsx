@@ -1,7 +1,7 @@
 import { useEffect, useRef, type RefObject } from 'react';
 import AIResponseBlock from './AIResponseBlock';
 import { Button } from '@/components/ui/button';
-import type { ChatMessage, Halt } from '@/data/aiPanelMockData';
+import type { ChatMessage, Halt, Suggestion } from '@/data/aiPanelMockData';
 
 interface ChatWindowProps {
   messages: ChatMessage[];
@@ -10,6 +10,9 @@ interface ChatWindowProps {
   onRetry: (messageId: string) => void;
   scrollContainerRef?: RefObject<HTMLDivElement>;
   onInsightAnalyse?: (halt: Halt, insightsMessageId: string) => void;
+  onHaltSelect?: (halt: Halt) => void;
+  onViewAll?: () => void;
+  onSuggestionInlineSelect?: (suggestion: Suggestion, messageId: string) => void;
 }
 
 const LoadingDots = () => (
@@ -29,7 +32,7 @@ const LoadingDots = () => (
   </div>
 );
 
-const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrollContainerRef, onInsightAnalyse }: ChatWindowProps) => {
+const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrollContainerRef, onInsightAnalyse, onHaltSelect, onViewAll, onSuggestionInlineSelect }: ChatWindowProps) => {
   const lastUserMsgRef = useRef<HTMLDivElement>(null);
   const lastScrolledId = useRef<string | null>(null);
 
@@ -200,9 +203,97 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
                         onClick={() => onInsightAnalyse?.(halt, msg.id)}
                         style={{ padding: '4px 12px', fontSize: 12, height: 'auto', minWidth: 'auto' }}
                       >
-                        Analyse
+                        Get Insights
                       </Button>
                     </div>
+                  ))}
+                </div>
+              </div>
+            );
+
+          case 'welcome':
+            return (
+              <div key={msg.id} style={{ marginBottom: 12 }}>
+                <div className="m8-p5" style={{ color: 'var(--color_text)', marginBottom: 14, lineHeight: '1.5' }}>
+                  Hey Satyam, I've been looking at your Targeting Analysis data. Here are a few highlights I found for you.
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  {msg.welcomeHalts?.map((halt, i) => (
+                    <div key={halt.id} style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 10,
+                      padding: '10px 12px',
+                      borderRadius: 'var(--m8-radius-md)',
+                      background: 'rgba(237,240,247,0.5)',
+                      border: '1px solid rgba(18,24,43,0.06)',
+                    }}>
+                      <span className="m8-p6" style={{ color: 'rgba(18,24,43,0.35)', minWidth: 16, textAlign: 'center' }}>{i + 1}</span>
+                      <span className="m8-p6" style={{ color: 'var(--color_text)', flex: 1 }}>{halt.statement}</span>
+                      <Button
+                        variant="m8-outline-violet"
+                        size="sm"
+                        onClick={() => onHaltSelect?.(halt)}
+                        style={{ padding: '4px 12px', fontSize: 12, height: 'auto', minWidth: 'auto' }}
+                      >
+                        Get Insights
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+                {/* View all insights link */}
+                <button
+                  onClick={() => onViewAll?.()}
+                  style={{
+                    background: 'none', border: 'none', cursor: 'pointer',
+                    padding: '8px 0 0',
+                    color: 'var(--color_primary)',
+                  }}
+                >
+                  <span className="m8-p6">+ View all insights ({5} total)</span>
+                </button>
+              </div>
+            );
+
+          case 'suggestions-inline':
+            return (
+              <div key={msg.id} style={{ marginBottom: 8 }}>
+                <div className="m8-p6" style={{
+                  color: 'var(--color_primary)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                  fontWeight: 500,
+                  marginBottom: 10,
+                }}>
+                  Here are a few suggestions
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  {msg.suggestionsList?.map((s) => (
+                    <button
+                      key={s.id}
+                      onClick={() => onSuggestionInlineSelect?.(s, msg.id)}
+                      style={{
+                        width: '100%',
+                        padding: '8px 14px',
+                        borderRadius: 999,
+                        background: 'transparent',
+                        border: '1px solid rgba(18,24,43,0.12)',
+                        cursor: 'pointer',
+                        transition: 'border-color 0.15s, background 0.15s',
+                        textAlign: 'left',
+                        fontFamily: 'var(--font_primary)',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = 'rgba(142,89,255,0.5)';
+                        e.currentTarget.style.background = 'rgba(142,89,255,0.04)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = 'rgba(18,24,43,0.12)';
+                        e.currentTarget.style.background = 'transparent';
+                      }}
+                    >
+                      <span className="m8-p6" style={{ color: 'var(--color_text)', fontSize: 12 }}>{s.question}</span>
+                    </button>
                   ))}
                 </div>
               </div>

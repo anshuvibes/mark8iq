@@ -17,9 +17,6 @@ const HaltsSection = ({ halts, hasActiveChat, onAnalyse, onViewAll }: HaltsSecti
         <span className="m8-p6" style={{ color: 'var(--color_primary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 500 }}>
           Highlights
         </span>
-        <span className="m8-p6" style={{ color: 'rgba(18,24,43,0.3)' }}>
-          Generated at 9:14 AM
-        </span>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>

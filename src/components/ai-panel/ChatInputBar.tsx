@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ArrowUp, X } from 'lucide-react';
+import { ArrowUp, X, Sparkles, MessageSquare } from 'lucide-react';
 
 interface ChatInputBarProps {
   contextLabel: string;
@@ -7,13 +7,17 @@ interface ChatInputBarProps {
   onSend: (message: string) => void;
   pageName?: string;
   pageIcon?: string;
+  onGetInsights: () => void;
+  onGetSuggestions: () => void;
 }
 
-const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: ChatInputBarProps) => {
+const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon, onGetInsights, onGetSuggestions }: ChatInputBarProps) => {
   const [value, setValue] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [showChip, setShowChip] = useState(true);
+  const [plusMenuOpen, setPlusMenuOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const plusMenuRef = useRef<HTMLDivElement>(null);
 
   const handleSend = () => {
     const trimmed = value.trim();
@@ -77,12 +81,89 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
     }
   }, []);
 
+  // Click outside handler for plus menu
+  useEffect(() => {
+    if (!plusMenuOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (plusMenuRef.current && !plusMenuRef.current.contains(e.target as Node)) {
+        setPlusMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [plusMenuOpen]);
+
   return (
     <div style={{
       padding: '12px 16px 16px',
       borderTop: '1px solid rgba(18,24,43,0.06)',
       background: '#FFFFFF',
+      position: 'relative',
     }}>
+      {/* Plus menu popup */}
+      {plusMenuOpen && (
+        <div
+          ref={plusMenuRef}
+          style={{
+            position: 'absolute',
+            bottom: '100%',
+            left: 16,
+            width: 200,
+            background: '#FFFFFF',
+            border: '1px solid rgba(18,24,43,0.1)',
+            borderRadius: 'var(--m8-radius-md)',
+            boxShadow: '0 4px 16px rgba(8,13,25,0.1)',
+            padding: '4px 0',
+            zIndex: 10,
+          }}
+        >
+          <button
+            onClick={() => { setPlusMenuOpen(false); onGetInsights(); }}
+            className="m8-p6"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              width: '100%',
+              padding: '8px 14px',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              fontFamily: 'var(--font_primary)',
+              color: 'var(--color_text)',
+              transition: 'background 0.15s',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.03)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+          >
+            <Sparkles size={14} style={{ color: 'var(--color_primary)', flexShrink: 0 }} />
+            Get Insights
+          </button>
+          <button
+            onClick={() => { setPlusMenuOpen(false); onGetSuggestions(); }}
+            className="m8-p6"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              width: '100%',
+              padding: '8px 14px',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              fontFamily: 'var(--font_primary)',
+              color: 'var(--color_text)',
+              transition: 'background 0.15s',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.03)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+          >
+            <MessageSquare size={14} style={{ color: 'var(--color_primary)', flexShrink: 0 }} />
+            Get Suggestions
+          </button>
+        </div>
+      )}
+
       {/* Larger container */}
       <div style={{
         display: 'flex',
@@ -148,7 +229,9 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
               fontSize: 11,
               lineHeight: '16px',
               transition: 'color 0.15s',
-            }}>
+            }}
+              onClick={() => { setPlusMenuOpen(!plusMenuOpen); }}
+            >
               + Add context
             </span>
           )}

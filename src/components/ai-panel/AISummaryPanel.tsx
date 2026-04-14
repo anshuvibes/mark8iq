@@ -1,7 +1,6 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import AIPanelHeader from './AIPanelHeader';
-import HaltsSection from './HaltsSection';
 import SuggestionsSection from './SuggestionsSection';
 import ChatWindow from './ChatWindow';
 import ChatInputBar from './ChatInputBar';
@@ -22,37 +21,33 @@ interface AISummaryPanelProps {
   currentPageId: DashboardPageId;
   dateRange: string;
   inline?: boolean;
-  isNewDay?: boolean;
 }
 
 let msgCounter = 0;
 const nextId = () => `msg-${++msgCounter}`;
 
-const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange, inline, isNewDay = false }: AISummaryPanelProps) => {
+const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange, inline }: AISummaryPanelProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [contextNotice, setContextNotice] = useState<string | null>(null);
   const [lastPageId, setLastPageId] = useState<DashboardPageId>(currentPageId);
-  const [homeCollapsed, setHomeCollapsed] = useState(false);
 
-  const hasMessages = messages.some(m => m.type !== 'date-separator' && m.type !== 'divider');
   const contextLabel = `${currentPage}  ·  ${dateRange}`;
 
-  // Derive chat title from first meaningful message
-  const firstMsg = messages.find(m => m.type === 'context-pill' || m.type === 'user-bubble');
-  const chatTitle = firstMsg
-    ? (firstMsg.type === 'context-pill' ? firstMsg.pillText : firstMsg.userText)?.slice(0, 40) + (((firstMsg.type === 'context-pill' ? firstMsg.pillText : firstMsg.userText)?.length || 0) > 40 ? '…' : '')
-    : undefined;
+  // Auto-generate welcome message on mount
+  useEffect(() => {
+    if (messages.length === 0) {
+      setMessages([{ id: nextId(), type: 'welcome', welcomeHalts: mockHalts.slice(0, 3) }]);
+    }
+  }, []);
 
-  // Home state visibility:
-  // State A: no messages → show home
-  // State B2: isNewDay && !homeCollapsed → show home above history
-  // Otherwise: hidden
-  const homeStateVisible = !hasMessages || (isNewDay && !homeCollapsed && !hasMessages) ? true : (isNewDay && !homeCollapsed);
+  // Derive suggestions mode
+  const hasUserInteraction = messages.some(m => m.type === 'user-bubble' || m.type === 'context-pill');
+  const suggestionsMode = hasUserInteraction ? 'horizontal' : 'vertical';
 
   // Detect page change
-  if (currentPageId !== lastPageId && hasMessages) {
+  if (currentPageId !== lastPageId && messages.length > 0) {
     const pageName = currentPage;
     setMessages(prev => [
       ...prev,
@@ -63,10 +58,6 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   } else if (currentPageId !== lastPageId) {
     setLastPageId(currentPageId);
   }
-
-  const collapseHome = useCallback(() => {
-    setHomeCollapsed(true);
-  }, []);
 
   const simulateResponse = useCallback((responseKey: string) => {
     setIsLoading(true);
@@ -82,42 +73,36 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
     }, 3000);
   }, []);
 
-  const handleHaltAnalyse = useCallback((halt: Halt) => {
-    collapseHome();
+  const handleHaltSelect = useCallback((halt: Halt) => {
     setMessages(prev => [
       ...prev,
       { id: nextId(), type: 'context-pill', pillVariant: 'halt', pillText: halt.statement },
     ]);
     simulateResponse(halt.id);
-  }, [simulateResponse, collapseHome]);
+  }, [simulateResponse]);
 
   const handleSuggestionSelect = useCallback((suggestion: Suggestion) => {
-    collapseHome();
     setMessages(prev => [
       ...prev,
       { id: nextId(), type: 'context-pill', pillVariant: 'suggestion', pillText: suggestion.question },
     ]);
     simulateResponse(suggestion.id);
-  }, [simulateResponse, collapseHome]);
+  }, [simulateResponse]);
 
   const handleSendMessage = useCallback((text: string) => {
-    collapseHome();
     setMessages(prev => [...prev, { id: nextId(), type: 'user-bubble', userText: text }]);
     simulateResponse('generic');
-  }, [simulateResponse, collapseHome]);
+  }, [simulateResponse]);
 
   const handleViewAll = useCallback(() => {
-    collapseHome();
     setMessages(prev => [
       ...prev,
       { id: nextId(), type: 'insights-list', insightsList: mockHalts },
     ]);
-  }, [collapseHome]);
+  }, []);
 
   const handleInsightAnalyse = useCallback((halt: Halt, insightsMessageId: string) => {
-    // Remove the insights-list message
     setMessages(prev => prev.filter(m => m.id !== insightsMessageId));
-    // Add context pill and simulate response
     setMessages(prev => [
       ...prev,
       { id: nextId(), type: 'context-pill', pillVariant: 'halt', pillText: halt.statement },
@@ -130,28 +115,35 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
     simulateResponse('generic');
   }, [simulateResponse]);
 
+  const handleGetInsights = useCallback(() => {
+    setMessages(prev => [
+      ...prev,
+      { id: nextId(), type: 'insights-list', insightsList: mockHalts },
+    ]);
+  }, []);
+
+  const handleGetSuggestions = useCallback(() => {
+    setMessages(prev => [
+      ...prev,
+      { id: nextId(), type: 'suggestions-inline', suggestionsList: mockSuggestions },
+    ]);
+  }, []);
+
+  const handleSuggestionInlineSelect = useCallback((suggestion: Suggestion, messageId: string) => {
+    setMessages(prev => prev.filter(m => m.id !== messageId));
+    setMessages(prev => [
+      ...prev,
+      { id: nextId(), type: 'context-pill', pillVariant: 'suggestion', pillText: suggestion.question },
+    ]);
+    simulateResponse(suggestion.id);
+  }, [simulateResponse]);
+
   const panelContent = (
     <>
-      <AIPanelHeader chatTitle={chatTitle} />
+      <AIPanelHeader />
 
       {/* Scrollable middle area */}
       <div ref={scrollContainerRef} className="ai-panel-scroll" data-lenis-prevent="" style={{ flex: 1, minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
-        {homeStateVisible && (
-          <>
-            <HaltsSection
-              halts={mockHalts}
-              hasActiveChat={hasMessages}
-              onAnalyse={handleHaltAnalyse}
-              onViewAll={handleViewAll}
-            />
-            <SuggestionsSection
-              suggestions={mockSuggestions}
-              onSelect={handleSuggestionSelect}
-              isStale={false}
-            />
-          </>
-        )}
-
         {contextNotice && (
           <div style={{
             padding: '8px 16px',
@@ -178,8 +170,19 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
           onRetry={handleRetry}
           scrollContainerRef={scrollContainerRef}
           onInsightAnalyse={handleInsightAnalyse}
+          onHaltSelect={handleHaltSelect}
+          onViewAll={handleViewAll}
+          onSuggestionInlineSelect={handleSuggestionInlineSelect}
         />
       </div>
+
+      {/* Suggestions pinned above input */}
+      <SuggestionsSection
+        suggestions={mockSuggestions}
+        onSelect={handleSuggestionSelect}
+        isStale={false}
+        mode={suggestionsMode}
+      />
 
       {/* Chat input pinned at bottom */}
       <ChatInputBar
@@ -187,6 +190,8 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
         isLoading={isLoading}
         onSend={handleSendMessage}
         pageName={currentPage}
+        onGetInsights={handleGetInsights}
+        onGetSuggestions={handleGetSuggestions}
       />
     </>
   );
