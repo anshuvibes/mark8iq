@@ -15,6 +15,7 @@ interface ChatWindowProps {
   onViewAll?: () => void;
   onSuggestionInlineSelect?: (suggestion: Suggestion, messageId: string) => void;
   onWelcomeSuggestionSelect?: (suggestion: Suggestion) => void;
+  onTypingComplete?: () => void;
 }
 
 const LoadingDots = () => (
@@ -277,7 +278,7 @@ const WelcomeMessage = ({ halts, onHaltSelect, onViewAll, onSuggestionSelect }: 
 
 /* ─── ChatWindow ─── */
 
-const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrollContainerRef, onInsightAnalyse, onHaltSelect, onViewAll, onSuggestionInlineSelect, onWelcomeSuggestionSelect }: ChatWindowProps) => {
+const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrollContainerRef, onInsightAnalyse, onHaltSelect, onViewAll, onSuggestionInlineSelect, onWelcomeSuggestionSelect, onTypingComplete }: ChatWindowProps) => {
   const lastUserMsgRef = useRef<HTMLDivElement>(null);
   const lastScrolledId = useRef<string | null>(null);
 
@@ -384,7 +385,7 @@ const ChatWindow = ({ messages, showLoadPrevious, onLoadPrevious, onRetry, scrol
           case 'ai-response':
             return msg.aiResponse ? (
               <div key={msg.id} style={{ marginBottom: 20 }}>
-                <AIResponseBlock response={msg.aiResponse} />
+                <AIResponseBlock response={msg.aiResponse} onTypingComplete={onTypingComplete} />
               </div>
             ) : null;
 

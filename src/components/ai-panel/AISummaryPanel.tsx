@@ -30,6 +30,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [lastResponseComplete, setLastResponseComplete] = useState(true);
   const [contextNotice, setContextNotice] = useState<string | null>(null);
   const [lastPageId, setLastPageId] = useState<DashboardPageId>(currentPageId);
 
@@ -57,6 +58,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
 
   const simulateResponse = useCallback((responseKey: string) => {
     setIsLoading(true);
+    setLastResponseComplete(false);
     setMessages(prev => [...prev, { id: nextId(), type: 'loading' }]);
 
     setTimeout(() => {

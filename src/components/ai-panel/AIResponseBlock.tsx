@@ -4,6 +4,7 @@ import type { AIResponse } from '@/data/aiPanelMockData';
 
 interface AIResponseBlockProps {
   response: AIResponse;
+  onTypingComplete?: () => void;
 }
 
 /** Splits text into words and reveals them one by one */
@@ -92,7 +93,7 @@ const AnimatedDivider = ({ delay }: { delay: number }) => {
 const WORD_SPEED = 25; // ms per word
 const SECTION_GAP = 80; // ms pause between sections
 
-const AIResponseBlock = ({ response }: AIResponseBlockProps) => {
+const AIResponseBlock = ({ response, onTypingComplete }: AIResponseBlockProps) => {
   const [feedback, setFeedback] = useState<'up' | 'down' | null>(null);
   const [phase, setPhase] = useState(0);
   // Phases:
@@ -187,7 +188,7 @@ const AIResponseBlock = ({ response }: AIResponseBlockProps) => {
       </div>
 
       {/* FEEDBACK ROW */}
-      <DelayedReveal delay={feedbackAt}>
+      <DelayedReveal delay={feedbackAt} onDone={onTypingComplete}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingTop: 8 }}>
           <span className="m8-p6" style={{ color: 'rgba(18,24,43,0.45)' }}>Was this helpful?</span>
           <button
