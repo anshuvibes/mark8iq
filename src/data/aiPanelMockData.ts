@@ -16,7 +16,7 @@ export interface AIResponse {
 
 export interface ChatMessage {
   id: string;
-  type: 'context-pill' | 'user-bubble' | 'ai-response' | 'loading' | 'error' | 'divider' | 'date-separator';
+  type: 'context-pill' | 'user-bubble' | 'ai-response' | 'loading' | 'error' | 'divider' | 'date-separator' | 'insights-list';
   pillVariant?: 'halt' | 'suggestion';
   pillText?: string;
   userText?: string;
@@ -25,6 +25,7 @@ export interface ChatMessage {
   dividerPage?: string;
   date?: string;
   sessionContext?: string;
+  insightsList?: Halt[];
 }
 
 export const mockHalts: Halt[] = [
