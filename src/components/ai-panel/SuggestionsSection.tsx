@@ -102,19 +102,17 @@ const SuggestionsSection = ({ suggestions, onSelect, isStale, mode }: Suggestion
               padding: '6px 12px',
               borderRadius: 999,
               background: 'transparent',
-              border: '1px solid rgba(18,24,43,0.12)',
+              border: 'none',
               cursor: 'pointer',
-              transition: 'border-color 0.15s, background 0.15s',
+              transition: 'background 0.15s',
               whiteSpace: 'nowrap',
               fontFamily: 'var(--font_primary)',
               flexShrink: 0,
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(142,89,255,0.5)';
               e.currentTarget.style.background = 'rgba(142,89,255,0.04)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(18,24,43,0.12)';
               e.currentTarget.style.background = 'transparent';
             }}
           >

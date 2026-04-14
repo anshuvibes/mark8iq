@@ -139,7 +139,19 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
       <AIPanelHeader />
 
       {/* Scrollable middle area */}
-      <div ref={scrollContainerRef} className="ai-panel-scroll" data-lenis-prevent="" style={{ flex: 1, minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
+      <div ref={scrollContainerRef} className="ai-panel-scroll" data-lenis-prevent="" style={{ flex: 1, minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch', position: 'relative' }}>
+        <div style={{
+          position: 'sticky',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 32,
+          background: 'linear-gradient(to top, transparent 0%, #FFFFFF 100%)',
+          pointerEvents: 'none',
+          zIndex: 1,
+          marginBottom: -32,
+          flexShrink: 0,
+        }} />
         {contextNotice && (
           <div style={{
             padding: '8px 16px',
@@ -176,7 +188,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
       {/* Horizontal suggestion strip — visible once user has interacted */}
       {messages.some(m => m.type === 'user-bubble' || m.type === 'context-pill') && (
         <div
-          style={{ opacity: 0.7, transition: 'opacity 0.2s' }}
+          style={{ opacity: 0.7, transition: 'opacity 0.2s', position: 'relative', background: 'linear-gradient(to bottom, transparent 0%, #FFFFFF 40%)', paddingTop: 24 }}
           onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
           onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
         >
