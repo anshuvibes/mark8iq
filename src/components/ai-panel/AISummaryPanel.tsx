@@ -38,6 +38,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   const highlightsItemsRef = useRef<HTMLDivElement[]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [historyLoading, setHistoryLoading] = useState(false);
   const [lastResponseComplete, setLastResponseComplete] = useState(true);
   const [contextNotice, setContextNotice] = useState<string | null>(null);
   const [lastPageId, setLastPageId] = useState<DashboardPageId>(currentPageId);
