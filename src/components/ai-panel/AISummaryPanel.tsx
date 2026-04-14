@@ -121,7 +121,7 @@ const AISummaryPanel = ({ isOpen, onClose, currentPage, currentPageId, dateRange
   }, [simulateResponse]);
 
   const handleGetInsights = useCallback(() => {
-    setView('highlights');
+    setSheetOpen(true);
   }, []);
 
   const handleSuggestionInlineSelect = useCallback((suggestion: Suggestion, messageId: string) => {
