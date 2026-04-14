@@ -82,77 +82,135 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
       padding: '12px 16px 16px',
       borderTop: '1px solid rgba(18,24,43,0.06)',
       background: '#FFFFFF',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 6,
     }}>
-      {/* Part 1: Context chip — standalone, no border, no background */}
-      {showChip ? (
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 10,
-          padding: '0 4px',
-        }}>
-          {/* Accent square icon */}
+      {/* Input container */}
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        borderRadius: 'var(--m8-radius-md)',
+        border: `1.5px solid ${getBorderColor()}`,
+        background: isLoading ? 'rgba(237,240,247,0.5)' : '#FFFFFF',
+        transition: 'border-color 0.2s',
+        overflow: 'hidden',
+      }}>
+
+        {/* Context chip inside the input box */}
+        {showChip && (
           <div style={{
-            width: 16,
-            height: 16,
-            borderRadius: 4,
-            background: 'var(--color_primary)',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0,
+            gap: 8,
+            padding: '8px 12px',
+            background: 'rgba(142,89,255,0.06)',
+            borderBottom: '1px solid rgba(18,24,43,0.06)',
           }}>
-            <span style={{ color: '#fff', fontSize: 10, lineHeight: 1 }}>✦</span>
+            <img
+              src={pageIcon || '/img/product-logos/black/mark8-ads.svg'}
+              alt=""
+              style={{ width: 16, height: 16, flexShrink: 0 }}
+            />
+            <span className="m8-p6" style={{
+              color: 'rgba(18,24,43,0.65)',
+              fontSize: 12,
+              lineHeight: '16px',
+              flex: 1,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}>
+              Sharing "{displayName}"
+            </span>
+            <button
+              onClick={() => setShowChip(false)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: 0,
+                display: 'flex',
+                alignItems: 'center',
+                color: 'rgba(18,24,43,0.35)',
+                flexShrink: 0,
+                transition: 'color 0.15s',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.6)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.35)'; }}
+            >
+              <X size={14} />
+            </button>
           </div>
-          <span style={{
-            color: 'rgba(18,24,43,0.55)',
-            fontSize: 13,
-            fontWeight: 400,
-            fontFamily: 'var(--font_primary)',
-            lineHeight: '16px',
-            flex: 1,
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}>
-            Reading "{displayName}"
-          </span>
-          <button
-            onClick={() => setShowChip(false)}
+        )}
+
+        {/* Text input row */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'flex-end',
+          gap: 8,
+          padding: '10px 12px',
+          minHeight: 48,
+        }}>
+          <textarea
+            ref={textareaRef}
+            value={value}
+            onChange={handleInput}
+            onKeyDown={handleKeyDown}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            placeholder={isLoading ? 'Generating response...' : 'Ask about this page...'}
+            disabled={isLoading}
+            rows={1}
+            className="m8-p6 ai-chat-textarea"
             style={{
-              background: 'none',
+              flex: 1,
               border: 'none',
-              cursor: 'pointer',
+              outline: 'none',
+              background: 'transparent',
+              color: 'var(--color_text)',
+              fontFamily: 'var(--font_primary)',
+              resize: 'none',
+              height: 44,
+              maxHeight: 120,
+              overflowY: 'auto',
+              lineHeight: '22px',
               padding: 0,
+            }}
+          />
+          <button
+            onClick={handleSend}
+            disabled={!canSend}
+            style={{
+              width: 28,
+              height: 28,
+              borderRadius: 'var(--m8-radius-md)',
+              ...sendStyle,
               display: 'flex',
               alignItems: 'center',
-              color: 'rgba(18,24,43,0.3)',
+              justifyContent: 'center',
+              transition: 'all 0.15s',
               flexShrink: 0,
-              transition: 'color 0.15s',
+              marginBottom: 2,
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.6)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(18,24,43,0.3)'; }}
           >
-            <X size={14} />
+            <ArrowUp size={14} />
           </button>
         </div>
-      ) : (
+      </div>
+
+      {/* Show context link when chip is dismissed */}
+      {!showChip && (
         <button
           onClick={() => setShowChip(true)}
           style={{
             background: 'none',
             border: 'none',
             cursor: 'pointer',
-            padding: '0 4px',
+            padding: '6px 0 0',
             display: 'flex',
             alignItems: 'center',
             gap: 4,
             color: 'rgba(18,24,43,0.4)',
             fontFamily: 'var(--font_primary)',
-            fontSize: 12,
+            fontSize: 11,
             transition: 'color 0.15s',
           }}
           onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color_primary)'; }}
@@ -161,105 +219,6 @@ const ChatInputBar = ({ contextLabel, isLoading, onSend, pageName, pageIcon }: C
           + Show context
         </button>
       )}
-
-      {/* Part 2: Input box — own bordered rounded container */}
-      <div style={{
-        borderRadius: 14,
-        border: `1.5px solid ${getBorderColor()}`,
-        background: isLoading ? 'rgba(237,240,247,0.5)' : '#FFFFFF',
-        transition: 'border-color 0.2s',
-        padding: '12px 16px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 10,
-      }}>
-        {/* Text input */}
-        <textarea
-          ref={textareaRef}
-          value={value}
-          onChange={handleInput}
-          onKeyDown={handleKeyDown}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          placeholder={isLoading ? 'Generating response...' : 'Ask about this page...'}
-          disabled={isLoading}
-          rows={1}
-          className="ai-chat-textarea"
-          style={{
-            width: '100%',
-            border: 'none',
-            outline: 'none',
-            background: 'transparent',
-            color: 'var(--color_text)',
-            fontFamily: 'var(--font_primary)',
-            fontSize: 15,
-            resize: 'none',
-            height: 22,
-            maxHeight: 120,
-            overflowY: 'auto',
-            lineHeight: '22px',
-            padding: 0,
-          }}
-        />
-
-        {/* Bottom row: + button left, send button right */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-          {/* Plus button */}
-          <button
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: '50%',
-              background: 'rgba(18,24,43,0.06)',
-              border: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              color: 'rgba(18,24,43,0.4)',
-              fontSize: 14,
-              transition: 'background 0.15s',
-              flexShrink: 0,
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.1)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(18,24,43,0.06)'; }}
-          >
-            +
-          </button>
-
-          {/* Send pill button */}
-          <button
-            onClick={handleSend}
-            disabled={!canSend}
-            style={{
-              height: 34,
-              padding: '0 14px',
-              borderRadius: 20,
-              border: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'all 0.15s',
-              flexShrink: 0,
-              ...(canSend ? {
-                background: 'var(--color_primary)',
-                color: '#FFFFFF',
-                cursor: 'pointer',
-              } : {
-                background: 'rgba(142,89,255,0.12)',
-                color: 'rgba(142,89,255,0.4)',
-                cursor: 'not-allowed',
-              }),
-            }}
-          >
-            <ArrowUp size={16} />
-          </button>
-        </div>
-      </div>
     </div>
   );
 };
