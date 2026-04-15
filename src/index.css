@@ -904,7 +904,7 @@ All colors MUST be HSL.
   background-color: var(--m8-grid-base, #F0F1F6) !important;
   background-image: none !important;
   position: relative !important;
-  transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: background-color 0.4s ease !important;
 }
 
 /* Grid SVG rendered as a pseudo-element ABOVE the gradient but below content */
@@ -916,8 +916,7 @@ All colors MUST be HSL.
   z-index: 1;
   background-image: url("/img/bg-pattern-reverse.svg");
   background-repeat: repeat;
-  mix-blend-mode: multiply;
-  opacity: 0.5;
+  opacity: 0.74;
 }
 
 /* All direct children above the grid pseudo-element */
@@ -1037,7 +1036,6 @@ body {
               filter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ─── V2 Dark Mode: Grid Background Overrides ─── */
 .v2-dark .CustomBg_bg_image__RIwVy {
   background-color: #080D19 !important;
 }
