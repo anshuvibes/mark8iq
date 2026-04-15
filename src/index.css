@@ -916,7 +916,7 @@ All colors MUST be HSL.
   z-index: 1;
   background-image: url("/img/bg-pattern-reverse.svg");
   background-repeat: repeat;
-  transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: filter 0.08s ease, opacity 0.08s ease;
 }
 
 /* All direct children above the grid pseudo-element */
