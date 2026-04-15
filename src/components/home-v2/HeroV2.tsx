@@ -1,17 +1,8 @@
 import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
-import heroDashboard from '@/assets/hero-dashboard.svg';
+import heroDashboardSvg from '@/assets/hero-dashboard.svg?raw';
 import ThemeToggle from './ThemeToggle';
-
-// Preload hero dashboard at module load time (before React renders)
-if (typeof window !== 'undefined') {
-  const _preloadLink = document.createElement('link');
-  _preloadLink.rel = 'preload';
-  _preloadLink.as = 'image';
-  _preloadLink.href = heroDashboard;
-  document.head.appendChild(_preloadLink);
-}
 
 const fadeIn = (delay: number) => ({
   initial: { opacity: 0, y: 20 },
@@ -84,14 +75,15 @@ export default function HeroV2() {
             minHeight: '520px',
           }}
         >
-          <motion.img
-            src={heroDashboard}
-            alt="Mark8 IQ Dashboard"
-            fetchPriority="high"
+          <motion.div
+            aria-label="Mark8 IQ Dashboard"
+            className="hero-dashboard-svg"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            role="img"
             transition={{ duration: 0.35 }}
             style={{ width: '100%', display: 'block' }}
+            dangerouslySetInnerHTML={{ __html: heroDashboardSvg }}
           />
         </div>
 
@@ -173,6 +165,12 @@ export default function HeroV2() {
       </motion.div>
 
       <style>{`
+        .hero-dashboard-svg svg {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+
         @media (max-width: 1280px) {
           .hero-module-card {
             right: 16px !important;
