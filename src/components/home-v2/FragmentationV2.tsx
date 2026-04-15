@@ -286,19 +286,6 @@ export default function FragmentationV2() {
       ease: 'power3.inOut',
     }, 96);
 
-    // Switch back to light during logo reveal
-    tl.call(() => {
-      setThemeRef.current('light');
-    }, [], 96);
-
-    // Supplementary theme reset — fires when user scrolls completely past fragmentation
-    const themeResetTrigger = ScrollTrigger.create({
-      trigger: container,
-      start: 'bottom 80%',
-      onEnter: () => setThemeRef.current('light'),
-      onEnterBack: () => setThemeRef.current('dark'),
-    });
-
     gsap.set(logoRef.current, { opacity: 0, xPercent: -50, yPercent: -50 });
     tl.to(logoRef.current, {
       opacity: 1,
@@ -316,7 +303,6 @@ export default function FragmentationV2() {
     return () => {
       tl.scrollTrigger?.kill();
       tl.kill();
-      themeResetTrigger.kill();
     };
   }, []);
 
