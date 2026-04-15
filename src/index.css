@@ -914,9 +914,10 @@ All colors MUST be HSL.
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  background-image: url("/img/bg-pattern-reverse.svg");
+  background-image: url("/img/Pattern_BG_for_white.svg");
   background-repeat: repeat;
-  opacity: 0.74;
+  background-size: 1988px 1076px;
+  opacity: 1;
 }
 
 /* All direct children above the grid pseudo-element */
@@ -1040,7 +1041,10 @@ body {
   background-color: #080D19 !important;
 }
 
-
+/* Boost grid visibility on dark background (SVG has 5% internal opacity) */
+.v2-dark .CustomBg_bg_image__RIwVy::after {
+  opacity: 2.5;
+}
 
 /* Adjust the mouse-follow gradient for dark mode */
 .v2-dark .CustomBg_bg_gradient__9nROB .gradient_circle {
