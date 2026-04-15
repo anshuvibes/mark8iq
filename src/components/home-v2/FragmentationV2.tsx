@@ -100,7 +100,9 @@ export default function FragmentationV2() {
       start: 'top 40%',
       end: 'bottom bottom',
       onEnter: () => setThemeRef.current('dark'),
+      onLeave: () => setThemeRef.current('light'),
       onLeaveBack: () => setThemeRef.current('light'),
+      onEnterBack: () => setThemeRef.current('dark'),
     });
 
     return () => {
@@ -319,7 +321,7 @@ export default function FragmentationV2() {
   }, []);
 
   return (
-    <div ref={containerRef} style={{ height: '700vh', position: 'relative' }}>
+    <div ref={containerRef} data-section="fragmentation" style={{ height: '700vh', position: 'relative' }}>
       <div
         ref={stickyRef}
         style={{
