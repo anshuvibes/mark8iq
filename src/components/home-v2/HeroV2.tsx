@@ -1,8 +1,17 @@
-import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { useState, useRef } from 'react';
+import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import heroDashboard from '@/assets/hero-dashboard.svg';
 import ThemeToggle from './ThemeToggle';
+
+// Preload hero dashboard at module load time (before React renders)
+if (typeof window !== 'undefined') {
+  const _preloadLink = document.createElement('link');
+  _preloadLink.rel = 'preload';
+  _preloadLink.as = 'image';
+  _preloadLink.href = heroDashboard;
+  document.head.appendChild(_preloadLink);
+}
 
 const fadeIn = (delay: number) => ({
   initial: { opacity: 0, y: 20 },
@@ -22,20 +31,6 @@ const modules = [
 export default function HeroV2() {
   const [activeModule, setActiveModule] = useState(0);
   const imgContainerRef = useRef<HTMLDivElement>(null);
-
-  // Preload hero dashboard SVG immediately on mount
-  useEffect(() => {
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'image';
-    link.href = heroDashboard;
-    document.head.appendChild(link);
-    return () => {
-      if (document.head.contains(link)) {
-        document.head.removeChild(link);
-      }
-    };
-  }, []);
 
   return (
     <section style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -89,17 +84,15 @@ export default function HeroV2() {
             minHeight: '520px',
           }}
         >
-          <AnimatePresence mode="sync">
-            <motion.img
-              src={heroDashboard}
-              alt={`${modules[activeModule].name} Dashboard`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.35 }}
-              style={{ width: '100%', display: 'block' }}
-            />
-          </AnimatePresence>
+          <motion.img
+            src={heroDashboard}
+            alt="Mark8 IQ Dashboard"
+            fetchPriority="high"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.35 }}
+            style={{ width: '100%', display: 'block' }}
+          />
         </div>
 
         {/* Floating module selector card */}
