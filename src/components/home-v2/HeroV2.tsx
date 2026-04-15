@@ -86,7 +86,6 @@ export default function HeroV2() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.35 }}
               style={{ width: '100%', display: 'block' }}
-              />
             />
           </AnimatePresence>
         </div>
