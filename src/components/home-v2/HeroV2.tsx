@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import heroDashboard from '@/assets/hero-dashboard.svg';
@@ -22,6 +22,20 @@ const modules = [
 export default function HeroV2() {
   const [activeModule, setActiveModule] = useState(0);
   const imgContainerRef = useRef<HTMLDivElement>(null);
+
+  // Preload hero dashboard SVG immediately on mount
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = heroDashboard;
+    document.head.appendChild(link);
+    return () => {
+      if (document.head.contains(link)) {
+        document.head.removeChild(link);
+      }
+    };
+  }, []);
 
   return (
     <section style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -75,9 +89,8 @@ export default function HeroV2() {
             minHeight: '520px',
           }}
         >
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="sync">
             <motion.img
-              key={activeModule}
               src={heroDashboard}
               alt={`${modules[activeModule].name} Dashboard`}
               initial={{ opacity: 0 }}
