@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import heroDashboard from '@/assets/hero-dashboard.svg';
@@ -22,22 +22,6 @@ const modules = [
 export default function HeroV2() {
   const [activeModule, setActiveModule] = useState(0);
   const imgContainerRef = useRef<HTMLDivElement>(null);
-  const [imgHeight, setImgHeight] = useState<number | null>(null);
-
-  useEffect(() => {
-    const container = imgContainerRef.current;
-    if (!container) return;
-    const img = container.querySelector('img');
-    if (img && img.complete && img.naturalHeight > 0) {
-      setImgHeight(container.offsetHeight);
-    }
-  }, []);
-
-  const handleImageLoad = () => {
-    if (imgHeight === null && imgContainerRef.current) {
-      setImgHeight(imgContainerRef.current.offsetHeight);
-    }
-  };
 
   return (
     <section style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -88,7 +72,8 @@ export default function HeroV2() {
             position: 'relative',
             overflow: 'hidden',
             borderRadius: '16px 16px 0 0',
-            minHeight: imgHeight ?? undefined,
+            aspectRatio: '16 / 7',
+            background: 'var(--v2-bg-subtle)',
           }}
         >
           <AnimatePresence mode="wait">
@@ -101,7 +86,7 @@ export default function HeroV2() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.35 }}
               style={{ width: '100%', display: 'block' }}
-              onLoad={handleImageLoad}
+              />
             />
           </AnimatePresence>
         </div>
