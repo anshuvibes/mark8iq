@@ -1,17 +1,8 @@
 import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
-import heroDashboard from '@/assets/hero-dashboard.svg';
+import heroDashboardSvg from '@/assets/hero-dashboard.svg?raw';
 import ThemeToggle from './ThemeToggle';
-
-// Preload hero dashboard at module load time (before React renders)
-if (typeof window !== 'undefined') {
-  const _preloadLink = document.createElement('link');
-  _preloadLink.rel = 'preload';
-  _preloadLink.as = 'image';
-  _preloadLink.href = heroDashboard;
-  document.head.appendChild(_preloadLink);
-}
 
 const fadeIn = (delay: number) => ({
   initial: { opacity: 0, y: 20 },
@@ -70,9 +61,9 @@ export default function HeroV2() {
 
       {/* ZONE 2: Full-width visual block with floating card */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+        initial={{ y: 30 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
         style={{ position: 'relative', width: '100%', maxWidth: '1200px', margin: '0 auto' }}
       >
         <div
@@ -84,14 +75,12 @@ export default function HeroV2() {
             minHeight: '520px',
           }}
         >
-          <motion.img
-            src={heroDashboard}
-            alt="Mark8 IQ Dashboard"
-            fetchPriority="high"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.35 }}
+          <div
+            aria-label="Mark8 IQ Dashboard"
+            className="hero-dashboard-svg"
+            role="img"
             style={{ width: '100%', display: 'block' }}
+            dangerouslySetInnerHTML={{ __html: heroDashboardSvg }}
           />
         </div>
 
@@ -173,6 +162,12 @@ export default function HeroV2() {
       </motion.div>
 
       <style>{`
+        .hero-dashboard-svg svg {
+          width: 100%;
+          height: auto;
+          display: block;
+        }
+
         @media (max-width: 1280px) {
           .hero-module-card {
             right: 16px !important;

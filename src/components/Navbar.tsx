@@ -189,7 +189,8 @@ export default function Navbar() {
             <div className="Header_image_wrap__MrSDq">
               <img
                 alt="Logo"
-                loading="lazy"
+                loading="eager"
+                fetchPriority="high"
                 width={130}
                 height={27}
                 style={{ color: 'transparent' }}
