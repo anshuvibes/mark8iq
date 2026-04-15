@@ -1041,7 +1041,10 @@ body {
   background-color: #080D19 !important;
 }
 
-
+/* Boost grid visibility on dark background (SVG has 5% internal opacity) */
+.v2-dark .CustomBg_bg_image__RIwVy::after {
+  opacity: 2.5;
+}
 
 /* Adjust the mouse-follow gradient for dark mode */
 .v2-dark .CustomBg_bg_gradient__9nROB .gradient_circle {
