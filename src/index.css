@@ -914,9 +914,10 @@ All colors MUST be HSL.
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  background-image: url("/img/bg-pattern-reverse.svg");
+  background-image: url("/img/Pattern_BG_for_white.svg");
   background-repeat: repeat;
-  opacity: 0.74;
+  background-size: 1988px 1076px;
+  opacity: 1;
 }
 
 /* All direct children above the grid pseudo-element */
