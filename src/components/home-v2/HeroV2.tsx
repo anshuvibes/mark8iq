@@ -72,8 +72,7 @@ export default function HeroV2() {
             position: 'relative',
             overflow: 'hidden',
             borderRadius: '16px 16px 0 0',
-            aspectRatio: '16 / 7',
-            background: 'var(--v2-bg-subtle)',
+            minHeight: '520px',
           }}
         >
           <AnimatePresence mode="wait">
