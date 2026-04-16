@@ -5,13 +5,13 @@ import { useV2Theme } from './ThemeContext';
 
 
 const marketplacePills = [
-  { label: 'Amazon',           logo: '/img/home-v2/fragmentation/amazon.png',           size: 72, x: -420, y: -190 },
-  { label: 'Flipkart',         logo: '/img/home-v2/fragmentation/flipkart.png',         size: 64, x:  370, y: -200 },
-  { label: 'Myntra',           logo: '/img/home-v2/fragmentation/myntra.png',           size: 56, x: -390, y:  110 },
-  { label: 'Meesho',           logo: '/img/home-v2/fragmentation/meesho.png',           size: 60, x:  410, y:  130 },
-  { label: 'Zepto',            logo: '/img/home-v2/fragmentation/zepto.png',            size: 48, x: -210, y:  260 },
-  { label: 'Blinkit',          logo: '/img/home-v2/fragmentation/blinkit.png',          size: 68, x:  220, y:  270 },
-  { label: 'Swiggy Instamart', logo: '/img/home-v2/fragmentation/swiggy-instamart.png', size: 52, x:    0, y:  310 },
+  { label: 'Amazon',           logo: '/img/home-v2/fragmentation/amazon.png',            size: 80,  blur: 0,   x: -480, y: -220 },
+  { label: 'Flipkart',         logo: '/img/home-v2/fragmentation/flipkart.png',          size: 72,  blur: 0,   x:  460, y: -180 },
+  { label: 'Myntra',           logo: '/img/home-v2/fragmentation/myntra.png',            size: 52,  blur: 1.5, x: -300, y:   80 },
+  { label: 'Meesho',           logo: '/img/home-v2/fragmentation/meesho.png',            size: 60,  blur: 0,   x:  500, y:   60 },
+  { label: 'Zepto',            logo: '/img/home-v2/fragmentation/zepto.png',             size: 44,  blur: 2,   x: -160, y:  280 },
+  { label: 'Blinkit',          logo: '/img/home-v2/fragmentation/blinkit.png',           size: 68,  blur: 0,   x:  200, y:  260 },
+  { label: 'Swiggy Instamart', logo: '/img/home-v2/fragmentation/swiggy-instamart.png',  size: 48,  blur: 1,   x:   60, y: -300 },
 ];
 
 const departmentTags = [
@@ -333,6 +333,7 @@ export default function FragmentationV2() {
               zIndex: 2,
               width: `${pill.size}px`,
               height: `${pill.size}px`,
+              overflow: 'visible',
             }}
           >
             <img
@@ -342,8 +343,8 @@ export default function FragmentationV2() {
                 width: '100%',
                 height: '100%',
                 objectFit: 'contain',
-                borderRadius: '16px',
                 display: 'block',
+                filter: pill.blur > 0 ? `blur(${pill.blur}px)` : 'none',
               }}
             />
           </div>
