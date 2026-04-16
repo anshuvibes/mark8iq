@@ -320,58 +320,57 @@ export default function FragmentationV2() {
         />
 
 
-        {/* Marketplace pills */}
+        {/* Marketplace logos */}
         {marketplacePills.map((pill, i) => (
           <div
             key={pill.label}
             ref={(el) => { mktRefs.current[i] = el; }}
             style={{
-              ...pillBase,
-              background: 'var(--v2-frag-pill-bg)',
-              border: '1px solid var(--v2-frag-pill-border)',
-              color: 'var(--v2-frag-pill-text)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '4px',
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              pointerEvents: 'none',
+              zIndex: 2,
+              width: `${pill.size}px`,
+              height: `${pill.size}px`,
             }}
           >
-            <span style={{ fontWeight: 300, fontSize: '15px' }}>{pill.label}</span>
-            <span style={{
-              fontSize: '11px',
-              fontWeight: 300,
-              opacity: 0.55,
-              fontFamily: "'Saira', sans-serif",
-              whiteSpace: 'nowrap',
-            }}>{pill.sub}</span>
+            <img
+              src={pill.logo}
+              alt={pill.label}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                borderRadius: '16px',
+                display: 'block',
+              }}
+            />
           </div>
         ))}
 
         {/* Department tags */}
         {departmentTags.map((tag, i) => (
-          <div
+          <span
             key={tag.label}
             ref={(el) => { deptRefs.current[i] = el; }}
             style={{
-              ...pillBase,
-              background: 'var(--v2-frag-dept-bg)',
-              border: '1px solid var(--v2-frag-dept-border)',
-              color: 'var(--v2-frag-dept-text)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '4px',
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              color: '#ffffff',
+              opacity: tag.opacity,
+              fontSize: '18px',
+              fontFamily: "'Saira', sans-serif",
+              fontWeight: 300,
+              whiteSpace: 'nowrap',
+              pointerEvents: 'none',
+              zIndex: 2,
+              letterSpacing: '-0.01em',
             }}
           >
-            <span style={{ fontWeight: 300, fontSize: '15px' }}>{tag.label}</span>
-            <span style={{
-              fontSize: '11px',
-              fontWeight: 300,
-              opacity: 0.55,
-              fontFamily: "'Saira', sans-serif",
-              whiteSpace: 'nowrap',
-            }}>{tag.sub}</span>
-          </div>
+            {tag.label}
+          </span>
         ))}
 
         {/* Persona labels */}
@@ -383,31 +382,18 @@ export default function FragmentationV2() {
               position: 'absolute',
               left: '50%',
               top: '50%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '4px',
-              color: 'var(--v2-frag-persona-text)',
-              fontSize: '15px',
+              color: '#ffffff',
+              opacity: persona.opacity,
+              fontSize: '18px',
               fontFamily: "'Saira', sans-serif",
               fontWeight: 300,
               whiteSpace: 'nowrap',
               pointerEvents: 'none',
               zIndex: 2,
-              transition: 'color 0.5s ease',
-              textAlign: 'center',
+              letterSpacing: '-0.01em',
             }}
           >
-            <span>{persona.label}</span>
-            <span style={{
-              fontSize: '11px',
-              fontWeight: 300,
-              opacity: 0.5,
-              fontFamily: "'Saira', sans-serif",
-              maxWidth: '200px',
-              whiteSpace: 'normal',
-              textAlign: 'center',
-            }}>{persona.sub}</span>
+            {persona.label}
           </span>
         ))}
 
