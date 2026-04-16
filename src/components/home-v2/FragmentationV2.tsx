@@ -5,48 +5,34 @@ import { useV2Theme } from './ThemeContext';
 
 
 const marketplacePills = [
-  { label: 'Amazon',           sub: 'Different report format',      x: -420, y: -190 },
-  { label: 'Flipkart',         sub: 'Different metrics dashboard',  x:  370, y: -200 },
-  { label: 'Myntra',           sub: 'Different seller portal',      x: -390, y:  110 },
-  { label: 'Meesho',           sub: 'Different data structure',     x:  410, y:  130 },
-  { label: 'Zepto',            sub: 'Different fulfilment rules',   x: -210, y:  260 },
-  { label: 'Blinkit',          sub: 'Different ad system',          x:  220, y:  270 },
-  { label: 'Swiggy Instamart', sub: 'Different performance view',   x:    0, y:  310 },
+  { label: 'Amazon',           logo: '/img/home-v2/fragmentation/amazon.png',           size: 72, x: -420, y: -190 },
+  { label: 'Flipkart',         logo: '/img/home-v2/fragmentation/flipkart.png',         size: 64, x:  370, y: -200 },
+  { label: 'Myntra',           logo: '/img/home-v2/fragmentation/myntra.png',           size: 56, x: -390, y:  110 },
+  { label: 'Meesho',           logo: '/img/home-v2/fragmentation/meesho.png',           size: 60, x:  410, y:  130 },
+  { label: 'Zepto',            logo: '/img/home-v2/fragmentation/zepto.png',            size: 48, x: -210, y:  260 },
+  { label: 'Blinkit',          logo: '/img/home-v2/fragmentation/blinkit.png',          size: 68, x:  220, y:  270 },
+  { label: 'Swiggy Instamart', logo: '/img/home-v2/fragmentation/swiggy-instamart.png', size: 52, x:    0, y:  310 },
 ];
 
 const departmentTags = [
-  { label: 'Ads Manager',           sub: 'Waiting on platform export',      x: -510, y:  -90 },
-  { label: 'Inventory Tracker',     sub: 'Last synced: yesterday',           x:  510, y:   70 },
-  { label: 'Returns Dashboard',     sub: 'Manual update required',           x: -490, y:  170 },
-  { label: 'Finance Suite',         sub: 'Cross-referencing 4 sources',      x:  490, y: -150 },
-  { label: 'PO Management',         sub: 'Pending reconciliation',           x: -310, y: -230 },
-  { label: 'Market Research Tool',  sub: 'Data 72 hours old',                x:  330, y:  230 },
-  { label: 'Reconciliation Engine', sub: 'Month-end only',                   x:   10, y: -310 },
+  { label: 'Ads',             opacity: 0.9,  x: -510, y:  -90 },
+  { label: 'Inventory',       opacity: 0.6,  x:  510, y:   70 },
+  { label: 'Returns',         opacity: 0.8,  x: -490, y:  170 },
+  { label: 'Finance',         opacity: 0.5,  x:  490, y: -150 },
+  { label: 'PO Management',   opacity: 0.7,  x: -310, y: -230 },
+  { label: 'Market Research', opacity: 0.55, x:  330, y:  230 },
+  { label: 'Reconciliation',  opacity: 0.65, x:   10, y: -310 },
 ];
 
 const personaLabels = [
-  { label: 'Analyst needs raw data',      sub: 'Spends 4 hours compiling before analysis starts', x: -610, y:  -70 },
-  { label: 'Manager needs trends',        sub: 'Gets reports 3 days after the week ends',          x:  600, y:  -50 },
-  { label: 'CXO needs P&L impact',        sub: 'Sees the full picture once a month',               x: -580, y:  210 },
-  { label: 'CAM needs campaign view',     sub: 'Switches between 6 tabs per campaign',             x:  560, y:  190 },
-  { label: 'Ops Head needs stock levels', sub: 'Discovers stockouts after they happen',            x:    0, y: -330 },
+  { label: 'Analyst',              opacity: 0.9,  x: -610, y:  -70 },
+  { label: 'E-Commerce Manager',   opacity: 0.6,  x:  600, y:  -50 },
+  { label: 'CXO',                  opacity: 0.8,  x: -580, y:  210 },
+  { label: 'CAM',                  opacity: 0.5,  x:  560, y:  190 },
+  { label: 'Ops Head',             opacity: 0.7,  x:    0, y: -330 },
 ];
 
-/* Shared inline style fragments */
-const pillBase: React.CSSProperties = {
-  position: 'absolute',
-  left: '50%',
-  top: '50%',
-  padding: '10px 20px',
-  borderRadius: '9999px',
-  fontSize: '15px',
-  fontFamily: "'Saira', sans-serif",
-  fontWeight: 300,
-  whiteSpace: 'nowrap',
-  pointerEvents: 'none',
-  zIndex: 2,
-  transition: 'background 0.5s ease, border-color 0.5s ease, color 0.5s ease',
-};
+/* headingBase kept for anchor copy */
 
 const headingBase: React.CSSProperties = {
   position: 'absolute',
@@ -73,7 +59,7 @@ export default function FragmentationV2() {
   
 
   const mktRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const deptRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const deptRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const personaRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   const text1Ref = useRef<HTMLDivElement>(null);
@@ -334,58 +320,57 @@ export default function FragmentationV2() {
         />
 
 
-        {/* Marketplace pills */}
+        {/* Marketplace logos */}
         {marketplacePills.map((pill, i) => (
           <div
             key={pill.label}
             ref={(el) => { mktRefs.current[i] = el; }}
             style={{
-              ...pillBase,
-              background: 'var(--v2-frag-pill-bg)',
-              border: '1px solid var(--v2-frag-pill-border)',
-              color: 'var(--v2-frag-pill-text)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '4px',
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              pointerEvents: 'none',
+              zIndex: 2,
+              width: `${pill.size}px`,
+              height: `${pill.size}px`,
             }}
           >
-            <span style={{ fontWeight: 300, fontSize: '15px' }}>{pill.label}</span>
-            <span style={{
-              fontSize: '11px',
-              fontWeight: 300,
-              opacity: 0.55,
-              fontFamily: "'Saira', sans-serif",
-              whiteSpace: 'nowrap',
-            }}>{pill.sub}</span>
+            <img
+              src={pill.logo}
+              alt={pill.label}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                borderRadius: '16px',
+                display: 'block',
+              }}
+            />
           </div>
         ))}
 
         {/* Department tags */}
         {departmentTags.map((tag, i) => (
-          <div
+          <span
             key={tag.label}
             ref={(el) => { deptRefs.current[i] = el; }}
             style={{
-              ...pillBase,
-              background: 'var(--v2-frag-dept-bg)',
-              border: '1px solid var(--v2-frag-dept-border)',
-              color: 'var(--v2-frag-dept-text)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '4px',
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              color: '#ffffff',
+              opacity: tag.opacity,
+              fontSize: '18px',
+              fontFamily: "'Saira', sans-serif",
+              fontWeight: 300,
+              whiteSpace: 'nowrap',
+              pointerEvents: 'none',
+              zIndex: 2,
+              letterSpacing: '-0.01em',
             }}
           >
-            <span style={{ fontWeight: 300, fontSize: '15px' }}>{tag.label}</span>
-            <span style={{
-              fontSize: '11px',
-              fontWeight: 300,
-              opacity: 0.55,
-              fontFamily: "'Saira', sans-serif",
-              whiteSpace: 'nowrap',
-            }}>{tag.sub}</span>
-          </div>
+            {tag.label}
+          </span>
         ))}
 
         {/* Persona labels */}
@@ -397,31 +382,18 @@ export default function FragmentationV2() {
               position: 'absolute',
               left: '50%',
               top: '50%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '4px',
-              color: 'var(--v2-frag-persona-text)',
-              fontSize: '15px',
+              color: '#ffffff',
+              opacity: persona.opacity,
+              fontSize: '18px',
               fontFamily: "'Saira', sans-serif",
               fontWeight: 300,
               whiteSpace: 'nowrap',
               pointerEvents: 'none',
               zIndex: 2,
-              transition: 'color 0.5s ease',
-              textAlign: 'center',
+              letterSpacing: '-0.01em',
             }}
           >
-            <span>{persona.label}</span>
-            <span style={{
-              fontSize: '11px',
-              fontWeight: 300,
-              opacity: 0.5,
-              fontFamily: "'Saira', sans-serif",
-              maxWidth: '200px',
-              whiteSpace: 'normal',
-              textAlign: 'center',
-            }}>{persona.sub}</span>
+            {persona.label}
           </span>
         ))}
 
