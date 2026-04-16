@@ -397,7 +397,7 @@ export default function FragmentationV2() {
             color: 'var(--v2-frag-heading-text)',
           }}
         >
-          Every marketplace speaks a different language.
+          Your data is everywhere.
         </div>
 
         {/* Text 2 */}
@@ -408,7 +408,7 @@ export default function FragmentationV2() {
             color: 'var(--v2-frag-heading-text)',
           }}
         >
-          Every department runs on a different tool. None of them talk to each other.
+          Your decisions are waiting.
         </div>
 
         {/* Text 3 */}
@@ -419,7 +419,7 @@ export default function FragmentationV2() {
             color: 'var(--v2-frag-heading-text)',
           }}
         >
-          Same data. Seven interpretations. Zero shared truth.
+          Your operation outgrows your team. Every time.
         </div>
 
         {/* Pivot */}
@@ -508,7 +508,7 @@ export default function FragmentationV2() {
             transition: 'color 0.5s ease',
           }}
         >
-          One platform absorbs it all.
+          This is what control looks like.
         </div>
       </div>
     </div>
