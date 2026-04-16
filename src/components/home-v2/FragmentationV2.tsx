@@ -56,7 +56,7 @@ export default function FragmentationV2() {
   const containerRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
-  
+  const depthWrapperRef = useRef<HTMLDivElement>(null);
 
   const mktRefs = useRef<(HTMLDivElement | null)[]>([]);
   const deptRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -102,8 +102,9 @@ export default function FragmentationV2() {
     gsap.registerPlugin(ScrollTrigger);
 
     const container = containerRef.current;
-    const sticky = stickyRef.current;
     if (!container) return;
+
+    const PERSPECTIVE = 1200;
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -114,27 +115,29 @@ export default function FragmentationV2() {
       },
     });
 
-
-    // PHASE 1 (t=8–25): Marketplace pills bloom in
+    // PHASE 1: Marketplace logos emerge from depth (z: -600 → 0)
     mktRefs.current.forEach((el, i) => {
       if (!el) return;
       gsap.set(el, {
         opacity: 0,
         x: marketplacePills[i].x,
         y: marketplacePills[i].y,
-        scale: 0.6,
+        z: -600,
         xPercent: -50,
         yPercent: -50,
+        scale: 0.3,
+        transformPerspective: PERSPECTIVE,
       });
       tl.to(el, {
         opacity: 1,
+        z: 0,
         scale: 1,
         duration: 6,
         ease: 'power2.out',
       }, 0 + i * 0.8);
     });
 
-    // PHASE 2 (t=25–32): Text 1 blooms in
+    // PHASE 2: Text 1 blooms in
     gsap.set(text1Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
     tl.to(text1Ref.current, {
       opacity: 1,
@@ -151,34 +154,29 @@ export default function FragmentationV2() {
       ease: 'power2.in',
     }, 12);
 
-    // PHASE 4: Department tags appear, marketplace pills compress
+    // PHASE 4: Department tags emerge from deeper Z (-1000 → 0)
     deptRefs.current.forEach((el, i) => {
       if (!el) return;
       gsap.set(el, {
         opacity: 0,
         x: departmentTags[i].x,
         y: departmentTags[i].y,
-        scale: 0.6,
+        z: -1000,
         xPercent: -50,
         yPercent: -50,
+        scale: 0.15,
+        transformPerspective: PERSPECTIVE,
       });
       tl.to(el, {
-        opacity: 1,
+        opacity: departmentTags[i].opacity,
+        z: 0,
         scale: 1,
         duration: 6,
         ease: 'power2.out',
       }, 16 + i * 0.8);
     });
 
-    mktRefs.current.forEach((el, i) => {
-      if (!el) return;
-      tl.to(el, {
-        x: marketplacePills[i].x * 0.7,
-        y: marketplacePills[i].y * 0.7,
-        duration: 8,
-        ease: 'power1.inOut',
-      }, 16);
-    });
+    // No marketplace compress — they stay at their x/y positions
 
     // PHASE 5: Text 2 blooms in
     gsap.set(text2Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
@@ -197,21 +195,26 @@ export default function FragmentationV2() {
       ease: 'power2.in',
     }, 26);
 
-    // PHASE 7: Persona labels appear
+    // PHASE 7: Persona labels emerge from deepest Z (-1400 → 0)
     personaRefs.current.forEach((el, i) => {
       if (!el) return;
       gsap.set(el, {
         opacity: 0,
         x: personaLabels[i].x,
         y: personaLabels[i].y,
+        z: -1400,
         xPercent: -50,
         yPercent: -50,
+        scale: 0.08,
+        transformPerspective: PERSPECTIVE,
       });
       tl.to(el, {
-        opacity: 1,
+        opacity: personaLabels[i].opacity,
+        z: 0,
+        scale: 1,
         duration: 5,
         ease: 'power2.out',
-      }, 30 + i * 1.2);
+      }, 30 + i * 1.0);
     });
 
     // PHASE 8: Text 3 blooms in
@@ -240,7 +243,7 @@ export default function FragmentationV2() {
       ease: 'power2.out',
     }, 44);
 
-    // PHASE 11: Everything converges to center
+    // PHASE 11: Everything flies PAST the camera (positive Z = toward viewer)
     tl.to(pivotRef.current, {
       opacity: 0,
       scale: 0.8,
@@ -250,17 +253,35 @@ export default function FragmentationV2() {
 
     mktRefs.current.forEach((el) => {
       if (!el) return;
-      tl.to(el, { x: 0, y: 0, scale: 0.3, opacity: 0, duration: 4, ease: 'power3.in' }, 48);
+      tl.to(el, {
+        z: 800,
+        scale: 3,
+        opacity: 0,
+        duration: 4,
+        ease: 'power2.in',
+      }, 48);
     });
 
     deptRefs.current.forEach((el) => {
       if (!el) return;
-      tl.to(el, { x: 0, y: 0, scale: 0.3, opacity: 0, duration: 4, ease: 'power3.in' }, 48);
+      tl.to(el, {
+        z: 800,
+        scale: 3,
+        opacity: 0,
+        duration: 4,
+        ease: 'power2.in',
+      }, 48);
     });
 
     personaRefs.current.forEach((el) => {
       if (!el) return;
-      tl.to(el, { x: 0, y: 0, opacity: 0, duration: 4, ease: 'power3.in' }, 48);
+      tl.to(el, {
+        z: 800,
+        scale: 3,
+        opacity: 0,
+        duration: 4,
+        ease: 'power2.in',
+      }, 48);
     });
 
     // PHASE 12: Circle expands, logo reveals
@@ -319,84 +340,97 @@ export default function FragmentationV2() {
           }}
         />
 
-
-        {/* Marketplace logos */}
-        {marketplacePills.map((pill, i) => (
-          <div
-            key={pill.label}
-            ref={(el) => { mktRefs.current[i] = el; }}
-            style={{
-              position: 'absolute',
-              left: '50%',
-              top: '50%',
-              pointerEvents: 'none',
-              zIndex: 2,
-              width: `${pill.size}px`,
-              height: `${pill.size}px`,
-              overflow: 'visible',
-            }}
-          >
-            <img
-              src={pill.logo}
-              alt={pill.label}
+        {/* 3D depth wrapper for floating elements */}
+        <div
+          ref={depthWrapperRef}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            transformStyle: 'preserve-3d',
+            perspective: '1200px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {/* Marketplace logos */}
+          {marketplacePills.map((pill, i) => (
+            <div
+              key={pill.label}
+              ref={(el) => { mktRefs.current[i] = el; }}
               style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain',
-                display: 'block',
-                filter: pill.blur > 0 ? `blur(${pill.blur}px)` : 'none',
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                pointerEvents: 'none',
+                zIndex: 2,
+                width: `${pill.size}px`,
+                height: `${pill.size}px`,
+                overflow: 'visible',
               }}
-            />
-          </div>
-        ))}
+            >
+              <img
+                src={pill.logo}
+                alt={pill.label}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                  display: 'block',
+                  filter: pill.blur > 0 ? `blur(${pill.blur}px)` : 'none',
+                }}
+              />
+            </div>
+          ))}
 
-        {/* Department tags */}
-        {departmentTags.map((tag, i) => (
-          <span
-            key={tag.label}
-            ref={(el) => { deptRefs.current[i] = el; }}
-            style={{
-              position: 'absolute',
-              left: '50%',
-              top: '50%',
-              color: '#ffffff',
-              opacity: tag.opacity,
-              fontSize: '18px',
-              fontFamily: "'Saira', sans-serif",
-              fontWeight: 300,
-              whiteSpace: 'nowrap',
-              pointerEvents: 'none',
-              zIndex: 2,
-              letterSpacing: '-0.01em',
-            }}
-          >
-            {tag.label}
-          </span>
-        ))}
+          {/* Department tags */}
+          {departmentTags.map((tag, i) => (
+            <span
+              key={tag.label}
+              ref={(el) => { deptRefs.current[i] = el; }}
+              style={{
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                color: '#ffffff',
+                opacity: tag.opacity,
+                fontSize: '18px',
+                fontFamily: "'Saira', sans-serif",
+                fontWeight: 300,
+                whiteSpace: 'nowrap',
+                pointerEvents: 'none',
+                zIndex: 2,
+                letterSpacing: '-0.01em',
+              }}
+            >
+              {tag.label}
+            </span>
+          ))}
 
-        {/* Persona labels */}
-        {personaLabels.map((persona, i) => (
-          <span
-            key={persona.label}
-            ref={(el) => { personaRefs.current[i] = el; }}
-            style={{
-              position: 'absolute',
-              left: '50%',
-              top: '50%',
-              color: '#ffffff',
-              opacity: persona.opacity,
-              fontSize: '18px',
-              fontFamily: "'Saira', sans-serif",
-              fontWeight: 300,
-              whiteSpace: 'nowrap',
-              pointerEvents: 'none',
-              zIndex: 2,
-              letterSpacing: '-0.01em',
-            }}
-          >
-            {persona.label}
-          </span>
-        ))}
+          {/* Persona labels */}
+          {personaLabels.map((persona, i) => (
+            <span
+              key={persona.label}
+              ref={(el) => { personaRefs.current[i] = el; }}
+              style={{
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                color: '#ffffff',
+                opacity: persona.opacity,
+                fontSize: '18px',
+                fontFamily: "'Saira', sans-serif",
+                fontWeight: 300,
+                whiteSpace: 'nowrap',
+                pointerEvents: 'none',
+                zIndex: 2,
+                letterSpacing: '-0.01em',
+              }}
+            >
+              {persona.label}
+            </span>
+          ))}
+        </div>
 
         {/* Text 1 */}
         <div
