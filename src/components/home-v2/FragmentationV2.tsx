@@ -252,7 +252,7 @@ export default function FragmentationV2() {
       scale: 1,
       duration: 4,
       ease: 'power2.out',
-    }, 63);
+    }, 72);
 
     // PHASE 11 (t=92–96): Everything converges to center
     tl.to(pivotRef.current, {
@@ -260,7 +260,7 @@ export default function FragmentationV2() {
       scale: 0.8,
       duration: 3,
       ease: 'power2.in',
-    }, 68);
+    }, 77);
 
     mktRefs.current.forEach((el) => {
       if (!el) return;
