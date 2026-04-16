@@ -157,15 +157,15 @@ export default function FragmentationV2() {
       ease: 'power2.out',
     }, 8);
 
-    // PHASE 3 (t=32–38): Text 1 blooms out
+    // PHASE 3: Text 1 blooms out
     tl.to(text1Ref.current, {
       opacity: 0,
       scale: 1.15,
       duration: 5,
       ease: 'power2.in',
-    }, 14);
+    }, 12);
 
-    // PHASE 4 (t=38–52): Department tags appear, marketplace pills compress
+    // PHASE 4: Department tags appear, marketplace pills compress
     deptRefs.current.forEach((el, i) => {
       if (!el) return;
       gsap.set(el, {
@@ -181,7 +181,7 @@ export default function FragmentationV2() {
         scale: 1,
         duration: 6,
         ease: 'power2.out',
-      }, 18 + i * 0.8);
+      }, 16 + i * 0.8);
     });
 
     mktRefs.current.forEach((el, i) => {
@@ -191,27 +191,27 @@ export default function FragmentationV2() {
         y: marketplacePills[i].y * 0.7,
         duration: 8,
         ease: 'power1.inOut',
-      }, 18);
+      }, 16);
     });
 
-    // PHASE 5 (t=52–58): Text 2 blooms in
+    // PHASE 5: Text 2 blooms in
     gsap.set(text2Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
     tl.to(text2Ref.current, {
       opacity: 1,
       scale: 1,
       duration: 5,
       ease: 'power2.out',
-    }, 30);
+    }, 22);
 
-    // PHASE 6 (t=58–64): Text 2 blooms out
+    // PHASE 6: Text 2 blooms out
     tl.to(text2Ref.current, {
       opacity: 0,
       scale: 1.15,
       duration: 5,
       ease: 'power2.in',
-    }, 36);
+    }, 26);
 
-    // PHASE 7 (t=64–76): Persona labels appear
+    // PHASE 7: Persona labels appear
     personaRefs.current.forEach((el, i) => {
       if (!el) return;
       gsap.set(el, {
@@ -225,80 +225,80 @@ export default function FragmentationV2() {
         opacity: 1,
         duration: 5,
         ease: 'power2.out',
-      }, 40 + i * 1.2);
+      }, 30 + i * 1.2);
     });
 
-    // PHASE 8 (t=76–82): Text 3 blooms in
+    // PHASE 8: Text 3 blooms in
     gsap.set(text3Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
     tl.to(text3Ref.current, {
       opacity: 1,
       scale: 1,
       duration: 5,
       ease: 'power2.out',
-    }, 52);
+    }, 36);
 
-    // PHASE 9 (t=82–87): Text 3 blooms out
+    // PHASE 9: Text 3 blooms out
     tl.to(text3Ref.current, {
       opacity: 0,
       scale: 1.15,
       duration: 4,
       ease: 'power2.in',
-    }, 58);
+    }, 40);
 
-    // PHASE 10 (t=87–92): "Until now." blooms in
+    // PHASE 10: "Until now." blooms in
     gsap.set(pivotRef.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
     tl.to(pivotRef.current, {
       opacity: 1,
       scale: 1,
       duration: 4,
       ease: 'power2.out',
-    }, 72);
+    }, 44);
 
-    // PHASE 11 (t=92–96): Everything converges to center
+    // PHASE 11: Everything converges to center
     tl.to(pivotRef.current, {
       opacity: 0,
       scale: 0.8,
       duration: 3,
       ease: 'power2.in',
-    }, 77);
+    }, 48);
 
     mktRefs.current.forEach((el) => {
       if (!el) return;
-      tl.to(el, { x: 0, y: 0, scale: 0.3, opacity: 0, duration: 4, ease: 'power3.in' }, 77);
+      tl.to(el, { x: 0, y: 0, scale: 0.3, opacity: 0, duration: 4, ease: 'power3.in' }, 48);
     });
 
     deptRefs.current.forEach((el) => {
       if (!el) return;
-      tl.to(el, { x: 0, y: 0, scale: 0.3, opacity: 0, duration: 4, ease: 'power3.in' }, 77);
+      tl.to(el, { x: 0, y: 0, scale: 0.3, opacity: 0, duration: 4, ease: 'power3.in' }, 48);
     });
 
     personaRefs.current.forEach((el) => {
       if (!el) return;
-      tl.to(el, { x: 0, y: 0, opacity: 0, duration: 4, ease: 'power3.in' }, 77);
+      tl.to(el, { x: 0, y: 0, opacity: 0, duration: 4, ease: 'power3.in' }, 48);
     });
 
-    // PHASE 12 (t=96–100): Circle expands, logo reveals
+    // PHASE 12: Circle expands, logo reveals
     gsap.set(circleRef.current, { scale: 0, opacity: 0, xPercent: -50, yPercent: -50 });
     tl.to(circleRef.current, {
       scale: 40,
       opacity: 1,
       duration: 4,
       ease: 'power3.inOut',
-    }, 83);
+    }, 52);
 
     gsap.set(logoRef.current, { opacity: 0, xPercent: -50, yPercent: -50 });
     tl.to(logoRef.current, {
       opacity: 1,
       duration: 2,
       ease: 'power2.out',
-    }, 86);
+    }, 55);
 
     gsap.set(subCopyRef.current, { opacity: 0, xPercent: -50 });
     tl.to(subCopyRef.current, {
       opacity: 1,
       duration: 2,
       ease: 'power2.out',
-    }, 88);
+    }, 57);
 
     return () => {
       tl.scrollTrigger?.kill();
