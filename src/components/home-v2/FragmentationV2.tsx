@@ -32,21 +32,7 @@ const personaLabels = [
   { label: 'Ops Head',             opacity: 0.7,  x:    0, y: -330 },
 ];
 
-/* Shared inline style fragments */
-const pillBase: React.CSSProperties = {
-  position: 'absolute',
-  left: '50%',
-  top: '50%',
-  padding: '10px 20px',
-  borderRadius: '9999px',
-  fontSize: '15px',
-  fontFamily: "'Saira', sans-serif",
-  fontWeight: 300,
-  whiteSpace: 'nowrap',
-  pointerEvents: 'none',
-  zIndex: 2,
-  transition: 'background 0.5s ease, border-color 0.5s ease, color 0.5s ease',
-};
+/* headingBase kept for anchor copy */
 
 const headingBase: React.CSSProperties = {
   position: 'absolute',
