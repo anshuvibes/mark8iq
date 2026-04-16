@@ -59,7 +59,7 @@ export default function FragmentationV2() {
   
 
   const mktRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const deptRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const deptRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const personaRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   const text1Ref = useRef<HTMLDivElement>(null);
