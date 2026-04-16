@@ -15,21 +15,21 @@ const marketplacePills = [
 ];
 
 const departmentTags = [
-  { label: 'Ads Manager',           sub: 'Waiting on platform export',      x: -510, y:  -90 },
-  { label: 'Inventory Tracker',     sub: 'Last synced: yesterday',           x:  510, y:   70 },
-  { label: 'Returns Dashboard',     sub: 'Manual update required',           x: -490, y:  170 },
-  { label: 'Finance Suite',         sub: 'Cross-referencing 4 sources',      x:  490, y: -150 },
-  { label: 'PO Management',         sub: 'Pending reconciliation',           x: -310, y: -230 },
-  { label: 'Market Research Tool',  sub: 'Data 72 hours old',                x:  330, y:  230 },
-  { label: 'Reconciliation Engine', sub: 'Month-end only',                   x:   10, y: -310 },
+  { label: 'Ads',             opacity: 0.9,  x: -510, y:  -90 },
+  { label: 'Inventory',       opacity: 0.6,  x:  510, y:   70 },
+  { label: 'Returns',         opacity: 0.8,  x: -490, y:  170 },
+  { label: 'Finance',         opacity: 0.5,  x:  490, y: -150 },
+  { label: 'PO Management',   opacity: 0.7,  x: -310, y: -230 },
+  { label: 'Market Research', opacity: 0.55, x:  330, y:  230 },
+  { label: 'Reconciliation',  opacity: 0.65, x:   10, y: -310 },
 ];
 
 const personaLabels = [
-  { label: 'Analyst needs raw data',      sub: 'Spends 4 hours compiling before analysis starts', x: -610, y:  -70 },
-  { label: 'Manager needs trends',        sub: 'Gets reports 3 days after the week ends',          x:  600, y:  -50 },
-  { label: 'CXO needs P&L impact',        sub: 'Sees the full picture once a month',               x: -580, y:  210 },
-  { label: 'CAM needs campaign view',     sub: 'Switches between 6 tabs per campaign',             x:  560, y:  190 },
-  { label: 'Ops Head needs stock levels', sub: 'Discovers stockouts after they happen',            x:    0, y: -330 },
+  { label: 'Analyst',              opacity: 0.9,  x: -610, y:  -70 },
+  { label: 'E-Commerce Manager',   opacity: 0.6,  x:  600, y:  -50 },
+  { label: 'CXO',                  opacity: 0.8,  x: -580, y:  210 },
+  { label: 'CAM',                  opacity: 0.5,  x:  560, y:  190 },
+  { label: 'Ops Head',             opacity: 0.7,  x:    0, y: -330 },
 ];
 
 /* Shared inline style fragments */
