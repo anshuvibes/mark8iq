@@ -264,17 +264,17 @@ export default function FragmentationV2() {
 
     mktRefs.current.forEach((el) => {
       if (!el) return;
-      tl.to(el, { x: 0, y: 0, scale: 0.3, opacity: 0, duration: 4, ease: 'power3.in' }, 68);
+      tl.to(el, { x: 0, y: 0, scale: 0.3, opacity: 0, duration: 4, ease: 'power3.in' }, 77);
     });
 
     deptRefs.current.forEach((el) => {
       if (!el) return;
-      tl.to(el, { x: 0, y: 0, scale: 0.3, opacity: 0, duration: 4, ease: 'power3.in' }, 68);
+      tl.to(el, { x: 0, y: 0, scale: 0.3, opacity: 0, duration: 4, ease: 'power3.in' }, 77);
     });
 
     personaRefs.current.forEach((el) => {
       if (!el) return;
-      tl.to(el, { x: 0, y: 0, opacity: 0, duration: 4, ease: 'power3.in' }, 68);
+      tl.to(el, { x: 0, y: 0, opacity: 0, duration: 4, ease: 'power3.in' }, 77);
     });
 
     // PHASE 12 (t=96–100): Circle expands, logo reveals
@@ -284,21 +284,21 @@ export default function FragmentationV2() {
       opacity: 1,
       duration: 4,
       ease: 'power3.inOut',
-    }, 74);
+    }, 83);
 
     gsap.set(logoRef.current, { opacity: 0, xPercent: -50, yPercent: -50 });
     tl.to(logoRef.current, {
       opacity: 1,
       duration: 2,
       ease: 'power2.out',
-    }, 77);
+    }, 86);
 
     gsap.set(subCopyRef.current, { opacity: 0, xPercent: -50 });
     tl.to(subCopyRef.current, {
       opacity: 1,
       duration: 2,
       ease: 'power2.out',
-    }, 79);
+    }, 88);
 
     return () => {
       tl.scrollTrigger?.kill();
