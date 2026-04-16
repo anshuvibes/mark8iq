@@ -5,13 +5,13 @@ import { useV2Theme } from './ThemeContext';
 
 
 const marketplacePills = [
-  { label: 'Amazon',           sub: 'Different report format',      x: -420, y: -190 },
-  { label: 'Flipkart',         sub: 'Different metrics dashboard',  x:  370, y: -200 },
-  { label: 'Myntra',           sub: 'Different seller portal',      x: -390, y:  110 },
-  { label: 'Meesho',           sub: 'Different data structure',     x:  410, y:  130 },
-  { label: 'Zepto',            sub: 'Different fulfilment rules',   x: -210, y:  260 },
-  { label: 'Blinkit',          sub: 'Different ad system',          x:  220, y:  270 },
-  { label: 'Swiggy Instamart', sub: 'Different performance view',   x:    0, y:  310 },
+  { label: 'Amazon',           logo: '/img/home-v2/fragmentation/amazon.png',           size: 72, x: -420, y: -190 },
+  { label: 'Flipkart',         logo: '/img/home-v2/fragmentation/flipkart.png',         size: 64, x:  370, y: -200 },
+  { label: 'Myntra',           logo: '/img/home-v2/fragmentation/myntra.png',           size: 56, x: -390, y:  110 },
+  { label: 'Meesho',           logo: '/img/home-v2/fragmentation/meesho.png',           size: 60, x:  410, y:  130 },
+  { label: 'Zepto',            logo: '/img/home-v2/fragmentation/zepto.png',            size: 48, x: -210, y:  260 },
+  { label: 'Blinkit',          logo: '/img/home-v2/fragmentation/blinkit.png',          size: 68, x:  220, y:  270 },
+  { label: 'Swiggy Instamart', logo: '/img/home-v2/fragmentation/swiggy-instamart.png', size: 52, x:    0, y:  310 },
 ];
 
 const departmentTags = [
