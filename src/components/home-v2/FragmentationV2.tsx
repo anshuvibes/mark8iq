@@ -5,31 +5,31 @@ import { useV2Theme } from './ThemeContext';
 
 
 const marketplacePills = [
-  { label: 'Amazon',           x: -420, y: -190 },
-  { label: 'Flipkart',         x:  370, y: -200 },
-  { label: 'Myntra',           x: -390, y:  110 },
-  { label: 'Meesho',           x:  410, y:  130 },
-  { label: 'Zepto',            x: -210, y:  260 },
-  { label: 'Blinkit',          x:  220, y:  270 },
-  { label: 'Swiggy Instamart', x:    0, y:  310 },
+  { label: 'Amazon',           sub: 'Different report format',      x: -420, y: -190 },
+  { label: 'Flipkart',         sub: 'Different metrics dashboard',  x:  370, y: -200 },
+  { label: 'Myntra',           sub: 'Different seller portal',      x: -390, y:  110 },
+  { label: 'Meesho',           sub: 'Different data structure',     x:  410, y:  130 },
+  { label: 'Zepto',            sub: 'Different fulfilment rules',   x: -210, y:  260 },
+  { label: 'Blinkit',          sub: 'Different ad system',          x:  220, y:  270 },
+  { label: 'Swiggy Instamart', sub: 'Different performance view',   x:    0, y:  310 },
 ];
 
 const departmentTags = [
-  { label: 'Ads Manager',           x: -510, y:  -90 },
-  { label: 'Inventory Tracker',     x:  510, y:   70 },
-  { label: 'Returns Dashboard',     x: -490, y:  170 },
-  { label: 'Finance Suite',         x:  490, y: -150 },
-  { label: 'PO Management',         x: -310, y: -230 },
-  { label: 'Market Research Tool',  x:  330, y:  230 },
-  { label: 'Reconciliation Engine', x:   10, y: -310 },
+  { label: 'Ads Manager',           sub: 'Waiting on platform export',      x: -510, y:  -90 },
+  { label: 'Inventory Tracker',     sub: 'Last synced: yesterday',           x:  510, y:   70 },
+  { label: 'Returns Dashboard',     sub: 'Manual update required',           x: -490, y:  170 },
+  { label: 'Finance Suite',         sub: 'Cross-referencing 4 sources',      x:  490, y: -150 },
+  { label: 'PO Management',         sub: 'Pending reconciliation',           x: -310, y: -230 },
+  { label: 'Market Research Tool',  sub: 'Data 72 hours old',                x:  330, y:  230 },
+  { label: 'Reconciliation Engine', sub: 'Month-end only',                   x:   10, y: -310 },
 ];
 
 const personaLabels = [
-  { label: 'Analyst needs raw data',      x: -610, y:  -70 },
-  { label: 'Manager needs trends',        x:  600, y:  -50 },
-  { label: 'CXO needs P&L impact',        x: -580, y:  210 },
-  { label: 'CAM needs campaign view',     x:  560, y:  190 },
-  { label: 'Ops Head needs stock levels', x:    0, y: -330 },
+  { label: 'Analyst needs raw data',      sub: 'Spends 4 hours compiling before analysis starts', x: -610, y:  -70 },
+  { label: 'Manager needs trends',        sub: 'Gets reports 3 days after the week ends',          x:  600, y:  -50 },
+  { label: 'CXO needs P&L impact',        sub: 'Sees the full picture once a month',               x: -580, y:  210 },
+  { label: 'CAM needs campaign view',     sub: 'Switches between 6 tabs per campaign',             x:  560, y:  190 },
+  { label: 'Ops Head needs stock levels', sub: 'Discovers stockouts after they happen',            x:    0, y: -330 },
 ];
 
 /* Shared inline style fragments */
@@ -344,9 +344,20 @@ export default function FragmentationV2() {
               background: 'var(--v2-frag-pill-bg)',
               border: '1px solid var(--v2-frag-pill-border)',
               color: 'var(--v2-frag-pill-text)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '4px',
             }}
           >
-            {pill.label}
+            <span style={{ fontWeight: 300, fontSize: '15px' }}>{pill.label}</span>
+            <span style={{
+              fontSize: '11px',
+              fontWeight: 300,
+              opacity: 0.55,
+              fontFamily: "'Saira', sans-serif",
+              whiteSpace: 'nowrap',
+            }}>{pill.sub}</span>
           </div>
         ))}
 
@@ -360,9 +371,20 @@ export default function FragmentationV2() {
               background: 'var(--v2-frag-dept-bg)',
               border: '1px solid var(--v2-frag-dept-border)',
               color: 'var(--v2-frag-dept-text)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '4px',
             }}
           >
-            {tag.label}
+            <span style={{ fontWeight: 300, fontSize: '15px' }}>{tag.label}</span>
+            <span style={{
+              fontSize: '11px',
+              fontWeight: 300,
+              opacity: 0.55,
+              fontFamily: "'Saira', sans-serif",
+              whiteSpace: 'nowrap',
+            }}>{tag.sub}</span>
           </div>
         ))}
 
@@ -375,6 +397,10 @@ export default function FragmentationV2() {
               position: 'absolute',
               left: '50%',
               top: '50%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '4px',
               color: 'var(--v2-frag-persona-text)',
               fontSize: '15px',
               fontFamily: "'Saira', sans-serif",
@@ -383,9 +409,19 @@ export default function FragmentationV2() {
               pointerEvents: 'none',
               zIndex: 2,
               transition: 'color 0.5s ease',
+              textAlign: 'center',
             }}
           >
-            {persona.label}
+            <span>{persona.label}</span>
+            <span style={{
+              fontSize: '11px',
+              fontWeight: 300,
+              opacity: 0.5,
+              fontFamily: "'Saira', sans-serif",
+              maxWidth: '200px',
+              whiteSpace: 'normal',
+              textAlign: 'center',
+            }}>{persona.sub}</span>
           </span>
         ))}
 
