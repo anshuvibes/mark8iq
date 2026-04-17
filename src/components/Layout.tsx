@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Navbar from './Navbar';
+import GradualBlur from '@/components/GradualBlur';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -42,6 +43,17 @@ export default function Layout({ children }: LayoutProps) {
           {children}
         </div>
       </div>
+      <GradualBlur
+        target="page"
+        position="bottom"
+        height="80px"
+        strength={1.5}
+        divCount={5}
+        curve="bezier"
+        exponential={true}
+        opacity={1}
+        zIndex={9990}
+      />
     </div>
   );
 }
