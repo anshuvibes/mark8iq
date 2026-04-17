@@ -46,12 +46,12 @@ export default function Layout({ children }: LayoutProps) {
       <GradualBlur
         target="page"
         position="bottom"
-        height="80px"
-        strength={1.5}
-        divCount={5}
+        height="48px"
+        strength={0.8}
+        divCount={6}
         curve="bezier"
-        exponential={true}
-        opacity={1}
+        exponential={false}
+        opacity={0.9}
         zIndex={9990}
       />
     </div>
