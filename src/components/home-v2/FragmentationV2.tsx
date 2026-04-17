@@ -547,7 +547,7 @@ export default function FragmentationV2() {
             width: '60px',
             height: '60px',
             borderRadius: '50%',
-            background: 'var(--v2-frag-reveal-bg)',
+            background: '#F0F1F6',
             pointerEvents: 'none',
             zIndex: 20,
           }}
