@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Navbar from './Navbar';
-import GradualBlur from '@/components/GradualBlur';
+import GradualBlur from '@/components/GradualBlur.jsx';
 
 interface LayoutProps {
   children: React.ReactNode;
