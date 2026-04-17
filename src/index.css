@@ -1092,3 +1092,8 @@ body {
 .ai-panel-scroll:hover::-webkit-scrollbar-thumb:hover {
   background: rgba(18, 24, 43, 0.25);
 }
+
+/* Custom cursor — hide OS cursor site-wide (CustomCursor handles all states) */
+*, *::before, *::after {
+  cursor: none !important;
+}
