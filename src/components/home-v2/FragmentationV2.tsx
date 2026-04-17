@@ -217,14 +217,14 @@ export default function FragmentationV2() {
       }, 30 + i * 1.0);
     });
 
-    // PHASE 8: Text 3 blooms in
+    // PHASE 8: Text 3 blooms in (synced with persona entry)
     gsap.set(text3Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
     tl.to(text3Ref.current, {
       opacity: 1,
       scale: 1,
       duration: 5,
       ease: 'power2.out',
-    }, 36);
+    }, 30);
 
     // PHASE 9: Text 3 blooms out
     tl.to(text3Ref.current, {
@@ -232,7 +232,7 @@ export default function FragmentationV2() {
       scale: 1.15,
       duration: 4,
       ease: 'power2.in',
-    }, 40);
+    }, 42);
 
     // PHASE 10: "Until now." blooms in
     gsap.set(pivotRef.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
