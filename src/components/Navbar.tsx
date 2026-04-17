@@ -206,7 +206,14 @@ export default function Navbar() {
   ].filter(Boolean).join(' ');
 
   return (
-    <div className={headerClasses} ref={headerRef}>
+    <div
+      className={headerClasses}
+      ref={headerRef}
+      style={{
+        transform: navHidden ? 'translateY(-100%)' : 'translateY(0)',
+        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      }}
+    >
       <div className="Header_bg_box__iSYuh" ref={bgBoxRef} />
       <div className="container">
         <div className="Header_header_inside__mipeB">
