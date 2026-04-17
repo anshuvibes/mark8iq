@@ -70,6 +70,8 @@ export default function FragmentationV2() {
   const circleRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const subCopyRef = useRef<HTMLDivElement>(null);
+  const logoMarkColorRef = useRef<string>('#FFFFFF');
+  const logoMarkGroupRef = useRef<SVGGElement>(null);
 
   // Store setTheme in a ref so GSAP callbacks can access it without stale closures
   const setThemeRef = useRef(setTheme);
