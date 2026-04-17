@@ -77,6 +77,11 @@ export default function FragmentationV2() {
   const setThemeRef = useRef(setTheme);
   setThemeRef.current = setTheme;
 
+  const setLogoMarkColor = (color: string) => {
+    logoMarkColorRef.current = color;
+    logoMarkGroupRef.current?.setAttribute('fill', color);
+  };
+
   // ScrollTrigger-based theme toggle — uses global V2 theme context
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -87,10 +92,22 @@ export default function FragmentationV2() {
       trigger: container,
       start: 'top 80%',
       end: 'bottom bottom',
-      onEnter: () => setThemeRef.current('dark'),
-      onLeave: () => setThemeRef.current('light'),
-      onLeaveBack: () => setThemeRef.current('light'),
-      onEnterBack: () => setThemeRef.current('dark'),
+      onEnter: () => {
+        setThemeRef.current('dark');
+        setLogoMarkColor('#FFFFFF');
+      },
+      onLeave: () => {
+        setThemeRef.current('light');
+        setLogoMarkColor('#12182B');
+      },
+      onLeaveBack: () => {
+        setThemeRef.current('light');
+        setLogoMarkColor('#12182B');
+      },
+      onEnterBack: () => {
+        setThemeRef.current('dark');
+        setLogoMarkColor('#FFFFFF');
+      },
     });
 
     return () => {
@@ -320,13 +337,6 @@ export default function FragmentationV2() {
       ease: 'power2.out',
     }, 52);
 
-    // Logo wordmark color flip — fires AFTER circle has fully covered the viewport
-    // Circle expansion runs t=48 → t=52, so flip at t=52 once the light background is locked in.
-    tl.to(logoMarkGroupRef.current, {
-      attr: { fill: '#12182B' },
-      duration: 0.01,
-      ease: 'none',
-    }, 52);
 
     return () => {
       tl.scrollTrigger?.kill();
