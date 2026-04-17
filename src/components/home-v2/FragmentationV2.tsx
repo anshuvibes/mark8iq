@@ -361,7 +361,7 @@ export default function FragmentationV2() {
   }, []);
 
   return (
-    <div ref={containerRef} data-section="fragmentation" style={{ height: '250vh', position: 'relative' }}>
+    <div ref={containerRef} data-section="fragmentation" data-hide-cursor="true" style={{ height: '250vh', position: 'relative' }}>
       <div
         ref={stickyRef}
         style={{
@@ -607,6 +607,7 @@ export default function FragmentationV2() {
         <button
           ref={videoCTARef}
           type="button"
+          data-show-cursor="true"
           onClick={() => {
             // Video modal trigger — wire up video URL here
             console.log('Play video');
