@@ -71,6 +71,7 @@ export default function FragmentationV2() {
   const logoRef = useRef<HTMLDivElement>(null);
   const subCopyRef = useRef<HTMLDivElement>(null);
   const videoCTARef = useRef<HTMLButtonElement>(null);
+  const endStateZoneRef = useRef<HTMLDivElement>(null);
   const logoMarkColorRef = useRef<string>('#FFFFFF');
   const logoMarkGroupRef = useRef<SVGGElement>(null);
 
@@ -344,6 +345,16 @@ export default function FragmentationV2() {
       y: 0,
       duration: 2,
       ease: 'power2.out',
+      onComplete: () => {
+        if (endStateZoneRef.current) {
+          endStateZoneRef.current.style.pointerEvents = 'auto';
+        }
+      },
+      onReverseComplete: () => {
+        if (endStateZoneRef.current) {
+          endStateZoneRef.current.style.pointerEvents = 'none';
+        }
+      },
     }, 53);
 
     // After circle reveal completes, clear sticky container background
@@ -541,6 +552,18 @@ export default function FragmentationV2() {
           }}
         />
 
+        {/* End-state zone wrapper — cursor-visible region containing logo, sub copy, and video CTA.
+            pointer-events toggled to 'auto' after GSAP reveal completes (see onComplete on videoCTARef tween). */}
+        <div
+          ref={endStateZoneRef}
+          data-show-cursor="true"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            pointerEvents: 'none',
+            zIndex: 30,
+          }}
+        >
         {/* Logo */}
         <div
           ref={logoRef}
@@ -607,7 +630,6 @@ export default function FragmentationV2() {
         <button
           ref={videoCTARef}
           type="button"
-          data-show-cursor="true"
           onClick={() => {
             // Video modal trigger — wire up video URL here
             console.log('Play video');
@@ -692,6 +714,8 @@ export default function FragmentationV2() {
             Watch how it works
           </span>
         </button>
+        </div>
+        {/* /End-state zone */}
 
         <style>{`
           @keyframes fragPulse {
