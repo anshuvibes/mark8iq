@@ -320,12 +320,13 @@ export default function FragmentationV2() {
       ease: 'power2.out',
     }, 52);
 
-    // Logo wordmark color flip — mark8 turns dark as the light background reveals
+    // Logo wordmark color flip — fires AFTER circle has fully covered the viewport
+    // Circle expansion runs t=48 → t=52, so flip at t=52 once the light background is locked in.
     tl.to(logoMarkGroupRef.current, {
       attr: { fill: '#12182B' },
-      duration: 0.5,
+      duration: 0.01,
       ease: 'none',
-    }, 50);
+    }, 52);
 
     return () => {
       tl.scrollTrigger?.kill();
