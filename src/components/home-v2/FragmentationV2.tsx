@@ -122,10 +122,10 @@ export default function FragmentationV2() {
         opacity: 0,
         x: marketplacePills[i].x,
         y: marketplacePills[i].y,
-        z: -600,
+        z: 600,
         xPercent: -50,
         yPercent: -50,
-        scale: 0.3,
+        scale: 2.5,
         transformPerspective: PERSPECTIVE,
       });
       tl.to(el, {
@@ -161,10 +161,10 @@ export default function FragmentationV2() {
         opacity: 0,
         x: departmentTags[i].x,
         y: departmentTags[i].y,
-        z: -1000,
+        z: 1000,
         xPercent: -50,
         yPercent: -50,
-        scale: 0.15,
+        scale: 3,
         transformPerspective: PERSPECTIVE,
       });
       tl.to(el, {
@@ -202,10 +202,10 @@ export default function FragmentationV2() {
         opacity: 0,
         x: personaLabels[i].x,
         y: personaLabels[i].y,
-        z: -1400,
+        z: 1400,
         xPercent: -50,
         yPercent: -50,
-        scale: 0.08,
+        scale: 4,
         transformPerspective: PERSPECTIVE,
       });
       tl.to(el, {
@@ -254,8 +254,8 @@ export default function FragmentationV2() {
     mktRefs.current.forEach((el) => {
       if (!el) return;
       tl.to(el, {
-        z: 800,
-        scale: 3,
+        z: -800,
+        scale: 0.1,
         opacity: 0,
         duration: 4,
         ease: 'power2.in',
@@ -265,8 +265,8 @@ export default function FragmentationV2() {
     deptRefs.current.forEach((el) => {
       if (!el) return;
       tl.to(el, {
-        z: 800,
-        scale: 3,
+        z: -800,
+        scale: 0.1,
         opacity: 0,
         duration: 4,
         ease: 'power2.in',
@@ -276,8 +276,8 @@ export default function FragmentationV2() {
     personaRefs.current.forEach((el) => {
       if (!el) return;
       tl.to(el, {
-        z: 800,
-        scale: 3,
+        z: -800,
+        scale: 0.1,
         opacity: 0,
         duration: 4,
         ease: 'power2.in',
