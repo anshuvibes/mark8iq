@@ -137,11 +137,19 @@ export default function FragmentationV2() {
       }, 0 + i * 0.8);
     });
 
-    // PHASE 2: Text 1 blooms in
-    gsap.set(text1Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
+    // PHASE 2: Text 1 emerges from depth (large/close → settle)
+    gsap.set(text1Ref.current, {
+      opacity: 0,
+      scale: 2.5,
+      z: 600,
+      xPercent: -50,
+      yPercent: -50,
+      transformPerspective: PERSPECTIVE,
+    });
     tl.to(text1Ref.current, {
       opacity: 1,
       scale: 1,
+      z: 0,
       duration: 5,
       ease: 'power2.out',
     }, 8);
