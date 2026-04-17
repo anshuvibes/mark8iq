@@ -254,8 +254,8 @@ export default function FragmentationV2() {
     mktRefs.current.forEach((el) => {
       if (!el) return;
       tl.to(el, {
-        z: 800,
-        scale: 3,
+        z: -800,
+        scale: 0.1,
         opacity: 0,
         duration: 4,
         ease: 'power2.in',
@@ -265,8 +265,8 @@ export default function FragmentationV2() {
     deptRefs.current.forEach((el) => {
       if (!el) return;
       tl.to(el, {
-        z: 800,
-        scale: 3,
+        z: -800,
+        scale: 0.1,
         opacity: 0,
         duration: 4,
         ease: 'power2.in',
@@ -276,8 +276,8 @@ export default function FragmentationV2() {
     personaRefs.current.forEach((el) => {
       if (!el) return;
       tl.to(el, {
-        z: 800,
-        scale: 3,
+        z: -800,
+        scale: 0.1,
         opacity: 0,
         duration: 4,
         ease: 'power2.in',
