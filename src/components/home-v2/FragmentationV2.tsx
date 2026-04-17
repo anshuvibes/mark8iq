@@ -180,20 +180,28 @@ export default function FragmentationV2() {
 
     // No marketplace compress — they stay at their x/y positions
 
-    // PHASE 5: Text 2 blooms in
-    gsap.set(text2Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
+    // PHASE 5: Text 2 flips in from below
+    gsap.set(text2Ref.current, {
+      opacity: 0,
+      rotateX: 90,
+      xPercent: -50,
+      yPercent: -50,
+      transformPerspective: 800,
+      transformOrigin: '50% 50%',
+    });
     tl.to(text2Ref.current, {
       opacity: 1,
-      scale: 1,
-      duration: 5,
+      rotateX: 0,
+      duration: 4,
       ease: 'power2.out',
     }, 22);
 
-    // PHASE 6: Text 2 blooms out
+    // PHASE 6: Text 2 flips up and out
     tl.to(text2Ref.current, {
       opacity: 0,
-      scale: 1.15,
-      duration: 5,
+      rotateX: -90,
+      y: '-=40',
+      duration: 4,
       ease: 'power2.in',
     }, 26);
 
