@@ -520,27 +520,15 @@ export default function FragmentationV2() {
             zIndex: 30,
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
-            <span style={{
-              fontSize: '48px',
-              fontFamily: "'Saira', sans-serif",
-              fontWeight: 400,
-              color: 'var(--v2-frag-logo-text)',
-              letterSpacing: '-0.03em',
-              transition: 'color 0.5s ease',
-            }}>
-              mark8
-            </span>
-            <span style={{
-              fontSize: '48px',
-              fontFamily: "'Saira', sans-serif",
-              fontWeight: 500,
-              color: '#8E59FF',
-              letterSpacing: '-0.03em',
-            }}>
-              IQ
-            </span>
-          </div>
+          <img
+            src="/img/logo-black.svg"
+            alt="Mark8 IQ"
+            style={{
+              height: '48px',
+              width: 'auto',
+              display: 'block',
+            }}
+          />
         </div>
 
         {/* Sub copy */}
