@@ -131,9 +131,12 @@ export default function Navbar() {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  // Scroll listener — toggles scrolled state and direction-aware hide/show
+  // Scroll listener — toggles scrolled state and direction-aware hide/show.
+  // Hide-on-scroll behavior is GATED to only apply while the fragmentation section
+  // is in the viewport. Outside that section, the navbar is always visible.
   useEffect(() => {
     let lastScrollY = window.scrollY;
+    let fragmentationInView = false;
 
     const onScroll = () => {
       const currentScrollY = window.scrollY;
@@ -148,6 +151,13 @@ export default function Navbar() {
 
       setScrolled(currentScrollY > 50);
 
+      // Only allow hide/show toggling while inside fragmentation section
+      if (!fragmentationInView) {
+        setNavHidden(false);
+        lastScrollY = currentScrollY;
+        return;
+      }
+
       // Hide on scroll down (past 100px), show on scroll up
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setNavHidden(true);
@@ -159,7 +169,27 @@ export default function Navbar() {
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+
+    // Watch the fragmentation section to gate the hide/show behavior
+    const fragEl = document.querySelector('[data-section="fragmentation"]');
+    let observer: IntersectionObserver | null = null;
+    if (fragEl) {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          fragmentationInView = entry.isIntersecting;
+          if (!fragmentationInView) {
+            setNavHidden(false);
+          }
+        },
+        { threshold: 0 }
+      );
+      observer.observe(fragEl);
+    }
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      observer?.disconnect();
+    };
   }, []);
 
   // Position the bg_box behind the links_wrap
