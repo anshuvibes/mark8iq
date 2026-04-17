@@ -338,6 +338,14 @@ export default function FragmentationV2() {
       ease: 'power2.out',
     }, 52);
 
+    gsap.set(videoCTARef.current, { opacity: 0, y: 12, xPercent: -50 });
+    tl.to(videoCTARef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 2,
+      ease: 'power2.out',
+    }, 53);
+
     // After circle reveal completes, clear sticky container background
     // so the global grid/gradient layer shows through.
     tl.to(stickyRef.current, {
