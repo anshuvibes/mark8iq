@@ -70,6 +70,7 @@ export default function FragmentationV2() {
   const circleRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const subCopyRef = useRef<HTMLDivElement>(null);
+  const videoCTARef = useRef<HTMLButtonElement>(null);
   const logoMarkColorRef = useRef<string>('#FFFFFF');
   const logoMarkGroupRef = useRef<SVGGElement>(null);
 
