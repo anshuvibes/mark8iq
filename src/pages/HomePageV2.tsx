@@ -13,7 +13,6 @@ import ProofV2 from '../components/home-v2/ProofV2';
 import CredentialsV2 from '../components/home-v2/CredentialsV2';
 import CtaBlockV2 from '../components/home-v2/CtaBlockV2';
 import AgentMarkWidget from '../components/home-v2/AgentMarkWidget';
-import CustomCursor from '../components/CustomCursor';
 
 export default function HomePageV2() {
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -34,7 +33,6 @@ export default function HomePageV2() {
         </main>
         <Footer />
         <AgentMarkWidget />
-        <CustomCursor />
       </Layout>
     </V2ThemeProvider>
   );
