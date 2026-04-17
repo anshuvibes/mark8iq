@@ -20,6 +20,7 @@ import DesignSystemPage from "./pages/DesignSystemPage";
 import HomePageV2 from "./pages/HomePageV2";
 import DeckPage from "./pages/DeckPage";
 import DashboardAdsPage from "./pages/DashboardAdsPage";
+import CustomCursor from "./components/CustomCursor";
 
 const App = () => {
   useEffect(() => {
@@ -44,6 +45,7 @@ const App = () => {
 
   return (
   <BrowserRouter>
+    <CustomCursor />
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/about-us" element={<AboutPage />} />
