@@ -137,20 +137,22 @@ export default function FragmentationV2() {
       }, 0 + i * 0.8);
     });
 
-    // PHASE 2: Text 1 blooms in
-    gsap.set(text1Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
-    tl.to(text1Ref.current, {
+    // PHASE 2: Text 1 already visible (no entrance)
+    gsap.set(text1Ref.current, {
       opacity: 1,
-      scale: 1,
-      duration: 5,
-      ease: 'power2.out',
-    }, 8);
+      rotateX: 0,
+      xPercent: -50,
+      yPercent: -50,
+      transformPerspective: 800,
+      transformOrigin: '50% 50%',
+    });
 
-    // PHASE 3: Text 1 blooms out
+    // PHASE 3: Text 1 flips up and out
     tl.to(text1Ref.current, {
       opacity: 0,
-      scale: 1.15,
-      duration: 5,
+      rotateX: -90,
+      y: '-=40',
+      duration: 4,
       ease: 'power2.in',
     }, 12);
 
