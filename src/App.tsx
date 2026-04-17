@@ -32,18 +32,13 @@ const App = () => {
       allowNestedScroll: true,
     });
 
-    // Expose Lenis globally so components (e.g. FragmentationV2) can stop/start scroll
-    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
-
     lenis.on('scroll', ScrollTrigger.update);
-    const rafTick = (time: number) => { lenis.raf(time * 1000); };
-    gsap.ticker.add(rafTick);
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
     gsap.ticker.lagSmoothing(0);
 
     return () => {
-      gsap.ticker.remove(rafTick);
+      gsap.ticker.remove((time) => { lenis.raf(time * 1000); });
       lenis.destroy();
-      delete (window as unknown as { __lenis?: Lenis }).__lenis;
     };
   }, []);
 
