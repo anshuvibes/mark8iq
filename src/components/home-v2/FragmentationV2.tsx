@@ -137,22 +137,22 @@ export default function FragmentationV2() {
       }, 0 + i * 0.8);
     });
 
-    // PHASE 2: Text 1 blooms in
+    // PHASE 2: Text 1 blooms in (synced with marketplace entry)
     gsap.set(text1Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
     tl.to(text1Ref.current, {
       opacity: 1,
       scale: 1,
       duration: 5,
       ease: 'power2.out',
-    }, 8);
+    }, 0);
 
-    // PHASE 3: Text 1 blooms out
+    // PHASE 3: Text 1 blooms out (just before dept tags arrive)
     tl.to(text1Ref.current, {
       opacity: 0,
       scale: 1.15,
-      duration: 5,
+      duration: 4,
       ease: 'power2.in',
-    }, 12);
+    }, 14);
 
     // PHASE 4: Department tags emerge from deeper Z (-1000 → 0)
     deptRefs.current.forEach((el, i) => {
