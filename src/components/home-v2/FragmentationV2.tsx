@@ -579,7 +579,6 @@ export default function FragmentationV2() {
             pointer-events toggled to 'auto' after GSAP reveal completes (see onComplete on videoCTARef tween). */}
         <div
           ref={endStateZoneRef}
-          data-show-cursor="true"
           style={{
             position: 'absolute',
             inset: 0,
