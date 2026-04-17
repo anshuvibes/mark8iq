@@ -355,6 +355,14 @@ export default function FragmentationV2() {
       ease: 'power2.out',
     }, 52);
 
+    // After circle reveal completes, clear sticky container background
+    // so the global grid/gradient layer shows through.
+    tl.to(stickyRef.current, {
+      backgroundColor: 'transparent',
+      duration: 0.5,
+      ease: 'none',
+    }, 52);
+
     // Safety net: with scrub, fast scroll can skip tl.call().
     // This ScrollTrigger guarantees the lock fires when reveal area is reached.
     const lockTrigger = ScrollTrigger.create({
