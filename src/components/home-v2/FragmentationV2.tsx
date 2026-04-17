@@ -77,6 +77,19 @@ export default function FragmentationV2() {
   const setThemeRef = useRef(setTheme);
   setThemeRef.current = setTheme;
 
+  // One-time scroll lock at the logo reveal moment
+  const hasLockedRef = useRef(false);
+  const lockScrollOnce = () => {
+    if (hasLockedRef.current) return;
+    hasLockedRef.current = true;
+    const lenis = (window as any).__lenis;
+    if (!lenis) return;
+    lenis.stop();
+    setTimeout(() => {
+      lenis.start();
+    }, 1500);
+  };
+
   const setLogoMarkColor = (color: string) => {
     logoMarkColorRef.current = color;
     logoMarkGroupRef.current?.setAttribute('fill', color);
@@ -330,6 +343,11 @@ export default function FragmentationV2() {
       ease: 'power2.out',
     }, 51);
 
+    // Fire scroll lock at logo reveal (timeline path)
+    tl.call(() => {
+      lockScrollOnce();
+    }, [], 51);
+
     gsap.set(subCopyRef.current, { opacity: 0, xPercent: -50 });
     tl.to(subCopyRef.current, {
       opacity: 1,
@@ -337,8 +355,18 @@ export default function FragmentationV2() {
       ease: 'power2.out',
     }, 52);
 
+    // Safety net: with scrub, fast scroll can skip tl.call().
+    // This ScrollTrigger guarantees the lock fires when reveal area is reached.
+    const lockTrigger = ScrollTrigger.create({
+      trigger: container,
+      start: 'bottom 60%',
+      onEnter: () => {
+        lockScrollOnce();
+      },
+    });
 
     return () => {
+      lockTrigger.kill();
       tl.scrollTrigger?.kill();
       tl.kill();
     };

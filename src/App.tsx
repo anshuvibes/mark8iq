@@ -32,12 +32,18 @@ const App = () => {
       allowNestedScroll: true,
     });
 
+    // Expose globally so timeline-driven sections (e.g., FragmentationV2) can pause/resume scroll
+    (window as any).__lenis = lenis;
+
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => { lenis.raf(time * 1000); });
     gsap.ticker.lagSmoothing(0);
 
     return () => {
       gsap.ticker.remove((time) => { lenis.raf(time * 1000); });
+      if ((window as any).__lenis === lenis) {
+        delete (window as any).__lenis;
+      }
       lenis.destroy();
     };
   }, []);
