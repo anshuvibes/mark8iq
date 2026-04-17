@@ -233,11 +233,19 @@ export default function FragmentationV2() {
       }, 30 + i * 1.0);
     });
 
-    // PHASE 8: Text 3 blooms in
-    gsap.set(text3Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
+    // PHASE 8: Text 3 emerges from depth
+    gsap.set(text3Ref.current, {
+      opacity: 0,
+      scale: 2.5,
+      z: 600,
+      xPercent: -50,
+      yPercent: -50,
+      transformPerspective: PERSPECTIVE,
+    });
     tl.to(text3Ref.current, {
       opacity: 1,
       scale: 1,
+      z: 0,
       duration: 5,
       ease: 'power2.out',
     }, 36);
