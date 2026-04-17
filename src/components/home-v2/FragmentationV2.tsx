@@ -345,16 +345,6 @@ export default function FragmentationV2() {
       y: 0,
       duration: 2,
       ease: 'power2.out',
-      onComplete: () => {
-        if (endStateZoneRef.current) {
-          endStateZoneRef.current.style.pointerEvents = 'auto';
-        }
-      },
-      onReverseComplete: () => {
-        if (endStateZoneRef.current) {
-          endStateZoneRef.current.style.pointerEvents = 'none';
-        }
-      },
     }, 53);
 
     // After circle reveal completes, clear sticky container background
@@ -365,9 +355,28 @@ export default function FragmentationV2() {
       ease: 'none',
     }, 52);
 
+    // Supplementary pointer-events toggle for end-state zone.
+    // Fires when user scrolls far enough for end-state to be visible.
+    // ScrollTrigger is reliable where onComplete with scrub is not.
+    const endStateTrigger = ScrollTrigger.create({
+      trigger: container,
+      start: 'bottom 40%',
+      onEnter: () => {
+        if (endStateZoneRef.current) {
+          endStateZoneRef.current.style.pointerEvents = 'auto';
+        }
+      },
+      onLeaveBack: () => {
+        if (endStateZoneRef.current) {
+          endStateZoneRef.current.style.pointerEvents = 'none';
+        }
+      },
+    });
+
     return () => {
       tl.scrollTrigger?.kill();
       tl.kill();
+      endStateTrigger.kill();
     };
   }, []);
 
