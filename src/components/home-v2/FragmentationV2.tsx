@@ -202,10 +202,10 @@ export default function FragmentationV2() {
         opacity: 0,
         x: personaLabels[i].x,
         y: personaLabels[i].y,
-        z: -1400,
+        z: 1400,
         xPercent: -50,
         yPercent: -50,
-        scale: 0.08,
+        scale: 4,
         transformPerspective: PERSPECTIVE,
       });
       tl.to(el, {
