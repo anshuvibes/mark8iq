@@ -607,6 +607,7 @@ export default function FragmentationV2() {
         <button
           ref={videoCTARef}
           type="button"
+          data-show-cursor="true"
           onClick={() => {
             // Video modal trigger — wire up video URL here
             console.log('Play video');
