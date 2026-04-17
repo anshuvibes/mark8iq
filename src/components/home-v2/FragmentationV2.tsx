@@ -470,7 +470,6 @@ export default function FragmentationV2() {
           ref={pivotRef}
           style={{
             ...headingBase,
-            fontSize: '80px',
             maxWidth: undefined,
             width: undefined,
             color: 'var(--v2-frag-heading-text)',
