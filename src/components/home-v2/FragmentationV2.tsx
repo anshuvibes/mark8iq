@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import type Lenis from 'lenis';
 import { useV2Theme } from './ThemeContext';
 
 
@@ -77,6 +78,10 @@ export default function FragmentationV2() {
   const setThemeRef = useRef(setTheme);
   setThemeRef.current = setTheme;
 
+  // Scroll dwell pause refs — fires once per downward pass at the Mark8 IQ reveal
+  const dwellFiredRef = useRef(false);
+  const dwellTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const setLogoMarkColor = (color: string) => {
     logoMarkColorRef.current = color;
     logoMarkGroupRef.current?.setAttribute('fill', color);
@@ -103,6 +108,15 @@ export default function FragmentationV2() {
       onLeaveBack: () => {
         setThemeRef.current('light');
         setLogoMarkColor('#12182B');
+        // Reset dwell so it can fire again on next downward pass
+        dwellFiredRef.current = false;
+        if (dwellTimeoutRef.current) {
+          clearTimeout(dwellTimeoutRef.current);
+          dwellTimeoutRef.current = null;
+        }
+        // Safety: ensure Lenis is running if user scrolls back up mid-dwell
+        const lenis = (window as unknown as { __lenis?: Lenis }).__lenis;
+        lenis?.start();
       },
       onEnterBack: () => {
         setThemeRef.current('dark');
@@ -337,10 +351,32 @@ export default function FragmentationV2() {
       ease: 'power2.out',
     }, 52);
 
+    // Dwell pause at the Mark8 IQ reveal — fires once per downward pass
+    tl.call(() => {
+      if (dwellFiredRef.current) return;
+      dwellFiredRef.current = true;
+
+      const lenis = (window as unknown as { __lenis?: Lenis }).__lenis;
+      if (!lenis) return;
+
+      lenis.stop();
+      dwellTimeoutRef.current = setTimeout(() => {
+        lenis.start();
+        dwellTimeoutRef.current = null;
+      }, 1800);
+    }, [], 51);
+
 
     return () => {
       tl.scrollTrigger?.kill();
       tl.kill();
+      if (dwellTimeoutRef.current) {
+        clearTimeout(dwellTimeoutRef.current);
+        dwellTimeoutRef.current = null;
+      }
+      // Safety: ensure Lenis is not left stopped if component unmounts mid-dwell
+      const lenis = (window as unknown as { __lenis?: Lenis }).__lenis;
+      lenis?.start();
     };
   }, []);
 
