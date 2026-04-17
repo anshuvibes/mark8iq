@@ -77,6 +77,11 @@ export default function FragmentationV2() {
   const setThemeRef = useRef(setTheme);
   setThemeRef.current = setTheme;
 
+  const setLogoMarkColor = (color: string) => {
+    logoMarkColorRef.current = color;
+    logoMarkGroupRef.current?.setAttribute('fill', color);
+  };
+
   // ScrollTrigger-based theme toggle — uses global V2 theme context
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
