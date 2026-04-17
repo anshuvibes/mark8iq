@@ -46,7 +46,7 @@ export default function Layout({ children }: LayoutProps) {
       <GradualBlur
         target="page"
         position="bottom"
-        height="48px"
+        height="80px"
         strength={0.8}
         divCount={6}
         curve="bezier"
