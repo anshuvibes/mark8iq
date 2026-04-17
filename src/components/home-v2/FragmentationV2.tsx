@@ -137,20 +137,22 @@ export default function FragmentationV2() {
       }, 0 + i * 0.8);
     });
 
-    // PHASE 2: Text 1 blooms in
-    gsap.set(text1Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
-    tl.to(text1Ref.current, {
+    // PHASE 2: Text 1 already visible (no entrance)
+    gsap.set(text1Ref.current, {
       opacity: 1,
-      scale: 1,
-      duration: 5,
-      ease: 'power2.out',
-    }, 8);
+      rotateX: 0,
+      xPercent: -50,
+      yPercent: -50,
+      transformPerspective: 800,
+      transformOrigin: '50% 50%',
+    });
 
-    // PHASE 3: Text 1 blooms out
+    // PHASE 3: Text 1 flips up and out
     tl.to(text1Ref.current, {
       opacity: 0,
-      scale: 1.15,
-      duration: 5,
+      rotateX: -90,
+      y: '-=40',
+      duration: 4,
       ease: 'power2.in',
     }, 12);
 
@@ -178,20 +180,28 @@ export default function FragmentationV2() {
 
     // No marketplace compress — they stay at their x/y positions
 
-    // PHASE 5: Text 2 blooms in
-    gsap.set(text2Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
+    // PHASE 5: Text 2 flips in from below
+    gsap.set(text2Ref.current, {
+      opacity: 0,
+      rotateX: 90,
+      xPercent: -50,
+      yPercent: -50,
+      transformPerspective: 800,
+      transformOrigin: '50% 50%',
+    });
     tl.to(text2Ref.current, {
       opacity: 1,
-      scale: 1,
-      duration: 5,
+      rotateX: 0,
+      duration: 4,
       ease: 'power2.out',
     }, 22);
 
-    // PHASE 6: Text 2 blooms out
+    // PHASE 6: Text 2 flips up and out
     tl.to(text2Ref.current, {
       opacity: 0,
-      scale: 1.15,
-      duration: 5,
+      rotateX: -90,
+      y: '-=40',
+      duration: 4,
       ease: 'power2.in',
     }, 26);
 
@@ -217,30 +227,45 @@ export default function FragmentationV2() {
       }, 30 + i * 1.0);
     });
 
-    // PHASE 8: Text 3 blooms in
-    gsap.set(text3Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
+    // PHASE 8: Text 3 flips in from below
+    gsap.set(text3Ref.current, {
+      opacity: 0,
+      rotateX: 90,
+      xPercent: -50,
+      yPercent: -50,
+      transformPerspective: 800,
+      transformOrigin: '50% 50%',
+    });
     tl.to(text3Ref.current, {
       opacity: 1,
-      scale: 1,
-      duration: 5,
+      rotateX: 0,
+      duration: 4,
       ease: 'power2.out',
     }, 36);
 
-    // PHASE 9: Text 3 blooms out
+    // PHASE 9: Text 3 flips up and out
     tl.to(text3Ref.current, {
       opacity: 0,
-      scale: 1.15,
+      rotateX: -90,
+      y: '-=40',
       duration: 4,
       ease: 'power2.in',
     }, 40);
 
-    // PHASE 10: "Until now." blooms in
-    gsap.set(pivotRef.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
+    // PHASE 10: "Until now." flips in from below
+    gsap.set(pivotRef.current, {
+      opacity: 0,
+      rotateX: 90,
+      xPercent: -50,
+      yPercent: -50,
+      transformPerspective: 800,
+      transformOrigin: '50% 50%',
+    });
     tl.to(pivotRef.current, {
       opacity: 1,
-      scale: 1,
-      duration: 4,
-      ease: 'power2.out',
+      rotateX: 0,
+      duration: 3,
+      ease: 'power3.out',
     }, 44);
 
     // PHASE 11: Everything flies PAST the camera (positive Z = toward viewer)
