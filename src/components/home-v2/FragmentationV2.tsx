@@ -178,22 +178,22 @@ export default function FragmentationV2() {
 
     // No marketplace compress — they stay at their x/y positions
 
-    // PHASE 5: Text 2 blooms in
+    // PHASE 5: Text 2 blooms in (synced with dept tag entry)
     gsap.set(text2Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
     tl.to(text2Ref.current, {
       opacity: 1,
       scale: 1,
       duration: 5,
       ease: 'power2.out',
-    }, 22);
+    }, 16);
 
-    // PHASE 6: Text 2 blooms out
+    // PHASE 6: Text 2 blooms out (before personas arrive)
     tl.to(text2Ref.current, {
       opacity: 0,
       scale: 1.15,
-      duration: 5,
+      duration: 4,
       ease: 'power2.in',
-    }, 26);
+    }, 28);
 
     // PHASE 7: Persona labels emerge from deepest Z (-1400 → 0)
     personaRefs.current.forEach((el, i) => {
