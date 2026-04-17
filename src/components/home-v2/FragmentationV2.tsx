@@ -243,69 +243,80 @@ export default function FragmentationV2() {
       ease: 'power2.out',
     }, 44);
 
-    // PHASE 11: Everything flies PAST the camera (positive Z = toward viewer)
+    // PHASE 11: Pivot exits and elements collapse INTO the circle
     tl.to(pivotRef.current, {
       opacity: 0,
       scale: 0.8,
       duration: 3,
       ease: 'power2.in',
-    }, 48);
+    }, 46);
 
     mktRefs.current.forEach((el) => {
       if (!el) return;
       tl.to(el, {
-        z: -800,
-        scale: 0.1,
+        x: 0,
+        y: 0,
+        z: -200,
+        scale: 0,
         opacity: 0,
-        duration: 4,
+        duration: 3,
         ease: 'power2.in',
-      }, 48);
+      }, 46);
     });
 
     deptRefs.current.forEach((el) => {
       if (!el) return;
       tl.to(el, {
-        z: -800,
-        scale: 0.1,
+        x: 0,
+        y: 0,
+        z: -200,
+        scale: 0,
         opacity: 0,
-        duration: 4,
+        duration: 3,
         ease: 'power2.in',
-      }, 48);
+      }, 46);
     });
 
     personaRefs.current.forEach((el) => {
       if (!el) return;
       tl.to(el, {
-        z: -800,
-        scale: 0.1,
+        x: 0,
+        y: 0,
+        z: -200,
+        scale: 0,
         opacity: 0,
-        duration: 4,
+        duration: 3,
         ease: 'power2.in',
-      }, 48);
+      }, 46);
     });
 
-    // PHASE 12: Circle expands, logo reveals
-    gsap.set(circleRef.current, { scale: 0, opacity: 0, xPercent: -50, yPercent: -50 });
+    // PHASE 12: Circle appears at pivot moment, then explodes
+    gsap.set(circleRef.current, { scale: 0, opacity: 1, xPercent: -50, yPercent: -50 });
     tl.to(circleRef.current, {
-      scale: 40,
-      opacity: 1,
+      scale: 0.15,
+      duration: 2,
+      ease: 'power2.out',
+    }, 44);
+
+    tl.to(circleRef.current, {
+      scale: 60,
       duration: 4,
       ease: 'power3.inOut',
-    }, 52);
+    }, 48);
 
     gsap.set(logoRef.current, { opacity: 0, xPercent: -50, yPercent: -50 });
     tl.to(logoRef.current, {
       opacity: 1,
       duration: 2,
       ease: 'power2.out',
-    }, 55);
+    }, 51);
 
     gsap.set(subCopyRef.current, { opacity: 0, xPercent: -50 });
     tl.to(subCopyRef.current, {
       opacity: 1,
       duration: 2,
       ease: 'power2.out',
-    }, 57);
+    }, 52);
 
     return () => {
       tl.scrollTrigger?.kill();
@@ -509,27 +520,15 @@ export default function FragmentationV2() {
             zIndex: 30,
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
-            <span style={{
-              fontSize: '48px',
-              fontFamily: "'Saira', sans-serif",
-              fontWeight: 400,
-              color: 'var(--v2-frag-logo-text)',
-              letterSpacing: '-0.03em',
-              transition: 'color 0.5s ease',
-            }}>
-              mark8
-            </span>
-            <span style={{
-              fontSize: '48px',
-              fontFamily: "'Saira', sans-serif",
-              fontWeight: 500,
-              color: '#8E59FF',
-              letterSpacing: '-0.03em',
-            }}>
-              IQ
-            </span>
-          </div>
+          <img
+            src="/img/logo-black.svg"
+            alt="Mark8 IQ"
+            style={{
+              height: '48px',
+              width: 'auto',
+              display: 'block',
+            }}
+          />
         </div>
 
         {/* Sub copy */}
