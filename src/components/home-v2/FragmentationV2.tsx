@@ -714,6 +714,8 @@ export default function FragmentationV2() {
             Watch how it works
           </span>
         </button>
+        </div>
+        {/* /End-state zone */}
 
         <style>{`
           @keyframes fragPulse {
