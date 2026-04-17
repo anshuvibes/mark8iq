@@ -602,6 +602,112 @@ export default function FragmentationV2() {
         >
           This is what control looks like.
         </div>
+
+        {/* Video CTA */}
+        <button
+          ref={videoCTARef}
+          type="button"
+          onClick={() => {
+            // Video modal trigger — wire up video URL here
+            console.log('Play video');
+          }}
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: 'calc(50% + 110px)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '8px 20px 8px 8px',
+            background: 'rgba(255, 255, 255, 0.06)',
+            border: '1px solid rgba(255, 255, 255, 0.18)',
+            borderRadius: '999px',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+            cursor: 'pointer',
+            zIndex: 30,
+            fontFamily: "'Saira', sans-serif",
+            transition: 'background-color 0.3s ease, border-color 0.3s ease',
+          }}
+        >
+          {/* Pulsing play icon */}
+          <span
+            style={{
+              position: 'relative',
+              width: '32px',
+              height: '32px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {/* Pulse ring */}
+            <span
+              style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: '50%',
+                background: '#8E59FF',
+                animation: 'fragPulse 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              }}
+            />
+            {/* Play circle */}
+            <span
+              style={{
+                position: 'relative',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                background: '#8E59FF',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {/* Play triangle */}
+              <span
+                style={{
+                  width: 0,
+                  height: 0,
+                  borderTop: '6px solid transparent',
+                  borderBottom: '6px solid transparent',
+                  borderLeft: '9px solid #FFFFFF',
+                  marginLeft: '2px',
+                }}
+              />
+            </span>
+          </span>
+
+          {/* Label */}
+          <span
+            style={{
+              fontSize: '16px',
+              fontWeight: 400,
+              color: 'var(--v2-frag-sub-text)',
+              letterSpacing: '-0.01em',
+              transition: 'color 0.5s ease',
+            }}
+          >
+            Watch how it works
+          </span>
+        </button>
+
+        <style>{`
+          @keyframes fragPulse {
+            0% {
+              transform: scale(1);
+              opacity: 0.8;
+            }
+            70% {
+              transform: scale(1.6);
+              opacity: 0;
+            }
+            100% {
+              transform: scale(1.6);
+              opacity: 0;
+            }
+          }
+        `}</style>
       </div>
     </div>
   );
