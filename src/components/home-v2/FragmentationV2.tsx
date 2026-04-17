@@ -111,7 +111,7 @@ export default function FragmentationV2() {
         trigger: container,
         start: 'top 70%',
         end: 'bottom bottom',
-        scrub: 1.5,
+        scrub: 2.5,
       },
     });
 
@@ -144,7 +144,7 @@ export default function FragmentationV2() {
       scale: 1,
       duration: 5,
       ease: 'power2.out',
-    }, 0);
+    }, 2);
 
     // PHASE 3: Text 1 blooms out (just before dept tags arrive)
     tl.to(text1Ref.current, {
@@ -185,7 +185,7 @@ export default function FragmentationV2() {
       scale: 1,
       duration: 5,
       ease: 'power2.out',
-    }, 16);
+    }, 18);
 
     // PHASE 6: Text 2 blooms out (before personas arrive)
     tl.to(text2Ref.current, {
@@ -224,7 +224,7 @@ export default function FragmentationV2() {
       scale: 1,
       duration: 5,
       ease: 'power2.out',
-    }, 30);
+    }, 32);
 
     // PHASE 9: Text 3 blooms out
     tl.to(text3Ref.current, {
