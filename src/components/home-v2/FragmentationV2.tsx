@@ -320,6 +320,13 @@ export default function FragmentationV2() {
       ease: 'power2.out',
     }, 52);
 
+    // Logo wordmark color flip — mark8 turns dark as the light background reveals
+    tl.to(logoMarkGroupRef.current, {
+      attr: { fill: '#12182B' },
+      duration: 0.5,
+      ease: 'none',
+    }, 50);
+
     return () => {
       tl.scrollTrigger?.kill();
       tl.kill();
