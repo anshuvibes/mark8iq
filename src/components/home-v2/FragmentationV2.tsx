@@ -186,11 +186,19 @@ export default function FragmentationV2() {
 
     // No marketplace compress — they stay at their x/y positions
 
-    // PHASE 5: Text 2 blooms in
-    gsap.set(text2Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
+    // PHASE 5: Text 2 emerges from depth
+    gsap.set(text2Ref.current, {
+      opacity: 0,
+      scale: 2.5,
+      z: 600,
+      xPercent: -50,
+      yPercent: -50,
+      transformPerspective: PERSPECTIVE,
+    });
     tl.to(text2Ref.current, {
       opacity: 1,
       scale: 1,
+      z: 0,
       duration: 5,
       ease: 'power2.out',
     }, 22);
