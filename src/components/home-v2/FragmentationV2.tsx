@@ -344,6 +344,16 @@ export default function FragmentationV2() {
       y: 0,
       duration: 2,
       ease: 'power2.out',
+      onComplete: () => {
+        if (endStateZoneRef.current) {
+          endStateZoneRef.current.style.pointerEvents = 'auto';
+        }
+      },
+      onReverseComplete: () => {
+        if (endStateZoneRef.current) {
+          endStateZoneRef.current.style.pointerEvents = 'none';
+        }
+      },
     }, 53);
 
     // After circle reveal completes, clear sticky container background
