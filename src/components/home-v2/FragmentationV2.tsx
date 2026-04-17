@@ -137,22 +137,22 @@ export default function FragmentationV2() {
       }, 0 + i * 0.8);
     });
 
-    // PHASE 2: Text 1 blooms in
+    // PHASE 2: Text 1 blooms in (synced with marketplace entry)
     gsap.set(text1Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
     tl.to(text1Ref.current, {
       opacity: 1,
       scale: 1,
       duration: 5,
       ease: 'power2.out',
-    }, 8);
+    }, 0);
 
-    // PHASE 3: Text 1 blooms out
+    // PHASE 3: Text 1 blooms out (just before dept tags arrive)
     tl.to(text1Ref.current, {
       opacity: 0,
       scale: 1.15,
-      duration: 5,
+      duration: 4,
       ease: 'power2.in',
-    }, 12);
+    }, 14);
 
     // PHASE 4: Department tags emerge from deeper Z (-1000 → 0)
     deptRefs.current.forEach((el, i) => {
@@ -178,22 +178,22 @@ export default function FragmentationV2() {
 
     // No marketplace compress — they stay at their x/y positions
 
-    // PHASE 5: Text 2 blooms in
+    // PHASE 5: Text 2 blooms in (synced with dept tag entry)
     gsap.set(text2Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
     tl.to(text2Ref.current, {
       opacity: 1,
       scale: 1,
       duration: 5,
       ease: 'power2.out',
-    }, 22);
+    }, 16);
 
-    // PHASE 6: Text 2 blooms out
+    // PHASE 6: Text 2 blooms out (before personas arrive)
     tl.to(text2Ref.current, {
       opacity: 0,
       scale: 1.15,
-      duration: 5,
+      duration: 4,
       ease: 'power2.in',
-    }, 26);
+    }, 28);
 
     // PHASE 7: Persona labels emerge from deepest Z (-1400 → 0)
     personaRefs.current.forEach((el, i) => {
@@ -217,14 +217,14 @@ export default function FragmentationV2() {
       }, 30 + i * 1.0);
     });
 
-    // PHASE 8: Text 3 blooms in
+    // PHASE 8: Text 3 blooms in (synced with persona entry)
     gsap.set(text3Ref.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
     tl.to(text3Ref.current, {
       opacity: 1,
       scale: 1,
       duration: 5,
       ease: 'power2.out',
-    }, 36);
+    }, 30);
 
     // PHASE 9: Text 3 blooms out
     tl.to(text3Ref.current, {
@@ -232,7 +232,7 @@ export default function FragmentationV2() {
       scale: 1.15,
       duration: 4,
       ease: 'power2.in',
-    }, 40);
+    }, 42);
 
     // PHASE 10: "Until now." blooms in
     gsap.set(pivotRef.current, { opacity: 0, scale: 0.5, xPercent: -50, yPercent: -50 });
