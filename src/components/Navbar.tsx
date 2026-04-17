@@ -131,9 +131,33 @@ export default function Navbar() {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  // Scroll listener for header_scrolled state
+  // Scroll listener — toggles scrolled state and direction-aware hide/show
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    let lastScrollY = window.scrollY;
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Always show at top of page
+      if (currentScrollY <= 0) {
+        setScrolled(false);
+        setNavHidden(false);
+        lastScrollY = currentScrollY;
+        return;
+      }
+
+      setScrolled(currentScrollY > 50);
+
+      // Hide on scroll down (past 100px), show on scroll up
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setNavHidden(true);
+      } else if (currentScrollY < lastScrollY) {
+        setNavHidden(false);
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
