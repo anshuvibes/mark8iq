@@ -110,7 +110,7 @@ export default function AgentMarkWidget() {
               position: 'fixed',
               bottom: '24px',
               right: '24px',
-              zIndex: 9999,
+              zIndex: 99999,
               cursor: 'pointer',
             }}
             onClick={() => { setIsOpen(true); setShowNudge(false); }}
@@ -170,7 +170,7 @@ export default function AgentMarkWidget() {
               background: '#0D1117',
               borderRadius: '16px',
               overflow: 'hidden',
-              zIndex: 9999,
+              zIndex: 99999,
               display: 'flex',
               flexDirection: 'column',
               boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
