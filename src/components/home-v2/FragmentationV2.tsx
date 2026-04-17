@@ -122,10 +122,10 @@ export default function FragmentationV2() {
         opacity: 0,
         x: marketplacePills[i].x,
         y: marketplacePills[i].y,
-        z: -600,
+        z: 600,
         xPercent: -50,
         yPercent: -50,
-        scale: 0.3,
+        scale: 2.5,
         transformPerspective: PERSPECTIVE,
       });
       tl.to(el, {
