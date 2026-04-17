@@ -92,10 +92,22 @@ export default function FragmentationV2() {
       trigger: container,
       start: 'top 80%',
       end: 'bottom bottom',
-      onEnter: () => setThemeRef.current('dark'),
-      onLeave: () => setThemeRef.current('light'),
-      onLeaveBack: () => setThemeRef.current('light'),
-      onEnterBack: () => setThemeRef.current('dark'),
+      onEnter: () => {
+        setThemeRef.current('dark');
+        setLogoMarkColor('#FFFFFF');
+      },
+      onLeave: () => {
+        setThemeRef.current('light');
+        setLogoMarkColor('#12182B');
+      },
+      onLeaveBack: () => {
+        setThemeRef.current('light');
+        setLogoMarkColor('#12182B');
+      },
+      onEnterBack: () => {
+        setThemeRef.current('dark');
+        setLogoMarkColor('#FFFFFF');
+      },
     });
 
     return () => {
