@@ -345,6 +345,14 @@ export default function FragmentationV2() {
       ease: 'power2.out',
     }, 52);
 
+    gsap.set(videoCTAWrapperRef.current, { opacity: 0, y: 12 });
+    tl.to(videoCTAWrapperRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 2,
+      ease: 'power2.out',
+    }, 53);
+
     // After circle reveal completes, clear sticky container background
     // so the global grid/gradient layer shows through.
     tl.to(stickyRef.current, {
@@ -551,7 +559,7 @@ export default function FragmentationV2() {
             zIndex: 30,
           }}
         >
-        {/* Logo — centered in sticky viewport */}
+        {/* Logo */}
         <div
           ref={logoRef}
           style={{
@@ -592,13 +600,13 @@ export default function FragmentationV2() {
           </svg>
         </div>
 
-        {/* Sub copy — centered, 52px below logo */}
+        {/* Sub copy */}
         <div
           ref={subCopyRef}
           style={{
             position: 'absolute',
             left: '50%',
-            top: 'calc(50% + 40px)',
+            top: 'calc(50% + 52px)',
             fontFamily: "'Saira', sans-serif",
             fontSize: '24px',
             fontWeight: 400,
@@ -613,40 +621,10 @@ export default function FragmentationV2() {
           This is what control looks like.
         </div>
 
-        {/* Scroll video — renders 48px below sub-copy inside fragmentation end-state */}
-        <div
-          style={{
-            position: 'absolute',
-            left: '50%',
-            top: 'calc(50% + 90px)',
-            transform: 'translateX(-50%)',
-            width: '62vw',
-            aspectRatio: '16 / 9',
-            borderRadius: '12px',
-            overflow: 'hidden',
-            boxShadow: '0 24px 64px rgba(0,0,0,0.32)',
-            zIndex: 30,
-            pointerEvents: 'auto',
-          }}
-        >
-          <video
-            src="/demo.mp4"
-            controls
-            playsInline
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              display: 'block',
-            }}
-          />
-        </div>
-
-        {/* Video CTA — hidden; replaced by ScrollVideoV2 reveal section below */}
+        {/* Video CTA — magnetic pull + charge ring */}
         <div
           ref={videoCTAWrapperRef}
           style={{
-            display: 'none',
             position: 'absolute',
             left: '50%',
             top: 'calc(50% + 110px)',
