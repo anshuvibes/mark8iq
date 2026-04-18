@@ -4,7 +4,7 @@ import 'video.js/dist/video-js.css';
 import type Player from 'video.js/dist/types/player';
 
 // Replace with real video URL when available
-const VIDEO_URL = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+const VIDEO_URL = '/demo.mp4';
 
 interface VideoModalProps {
   onClose: () => void;
