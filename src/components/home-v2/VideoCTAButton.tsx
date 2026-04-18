@@ -16,13 +16,31 @@ export default function VideoCTAButton() {
   const rawX = useSpring(0, { stiffness: 150, damping: 15 });
   const rawY = useSpring(0, { stiffness: 150, damping: 15 });
 
-  // Pill charge ring geometry
-  // Pill approx 220px wide x 48px tall, rx=24 (matches border-radius: 999px at this height)
-  const PILL_W = 220;
-  const PILL_H = 48;
-  const PILL_RX = 24;
-  // Perimeter of a rounded rect: 2*(W-2rx) + 2*(H-2rx) + 2*PI*rx
-  const PILL_PERIMETER = 2 * (PILL_W - 2 * PILL_RX) + 2 * (PILL_H - 2 * PILL_RX) + 2 * Math.PI * PILL_RX;
+  // Pill charge ring geometry — measured dynamically
+  const [pillSize, setPillSize] = useState({ w: 220, h: 48 });
+  const PILL_RX = pillSize.h / 2;
+  const PILL_PERIMETER =
+    2 * (pillSize.w - 2 * PILL_RX) +
+    2 * (pillSize.h - 2 * PILL_RX) +
+    2 * Math.PI * PILL_RX;
+
+  // Measure pill on mount and on resize
+  useEffect(() => {
+    const el = buttonRef.current;
+    if (!el) return;
+
+    const measure = () => {
+      const rect = el.getBoundingClientRect();
+      if (rect.width > 0) {
+        setPillSize({ w: rect.width, h: rect.height });
+      }
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   // Mousemove handler for magnetic effect
   useEffect(() => {
@@ -123,14 +141,16 @@ export default function VideoCTAButton() {
             fontFamily: "'Saira', sans-serif",
             transition: 'background 0.3s ease, border-color 0.3s ease',
             userSelect: 'none',
+            minWidth: '220px',
+            justifyContent: 'flex-start',
           }}
         >
           {/* Pill charge ring SVG — overlays entire pill on hover */}
           {isCharging && (
             <svg
-              width={PILL_W}
-              height={PILL_H}
-              viewBox={`0 0 ${PILL_W} ${PILL_H}`}
+              width={pillSize.w}
+              height={pillSize.h}
+              viewBox={`0 0 ${pillSize.w} ${pillSize.h}`}
               style={{
                 position: 'absolute',
                 top: '50%',
@@ -145,8 +165,8 @@ export default function VideoCTAButton() {
               <rect
                 x="1.25"
                 y="1.25"
-                width={PILL_W - 2.5}
-                height={PILL_H - 2.5}
+                width={pillSize.w - 2.5}
+                height={pillSize.h - 2.5}
                 rx={PILL_RX}
                 ry={PILL_RX}
                 fill="none"
@@ -157,8 +177,8 @@ export default function VideoCTAButton() {
               <rect
                 x="1.25"
                 y="1.25"
-                width={PILL_W - 2.5}
-                height={PILL_H - 2.5}
+                width={pillSize.w - 2.5}
+                height={pillSize.h - 2.5}
                 rx={PILL_RX}
                 ry={PILL_RX}
                 fill="none"
@@ -234,7 +254,7 @@ export default function VideoCTAButton() {
               whiteSpace: 'nowrap',
             }}
           >
-            {isCharging ? 'Opening demo...' : 'See it in action'}
+            {isCharging ? 'Watch this.' : 'See it in action'}
           </span>
         </div>
       </motion.div>
