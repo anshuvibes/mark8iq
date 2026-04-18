@@ -1098,39 +1098,16 @@ body {
   cursor: none !important;
 }
 
-/* ─── Video.js Mark8 IQ brand skin ─── */
+/* ─── Video.js v10 Mark8 IQ brand skin ─── */
+/* The v10 default skin uses `currentColor` for sliders/icons and CSS custom properties for surfaces. */
 
-.vjs-mark8iq.video-js {
-  background-color: #080D19;
-}
-
-/* Violet accent on progress and volume */
-.vjs-mark8iq .vjs-play-progress,
-.vjs-mark8iq .vjs-volume-level {
-  background-color: #8E59FF;
-}
-
-.vjs-mark8iq .vjs-play-progress::before {
+.vjs-mark8iq-wrapper .media-default-skin {
   color: #8E59FF;
+  --media-border-radius: 12px;
+  --media-video-border-radius: 12px;
 }
 
-.vjs-mark8iq .vjs-load-progress {
-  background-color: rgba(142, 89, 255, 0.2);
-}
-
-.vjs-mark8iq .vjs-big-play-button {
-  background-color: #8E59FF;
-  border: none;
-  border-radius: 50%;
-  width: 64px;
-  height: 64px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
-}
-
-.vjs-mark8iq .vjs-big-play-button:hover {
-  background-color: #a280ff;
+.vjs-mark8iq-wrapper .media-default-skin--video {
+  background: #080D19;
 }
 
