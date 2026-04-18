@@ -80,7 +80,7 @@ export default function VideoCTAButton() {
     const tick = (timestamp: number) => {
       if (!startTimeRef.current) startTimeRef.current = timestamp;
       const elapsed = timestamp - startTimeRef.current;
-      const p = Math.min(elapsed / 3000, 1);
+      const p = Math.min(elapsed / 1500, 1);
       setProgress(p);
 
       if (p < 1) {
