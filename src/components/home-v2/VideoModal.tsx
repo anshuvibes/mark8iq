@@ -24,14 +24,30 @@ export default function VideoModal({ onClose }: VideoModalProps) {
     return () => document.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
-  // On scroll: enter native Picture-in-Picture, then close the modal
+  // On scroll: enter native Picture-in-Picture, THEN close the modal.
+  // We wait for the `enterpictureinpicture` event so the browser has fully
+  // detached the video into its PiP window before React unmounts the <video>.
   useEffect(() => {
     const handleScroll = () => {
       const videoEl = videoRef.current;
-      if (videoEl && document.pictureInPictureEnabled && !document.pictureInPictureElement) {
-        videoEl.requestPictureInPicture().catch(() => {});
+      if (!videoEl) {
+        onClose();
+        return;
       }
-      onClose();
+
+      if (document.pictureInPictureEnabled && !document.pictureInPictureElement) {
+        videoEl
+          .requestPictureInPicture()
+          .then(() => {
+            // Defer close until after PiP detachment is committed
+            requestAnimationFrame(() => onClose());
+          })
+          .catch(() => {
+            onClose();
+          });
+      } else {
+        onClose();
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
