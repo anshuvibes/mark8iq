@@ -30,6 +30,13 @@ export default function VideoModal({ onClose }: VideoModalProps) {
   useEffect(() => {
     const handleScroll = () => {
       const videoEl = videoRef.current;
+      console.log('[PiP Debug] scroll fired');
+      console.log('[PiP Debug] videoRef.current:', videoEl);
+      console.log('[PiP Debug] pictureInPictureEnabled:', document.pictureInPictureEnabled);
+      console.log('[PiP Debug] pictureInPictureElement:', document.pictureInPictureElement);
+      console.log('[PiP Debug] video paused:', videoEl?.paused);
+      console.log('[PiP Debug] video readyState:', videoEl?.readyState);
+
       if (!videoEl) {
         onClose();
         return;
@@ -39,10 +46,10 @@ export default function VideoModal({ onClose }: VideoModalProps) {
         videoEl
           .requestPictureInPicture()
           .then(() => {
-            // Defer close until after PiP detachment is committed
             requestAnimationFrame(() => onClose());
           })
-          .catch(() => {
+          .catch((err) => {
+            console.log('[PiP Debug] requestPictureInPicture failed:', err);
             onClose();
           });
       } else {
