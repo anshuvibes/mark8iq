@@ -1097,3 +1097,96 @@ body {
 *, *::before, *::after {
   cursor: none !important;
 }
+
+/* ─── Video.js Mark8 IQ brand skin ─── */
+
+.vjs-mark8iq.video-js {
+  background-color: #080D19;
+  font-family: 'Saira', sans-serif;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Big play button — centered violet circle */
+.vjs-mark8iq .vjs-big-play-button {
+  background: #8E59FF !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 72px !important;
+  height: 72px !important;
+  line-height: 72px !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+}
+
+.vjs-mark8iq .vjs-big-play-button:hover {
+  background: #a280ff !important;
+}
+
+.vjs-mark8iq .vjs-big-play-button .vjs-icon-placeholder::before {
+  font-size: 28px !important;
+  line-height: 72px !important;
+}
+
+/* Control bar */
+.vjs-mark8iq .vjs-control-bar {
+  background: rgba(8, 13, 25, 0.92) !important;
+  height: 44px !important;
+  padding: 0 8px !important;
+}
+
+/* Progress bar track */
+.vjs-mark8iq .vjs-progress-control .vjs-progress-holder {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Progress bar fill */
+.vjs-mark8iq .vjs-play-progress {
+  background: #8E59FF !important;
+}
+
+/* Seek handle dot */
+.vjs-mark8iq .vjs-play-progress::before {
+  color: #8E59FF !important;
+}
+
+/* Load progress */
+.vjs-mark8iq .vjs-load-progress {
+  background: rgba(142, 89, 255, 0.2) !important;
+}
+
+/* All control icons */
+.vjs-mark8iq .vjs-control-bar .vjs-button > .vjs-icon-placeholder::before,
+.vjs-mark8iq .vjs-current-time,
+.vjs-mark8iq .vjs-time-divider,
+.vjs-mark8iq .vjs-duration,
+.vjs-mark8iq .vjs-remaining-time {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-family: 'Saira', sans-serif !important;
+  font-weight: 300 !important;
+}
+
+/* Volume bar fill */
+.vjs-mark8iq .vjs-volume-level {
+  background: #8E59FF !important;
+}
+
+/* Focus outlines — remove default yellow */
+.vjs-mark8iq .vjs-control:focus,
+.vjs-mark8iq .vjs-control:focus-visible {
+  outline: none !important;
+  text-shadow: none !important;
+}
+
+/* Tooltip */
+.vjs-mark8iq .vjs-time-tooltip,
+.vjs-mark8iq .vjs-mouse-display .vjs-time-tooltip {
+  background: #8E59FF !important;
+  color: #ffffff !important;
+  font-family: 'Saira', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 300 !important;
+  border-radius: 4px !important;
+}
