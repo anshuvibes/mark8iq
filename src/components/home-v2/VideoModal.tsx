@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { createPlayer } from '@videojs/react';
 import { Video, VideoSkin, videoFeatures } from '@videojs/react/video';
@@ -13,6 +13,8 @@ interface VideoModalProps {
 }
 
 export default function VideoModal({ onClose }: VideoModalProps) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
   // Close on Escape
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -22,20 +24,19 @@ export default function VideoModal({ onClose }: VideoModalProps) {
     return () => document.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
-  // Lock scroll (native + Lenis)
+  // On scroll: enter native Picture-in-Picture, then close the modal
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
-
-    const lenis = (window as any).__lenis;
-    if (lenis) lenis.stop();
-
-    return () => {
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-      if (lenis) lenis.start();
+    const handleScroll = () => {
+      const videoEl = videoRef.current;
+      if (videoEl && document.pictureInPictureEnabled && !document.pictureInPictureElement) {
+        videoEl.requestPictureInPicture().catch(() => {});
+      }
+      onClose();
     };
-  }, []);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [onClose]);
 
   return createPortal(
     <div
@@ -55,8 +56,8 @@ export default function VideoModal({ onClose }: VideoModalProps) {
         onClick={(e) => e.stopPropagation()}
         className="vjs-mark8iq-wrapper"
         style={{
-          width: '90vw',
-          maxWidth: '1100px',
+          width: 'min(90vw, calc(85vh * 16 / 9))',
+          maxWidth: '1200px',
           aspectRatio: '16 / 9',
           position: 'relative',
           background: '#080D19',
@@ -67,7 +68,7 @@ export default function VideoModal({ onClose }: VideoModalProps) {
         <Player.Provider>
           <Player.Container>
             <VideoSkin style={{ width: '100%', height: '100%', position: 'absolute', inset: 0 }}>
-              <Video src={VIDEO_URL} autoPlay playsInline controls={false} />
+              <Video ref={videoRef} src={VIDEO_URL} autoPlay playsInline controls={false} />
             </VideoSkin>
           </Player.Container>
         </Player.Provider>
