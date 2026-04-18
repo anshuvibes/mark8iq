@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { createPlayer } from '@videojs/react';
 import { Video, VideoSkin, videoFeatures } from '@videojs/react/video';
@@ -14,6 +14,7 @@ interface VideoModalProps {
 
 export default function VideoModal({ onClose }: VideoModalProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [buffering, setBuffering] = useState(true);
 
   // Close on Escape
   useEffect(() => {
@@ -68,9 +69,42 @@ export default function VideoModal({ onClose }: VideoModalProps) {
       >
         <Player.Provider>
           <VideoSkin>
-            <Video ref={videoRef} src={VIDEO_URL} autoPlay playsInline controls={false} />
+            <Video
+              ref={videoRef}
+              src={VIDEO_URL}
+              autoPlay
+              playsInline
+              controls={false}
+              onWaiting={() => setBuffering(true)}
+              onPlaying={() => setBuffering(false)}
+              onCanPlay={() => setBuffering(false)}
+            />
           </VideoSkin>
         </Player.Provider>
+        {buffering && (
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              pointerEvents: 'none',
+              zIndex: 10,
+            }}
+          >
+            <div
+              style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                border: '3px solid rgba(142, 89, 255, 0.2)',
+                borderTopColor: '#8E59FF',
+                animation: 'spinBuffer 0.8s linear infinite',
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>,
     document.body

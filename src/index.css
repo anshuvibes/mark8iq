@@ -1111,3 +1111,7 @@ body {
   background: #080D19;
 }
 
+
+@keyframes spinBuffer {
+  to { transform: rotate(360deg); }
+}
