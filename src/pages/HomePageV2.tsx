@@ -5,7 +5,6 @@ import { V2ThemeProvider } from '../components/home-v2/ThemeContext';
 import HeroV2 from '../components/home-v2/HeroV2';
 import TrustStripV2 from '../components/home-v2/TrustStripV2';
 import FragmentationV2 from '../components/home-v2/FragmentationV2';
-import ScrollVideoV2 from '../components/home-v2/ScrollVideoV2';
 import ProductSuiteV2 from '../components/home-v2/ProductSuiteV2';
 import RoleBasedValueV2 from '../components/home-v2/RoleBasedValueV2';
 import AgentMarkV2 from '../components/home-v2/AgentMarkV2';
@@ -24,7 +23,6 @@ export default function HomePageV2() {
           <HeroV2 />
           <TrustStripV2 />
           <FragmentationV2 />
-          <ScrollVideoV2 />
           <ProductSuiteV2 />
           <RoleBasedValueV2 />
           <AgentMarkV2 />
