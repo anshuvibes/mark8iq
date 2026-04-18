@@ -36,31 +36,23 @@ export default function CustomCursor() {
       }
     };
 
-    const onZoneCheck = (e: MouseEvent) => {
-      const target = e.target as Element;
-      if (!target || typeof target.closest !== 'function') return;
-      const inHideZone = !!target.closest('[data-hide-cursor="true"]');
-      const inShowZone = !!target.closest('[data-show-cursor="true"]');
-
-      if (inHideZone && !inShowZone) {
-        hide();
-      } else if (isInsideWindow.current) {
-        show();
-      }
-    };
+    const onCursorHide = () => { hide(); };
+    const onCursorShow = () => { if (isInsideWindow.current) show(); };
 
     document.addEventListener('mousemove', onMove, { passive: true });
     document.addEventListener('mouseleave', onLeave);
     document.addEventListener('mouseenter', onEnter);
     document.addEventListener('visibilitychange', onVisibility);
-    document.addEventListener('mouseover', onZoneCheck);
+    document.addEventListener('cursor-hide', onCursorHide);
+    document.addEventListener('cursor-show', onCursorShow);
 
     return () => {
       document.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseleave', onLeave);
       document.removeEventListener('mouseenter', onEnter);
       document.removeEventListener('visibilitychange', onVisibility);
-      document.removeEventListener('mouseover', onZoneCheck);
+      document.removeEventListener('cursor-hide', onCursorHide);
+      document.removeEventListener('cursor-show', onCursorShow);
     };
   }, []);
 
