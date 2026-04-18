@@ -68,42 +68,9 @@ export default function VideoModal({ onClose }: VideoModalProps) {
       >
         <Player.Provider>
           <VideoSkin>
-            <Video
-              ref={videoRef}
-              src={VIDEO_URL}
-              autoPlay
-              playsInline
-              controls={false}
-              onWaiting={() => setBuffering(true)}
-              onPlaying={() => setBuffering(false)}
-              onCanPlay={() => setBuffering(false)}
-            />
+            <Video ref={videoRef} src={VIDEO_URL} autoPlay playsInline controls={false} />
           </VideoSkin>
         </Player.Provider>
-        {buffering && (
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              pointerEvents: 'none',
-              zIndex: 10,
-            }}
-          >
-            <div
-              style={{
-                width: '48px',
-                height: '48px',
-                borderRadius: '50%',
-                border: '3px solid rgba(142, 89, 255, 0.2)',
-                borderTopColor: '#8E59FF',
-                animation: 'spinBuffer 0.8s linear infinite',
-              }}
-            />
-          </div>
-        )}
       </div>
     </div>,
     document.body

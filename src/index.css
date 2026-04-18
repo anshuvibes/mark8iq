@@ -1112,6 +1112,3 @@ body {
 }
 
 
-@keyframes spinBuffer {
-  to { transform: rotate(360deg); }
-}
