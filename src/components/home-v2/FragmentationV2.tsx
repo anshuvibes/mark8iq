@@ -551,13 +551,14 @@ export default function FragmentationV2() {
             zIndex: 30,
           }}
         >
-        {/* Logo */}
+        {/* Logo — anchored near bottom of sticky viewport so the next section sits ~48px below sub copy */}
         <div
           ref={logoRef}
           style={{
             position: 'absolute',
             left: '50%',
-            top: '50%',
+            bottom: '120px',
+            transform: 'translateX(-50%)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -592,13 +593,14 @@ export default function FragmentationV2() {
           </svg>
         </div>
 
-        {/* Sub copy */}
+        {/* Sub copy — anchored 48px above bottom of sticky so next section's video card sits ~48px below */}
         <div
           ref={subCopyRef}
           style={{
             position: 'absolute',
             left: '50%',
-            top: 'calc(50% + 52px)',
+            bottom: '48px',
+            transform: 'translateX(-50%)',
             fontFamily: "'Saira', sans-serif",
             fontSize: '24px',
             fontWeight: 400,

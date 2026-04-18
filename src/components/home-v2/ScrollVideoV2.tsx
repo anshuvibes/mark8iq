@@ -60,8 +60,9 @@ export default function ScrollVideoV2() {
           height: '100vh',
           width: '100%',
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           justifyContent: 'center',
+          paddingTop: '48px',
           overflow: 'hidden',
         }}
       >
