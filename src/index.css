@@ -1102,11 +1102,11 @@ body {
 
 .vjs-mark8iq.video-js {
   background-color: #080D19;
-  font-family: 'Saira', sans-serif;
 }
 
-/* Progress bar fill */
-.vjs-mark8iq .vjs-play-progress {
+/* Violet accent on progress and volume */
+.vjs-mark8iq .vjs-play-progress,
+.vjs-mark8iq .vjs-volume-level {
   background-color: #8E59FF;
 }
 
@@ -1114,29 +1114,16 @@ body {
   color: #8E59FF;
 }
 
-/* Load progress */
 .vjs-mark8iq .vjs-load-progress {
   background-color: rgba(142, 89, 255, 0.2);
 }
 
-/* Volume fill */
-.vjs-mark8iq .vjs-volume-level {
-  background-color: #8E59FF;
-}
-
-/* Control bar background */
-.vjs-mark8iq .vjs-control-bar {
-  background-color: rgba(8, 13, 25, 0.92);
-}
-
-/* Big play button */
 .vjs-mark8iq .vjs-big-play-button {
   background-color: #8E59FF;
   border: none;
   border-radius: 50%;
   width: 64px;
   height: 64px;
-  line-height: 64px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -1145,12 +1132,5 @@ body {
 
 .vjs-mark8iq .vjs-big-play-button:hover {
   background-color: #a280ff;
-}
-
-/* Tooltip */
-.vjs-mark8iq .vjs-time-tooltip {
-  background-color: #8E59FF;
-  color: #ffffff;
-  border-radius: 4px;
 }
 
