@@ -44,7 +44,7 @@ export default function VideoModal({ onClose }: VideoModalProps) {
       style={{
         position: 'fixed',
         inset: 0,
-        background: 'rgba(0, 0, 0, 0.88)',
+        background: 'rgba(8, 13, 25, 0.96)',
         zIndex: 999998,
         display: 'flex',
         alignItems: 'center',
@@ -56,7 +56,7 @@ export default function VideoModal({ onClose }: VideoModalProps) {
         onClick={(e) => e.stopPropagation()}
         className="vjs-mark8iq-wrapper"
         style={{
-          width: 'min(90vw, calc(85vh * 16 / 9))',
+          width: 'min(96vw, calc(92vh * 16 / 9))',
           maxWidth: '1200px',
           aspectRatio: '16 / 9',
           position: 'relative',
