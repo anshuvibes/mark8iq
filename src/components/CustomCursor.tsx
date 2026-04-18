@@ -37,7 +37,13 @@ export default function CustomCursor() {
     };
 
     const onCursorHide = () => { hide(); };
-    const onCursorShow = () => { if (isInsideWindow.current) show(); };
+    const onCursorShow = () => {
+      if (isInsideWindow.current) {
+        el.style.left = `${window.innerWidth / 2 - 7}px`;
+        el.style.top = `${window.innerHeight / 2 + 110 - 6}px`;
+        show();
+      }
+    };
 
     document.addEventListener('mousemove', onMove, { passive: true });
     document.addEventListener('mouseleave', onLeave);
