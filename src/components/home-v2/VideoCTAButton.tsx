@@ -126,6 +126,7 @@ export default function VideoCTAButton() {
         <div
           onMouseEnter={startCharge}
           onMouseLeave={resetCharge}
+          onClick={() => setModalOpen(true)}
           style={{
             position: 'relative',
             display: 'inline-flex',
