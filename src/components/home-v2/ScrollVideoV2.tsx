@@ -50,7 +50,12 @@ export default function ScrollVideoV2() {
     <section
       ref={containerRef}
       data-section="scroll-video"
-      style={{ height: '200vh', position: 'relative', backgroundColor: 'transparent' }}
+      style={{
+        height: '200vh',
+        position: 'relative',
+        backgroundColor: 'transparent',
+        marginTop: '-50vh',
+      }}
     >
       <div
         ref={stickyRef}
@@ -59,22 +64,23 @@ export default function ScrollVideoV2() {
           top: 0,
           height: '100vh',
           width: '100%',
-          display: 'flex',
-          alignItems: 'flex-start',
-          justifyContent: 'center',
-          paddingTop: '48px',
           overflow: 'hidden',
+          pointerEvents: 'none',
         }}
       >
         <div
           ref={videoWrapRef}
           style={{
-            position: 'relative',
+            position: 'absolute',
+            left: '50%',
+            top: 'calc(50% + 88px)',
+            transform: 'translateX(-50%)',
             aspectRatio: '16 / 9',
             overflow: 'hidden',
             boxShadow: '0 24px 80px -20px rgba(8, 13, 25, 0.35)',
             backgroundColor: '#080D19',
             willChange: 'width',
+            pointerEvents: 'auto',
           }}
         >
           <video
