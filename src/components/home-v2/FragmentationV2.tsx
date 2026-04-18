@@ -97,23 +97,28 @@ export default function FragmentationV2() {
       onEnter: () => {
         setThemeRef.current('dark');
         setLogoMarkColor('#FFFFFF');
+        container.setAttribute('data-hide-cursor', 'true');
       },
       onLeave: () => {
         setThemeRef.current('light');
         setLogoMarkColor('#12182B');
+        container.removeAttribute('data-hide-cursor');
       },
       onLeaveBack: () => {
         setThemeRef.current('light');
         setLogoMarkColor('#12182B');
+        container.removeAttribute('data-hide-cursor');
       },
       onEnterBack: () => {
         setThemeRef.current('dark');
         setLogoMarkColor('#FFFFFF');
+        container.setAttribute('data-hide-cursor', 'true');
       },
     });
 
     return () => {
       themeTrigger.kill();
+      container.setAttribute('data-hide-cursor', 'true');
       setThemeRef.current('light');
     };
   }, []);
@@ -373,23 +378,10 @@ export default function FragmentationV2() {
       },
     });
 
-    // Cursor zone toggle — hides cursor during fragmentation scroll, restores at logo reveal
-    const cursorZoneTrigger = ScrollTrigger.create({
-      trigger: container,
-      start: 'bottom 55%',
-      onEnter: () => {
-        container.removeAttribute('data-hide-cursor');
-      },
-      onLeaveBack: () => {
-        container.setAttribute('data-hide-cursor', 'true');
-      },
-    });
-
     return () => {
       tl.scrollTrigger?.kill();
       tl.kill();
       endStateTrigger.kill();
-      cursorZoneTrigger.kill();
       container.setAttribute('data-hide-cursor', 'true');
     };
   }, []);
