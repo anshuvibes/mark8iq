@@ -250,8 +250,6 @@ export default function VideoCTAButton() {
               letterSpacing: '-0.01em',
               transition: 'color 0.5s ease, opacity 0.2s ease',
               whiteSpace: 'nowrap',
-              minWidth: '138px',
-              textAlign: 'left',
             }}
           >
             {isCharging ? 'Watch this.' : 'See it in action'}
