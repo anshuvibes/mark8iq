@@ -254,7 +254,7 @@ export default function VideoCTAButton() {
               whiteSpace: 'nowrap',
             }}
           >
-            {isCharging ? 'Opening demo...' : 'See it in action'}
+            {isCharging ? 'Watch this.' : 'See it in action'}
           </span>
         </div>
       </motion.div>
