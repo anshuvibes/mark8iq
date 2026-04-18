@@ -593,13 +593,14 @@ export default function FragmentationV2() {
           </svg>
         </div>
 
-        {/* Sub copy */}
+        {/* Sub copy — anchored 48px above bottom of sticky so next section's video card sits ~48px below */}
         <div
           ref={subCopyRef}
           style={{
             position: 'absolute',
             left: '50%',
-            top: 'calc(50% + 52px)',
+            bottom: '48px',
+            transform: 'translateX(-50%)',
             fontFamily: "'Saira', sans-serif",
             fontSize: '24px',
             fontWeight: 400,
