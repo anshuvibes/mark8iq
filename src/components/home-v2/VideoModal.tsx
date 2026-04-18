@@ -24,13 +24,18 @@ export default function VideoModal({ onClose }: VideoModalProps) {
     return () => document.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
-  // Lock background scroll while modal is open
+  // Lock background scroll while modal is open (Lenis + native)
   useEffect(() => {
+    const lenis = (window as any).__lenis;
+    lenis?.stop?.();
+
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
+
     return () => {
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
+      lenis?.start?.();
     };
   }, []);
 
