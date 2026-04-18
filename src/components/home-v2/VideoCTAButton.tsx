@@ -148,9 +148,9 @@ export default function VideoCTAButton() {
           {/* Pill charge ring SVG — overlays entire pill on hover */}
           {isCharging && (
             <svg
-              width={PILL_W}
-              height={PILL_H}
-              viewBox={`0 0 ${PILL_W} ${PILL_H}`}
+              width={pillSize.w}
+              height={pillSize.h}
+              viewBox={`0 0 ${pillSize.w} ${pillSize.h}`}
               style={{
                 position: 'absolute',
                 top: '50%',
@@ -165,8 +165,8 @@ export default function VideoCTAButton() {
               <rect
                 x="1.25"
                 y="1.25"
-                width={PILL_W - 2.5}
-                height={PILL_H - 2.5}
+                width={pillSize.w - 2.5}
+                height={pillSize.h - 2.5}
                 rx={PILL_RX}
                 ry={PILL_RX}
                 fill="none"
@@ -177,8 +177,8 @@ export default function VideoCTAButton() {
               <rect
                 x="1.25"
                 y="1.25"
-                width={PILL_W - 2.5}
-                height={PILL_H - 2.5}
+                width={pillSize.w - 2.5}
+                height={pillSize.h - 2.5}
                 rx={PILL_RX}
                 ry={PILL_RX}
                 fill="none"
