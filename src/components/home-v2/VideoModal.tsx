@@ -24,42 +24,15 @@ export default function VideoModal({ onClose }: VideoModalProps) {
     return () => document.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
-  // On scroll: enter native Picture-in-Picture, THEN close the modal.
-  // We wait for the `enterpictureinpicture` event so the browser has fully
-  // detached the video into its PiP window before React unmounts the <video>.
+  // Lock background scroll while modal is open
   useEffect(() => {
-    const handleScroll = () => {
-      const videoEl = videoRef.current;
-      console.log('[PiP Debug] scroll fired');
-      console.log('[PiP Debug] videoRef.current:', videoEl);
-      console.log('[PiP Debug] pictureInPictureEnabled:', document.pictureInPictureEnabled);
-      console.log('[PiP Debug] pictureInPictureElement:', document.pictureInPictureElement);
-      console.log('[PiP Debug] video paused:', videoEl?.paused);
-      console.log('[PiP Debug] video readyState:', videoEl?.readyState);
-
-      if (!videoEl) {
-        onClose();
-        return;
-      }
-
-      if (document.pictureInPictureEnabled && !document.pictureInPictureElement) {
-        videoEl
-          .requestPictureInPicture()
-          .then(() => {
-            requestAnimationFrame(() => onClose());
-          })
-          .catch((err) => {
-            console.log('[PiP Debug] requestPictureInPicture failed:', err);
-            onClose();
-          });
-      } else {
-        onClose();
-      }
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [onClose]);
+  }, []);
 
   return createPortal(
     <div
