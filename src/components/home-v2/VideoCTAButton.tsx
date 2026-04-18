@@ -114,25 +114,6 @@ export default function VideoCTAButton() {
     };
   }, []);
 
-  // Teleport cursor to button center on cursor-show (dark→light reveal)
-  useEffect(() => {
-    const onCursorShow = () => {
-      requestAnimationFrame(() => {
-        const el = buttonRef.current;
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        const x = rect.left + rect.width / 2;
-        const y = rect.top + rect.height / 2;
-        document.dispatchEvent(
-          new CustomEvent('cursor-attract', { detail: { x, y } })
-        );
-      });
-    };
-
-    document.addEventListener('cursor-show', onCursorShow);
-    return () => document.removeEventListener('cursor-show', onCursorShow);
-  }, []);
-
   const strokeDashoffset = PILL_PERIMETER * (1 - progress);
   const isCharging = state === 'charging';
 

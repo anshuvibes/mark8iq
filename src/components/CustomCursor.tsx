@@ -3,7 +3,6 @@ import { useEffect, useRef } from 'react';
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const isInsideWindow = useRef(false);
-  const isAttracted = useRef(false);
 
   useEffect(() => {
     const el = cursorRef.current;
@@ -13,10 +12,6 @@ export default function CustomCursor() {
     const hide = () => { el.style.opacity = '0'; };
 
     const onMove = (e: MouseEvent) => {
-      if (isAttracted.current) {
-        // First mouse move after attract — return control to user
-        isAttracted.current = false;
-      }
       el.style.left = `${e.clientX - 7}px`;
       el.style.top = `${e.clientY - 6}px`;
       if (!isInsideWindow.current) {
@@ -41,18 +36,8 @@ export default function CustomCursor() {
       }
     };
 
-    const onCursorHide = () => {
-      hide();
-      isAttracted.current = false;
-    };
+    const onCursorHide = () => { hide(); };
     const onCursorShow = () => { if (isInsideWindow.current) show(); };
-
-    const onCursorAttract = (e: Event) => {
-      const { x, y } = (e as CustomEvent).detail;
-      el.style.left = `${x - 7}px`;
-      el.style.top = `${y - 6}px`;
-      isAttracted.current = true;
-    };
 
     document.addEventListener('mousemove', onMove, { passive: true });
     document.addEventListener('mouseleave', onLeave);
@@ -60,7 +45,6 @@ export default function CustomCursor() {
     document.addEventListener('visibilitychange', onVisibility);
     document.addEventListener('cursor-hide', onCursorHide);
     document.addEventListener('cursor-show', onCursorShow);
-    document.addEventListener('cursor-attract', onCursorAttract);
 
     return () => {
       document.removeEventListener('mousemove', onMove);
@@ -69,7 +53,6 @@ export default function CustomCursor() {
       document.removeEventListener('visibilitychange', onVisibility);
       document.removeEventListener('cursor-hide', onCursorHide);
       document.removeEventListener('cursor-show', onCursorShow);
-      document.removeEventListener('cursor-attract', onCursorAttract);
     };
   }, []);
 
