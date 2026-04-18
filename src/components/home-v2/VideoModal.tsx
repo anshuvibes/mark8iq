@@ -1,13 +1,45 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
+import type Player from 'video.js/dist/types/player';
 
-// Replace this with the real video URL when available
-const VIDEO_URL = '';
+// Replace with real video URL when available
+const VIDEO_URL = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 
 interface VideoModalProps {
   onClose: () => void;
 }
 
 export default function VideoModal({ onClose }: VideoModalProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const playerRef = useRef<Player | null>(null);
+
+  // Initialize Video.js player
+  useEffect(() => {
+    if (!videoRef.current) return;
+
+    playerRef.current = videojs(videoRef.current, {
+      autoplay: true,
+      muted: false,
+      controls: true,
+      responsive: true,
+      fluid: true,
+      sources: [
+        {
+          src: VIDEO_URL,
+          type: 'video/mp4',
+        },
+      ],
+    });
+
+    return () => {
+      if (playerRef.current) {
+        playerRef.current.dispose();
+        playerRef.current = null;
+      }
+    };
+  }, []);
+
   // Close on Escape key
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -17,7 +49,7 @@ export default function VideoModal({ onClose }: VideoModalProps) {
     return () => document.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
-  // Prevent body scroll while modal open
+  // Lock body scroll
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
@@ -42,44 +74,19 @@ export default function VideoModal({ onClose }: VideoModalProps) {
         style={{
           width: '100%',
           maxWidth: '900px',
-          aspectRatio: '16 / 9',
           background: '#080D19',
           borderRadius: '12px',
           overflow: 'hidden',
           position: 'relative',
         }}
       >
-        {VIDEO_URL ? (
-          <iframe
-            src={VIDEO_URL}
-            width="100%"
-            height="100%"
-            frameBorder="0"
-            allow="autoplay; fullscreen"
-            allowFullScreen
-            style={{ display: 'block' }}
-            title="Product video"
+        <div data-vjs-player>
+          <video
+            ref={videoRef}
+            className="video-js vjs-mark8iq"
+            playsInline
           />
-        ) : (
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '12px',
-              fontFamily: "'Saira', sans-serif",
-              color: 'rgba(255,255,255,0.4)',
-              fontSize: '16px',
-              fontWeight: 300,
-            }}
-          >
-            <span style={{ fontSize: '32px' }}>▶</span>
-            <span>Video coming soon</span>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );
