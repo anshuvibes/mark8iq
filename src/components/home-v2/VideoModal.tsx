@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { createPlayer } from '@videojs/react';
 import { Video, VideoSkin, videoFeatures } from '@videojs/react/video';
@@ -14,7 +14,6 @@ interface VideoModalProps {
 
 export default function VideoModal({ onClose }: VideoModalProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [buffering, setBuffering] = useState(true);
 
   // Close on Escape
   useEffect(() => {
