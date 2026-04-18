@@ -22,10 +22,19 @@ export default function VideoModal({ onClose }: VideoModalProps) {
     return () => document.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
-  // Lock body scroll
+  // Lock scroll (native + Lenis)
   useEffect(() => {
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
+    document.documentElement.style.overflow = 'hidden';
+
+    const lenis = (window as any).__lenis;
+    if (lenis) lenis.stop();
+
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      if (lenis) lenis.start();
+    };
   }, []);
 
   return createPortal(
@@ -46,16 +55,19 @@ export default function VideoModal({ onClose }: VideoModalProps) {
         onClick={(e) => e.stopPropagation()}
         className="vjs-mark8iq-wrapper"
         style={{
-          width: '100%',
-          maxWidth: '960px',
+          width: '90vw',
+          maxWidth: '1100px',
           aspectRatio: '16 / 9',
           position: 'relative',
+          background: '#080D19',
+          borderRadius: '12px',
+          overflow: 'hidden',
         }}
       >
         <Player.Provider>
           <Player.Container>
-            <VideoSkin>
-              <Video src={VIDEO_URL} autoPlay controls={false} />
+            <VideoSkin style={{ width: '100%', height: '100%', position: 'absolute', inset: 0 }}>
+              <Video src={VIDEO_URL} autoPlay playsInline controls={false} />
             </VideoSkin>
           </Player.Container>
         </Player.Provider>
