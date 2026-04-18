@@ -345,14 +345,6 @@ export default function FragmentationV2() {
       ease: 'power2.out',
     }, 52);
 
-    gsap.set(videoCTAWrapperRef.current, { opacity: 0, y: 12 });
-    tl.to(videoCTAWrapperRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 2,
-      ease: 'power2.out',
-    }, 53);
-
     // After circle reveal completes, clear sticky container background
     // so the global grid/gradient layer shows through.
     tl.to(stickyRef.current, {
@@ -621,10 +613,11 @@ export default function FragmentationV2() {
           This is what control looks like.
         </div>
 
-        {/* Video CTA — magnetic pull + charge ring */}
+        {/* Video CTA — hidden; replaced by ScrollVideoV2 reveal section below */}
         <div
           ref={videoCTAWrapperRef}
           style={{
+            display: 'none',
             position: 'absolute',
             left: '50%',
             top: 'calc(50% + 110px)',
