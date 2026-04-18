@@ -382,12 +382,12 @@ export default function FragmentationV2() {
       tl.scrollTrigger?.kill();
       tl.kill();
       endStateTrigger.kill();
-      container.setAttribute('data-hide-cursor', 'true');
+      
     };
   }, []);
 
   return (
-    <div ref={containerRef} data-section="fragmentation" data-hide-cursor="true" style={{ height: '250vh', position: 'relative' }}>
+    <div ref={containerRef} data-section="fragmentation" style={{ height: '250vh', position: 'relative' }}>
       <div
         ref={stickyRef}
         style={{
