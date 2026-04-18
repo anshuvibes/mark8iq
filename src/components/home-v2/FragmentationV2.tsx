@@ -71,7 +71,7 @@ export default function FragmentationV2() {
   const circleRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const subCopyRef = useRef<HTMLDivElement>(null);
-  // videoCTARef removed — VideoCTAButton manages its own visibility
+  const videoCTAWrapperRef = useRef<HTMLDivElement>(null);
   const endStateZoneRef = useRef<HTMLDivElement>(null);
   const logoMarkColorRef = useRef<string>('#FFFFFF');
   const logoMarkGroupRef = useRef<SVGGElement>(null);
@@ -345,7 +345,13 @@ export default function FragmentationV2() {
       ease: 'power2.out',
     }, 52);
 
-    // videoCTARef tween removed — VideoCTAButton self-manages visibility
+    gsap.set(videoCTAWrapperRef.current, { opacity: 0, y: 12 });
+    tl.to(videoCTAWrapperRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 2,
+      ease: 'power2.out',
+    }, 53);
 
     // After circle reveal completes, clear sticky container background
     // so the global grid/gradient layer shows through.
@@ -617,6 +623,7 @@ export default function FragmentationV2() {
 
         {/* Video CTA — magnetic pull + charge ring */}
         <div
+          ref={videoCTAWrapperRef}
           style={{
             position: 'absolute',
             left: '50%',
@@ -624,6 +631,7 @@ export default function FragmentationV2() {
             transform: 'translateX(-50%)',
             zIndex: 30,
             pointerEvents: 'auto',
+            opacity: 0,
           }}
         >
           <VideoCTAButton />

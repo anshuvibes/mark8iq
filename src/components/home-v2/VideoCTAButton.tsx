@@ -16,9 +16,13 @@ export default function VideoCTAButton() {
   const rawX = useSpring(0, { stiffness: 150, damping: 15 });
   const rawY = useSpring(0, { stiffness: 150, damping: 15 });
 
-  // Charge ring geometry
-  const RADIUS = 22;
-  const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+  // Pill charge ring geometry
+  // Pill approx 220px wide x 48px tall, rx=24 (matches border-radius: 999px at this height)
+  const PILL_W = 220;
+  const PILL_H = 48;
+  const PILL_RX = 24;
+  // Perimeter of a rounded rect: 2*(W-2rx) + 2*(H-2rx) + 2*PI*rx
+  const PILL_PERIMETER = 2 * (PILL_W - 2 * PILL_RX) + 2 * (PILL_H - 2 * PILL_RX) + 2 * Math.PI * PILL_RX;
 
   // Mousemove handler for magnetic effect
   useEffect(() => {
@@ -92,7 +96,7 @@ export default function VideoCTAButton() {
     };
   }, []);
 
-  const strokeDashoffset = CIRCUMFERENCE * (1 - progress);
+  const strokeDashoffset = PILL_PERIMETER * (1 - progress);
   const isCharging = state === 'charging';
 
   return (
@@ -105,6 +109,7 @@ export default function VideoCTAButton() {
           onMouseEnter={startCharge}
           onMouseLeave={resetCharge}
           style={{
+            position: 'relative',
             display: 'inline-flex',
             alignItems: 'center',
             gap: '12px',
@@ -120,7 +125,53 @@ export default function VideoCTAButton() {
             userSelect: 'none',
           }}
         >
-          {/* Play icon with charge ring */}
+          {/* Pill charge ring SVG — overlays entire pill on hover */}
+          {isCharging && (
+            <svg
+              width={PILL_W}
+              height={PILL_H}
+              viewBox={`0 0 ${PILL_W} ${PILL_H}`}
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                pointerEvents: 'none',
+                zIndex: 10,
+                overflow: 'visible',
+              }}
+            >
+              {/* Track rect */}
+              <rect
+                x="1.25"
+                y="1.25"
+                width={PILL_W - 2.5}
+                height={PILL_H - 2.5}
+                rx={PILL_RX}
+                ry={PILL_RX}
+                fill="none"
+                stroke="rgba(142, 89, 255, 0.2)"
+                strokeWidth="2.5"
+              />
+              {/* Charge rect — animates dashoffset */}
+              <rect
+                x="1.25"
+                y="1.25"
+                width={PILL_W - 2.5}
+                height={PILL_H - 2.5}
+                rx={PILL_RX}
+                ry={PILL_RX}
+                fill="none"
+                stroke="#8E59FF"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeDasharray={PILL_PERIMETER}
+                strokeDashoffset={strokeDashoffset}
+              />
+            </svg>
+          )}
+
+          {/* Play icon */}
           <span
             style={{
               position: 'relative',
@@ -132,46 +183,6 @@ export default function VideoCTAButton() {
               flexShrink: 0,
             }}
           >
-            {/* SVG charge ring — appears on hover */}
-            {isCharging && (
-              <svg
-                width="52"
-                height="52"
-                viewBox="0 0 52 52"
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%) rotate(-90deg)',
-                  pointerEvents: 'none',
-                  overflow: 'visible',
-                }}
-              >
-                {/* Track ring */}
-                <circle
-                  cx="26"
-                  cy="26"
-                  r={RADIUS}
-                  fill="none"
-                  stroke="rgba(142, 89, 255, 0.2)"
-                  strokeWidth="2.5"
-                />
-                {/* Charge ring */}
-                <circle
-                  cx="26"
-                  cy="26"
-                  r={RADIUS}
-                  fill="none"
-                  stroke="#8E59FF"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeDasharray={CIRCUMFERENCE}
-                  strokeDashoffset={strokeDashoffset}
-                  style={{ transition: 'stroke-dashoffset 0.05s linear' }}
-                />
-              </svg>
-            )}
-
             {/* Pulse ring — hidden while charging */}
             {!isCharging && (
               <span
@@ -219,11 +230,11 @@ export default function VideoCTAButton() {
               fontWeight: 400,
               color: 'var(--v2-frag-sub-text)',
               letterSpacing: '-0.01em',
-              transition: 'color 0.5s ease',
+              transition: 'color 0.5s ease, opacity 0.2s ease',
               whiteSpace: 'nowrap',
             }}
           >
-            See it in action
+            {isCharging ? 'Opening demo...' : 'See it in action'}
           </span>
         </div>
       </motion.div>
