@@ -97,28 +97,28 @@ export default function FragmentationV2() {
       onEnter: () => {
         setThemeRef.current('dark');
         setLogoMarkColor('#FFFFFF');
-        container.setAttribute('data-hide-cursor', 'true');
+        document.dispatchEvent(new CustomEvent('cursor-hide'));
       },
       onLeave: () => {
         setThemeRef.current('light');
         setLogoMarkColor('#12182B');
-        container.removeAttribute('data-hide-cursor');
+        document.dispatchEvent(new CustomEvent('cursor-show'));
       },
       onLeaveBack: () => {
         setThemeRef.current('light');
         setLogoMarkColor('#12182B');
-        container.removeAttribute('data-hide-cursor');
+        document.dispatchEvent(new CustomEvent('cursor-show'));
       },
       onEnterBack: () => {
         setThemeRef.current('dark');
         setLogoMarkColor('#FFFFFF');
-        container.setAttribute('data-hide-cursor', 'true');
+        document.dispatchEvent(new CustomEvent('cursor-hide'));
       },
     });
 
     return () => {
       themeTrigger.kill();
-      container.setAttribute('data-hide-cursor', 'true');
+      document.dispatchEvent(new CustomEvent('cursor-show'));
       setThemeRef.current('light');
     };
   }, []);
@@ -382,12 +382,12 @@ export default function FragmentationV2() {
       tl.scrollTrigger?.kill();
       tl.kill();
       endStateTrigger.kill();
-      container.setAttribute('data-hide-cursor', 'true');
+      
     };
   }, []);
 
   return (
-    <div ref={containerRef} data-section="fragmentation" data-hide-cursor="true" style={{ height: '250vh', position: 'relative' }}>
+    <div ref={containerRef} data-section="fragmentation" style={{ height: '250vh', position: 'relative' }}>
       <div
         ref={stickyRef}
         style={{
