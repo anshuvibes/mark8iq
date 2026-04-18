@@ -82,11 +82,9 @@ export default function VideoModal({ onClose }: VideoModalProps) {
         }}
       >
         <Player.Provider>
-          <Player.Container>
-            <VideoSkin style={{ width: '100%', height: '100%', position: 'absolute', inset: 0 }}>
-              <Video ref={videoRef} src={VIDEO_URL} autoPlay playsInline controls={false} />
-            </VideoSkin>
-          </Player.Container>
+          <VideoSkin>
+            <Video ref={videoRef} src={VIDEO_URL} autoPlay playsInline controls={false} />
+          </VideoSkin>
         </Player.Provider>
       </div>
     </div>,
