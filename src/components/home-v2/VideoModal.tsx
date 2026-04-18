@@ -53,9 +53,11 @@ export default function VideoModal({ onClose }: VideoModalProps) {
         }}
       >
         <Player.Provider>
-          <VideoSkin>
-            <Video src={VIDEO_URL} autoPlay controls={false} />
-          </VideoSkin>
+          <Player.Container>
+            <VideoSkin>
+              <Video src={VIDEO_URL} autoPlay controls={false} />
+            </VideoSkin>
+          </Player.Container>
         </Player.Provider>
       </div>
     </div>,
