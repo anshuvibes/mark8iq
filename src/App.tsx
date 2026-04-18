@@ -33,6 +33,9 @@ const App = () => {
       allowNestedScroll: true,
     });
 
+    // Expose for modals/overlays that need to pause smooth scroll
+    (window as any).__lenis = lenis;
+
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => { lenis.raf(time * 1000); });
     gsap.ticker.lagSmoothing(0);
@@ -40,6 +43,7 @@ const App = () => {
     return () => {
       gsap.ticker.remove((time) => { lenis.raf(time * 1000); });
       lenis.destroy();
+      delete (window as any).__lenis;
     };
   }, []);
 
