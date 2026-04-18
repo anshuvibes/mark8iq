@@ -1,39 +1,19 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
-import type Player from 'video.js/dist/types/player';
+import { createPlayer } from '@videojs/react';
+import { Video, VideoSkin, videoFeatures } from '@videojs/react/video';
+import '@videojs/react/video/skin.css';
 
 const VIDEO_URL = '/demo.mp4';
+
+const Player = createPlayer({ features: videoFeatures });
 
 interface VideoModalProps {
   onClose: () => void;
 }
 
 export default function VideoModal({ onClose }: VideoModalProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const playerRef = useRef<Player | null>(null);
-
-  useEffect(() => {
-    if (!videoRef.current) return;
-
-    playerRef.current = videojs(videoRef.current, {
-      autoplay: true,
-      muted: false,
-      controls: true,
-      responsive: true,
-      fluid: true,
-      sources: [{ src: VIDEO_URL, type: 'video/mp4' }],
-    });
-
-    return () => {
-      if (playerRef.current) {
-        playerRef.current.dispose();
-        playerRef.current = null;
-      }
-    };
-  }, []);
-
+  // Close on Escape
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -42,6 +22,7 @@ export default function VideoModal({ onClose }: VideoModalProps) {
     return () => document.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
+  // Lock body scroll
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
@@ -63,22 +44,19 @@ export default function VideoModal({ onClose }: VideoModalProps) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
+        className="vjs-mark8iq-wrapper"
         style={{
           width: '100%',
-          maxWidth: '900px',
-          background: '#080D19',
-          borderRadius: '12px',
-          overflow: 'hidden',
+          maxWidth: '960px',
+          aspectRatio: '16 / 9',
           position: 'relative',
         }}
       >
-        <div data-vjs-player>
-          <video
-            ref={videoRef}
-            className="video-js vjs-mark8iq"
-            playsInline
-          />
-        </div>
+        <Player.Provider>
+          <VideoSkin>
+            <Video src={VIDEO_URL} autoPlay controls={false} />
+          </VideoSkin>
+        </Player.Provider>
       </div>
     </div>,
     document.body
