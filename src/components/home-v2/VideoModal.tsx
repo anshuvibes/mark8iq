@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import type Player from 'video.js/dist/types/player';
 
-// Replace with real video URL when available
 const VIDEO_URL = '/demo.mp4';
 
 interface VideoModalProps {
@@ -14,7 +14,6 @@ export default function VideoModal({ onClose }: VideoModalProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerRef = useRef<Player | null>(null);
 
-  // Initialize Video.js player
   useEffect(() => {
     if (!videoRef.current) return;
 
@@ -24,12 +23,7 @@ export default function VideoModal({ onClose }: VideoModalProps) {
       controls: true,
       responsive: true,
       fluid: true,
-      sources: [
-        {
-          src: VIDEO_URL,
-          type: 'video/mp4',
-        },
-      ],
+      sources: [{ src: VIDEO_URL, type: 'video/mp4' }],
     });
 
     return () => {
@@ -40,7 +34,6 @@ export default function VideoModal({ onClose }: VideoModalProps) {
     };
   }, []);
 
-  // Close on Escape key
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -49,13 +42,12 @@ export default function VideoModal({ onClose }: VideoModalProps) {
     return () => document.removeEventListener('keydown', handleKey);
   }, [onClose]);
 
-  // Lock body scroll
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
   }, []);
 
-  return (
+  return createPortal(
     <div
       onClick={onClose}
       style={{
@@ -88,6 +80,7 @@ export default function VideoModal({ onClose }: VideoModalProps) {
           />
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
