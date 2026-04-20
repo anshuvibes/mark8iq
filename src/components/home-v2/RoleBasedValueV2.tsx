@@ -168,7 +168,7 @@ export default function RoleBasedValueV2() {
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
                 alignItems: 'end',
-                padding: 'clamp(130px, 18vh, 170px) clamp(24px, 5vw, 80px) clamp(40px, 7vh, 70px)',
+                padding: 'clamp(80px, 11vh, 110px) clamp(24px, 5vw, 80px) clamp(40px, 7vh, 70px)',
                 gap: '48px',
                 flexShrink: 0,
               }}
