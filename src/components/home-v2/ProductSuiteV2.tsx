@@ -165,12 +165,12 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
   );
 }
 
-const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.ads; active: boolean; onMouseEnter: () => void }>(
-  ({ mod, active, onMouseEnter }, ref) => (
+const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.ads; active: boolean; onMouseEnter: () => void; onMouseLeave: () => void }>(
+  ({ mod, active, onMouseEnter, onMouseLeave }, ref) => (
     <div
       ref={ref}
       onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px)'; onMouseEnter(); }}
-      onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; onMouseLeave(); }}
       style={{
         padding: '20px',
         borderRadius: '14px',
