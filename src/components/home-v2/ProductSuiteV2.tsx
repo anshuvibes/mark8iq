@@ -606,26 +606,12 @@ export default function ProductSuiteV2() {
                 <img
                   src="/img/product-logos/black/market-one.svg"
                   alt="Market One"
-                  style={{ height: '28px', width: 'auto', marginBottom: '16px' }}
+                  style={{ height: '26px', width: 'auto', marginBottom: '4px' }}
                 />
-                <p className="m8-p3" style={{
-                  color: 'var(--v2-text-subtle)',
-                  margin: 0,
-                  fontWeight: 300,
-                  whiteSpace: 'nowrap',
-                }}>
-                  Every product is a consolidated product.
+                <p className="m8-p2" style={{ color: 'var(--v2-text)', margin: 0, maxWidth: '560px', whiteSpace: 'pre-line' }}>
+                  Every product is a consolidated product.{"\n"}Market One is the consolidation of all consolidations.
                 </p>
-                <p className="m8-h3" style={{
-                  color: 'var(--v2-text)',
-                  margin: 0,
-                  fontWeight: 500,
-                  whiteSpace: 'nowrap',
-                  letterSpacing: '-0.03em',
-                }}>
-                  Market One is the consolidation of all consolidations.
-                </p>
-                <p className="m8-p6" style={{ color: 'var(--v2-text-subtle)', margin: '8px 0 0 0' }}>
+                <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)', margin: 0 }}>
                   6 dashboards. 15+ marketplaces. One source of truth.
                 </p>
               </div>
