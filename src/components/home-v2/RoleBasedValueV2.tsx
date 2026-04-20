@@ -166,105 +166,88 @@ export default function RoleBasedValueV2() {
               style={{
                 width: '88vw',
                 height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '0 clamp(16px, 3vw, 40px) clamp(40px, 7vh, 70px)',
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                alignItems: 'end',
+                padding: '0 clamp(24px, 5vw, 80px) clamp(40px, 7vh, 70px)',
+                gap: '48px',
                 flexShrink: 0,
-                boxSizing: 'border-box',
               }}
             >
-              {/* Bounding box — fixed uniform size across all slides */}
+              {/* Left: gradient placeholder card — 4:3 ratio */}
               <div
                 style={{
+                  background: role.gradient,
+                  borderRadius: '20px',
                   width: '100%',
-                  maxWidth: '1100px',
-                  height: '480px',
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  alignItems: 'stretch',
-                  gap: '32px',
-                  padding: '24px',
-                  borderRadius: '24px',
-                  background: 'rgba(255,255,255,0.05)',
-                  backdropFilter: 'blur(8px)',
-                  WebkitBackdropFilter: 'blur(8px)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  boxSizing: 'border-box',
+                  aspectRatio: '4 / 3',
+                  maxHeight: '100%',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.06)',
+                  justifySelf: 'end',
+                  maxWidth: '460px',
                 }}
               >
-                {/* Left: gradient visual — fills bounding box */}
                 <div
                   style={{
-                    background: role.gradient,
-                    borderRadius: '16px',
-                    width: '100%',
-                    height: '100%',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    boxShadow: '0 0 0 1px rgba(255,255,255,0.06)',
+                    position: 'absolute',
+                    inset: 0,
+                    background:
+                      'radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.08) 0%, transparent 60%)',
+                    borderRadius: '24px',
+                  }}
+                />
+                <span
+                  className="m8-p6"
+                  style={{
+                    position: 'absolute',
+                    bottom: '24px',
+                    left: '24px',
+                    color: 'rgba(255,255,255,0.3)',
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
                   }}
                 >
-                  <div
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background:
-                        'radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.08) 0%, transparent 60%)',
-                      borderRadius: '16px',
-                    }}
-                  />
-                  <span
-                    className="m8-p6"
-                    style={{
-                      position: 'absolute',
-                      bottom: '20px',
-                      left: '20px',
-                      color: 'rgba(255,255,255,0.3)',
-                      letterSpacing: '0.08em',
-                      textTransform: 'uppercase',
-                    }}
-                  >
-                    {role.label} view — screenshot coming
-                  </span>
-                </div>
+                  {role.label} view — screenshot coming
+                </span>
+              </div>
 
-                {/* Right: copy bottom-aligned */}
-                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '16px', padding: '8px 16px 8px 16px' }}>
-                  <span
-                    className="m8-p6"
-                    style={{
-                      letterSpacing: '0.12em',
-                      textTransform: 'uppercase',
-                      color: role.accentColor,
-                    }}
-                  >
-                    {role.label}
-                  </span>
+              {/* Right: copy bottom-aligned */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', paddingBottom: '8px' }}>
+                <span
+                  className="m8-p6"
+                  style={{
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    color: role.accentColor,
+                  }}
+                >
+                  {role.label}
+                </span>
 
-                  <h3
-                    className="m8-h3-m"
-                    style={{
-                      color: 'var(--v2-text)',
-                      margin: 0,
-                      lineHeight: '115%',
-                    }}
-                  >
-                    {role.taglineLine1}<br />{role.taglineLine2}
-                  </h3>
+                <h3
+                  className="m8-h3-m"
+                  style={{
+                    color: 'var(--v2-text)',
+                    margin: 0,
+                    lineHeight: '115%',
+                  }}
+                >
+                  {role.taglineLine1}<br />{role.taglineLine2}
+                </h3>
 
-                  <p
-                    className="m8-p4"
-                    style={{
-                      color: 'var(--v2-text-secondary)',
-                      margin: 0,
-                      maxWidth: '460px',
-                      lineHeight: '160%',
-                    }}
-                  >
-                    {role.body}
-                  </p>
-                </div>
+                <p
+                  className="m8-p4"
+                  style={{
+                    color: 'var(--v2-text-secondary)',
+                    margin: 0,
+                    maxWidth: '460px',
+                    lineHeight: '160%',
+                  }}
+                >
+                  {role.body}
+                </p>
               </div>
             </div>
           ))}
