@@ -6,21 +6,24 @@ import { useV2Theme } from './ThemeContext';
 const roles = [
   {
     label: 'Analyst',
-    tagline: 'Stop building reports. Start finding answers.',
+    taglineLine1: 'Stop building reports.',
+    taglineLine2: 'Start finding answers.',
     body: 'Raw data exports. ASIN-level breakdowns. Campaign performance tables. Reconciliation reports.',
     gradient: 'linear-gradient(135deg, #8e59ff 0%, #4a2d99 50%, #12182b 100%)',
     accentColor: '#8e59ff',
   },
   {
     label: 'E-Commerce Manager',
-    tagline: 'See what is moving, what is stuck, and why. Before your morning meeting.',
+    taglineLine1: 'See what is moving, what is stuck, and why.',
+    taglineLine2: 'Before your morning meeting.',
     body: 'Trend lines. Week-on-week movement. Marketplace comparison. Inventory alerts.',
     gradient: 'linear-gradient(135deg, #52bfbc 0%, #2a6b69 50%, #12182b 100%)',
     accentColor: '#52bfbc',
   },
   {
     label: 'CEO / Founder',
-    tagline: 'The full picture. In the time it takes to pour your first coffee.',
+    taglineLine1: 'The full picture. In the time it takes',
+    taglineLine2: 'to pour your first coffee.',
     body: 'P&L impact. Blended ROAS. GMV trajectory. Financial leakage alerts.',
     gradient: 'linear-gradient(135deg, #fcb24f 0%, #8e59ff 60%, #12182b 100%)',
     accentColor: '#fcb24f',
@@ -116,6 +119,7 @@ export default function RoleBasedValueV2() {
             padding: 'clamp(96px, 14vh, 140px) clamp(24px, 6vw, 120px) 0',
             zIndex: 10,
             pointerEvents: 'none',
+            textAlign: 'center',
           }}
         >
           <p
@@ -142,7 +146,7 @@ export default function RoleBasedValueV2() {
               margin: 0,
             }}
           >
-            Everyone on your team gets exactly what they need.
+            Everyone on your team gets <br />exactly what they need.
           </h2>
         </div>
 
@@ -163,8 +167,8 @@ export default function RoleBasedValueV2() {
                 height: '100%',
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
-                alignItems: 'center',
-                padding: 'clamp(200px, 28vh, 260px) clamp(24px, 6vw, 120px) 0',
+                alignItems: 'end',
+                padding: 'clamp(200px, 28vh, 260px) clamp(24px, 6vw, 120px) clamp(60px, 10vh, 100px)',
                 gap: '60px',
                 flexShrink: 0,
               }}
@@ -205,8 +209,8 @@ export default function RoleBasedValueV2() {
                 </span>
               </div>
 
-              {/* Right: copy */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              {/* Right: copy bottom-aligned */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', paddingBottom: '8px' }}>
                 <span
                   className="m8-p6"
                   style={{
@@ -218,16 +222,26 @@ export default function RoleBasedValueV2() {
                   {role.label}
                 </span>
 
-                <h2 className="m8-h3-xl" style={{ color: 'var(--v2-text)', margin: 0, lineHeight: '110%' }}>
-                  {role.tagline}
-                </h2>
+                <h3
+                  style={{
+                    fontFamily: "'Saira', sans-serif",
+                    fontSize: 'clamp(28px, 2.6vw, 36px)',
+                    fontWeight: 400,
+                    letterSpacing: '-0.02em',
+                    lineHeight: '115%',
+                    color: 'var(--v2-text)',
+                    margin: 0,
+                  }}
+                >
+                  {role.taglineLine1}<br />{role.taglineLine2}
+                </h3>
 
                 <p
                   className="m8-p4"
                   style={{
                     color: 'var(--v2-text-secondary)',
                     margin: 0,
-                    maxWidth: '420px',
+                    maxWidth: '460px',
                     lineHeight: '160%',
                   }}
                 >
