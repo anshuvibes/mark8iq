@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import gsap from 'gsap';
+import { useV2Theme } from './ThemeContext';
 
 const modules: Record<string, { name: string; abbr: string; accent: string; pain: string; metric: string; logo: string }> = {
   ads: { name: 'Mark8 Ads', abbr: 'AD', accent: '#FC7459', logo: '/img/product-logos/black/mark8-ads.svg', pain: 'Your ad spend across every marketplace. Optimized in real time.', metric: '105 Cr in ad spend optimized. 35% average ROAS improvement.' },
@@ -206,6 +207,8 @@ ModuleCard.displayName = 'ModuleCard';
 export default function ProductSuiteV2() {
   const [activeModule, setActiveModule] = useState('ads');
   const active = modules[activeModule];
+  const { theme } = useV2Theme();
+  const activeLogo = active.logo.replace('/black/', `/${theme === 'dark' ? 'white' : 'black'}/`);
 
   const hubRef = useRef<HTMLDivElement | null>(null);
   const centerRef = useRef<HTMLDivElement | null>(null);
