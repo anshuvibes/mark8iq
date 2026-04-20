@@ -47,7 +47,7 @@ export default function RoleBasedValueV2() {
     if (!container || !track) return;
 
     const totalSlides = roles.length;
-    const slideWidth = window.innerWidth;
+    const slideWidth = window.innerWidth * 0.88;
     const totalTravel = slideWidth * (totalSlides - 1);
 
     const tl = gsap.timeline({
@@ -116,7 +116,7 @@ export default function RoleBasedValueV2() {
             top: 0,
             left: 0,
             right: 0,
-            padding: 'clamp(96px, 14vh, 140px) clamp(24px, 6vw, 120px) 0',
+            padding: 'clamp(80px, 11vh, 110px) clamp(24px, 6vw, 120px) 0',
             zIndex: 10,
             pointerEvents: 'none',
             textAlign: 'center',
@@ -154,7 +154,7 @@ export default function RoleBasedValueV2() {
           ref={trackRef}
           style={{
             display: 'flex',
-            width: `${roles.length * 100}vw`,
+            width: `${roles.length * 88}vw`,
             height: '100%',
             willChange: 'transform',
           }}
@@ -163,13 +163,13 @@ export default function RoleBasedValueV2() {
             <div
               key={role.label}
               style={{
-                width: '100vw',
+                width: '88vw',
                 height: '100%',
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
                 alignItems: 'end',
-                padding: 'clamp(180px, 24vh, 220px) clamp(24px, 6vw, 120px) clamp(48px, 8vh, 80px)',
-                gap: '60px',
+                padding: 'clamp(130px, 18vh, 170px) clamp(24px, 5vw, 80px) clamp(40px, 7vh, 70px)',
+                gap: '48px',
                 flexShrink: 0,
               }}
             >
@@ -180,12 +180,12 @@ export default function RoleBasedValueV2() {
                   borderRadius: '20px',
                   width: '100%',
                   aspectRatio: '4 / 3',
-                  maxHeight: '46vh',
+                  maxHeight: '38vh',
                   position: 'relative',
                   overflow: 'hidden',
                   boxShadow: '0 0 0 1px rgba(255,255,255,0.06)',
                   justifySelf: 'end',
-                  maxWidth: '560px',
+                  maxWidth: '460px',
                 }}
               >
                 <div
