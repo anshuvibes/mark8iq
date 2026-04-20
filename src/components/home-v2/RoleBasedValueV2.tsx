@@ -66,7 +66,7 @@ export default function RoleBasedValueV2() {
     const containerHeight = container.offsetHeight;
 
     // Target the center of each zone based on updated thresholds
-    const zoneTargets = [0.12, 0.5, 0.88];
+    const zoneTargets = [0.12, 0.5, 0.78];
     const targetScroll = containerTop + containerHeight * zoneTargets[index];
 
     const lenis = (window as any).__lenis;
