@@ -240,38 +240,55 @@ export default function ProductSuiteV2() {
 
       const computed: Array<{ id: string; d: string; accent: string }> = [];
 
-      [...leftKeys, ...rightKeys].forEach((k) => {
+      // Entry point offsets — 24px spacing between each path at circle edge
+      const leftOffsets  = [-24, 0, 24];  // ads, shelf, reco (top to bottom)
+      const rightOffsets = [-24, 0, 24];  // sight, returns, inventory (top to bottom)
+
+      leftKeys.forEach((k, i) => {
         const card = cardRefs.current[k];
         if (!card) return;
 
         const cardRect = card.getBoundingClientRect();
-        const isLeft = leftKeys.includes(k);
-
-        // Card connection point: right edge midpoint for left cards, left edge for right cards
-        const cardX = isLeft
-          ? cardRect.right - hubRect.left
-          : cardRect.left - hubRect.left;
+        const cardX = cardRect.right - hubRect.left;
         const cardY = cardRect.top - hubRect.top + cardRect.height / 2;
 
-        // Circle origin: single west pole for all left cards, single east pole for all right cards
-        const originX = isLeft ? cx - r : cx + r;
-        const originY = cy;
+        // West pole with vertical offset
+        const originX = cx - r;
+        const originY = cy + leftOffsets[i];
 
-        // Horizontal span between card and circle pole
         const span = Math.abs(cardX - originX);
         const pull = span * 0.42;
 
-        // CP1: horizontal departure from card edge (perpendicular to card surface)
-        const cp1x = isLeft ? cardX + pull : cardX - pull;
+        const cp1x = cardX + pull;
         const cp1y = cardY;
-
-        // CP2: horizontal approach to circle pole (perpendicular to circle surface at pole)
-        const cp2x = isLeft ? originX - pull * 0.5 : originX + pull * 0.5;
+        const cp2x = originX - pull * 0.5;
         const cp2y = originY;
 
-        // Path: card → circle (inward direction)
         const d = `M ${cardX} ${cardY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${originX} ${originY}`;
+        computed.push({ id: k, d, accent: modules[k].accent });
+      });
 
+      rightKeys.forEach((k, i) => {
+        const card = cardRefs.current[k];
+        if (!card) return;
+
+        const cardRect = card.getBoundingClientRect();
+        const cardX = cardRect.left - hubRect.left;
+        const cardY = cardRect.top - hubRect.top + cardRect.height / 2;
+
+        // East pole with vertical offset
+        const originX = cx + r;
+        const originY = cy + rightOffsets[i];
+
+        const span = Math.abs(cardX - originX);
+        const pull = span * 0.42;
+
+        const cp1x = cardX - pull;
+        const cp1y = cardY;
+        const cp2x = originX + pull * 0.5;
+        const cp2y = originY;
+
+        const d = `M ${cardX} ${cardY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${originX} ${originY}`;
         computed.push({ id: k, d, accent: modules[k].accent });
       });
 
@@ -313,7 +330,7 @@ export default function ProductSuiteV2() {
         duration: 2.4,       // Match pulse cycle exactly (suiteWave1 = 2.4s)
         ease: 'none',
         repeat: -1,
-        delay: i * 0.4,      // Spread 6 paths across the 2.4s cycle: 0, 0.4, 0.8, 1.2, 1.6, 2.0
+        delay: 0,
       });
 
       animations.push(anim);
@@ -386,8 +403,8 @@ export default function ProductSuiteV2() {
           {/* Center circle */}
           <div className="product-suite-center" style={{
             position: 'relative',
-            flex: '0 0 260px',
-            height: '260px',
+            flex: '0 0 300px',
+            height: '300px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -409,10 +426,10 @@ export default function ProductSuiteV2() {
               position: 'absolute',
               top: '50%',
               left: '50%',
-              width: '260px',
-              height: '260px',
-              marginTop: '-130px',
-              marginLeft: '-130px',
+              width: '300px',
+              height: '300px',
+              marginTop: '-150px',
+              marginLeft: '-150px',
               borderRadius: '50%',
               border: '1px solid rgba(142,89,255,0.35)',
               animation: 'suiteWave1 3s ease-out infinite',
@@ -424,10 +441,10 @@ export default function ProductSuiteV2() {
               position: 'absolute',
               top: '50%',
               left: '50%',
-              width: '260px',
-              height: '260px',
-              marginTop: '-130px',
-              marginLeft: '-130px',
+              width: '300px',
+              height: '300px',
+              marginTop: '-150px',
+              marginLeft: '-150px',
               borderRadius: '50%',
               border: '1px solid rgba(142,89,255,0.3)',
               animation: 'suiteWave1 3s ease-out infinite',
@@ -440,10 +457,10 @@ export default function ProductSuiteV2() {
               position: 'absolute',
               top: '50%',
               left: '50%',
-              width: '260px',
-              height: '260px',
-              marginTop: '-130px',
-              marginLeft: '-130px',
+              width: '300px',
+              height: '300px',
+              marginTop: '-150px',
+              marginLeft: '-150px',
               borderRadius: '50%',
               border: '1px solid rgba(142,89,255,0.25)',
               animation: 'suiteWave1 3s ease-out infinite',
@@ -455,8 +472,8 @@ export default function ProductSuiteV2() {
 
             {/* Main circle — 3D feel */}
             <div ref={centerRef} style={{
-              width: '260px',
-              height: '260px',
+              width: '300px',
+              height: '300px',
               borderRadius: '50%',
               background: 'radial-gradient(circle at 32% 28%, #2a2440 0%, #15182a 40%, #080D19 100%)',
               display: 'flex',
