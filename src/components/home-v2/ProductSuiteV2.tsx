@@ -256,12 +256,24 @@ export default function ProductSuiteV2() {
         const circleX = cx + Math.cos(angle) * r;
         const circleY = cy + Math.sin(angle) * r;
 
-        const cp1x = isLeft ? circleX - 200 : circleX + 200;
-        const cp1y = circleY + (cardY - cy) * 0.3;
-        const cp2x = isLeft ? cardX + 140 : cardX - 140;
-        const cp2y = cardY - (cardY - cy) * 0.1;
+        // Pull distance: ~45% of horizontal span between circle edge and card edge
+        const horizontalSpan = Math.abs(cardX - circleX);
+        const pull = horizontalSpan * 0.45;
 
-        const d = `M ${circleX} ${circleY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${cardX} ${cardY}`;
+        // CP1: extends from circle connection point along the radius outward
+        // This makes the path leave the circle perpendicular to its surface
+        const cp1x = circleX + Math.cos(angle) * pull;
+        const cp1y = circleY + Math.sin(angle) * pull;
+
+        // CP2: horizontally aligned with card connection point
+        // This makes the path arrive at the card perpendicular to its vertical edge
+        const cp2x = isLeft ? cardX + pull * 0.5 : cardX - pull * 0.5;
+        const cp2y = cardY;
+
+        // PATH DIRECTION: card → circle (inward)
+        // Start at card edge, end at circle edge
+        // This allows the GSAP dash to travel inward (card → Market One)
+        const d = `M ${cardX} ${cardY} C ${cp2x} ${cp2y}, ${cp1x} ${cp1y}, ${circleX} ${circleY}`;
 
         computed.push({ id: k, d, accent: modules[k].accent });
       });
@@ -289,14 +301,22 @@ export default function ProductSuiteV2() {
       if (!el) return;
 
       const length = el.getTotalLength();
-      gsap.set(el, { strokeDasharray: `20 ${length}`, strokeDashoffset: length });
 
+      // Start: dash at card end (position 0 of the path = card edge)
+      // This is the beginning of the inward journey
+      gsap.set(el, {
+        strokeDasharray: `20 ${length}`,
+        strokeDashoffset: 0,
+      });
+
+      // Animate to: dash travels from card → circle
+      // dashOffset increases from 0 to length+20, moving dash along path toward circle
       const anim = gsap.to(el, {
-        strokeDashoffset: -length,
-        duration: 2.5,
+        strokeDashoffset: -(length + 20),
+        duration: 2.4,       // Match pulse cycle exactly (suiteWave1 = 2.4s)
         ease: 'none',
         repeat: -1,
-        delay: i * 0.3,
+        delay: i * 0.4,      // Spread 6 paths across the 2.4s cycle: 0, 0.4, 0.8, 1.2, 1.6, 2.0
       });
 
       animations.push(anim);
