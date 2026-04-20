@@ -213,8 +213,8 @@ export default function RoleBasedValueV2() {
                 </span>
               </div>
 
-              {/* Right: copy grouped and bottom-aligned to card */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', height: '100%', aspectRatio: '4 / 3', maxWidth: '460px', justifyContent: 'flex-end', paddingBottom: '8px' }}>
+              {/* Right: copy bottom-aligned */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', paddingBottom: '8px' }}>
                 <span
                   className="m8-p6"
                   style={{
