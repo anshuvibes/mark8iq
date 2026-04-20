@@ -13,40 +13,23 @@ export default function AgentMarkV2() {
     <section style={{
       padding: '100px 0',
       position: 'relative',
-      background: 'linear-gradient(118.99deg, #F3EFFD 1.54%, #EBF5FE 25.36%, #D9C8FE 49.17%)',
+      background: 'transparent',
       overflow: 'hidden',
     }}>
-
-      {/* Background glow blobs */}
-      <div style={{
-        position: 'absolute',
-        right: '-180px',
-        top: '-40px',
-        width: '560px',
-        height: '560px',
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(162,128,255,0.25) 0%, transparent 70%)',
-        pointerEvents: 'none',
-      }} />
-      <div style={{
-        position: 'absolute',
-        left: '-140px',
-        bottom: '60px',
-        width: '480px',
-        height: '480px',
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(96,143,246,0.2) 0%, transparent 70%)',
-        pointerEvents: 'none',
-      }} />
-
-      <div className="container" style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '0',
-        position: 'relative',
-        zIndex: 1,
-      }}>
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+        <div style={{
+          border: '1px solid var(--v2-border)',
+          borderRadius: '20px',
+          overflow: 'hidden',
+          background: 'var(--v2-bg-card)',
+          padding: '60px 40px',
+        }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '0',
+          }}>
 
         {/* Eyebrow */}
         <motion.p
