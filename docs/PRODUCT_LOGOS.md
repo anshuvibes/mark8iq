@@ -7,6 +7,7 @@ All product logos live under `public/img/product-logos/`:
 ```
 public/img/product-logos/
 ├── black/          ← For light backgrounds / light mode
+│   ├── market-one.svg
 │   ├── mark8-ads.svg
 │   ├── mark8-iq.svg
 │   ├── mark8-po.svg
@@ -15,6 +16,7 @@ public/img/product-logos/
 │   ├── mark8-shelf.svg
 │   └── mark8-sight.svg
 └── white/          ← For dark backgrounds / dark mode
+    ├── market-one.svg
     ├── mark8-ads.svg
     ├── mark8-iq.svg
     ├── mark8-po.svg
@@ -35,6 +37,7 @@ public/img/product-logos/
 
 | Product | Slug (used in filenames & routes) |
 |---|---|
+| Market One | `market-one` |
 | Mark8 Ads | `mark8-ads` |
 | Mark8 IQ | `mark8-iq` |
 | Mark8 PO | `mark8-po` |
