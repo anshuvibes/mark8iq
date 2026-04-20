@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { useV2Theme } from './ThemeContext';
 
 const roles = [
   {
@@ -30,6 +31,10 @@ export default function RoleBasedValueV2() {
   const containerRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+
+  const { setTheme } = useV2Theme();
+  const setThemeRef = useRef(setTheme);
+  setThemeRef.current = setTheme;
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -62,16 +67,29 @@ export default function RoleBasedValueV2() {
       trigger: container,
       start: 'top 80%',
       end: 'bottom bottom',
-      onEnter: () => document.dispatchEvent(new CustomEvent('cursor-hide')),
-      onLeave: () => document.dispatchEvent(new CustomEvent('cursor-show')),
-      onLeaveBack: () => document.dispatchEvent(new CustomEvent('cursor-show')),
-      onEnterBack: () => document.dispatchEvent(new CustomEvent('cursor-hide')),
+      onEnter: () => {
+        setThemeRef.current('dark');
+        document.dispatchEvent(new CustomEvent('cursor-hide'));
+      },
+      onLeave: () => {
+        setThemeRef.current('light');
+        document.dispatchEvent(new CustomEvent('cursor-show'));
+      },
+      onLeaveBack: () => {
+        setThemeRef.current('light');
+        document.dispatchEvent(new CustomEvent('cursor-show'));
+      },
+      onEnterBack: () => {
+        setThemeRef.current('dark');
+        document.dispatchEvent(new CustomEvent('cursor-hide'));
+      },
     });
 
     return () => {
       tl.scrollTrigger?.kill();
       tl.kill();
       trigger.kill();
+      setThemeRef.current('light');
       document.dispatchEvent(new CustomEvent('cursor-show'));
     };
   }, []);
@@ -85,9 +103,50 @@ export default function RoleBasedValueV2() {
           top: 0,
           height: '100vh',
           overflow: 'hidden',
-          background: '#080D19',
+          background: 'var(--v2-bg)',
+          transition: 'background 0.6s ease',
         }}
       >
+        {/* Fixed heading block */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            padding: 'clamp(24px, 4vh, 56px) clamp(24px, 6vw, 120px) 0',
+            zIndex: 10,
+            pointerEvents: 'none',
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "'Saira', sans-serif",
+              fontSize: '11px',
+              fontWeight: 400,
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              color: 'var(--v2-text-secondary)',
+              margin: '0 0 10px 0',
+            }}
+          >
+            Built for every role
+          </p>
+          <h2
+            style={{
+              fontFamily: "'Saira', sans-serif",
+              fontSize: '36px',
+              fontWeight: 400,
+              letterSpacing: '-0.03em',
+              lineHeight: '110%',
+              color: 'var(--v2-text)',
+              margin: 0,
+            }}
+          >
+            Everyone on your team gets exactly what they need.
+          </h2>
+        </div>
+
         <div
           ref={trackRef}
           style={{
@@ -106,7 +165,7 @@ export default function RoleBasedValueV2() {
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
                 alignItems: 'center',
-                padding: '0 clamp(24px, 6vw, 120px)',
+                padding: 'clamp(120px, 18vh, 160px) clamp(24px, 6vw, 120px) 0',
                 gap: '60px',
                 flexShrink: 0,
               }}
@@ -175,21 +234,6 @@ export default function RoleBasedValueV2() {
                 >
                   {role.body}
                 </p>
-
-                <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
-                  {roles.map((_, di) => (
-                    <div
-                      key={di}
-                      style={{
-                        width: i === di ? '24px' : '8px',
-                        height: '4px',
-                        borderRadius: '999px',
-                        background: i === di ? role.accentColor : 'rgba(255,255,255,0.2)',
-                        transition: 'width 0.3s ease',
-                      }}
-                    />
-                  ))}
-                </div>
               </div>
             </div>
           ))}
