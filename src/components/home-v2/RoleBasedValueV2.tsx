@@ -119,7 +119,7 @@ export default function RoleBasedValueV2() {
             pointerEvents: 'none',
             textAlign: 'center',
             flexShrink: 0,
-            marginBottom: '112px',
+            marginBottom: '88px',
           }}
         >
           <p
