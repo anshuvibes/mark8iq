@@ -418,6 +418,7 @@ export default function ProductSuiteV2() {
               animation: 'suiteWave1 3s ease-out infinite',
               pointerEvents: 'none',
               transformOrigin: 'center',
+              zIndex: 0,
             }} />
             <div style={{
               position: 'absolute',
@@ -433,6 +434,7 @@ export default function ProductSuiteV2() {
               animationDelay: '0.8s',
               pointerEvents: 'none',
               transformOrigin: 'center',
+              zIndex: 0,
             }} />
             <div style={{
               position: 'absolute',
@@ -448,6 +450,7 @@ export default function ProductSuiteV2() {
               animationDelay: '1.6s',
               pointerEvents: 'none',
               transformOrigin: 'center',
+              zIndex: 0,
             }} />
 
             {/* Main circle — 3D feel */}
