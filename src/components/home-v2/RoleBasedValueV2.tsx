@@ -166,36 +166,38 @@ export default function RoleBasedValueV2() {
               style={{
                 width: '88vw',
                 height: '100%',
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                alignItems: 'end',
-                padding: '0 clamp(24px, 5vw, 80px) clamp(40px, 7vh, 70px)',
-                gap: '48px',
+                display: 'flex',
+                alignItems: 'stretch',
+                padding: '0 clamp(16px, 3vw, 40px) clamp(40px, 7vh, 70px)',
                 flexShrink: 0,
+                boxSizing: 'border-box',
               }}
             >
-              {/* Left: bounding box wrapping the gradient card */}
+              {/* Bounding box wraps both card visual + copy */}
               <div
                 style={{
-                  width: '100%',
-                  maxWidth: '500px',
-                  aspectRatio: '4 / 3',
+                  flex: 1,
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  alignItems: 'end',
+                  gap: '48px',
                   padding: '24px',
                   borderRadius: '24px',
-                  background: 'rgba(255,255,255,0.12)',
-                  backdropFilter: 'blur(24px)',
-                  WebkitBackdropFilter: 'blur(24px)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  justifySelf: 'end',
+                  background: 'rgba(255,255,255,0.05)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
+                  border: '1px solid rgba(255,255,255,0.06)',
                   boxSizing: 'border-box',
                 }}
               >
+                {/* Left: gradient visual */}
                 <div
                   style={{
                     background: role.gradient,
                     borderRadius: '16px',
                     width: '100%',
                     height: '100%',
+                    minHeight: '260px',
                     position: 'relative',
                     overflow: 'hidden',
                     boxShadow: '0 0 0 1px rgba(255,255,255,0.06)',
@@ -224,43 +226,43 @@ export default function RoleBasedValueV2() {
                     {role.label} view — screenshot coming
                   </span>
                 </div>
-              </div>
 
-              {/* Right: copy bottom-aligned */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', paddingBottom: '8px' }}>
-                <span
-                  className="m8-p6"
-                  style={{
-                    letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
-                    color: role.accentColor,
-                  }}
-                >
-                  {role.label}
-                </span>
+                {/* Right: copy bottom-aligned */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', paddingBottom: '8px', paddingLeft: '16px', paddingRight: '16px' }}>
+                  <span
+                    className="m8-p6"
+                    style={{
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      color: role.accentColor,
+                    }}
+                  >
+                    {role.label}
+                  </span>
 
-                <h3
-                  className="m8-h3-m"
-                  style={{
-                    color: 'var(--v2-text)',
-                    margin: 0,
-                    lineHeight: '115%',
-                  }}
-                >
-                  {role.taglineLine1}<br />{role.taglineLine2}
-                </h3>
+                  <h3
+                    className="m8-h3-m"
+                    style={{
+                      color: 'var(--v2-text)',
+                      margin: 0,
+                      lineHeight: '115%',
+                    }}
+                  >
+                    {role.taglineLine1}<br />{role.taglineLine2}
+                  </h3>
 
-                <p
-                  className="m8-p4"
-                  style={{
-                    color: 'var(--v2-text-secondary)',
-                    margin: 0,
-                    maxWidth: '460px',
-                    lineHeight: '160%',
-                  }}
-                >
-                  {role.body}
-                </p>
+                  <p
+                    className="m8-p4"
+                    style={{
+                      color: 'var(--v2-text-secondary)',
+                      margin: 0,
+                      maxWidth: '460px',
+                      lineHeight: '160%',
+                    }}
+                  >
+                    {role.body}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
