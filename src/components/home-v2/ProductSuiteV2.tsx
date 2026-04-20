@@ -373,7 +373,7 @@ export default function ProductSuiteV2() {
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.h2
           className="m8-h1-large"
-          style={{ color: 'var(--v2-text)', textAlign: 'center' }}
+          style={{ color: '#12182b', textAlign: 'center' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
@@ -382,7 +382,7 @@ export default function ProductSuiteV2() {
         </motion.h2>
         <motion.p
           className="m8-p2"
-          style={{ color: 'var(--v2-text-secondary)', textAlign: 'center', maxWidth: '500px', margin: '0 auto 64px' }}
+          style={{ color: 'rgba(18,24,43,0.6)', textAlign: 'center', maxWidth: '500px', margin: '0 auto 64px' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
