@@ -590,6 +590,8 @@ export default function ProductSuiteV2() {
               margin: '0 32px 32px 32px',
               height: '220px',
               overflow: 'hidden',
+              position: 'relative',
+              zIndex: 5,
             }}
           >
             {activeModule === 'marketone' ? (
