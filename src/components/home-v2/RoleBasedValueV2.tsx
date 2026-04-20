@@ -43,9 +43,9 @@ export default function RoleBasedValueV2() {
       scrub: true,
       onUpdate: (self) => {
         const p = self.progress;
-        if (p < 0.33) {
+        if (p < 0.25) {
           setActiveRole(0);
-        } else if (p < 0.66) {
+        } else if (p < 0.75) {
           setActiveRole(1);
         } else {
           setActiveRole(2);
@@ -64,8 +64,10 @@ export default function RoleBasedValueV2() {
 
     const containerTop = container.getBoundingClientRect().top + window.scrollY;
     const containerHeight = container.offsetHeight;
-    // Nudge slightly past the threshold to land cleanly inside the role's zone
-    const targetScroll = containerTop + (containerHeight / 3) * index + 4;
+
+    // Target the center of each zone based on updated thresholds
+    const zoneTargets = [0.12, 0.5, 0.88];
+    const targetScroll = containerTop + containerHeight * zoneTargets[index];
 
     const lenis = (window as any).__lenis;
     if (lenis && typeof lenis.scrollTo === 'function') {
