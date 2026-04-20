@@ -170,9 +170,7 @@ const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.a
         padding: '20px',
         borderRadius: '14px',
         border: `1px solid ${active ? mod.accent + '40' : 'var(--v2-border)'}`,
-        background: active
-          ? `radial-gradient(ellipse at 0% 100%, ${mod.accent}18 0%, var(--v2-bg-card) 70%)`
-          : 'var(--v2-bg-card)',
+        background: 'var(--v2-bg-card)',
         cursor: 'pointer',
         boxShadow: active
           ? `0 4px 24px ${mod.accent}25`
@@ -183,26 +181,6 @@ const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.a
         overflow: 'hidden',
       }}
     >
-      {/* Accent badge top-left */}
-      <div style={{
-        width: '36px',
-        height: '36px',
-        borderRadius: '8px',
-        background: mod.accent,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: '14px',
-        flexShrink: 0,
-      }}>
-        <span style={{
-          fontSize: '11px',
-          fontWeight: 500,
-          color: '#fff',
-          fontFamily: "'Saira', sans-serif",
-          letterSpacing: '0.02em',
-        }}>{mod.abbr}</span>
-      </div>
 
       {/* Logo */}
       <img
