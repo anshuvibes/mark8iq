@@ -110,12 +110,13 @@ export default function RoleBasedValueV2() {
         <div
           style={{
             position: 'absolute',
-            top: 0,
+            top: 'clamp(24px, 4vh, 56px)',
             left: 0,
             right: 0,
-            padding: 'clamp(24px, 4vh, 56px) clamp(24px, 6vw, 120px) 0',
+            padding: '0 clamp(24px, 6vw, 120px)',
             zIndex: 10,
             pointerEvents: 'none',
+            textAlign: 'center',
           }}
         >
           <p
@@ -163,8 +164,12 @@ export default function RoleBasedValueV2() {
                 height: '100%',
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
-                alignItems: 'center',
-                padding: 'clamp(120px, 18vh, 160px) clamp(24px, 6vw, 120px) 0',
+                alignItems: 'start',
+                /* heading top offset (clamp 24-56) + heading block (~80px) + 88px gap */
+                paddingTop: 'calc(clamp(24px, 4vh, 56px) + 80px + 88px)',
+                paddingLeft: 'clamp(24px, 6vw, 120px)',
+                paddingRight: 'clamp(24px, 6vw, 120px)',
+                paddingBottom: '0',
                 gap: '60px',
                 flexShrink: 0,
               }}
