@@ -516,7 +516,7 @@ export default function ProductSuiteV2() {
             </div>
           </div>
 
-          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: '0 0 280px', position: 'relative', zIndex: 2 }}>
+          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: '0 0 280px', position: 'relative', zIndex: 3 }}>
             {rightKeys.map((k) => (
               <ModuleCard
                 key={k}
