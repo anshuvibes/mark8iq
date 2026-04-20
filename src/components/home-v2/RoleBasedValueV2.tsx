@@ -65,7 +65,7 @@ export default function RoleBasedValueV2() {
 
     const trigger = ScrollTrigger.create({
       trigger: container,
-      start: 'top top',
+      start: 'top 80%',
       end: 'bottom bottom',
       onEnter: () => {
         setThemeRef.current('dark');
