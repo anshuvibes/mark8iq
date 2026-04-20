@@ -1,5 +1,18 @@
 @import "lenis/dist/lenis.css";
 
+@font-face {
+  font-family: 'Soehne Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/test-soehne-mono-buch.woff2') format('woff2');
+}
+
+.m8-mono {
+  font-family: 'Soehne Mono', 'Saira', monospace;
+  font-feature-settings: 'ss01';
+}
+
 html {
   scrollbar-width: none;
 }
