@@ -452,7 +452,18 @@ export default function ProductSuiteV2() {
                 background: 'radial-gradient(circle at 50% 50%, rgba(142,89,255,0.18), transparent 70%)',
                 pointerEvents: 'none',
               }} />
-              <h3 className="m8-p3-medium" style={{ color: '#fff', position: 'relative', zIndex: 1, textAlign: 'center' }}>Market One</h3>
+              <img
+                src="/img/product-logos/white/market-one.svg"
+                alt="Market One"
+                style={{
+                  height: '32px',
+                  width: 'auto',
+                  display: 'block',
+                  position: 'relative',
+                  zIndex: 1,
+                  marginBottom: '4px',
+                }}
+              />
               <p className="m8-p6" style={{ color: 'rgba(255,255,255,0.55)', position: 'relative', zIndex: 1, textAlign: 'center' }}>Single source of truth</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center', position: 'relative', zIndex: 1, marginTop: '4px' }}>
                 {Object.values(modules).map((m) => (
