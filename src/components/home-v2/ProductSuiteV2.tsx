@@ -170,7 +170,10 @@ const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.a
         padding: '20px',
         borderRadius: '14px',
         border: `1px solid ${active ? mod.accent + '40' : 'var(--v2-border)'}`,
-        background: 'var(--v2-bg-card)',
+        background: '#ffffff',
+        backgroundImage: active
+          ? `radial-gradient(ellipse at 0% 100%, ${mod.accent}22 0%, transparent 65%)`
+          : `radial-gradient(ellipse at 0% 100%, ${mod.accent}12 0%, transparent 60%)`,
         cursor: 'pointer',
         boxShadow: active
           ? `0 4px 24px ${mod.accent}25`
