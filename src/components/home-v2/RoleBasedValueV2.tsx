@@ -47,7 +47,7 @@ export default function RoleBasedValueV2() {
     if (!container || !track) return;
 
     const totalSlides = roles.length;
-    const slideWidth = window.innerWidth;
+    const slideWidth = window.innerWidth * 0.88;
     const totalTravel = slideWidth * (totalSlides - 1);
 
     const tl = gsap.timeline({
