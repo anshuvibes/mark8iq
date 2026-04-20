@@ -300,9 +300,16 @@ export default function ProductSuiteV2() {
     // Re-measure shortly after mount in case fonts/layout settle
     const t = setTimeout(measure, 100);
     window.addEventListener('resize', measure);
+
+    // Observe hub container for any layout changes (fluid center, card reflow, etc.)
+    const ro = new ResizeObserver(() => measure());
+    if (hubRef.current) ro.observe(hubRef.current);
+    if (centerRef.current) ro.observe(centerRef.current);
+
     return () => {
       clearTimeout(t);
       window.removeEventListener('resize', measure);
+      ro.disconnect();
     };
   }, []);
 
