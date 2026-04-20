@@ -16,6 +16,29 @@ export default function AgentMarkV2() {
       background: 'transparent',
       overflow: 'hidden',
     }}>
+      {/* Eyebrow + headline — outside bounding box */}
+      <div className="container" style={{ textAlign: 'center', marginBottom: '40px', position: 'relative', zIndex: 1 }}>
+        <motion.p
+          className="m8-mono"
+          style={{ color: '#8E59FF', marginBottom: '12px' }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+        >
+          AGENT MARK
+        </motion.p>
+        <motion.h2
+          className="m8-h2"
+          style={{ color: 'var(--v2-text)', margin: 0 }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ delay: 0.05 }}
+        >
+          Your smartest team member never sleeps.
+        </motion.h2>
+      </div>
+
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <div style={{
           border: '1px solid var(--v2-border)',
@@ -31,41 +54,6 @@ export default function AgentMarkV2() {
             alignItems: 'center',
             gap: '0',
           }}>
-
-        {/* Eyebrow */}
-        <motion.p
-          className="m8-mono"
-          style={{
-            color: '#8E59FF',
-            marginBottom: '12px',
-            textAlign: 'center',
-          }}
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-        >
-          Agent Mark
-        </motion.p>
-
-        {/* Headline */}
-        <motion.h2
-          style={{
-            fontFamily: "'Saira', sans-serif",
-            fontSize: '40px',
-            fontWeight: 400,
-            letterSpacing: '-0.03em',
-            lineHeight: '110%',
-            color: '#12182b',
-            textAlign: 'center',
-            marginBottom: '48px',
-          }}
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ delay: 0.05 }}
-        >
-          Your smartest team member never sleeps.
-        </motion.h2>
 
         {/* Orb */}
         <motion.div
