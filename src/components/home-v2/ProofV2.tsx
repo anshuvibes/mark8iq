@@ -49,12 +49,22 @@ export default function ProofV2() {
   return (
     <section style={{ padding: '100px 0', position: 'relative' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+        <motion.p
+          className="m8-eyebrow"
+          style={{ color: 'var(--v2-text-secondary)', textAlign: 'center', marginBottom: '12px' }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+        >
+          PROOF
+        </motion.p>
         <motion.h2
           className="m8-h1-large"
           style={{ color: 'var(--v2-text)', textAlign: 'center', marginBottom: '64px' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
+          transition={{ delay: 0.05 }}
         >
           Real brands. Real numbers. Real outcomes.
         </motion.h2>
