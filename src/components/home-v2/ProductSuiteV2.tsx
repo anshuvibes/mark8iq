@@ -10,7 +10,7 @@ const modules: Record<string, { name: string; abbr: string; accent: string; pain
   returns: { name: 'Mark8 Returns', abbr: 'RE', accent: '#fc7459', logo: '/img/product-logos/black/mark8-returns.svg', pain: 'Stop losing money to returns you cannot see coming.', metric: 'Returns analyzed and flagged before they hit your P&L.' },
   reco: { name: 'Mark8 Reco', abbr: 'RC', accent: '#7cbc71', logo: '/img/product-logos/black/mark8-reco.svg', pain: 'Reconciliation that closes itself. No chasing. No leakage.', metric: 'Financial leakages identified in real time.' },
   inventory: { name: 'Mark8 Inventory', abbr: 'PO', accent: '#fcb24f', logo: '/img/product-logos/black/mark8-po.svg', pain: 'Never stockout. Never overstock. Always exactly right.', metric: 'Inventory decisions automated across all warehouses.' },
-  marketone: { name: 'Market One', abbr: 'M1', accent: '#8e59ff', logo: '/img/product-logos/black/market-one.svg', pain: 'Every product is a consolidated product. Market One is the consolidation of all consolidations.', metric: '6 dashboards. 15+ marketplaces. One source of truth.' },
+  marketone: { name: 'Market One', abbr: 'M1', accent: '#8e59ff', logo: '/img/product-logos/black/market-one.svg', pain: 'Every product is a consolidated product.\nMarket One is the consolidation of all consolidations.', metric: '6 dashboards. 15+ marketplaces. One source of truth.' },
 };
 
 const leftKeys = ['ads', 'shelf', 'reco'];
@@ -608,8 +608,8 @@ export default function ProductSuiteV2() {
                   alt="Market One"
                   style={{ height: '26px', width: 'auto', marginBottom: '4px' }}
                 />
-                <p className="m8-p2" style={{ color: 'var(--v2-text)', margin: 0, maxWidth: '560px' }}>
-                  Every product is a consolidated product. Market One is the consolidation of all consolidations.
+                <p className="m8-p2" style={{ color: 'var(--v2-text)', margin: 0, maxWidth: '560px', whiteSpace: 'pre-line' }}>
+                  Every product is a consolidated product.{"\n"}Market One is the consolidation of all consolidations.
                 </p>
                 <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)', margin: 0 }}>
                   6 dashboards. 15+ marketplaces. One source of truth.
