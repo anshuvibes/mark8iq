@@ -68,6 +68,17 @@ const mockupData: Record<string, TableDef> = {
       { cells: ['SKU-SHOE-40B', '121 units', '9 days', ''], statusColor: '#f59e0b', statusLabel: 'Watch' },
     ],
   },
+  marketone: {
+    headers: ['Dashboard', 'Status', 'Last Sync', 'Signal'],
+    rows: [
+      { cells: ['Mark8 Ads',     'Live', '2 min ago', ''], statusColor: '#dd4062', statusLabel: 'Active' },
+      { cells: ['Mark8 Sight',   'Live', '2 min ago', ''], statusColor: '#52bfbc', statusLabel: 'Active' },
+      { cells: ['Mark8 Shelf',   'Live', '4 min ago', ''], statusColor: '#6895fc', statusLabel: 'Active' },
+      { cells: ['Mark8 Returns', 'Live', '1 min ago', ''], statusColor: '#fc7459', statusLabel: 'Active' },
+      { cells: ['Mark8 Reco',    'Live', '3 min ago', ''], statusColor: '#7cbc71', statusLabel: 'Active' },
+      { cells: ['Mark8 PO',      'Live', '5 min ago', ''], statusColor: '#fcb24f', statusLabel: 'Active' },
+    ],
+  },
 };
 
 function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string }) {
