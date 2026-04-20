@@ -59,7 +59,7 @@ export default function RoleBasedValueV2() {
   }, []);
 
   return (
-    <div ref={containerRef} style={{ height: '100vh', position: 'relative' }}>
+    <div ref={containerRef} style={{ height: '300vh', position: 'relative' }}>
       <div
         ref={stickyRef}
         style={{
