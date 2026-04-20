@@ -133,17 +133,13 @@ export default function RoleBasedValueV2() {
           }}
         >
           <p
+            className="m8-eyebrow"
             style={{
-              fontFamily: "'Saira', sans-serif",
-              fontSize: '11px',
-              fontWeight: 400,
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
               color: 'var(--v2-text-secondary)',
               margin: '0 0 10px 0',
             }}
           >
-            Built for every role
+            BUILT FOR EVERY ROLE
           </p>
           <h2
             className="m8-h1-large"
