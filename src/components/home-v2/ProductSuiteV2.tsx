@@ -10,6 +10,7 @@ const modules: Record<string, { name: string; abbr: string; accent: string; pain
   returns: { name: 'Mark8 Returns', abbr: 'RE', accent: '#fc7459', logo: '/img/product-logos/black/mark8-returns.svg', pain: 'Stop losing money to returns you cannot see coming.', metric: 'Returns analyzed and flagged before they hit your P&L.' },
   reco: { name: 'Mark8 Reco', abbr: 'RC', accent: '#7cbc71', logo: '/img/product-logos/black/mark8-reco.svg', pain: 'Reconciliation that closes itself. No chasing. No leakage.', metric: 'Financial leakages identified in real time.' },
   inventory: { name: 'Mark8 Inventory', abbr: 'PO', accent: '#fcb24f', logo: '/img/product-logos/black/mark8-po.svg', pain: 'Never stockout. Never overstock. Always exactly right.', metric: 'Inventory decisions automated across all warehouses.' },
+  marketone: { name: 'Market One', abbr: 'M1', accent: '#8e59ff', logo: '/img/product-logos/black/market-one.svg', pain: 'Every product is a consolidated product. Market One is the consolidation of all consolidations.', metric: '6 dashboards. 15+ marketplaces. One source of truth.' },
 };
 
 const leftKeys = ['ads', 'shelf', 'reco'];
@@ -65,6 +66,17 @@ const mockupData: Record<string, TableDef> = {
       { cells: ['SKU-SHOE-42B', '284 units', '18 days', ''], statusColor: '#22c55e', statusLabel: 'Healthy' },
       { cells: ['SKU-SHOE-38W', '43 units', '4 days', ''], statusColor: '#ef4444', statusLabel: 'Reorder Now' },
       { cells: ['SKU-SHOE-40B', '121 units', '9 days', ''], statusColor: '#f59e0b', statusLabel: 'Watch' },
+    ],
+  },
+  marketone: {
+    headers: ['Dashboard', 'Status', 'Last Sync', 'Signal'],
+    rows: [
+      { cells: ['Mark8 Ads',     'Live', '2 min ago', ''], statusColor: '#dd4062', statusLabel: 'Active' },
+      { cells: ['Mark8 Sight',   'Live', '2 min ago', ''], statusColor: '#52bfbc', statusLabel: 'Active' },
+      { cells: ['Mark8 Shelf',   'Live', '4 min ago', ''], statusColor: '#6895fc', statusLabel: 'Active' },
+      { cells: ['Mark8 Returns', 'Live', '1 min ago', ''], statusColor: '#fc7459', statusLabel: 'Active' },
+      { cells: ['Mark8 Reco',    'Live', '3 min ago', ''], statusColor: '#7cbc71', statusLabel: 'Active' },
+      { cells: ['Mark8 PO',      'Live', '5 min ago', ''], statusColor: '#fcb24f', statusLabel: 'Active' },
     ],
   },
 };
@@ -211,7 +223,7 @@ const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.a
 ModuleCard.displayName = 'ModuleCard';
 
 export default function ProductSuiteV2() {
-  const [activeModule, setActiveModule] = useState('ads');
+  const [activeModule, setActiveModule] = useState('marketone');
   const active = modules[activeModule];
   const { theme } = useV2Theme();
   const activeLogo = active.logo.replace('/black/', `/${theme === 'dark' ? 'white' : 'black'}/`);
@@ -473,7 +485,9 @@ export default function ProductSuiteV2() {
             }} />
 
             {/* Main circle — 3D feel */}
-            <div ref={centerRef} style={{
+            <div ref={centerRef}
+              onMouseEnter={() => setActiveModule('marketone')}
+              style={{
               width: '300px',
               height: '300px',
               borderRadius: '50%',
@@ -488,6 +502,7 @@ export default function ProductSuiteV2() {
               overflow: 'hidden',
               boxShadow: '0 18px 50px rgba(8,13,25,0.5), inset 0 -8px 24px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.08)',
               zIndex: 2,
+              cursor: 'pointer',
             }}>
               <div style={{
                 position: 'absolute',
