@@ -347,6 +347,13 @@ export default function ProductSuiteV2() {
           Every function your brand runs on. Built to work together.
         </motion.p>
 
+        <div style={{
+          border: '1px solid var(--v2-border)',
+          borderRadius: '20px',
+          overflow: 'hidden',
+          background: 'var(--v2-bg-card)',
+          marginBottom: '32px',
+        }}>
         <motion.div
           ref={hubRef}
           className="product-suite-grid"
@@ -356,7 +363,6 @@ export default function ProductSuiteV2() {
             alignItems: 'center',
             justifyContent: 'space-between',
             gap: '40px',
-            marginBottom: '40px',
           }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
