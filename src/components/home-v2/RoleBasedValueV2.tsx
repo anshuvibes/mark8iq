@@ -103,8 +103,7 @@ export default function RoleBasedValueV2() {
           top: 0,
           height: '100vh',
           overflow: 'hidden',
-          background: 'var(--v2-bg)',
-          transition: 'background 0.6s ease',
+          background: 'transparent',
         }}
       >
         {/* Fixed heading block */}
