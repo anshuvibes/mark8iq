@@ -77,7 +77,7 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
 
   return (
     <div style={{
-      background: 'var(--v2-bg-subtle)',
+      background: 'var(--v2-bg-card)',
       borderRadius: '10px',
       border: '1px solid var(--v2-border)',
       overflow: 'hidden',
@@ -168,10 +168,10 @@ const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.a
         padding: '20px 20px',
         borderRadius: '14px',
         border: `1px solid ${active ? mod.accent + '50' : 'var(--v2-border)'}`,
-        backgroundColor: active ? mod.accent + '18' : 'var(--v2-bg-card)',
+        backgroundColor: 'var(--v2-bg-card)',
         cursor: 'pointer',
         boxShadow: active
-          ? `0 4px 24px ${mod.accent}30, inset 0 0 0 1px ${mod.accent}30`
+          ? `0 4px 24px ${mod.accent}40`
           : '0 1px 3px rgba(0,0,0,0.04)',
         transition: 'all 0.2s ease',
         position: 'relative',
@@ -524,7 +524,8 @@ export default function ProductSuiteV2() {
               gridTemplateColumns: '1fr 1fr',
               gap: '32px',
               padding: '32px',
-              background: 'var(--v2-bg-subtle)',
+              background: 'var(--v2-bg-card)',
+              opacity: 1,
               borderRadius: '16px',
               border: '1px solid var(--v2-border)',
               marginBottom: '48px',
