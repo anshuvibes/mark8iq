@@ -113,7 +113,7 @@ export default function RoleBasedValueV2() {
             top: 0,
             left: 0,
             right: 0,
-            padding: 'clamp(24px, 4vh, 56px) clamp(24px, 6vw, 120px) 0',
+            padding: 'clamp(96px, 14vh, 140px) clamp(24px, 6vw, 120px) 0',
             zIndex: 10,
             pointerEvents: 'none',
           }}
@@ -164,7 +164,7 @@ export default function RoleBasedValueV2() {
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
                 alignItems: 'center',
-                padding: 'clamp(120px, 18vh, 160px) clamp(24px, 6vw, 120px) 0',
+                padding: 'clamp(200px, 28vh, 260px) clamp(24px, 6vw, 120px) 0',
                 gap: '60px',
                 flexShrink: 0,
               }}
@@ -218,14 +218,14 @@ export default function RoleBasedValueV2() {
                   {role.label}
                 </span>
 
-                <h2 className="m8-h3-xl" style={{ color: '#ffffff', margin: 0, lineHeight: '110%' }}>
+                <h2 className="m8-h3-xl" style={{ color: 'var(--v2-text)', margin: 0, lineHeight: '110%' }}>
                   {role.tagline}
                 </h2>
 
                 <p
                   className="m8-p4"
                   style={{
-                    color: 'rgba(255,255,255,0.55)',
+                    color: 'var(--v2-text-secondary)',
                     margin: 0,
                     maxWidth: '420px',
                     lineHeight: '160%',
