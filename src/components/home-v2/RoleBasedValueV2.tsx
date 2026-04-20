@@ -251,7 +251,7 @@ export default function RoleBasedValueV2() {
                       lineHeight: '115%',
                     }}
                   >
-                    {role.taglineLine1}<br />{role.taglineLine2}
+                    {role.taglineLine1}{role.taglineLine2 && <><br />{role.taglineLine2}</>}
                   </h3>
 
                   <p
