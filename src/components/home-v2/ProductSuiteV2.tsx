@@ -391,7 +391,7 @@ export default function ProductSuiteV2() {
           Every function your brand runs on. Built to work together.
         </motion.p>
 
-        <div style={{
+        <div className="v2-force-light" style={{
           border: `1px solid ${active.accent}30`,
           borderRadius: '20px',
           overflow: 'hidden',
