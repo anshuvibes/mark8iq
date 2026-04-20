@@ -103,7 +103,7 @@ export default function AgentMarkV2() {
           transition={{ delay: 0.15 }}
         >
           <p style={{
-            fontFamily: "'Inter', sans-serif",
+            fontFamily: "'Saira', sans-serif",
             fontSize: '28px',
             fontWeight: 500,
             lineHeight: '42px',
@@ -116,7 +116,7 @@ export default function AgentMarkV2() {
             Hello, I'm Agent Mark!
           </p>
           <p style={{
-            fontFamily: "'Inter', sans-serif",
+            fontFamily: "'Saira', sans-serif",
             fontSize: '28px',
             fontWeight: 500,
             lineHeight: '42px',
@@ -150,7 +150,7 @@ export default function AgentMarkV2() {
               <path d="M12 2L13.5 8.5L20 10L13.5 11.5L12 18L10.5 11.5L4 10L10.5 8.5L12 2Z" fill="#8E59FF" opacity="0.8"/>
             </svg>
             <p style={{
-              fontFamily: "'Inter', sans-serif",
+              fontFamily: "'Saira', sans-serif",
               fontSize: '16px',
               fontWeight: 500,
               color: '#12182b',
@@ -185,7 +185,7 @@ export default function AgentMarkV2() {
               >
                 <p style={{
                   flex: 1,
-                  fontFamily: "'Inter', sans-serif",
+                  fontFamily: "'Saira', sans-serif",
                   fontSize: '14px',
                   fontWeight: 400,
                   lineHeight: '22px',
@@ -231,7 +231,7 @@ export default function AgentMarkV2() {
             boxShadow: '0 4px 16px 6px rgba(130,130,130,0.05)',
           }}>
             <p style={{
-              fontFamily: "'Inter', sans-serif",
+              fontFamily: "'Saira', sans-serif",
               fontSize: '14px',
               fontWeight: 400,
               color: '#656981',
@@ -254,7 +254,7 @@ export default function AgentMarkV2() {
                     background: 'none',
                     border: 'none',
                     cursor: 'pointer',
-                    fontFamily: "'Inter', sans-serif",
+                    fontFamily: "'Saira', sans-serif",
                     fontSize: '10px',
                     fontWeight: 500,
                     color: '#656981',
@@ -290,7 +290,7 @@ export default function AgentMarkV2() {
                   cursor: 'pointer',
                 }}>
                   <span style={{
-                    fontFamily: "'Inter', sans-serif",
+                    fontFamily: "'Saira', sans-serif",
                     fontSize: '12px',
                     fontWeight: 500,
                     color: '#adb1cc',
