@@ -46,9 +46,19 @@ export default function RoleBasedValueV2() {
     const track = trackRef.current;
     if (!container || !track) return;
 
-    const totalSlides = roles.length;
-    const slideWidth = window.innerWidth * 0.88;
-    const totalTravel = slideWidth * (totalSlides - 1);
+    // Layout math (in vw):
+    //   leftMargin = 6vw  (existing visual margin)
+    //   cardW      = 76vw
+    //   peek       = 10% of cardW visible on right edge of slide 1 = 7.6vw
+    //   → card2 left edge sits at (100 - peek) = 92.4vw
+    //   → gap between card1 and card2 = 92.4 - (leftMargin + cardW) = 10.4vw
+    //   gap2↔3 mirrors gap1↔2.
+    const vw = window.innerWidth / 100;
+    const leftMargin = 6 * vw;
+    const cardW = 76 * vw;
+    const peek = cardW * 0.1;
+    const gap = (100 * vw) - peek - leftMargin - cardW;
+    const slideTravel = cardW + gap; // distance to advance one card
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -62,7 +72,7 @@ export default function RoleBasedValueV2() {
     });
 
     tl.to(track, {
-      x: -totalTravel,
+      x: -(slideTravel * (roles.length - 1)),
       ease: 'none',
     });
 
@@ -150,7 +160,8 @@ export default function RoleBasedValueV2() {
           ref={trackRef}
           style={{
             display: 'flex',
-            width: `${roles.length * 88}vw`,
+            paddingLeft: '6vw',
+            gap: '10.4vw',
             flex: 1,
             minHeight: 0,
             willChange: 'transform',
@@ -160,12 +171,12 @@ export default function RoleBasedValueV2() {
             <div
               key={role.label}
               style={{
-                width: '88vw',
+                width: '76vw',
                 height: '100%',
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
                 alignItems: 'start',
-                padding: '0 clamp(24px, 5vw, 80px) clamp(40px, 7vh, 70px)',
+                paddingBottom: 'clamp(40px, 7vh, 70px)',
                 gap: '48px',
                 flexShrink: 0,
               }}
