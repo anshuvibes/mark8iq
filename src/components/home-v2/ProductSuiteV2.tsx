@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import gsap from 'gsap';
 
 const modules: Record<string, { name: string; abbr: string; accent: string; pain: string; metric: string }> = {
   ads: { name: 'Mark8 Ads', abbr: 'AD', accent: '#FC7459', pain: 'Your ad spend across every marketplace. Optimized in real time.', metric: '105 Cr in ad spend optimized. 35% average ROAS improvement.' },
@@ -157,12 +158,11 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
   );
 }
 
-function ModuleCard({ k, mod, active, onClick }: { k: string; mod: typeof modules.ads; active: boolean; onClick: () => void }) {
-  return (
-    <motion.div
+const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.ads; active: boolean; onClick: () => void }>(
+  ({ mod, active, onClick }, ref) => (
+    <div
+      ref={ref}
       onClick={onClick}
-      whileHover={{ y: -3 }}
-      transition={{ duration: 0.15 }}
       style={{
         padding: '18px 20px',
         borderRadius: '12px',
@@ -171,21 +171,115 @@ function ModuleCard({ k, mod, active, onClick }: { k: string; mod: typeof module
         backgroundColor: active ? mod.accent + '0d' : 'var(--v2-bg-card)',
         cursor: 'pointer',
         boxShadow: active ? `0 4px 20px ${mod.accent}20` : 'none',
-        transition: 'all 0.2s ease',
+        transition: 'all 0.2s ease, transform 0.15s ease',
       }}
+      onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
         <span className="m8-p6" style={{ color: mod.accent, fontWeight: 500 }}>{mod.abbr}</span>
         <span className="m8-p5" style={{ fontWeight: 500, color: 'var(--v2-text)' }}>{mod.name}</span>
       </div>
       <p className="m8-p6" style={{ color: 'var(--v2-text-subtle)' }}>{mod.pain}</p>
-    </motion.div>
-  );
-}
+    </div>
+  )
+);
+ModuleCard.displayName = 'ModuleCard';
 
 export default function ProductSuiteV2() {
   const [activeModule, setActiveModule] = useState('ads');
   const active = modules[activeModule];
+
+  const hubRef = useRef<HTMLDivElement | null>(null);
+  const centerRef = useRef<HTMLDivElement | null>(null);
+  const dashRefs = useRef<Record<string, SVGPathElement | null>>({});
+  const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [paths, setPaths] = useState<Array<{ id: string; d: string; accent: string }>>([]);
+  const [hubSize, setHubSize] = useState({ w: 0, h: 0 });
+
+  useEffect(() => {
+    const measure = () => {
+      const hub = hubRef.current;
+      const center = centerRef.current;
+      if (!hub || !center) return;
+
+      const hubRect = hub.getBoundingClientRect();
+      const centerRect = center.getBoundingClientRect();
+
+      setHubSize({ w: hubRect.width, h: hubRect.height });
+
+      const cx = centerRect.left - hubRect.left + centerRect.width / 2;
+      const cy = centerRect.top - hubRect.top + centerRect.height / 2;
+      const r = centerRect.width / 2;
+
+      const computed: Array<{ id: string; d: string; accent: string }> = [];
+
+      [...leftKeys, ...rightKeys].forEach((k) => {
+        const card = cardRefs.current[k];
+        if (!card) return;
+
+        const cardRect = card.getBoundingClientRect();
+        const isLeft = leftKeys.includes(k);
+
+        const cardX = isLeft
+          ? cardRect.right - hubRect.left
+          : cardRect.left - hubRect.left;
+        const cardY = cardRect.top - hubRect.top + cardRect.height / 2;
+
+        const angle = Math.atan2(cardY - cy, cardX - cx);
+        const circleX = cx + Math.cos(angle) * r;
+        const circleY = cy + Math.sin(angle) * r;
+
+        const cp1x = isLeft ? circleX - 120 : circleX + 120;
+        const cp1y = circleY;
+        const cp2x = isLeft ? cardX + 80 : cardX - 80;
+        const cp2y = cardY;
+
+        const d = `M ${circleX} ${circleY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${cardX} ${cardY}`;
+
+        computed.push({ id: k, d, accent: modules[k].accent });
+      });
+
+      setPaths(computed);
+    };
+
+    measure();
+    // Re-measure shortly after mount in case fonts/layout settle
+    const t = setTimeout(measure, 100);
+    window.addEventListener('resize', measure);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener('resize', measure);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (paths.length === 0) return;
+
+    const animations: gsap.core.Tween[] = [];
+
+    paths.forEach((p, i) => {
+      const el = dashRefs.current[p.id];
+      if (!el) return;
+
+      const length = el.getTotalLength();
+      gsap.set(el, { strokeDasharray: `20 ${length}`, strokeDashoffset: length });
+
+      const anim = gsap.to(el, {
+        strokeDashoffset: -length,
+        duration: 2.5,
+        ease: 'none',
+        repeat: -1,
+        delay: i * 0.3,
+      });
+
+      animations.push(anim);
+    });
+
+    return () => {
+      animations.forEach((a) => a.kill());
+    };
+  }, [paths]);
 
   return (
     <section style={{ padding: '100px 0', position: 'relative', zIndex: 1 }}>
@@ -211,53 +305,147 @@ export default function ProductSuiteV2() {
         </motion.p>
 
         <motion.div
+          ref={hubRef}
           className="product-suite-grid"
-          style={{ display: 'grid', gridTemplateColumns: '1fr 260px 1fr', gap: '16px', alignItems: 'start', marginBottom: '40px' }}
+          style={{
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '40px',
+            marginBottom: '40px',
+          }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ delay: 0.2 }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: '0 0 280px', position: 'relative', zIndex: 2 }}>
             {leftKeys.map((k) => (
-              <ModuleCard key={k} k={k} mod={modules[k]} active={activeModule === k} onClick={() => setActiveModule(k)} />
+              <ModuleCard
+                key={k}
+                k={k}
+                mod={modules[k]}
+                active={activeModule === k}
+                onClick={() => setActiveModule(k)}
+                ref={(el) => { cardRefs.current[k] = el; }}
+              />
             ))}
           </div>
 
-          <div style={{
-            background: '#080D19',
-            borderRadius: '16px',
-            padding: '28px 20px',
-            textAlign: 'center',
+          {/* Center circle */}
+          <div className="product-suite-center" style={{
             position: 'relative',
-            overflow: 'hidden',
-            alignSelf: 'stretch',
+            flex: '0 0 240px',
+            height: '240px',
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '16px',
+            zIndex: 2,
           }}>
+            {/* Pulse rings */}
             <div style={{
               position: 'absolute',
               inset: 0,
-              background: 'radial-gradient(circle at 50% 50%, rgba(142,89,255,0.15), transparent 70%)',
+              borderRadius: '50%',
+              border: '1px solid rgba(142,89,255,0.25)',
+              animation: 'suiteOuterPulse 2.8s ease-out infinite',
               pointerEvents: 'none',
             }} />
-            <h3 className="m8-p3-medium" style={{ color: '#fff', position: 'relative', zIndex: 1 }}>Market One</h3>
-            <p className="m8-p6" style={{ color: 'rgba(255,255,255,0.5)', position: 'relative', zIndex: 1 }}>Your single source of truth</p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center', position: 'relative', zIndex: 1, marginTop: '8px' }}>
-              {Object.values(modules).map((m) => (
-                <div key={m.abbr} style={{ width: '8px', height: '8px', borderRadius: '50%', background: m.accent }} />
-              ))}
+            <div style={{
+              position: 'absolute',
+              inset: '12px',
+              borderRadius: '50%',
+              border: '1px solid rgba(142,89,255,0.35)',
+              animation: 'suiteInnerPulse 2.8s ease-out infinite',
+              animationDelay: '0.6s',
+              pointerEvents: 'none',
+            }} />
+
+            {/* Main circle */}
+            <div ref={centerRef} style={{
+              width: '200px',
+              height: '200px',
+              borderRadius: '50%',
+              background: '#080D19',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '10px',
+              padding: '20px',
+              position: 'relative',
+              overflow: 'hidden',
+              boxShadow: '0 12px 40px rgba(8,13,25,0.35)',
+            }}>
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'radial-gradient(circle at 50% 50%, rgba(142,89,255,0.22), transparent 70%)',
+                pointerEvents: 'none',
+              }} />
+              <h3 className="m8-p3-medium" style={{ color: '#fff', position: 'relative', zIndex: 1, textAlign: 'center' }}>Market One</h3>
+              <p className="m8-p6" style={{ color: 'rgba(255,255,255,0.55)', position: 'relative', zIndex: 1, textAlign: 'center' }}>Single source of truth</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center', position: 'relative', zIndex: 1, marginTop: '4px' }}>
+                {Object.values(modules).map((m) => (
+                  <div key={m.abbr} style={{ width: '8px', height: '8px', borderRadius: '50%', background: m.accent }} />
+                ))}
+              </div>
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: '0 0 280px', position: 'relative', zIndex: 2 }}>
             {rightKeys.map((k) => (
-              <ModuleCard key={k} k={k} mod={modules[k]} active={activeModule === k} onClick={() => setActiveModule(k)} />
+              <ModuleCard
+                key={k}
+                k={k}
+                mod={modules[k]}
+                active={activeModule === k}
+                onClick={() => setActiveModule(k)}
+                ref={(el) => { cardRefs.current[k] = el; }}
+              />
             ))}
           </div>
+
+          {/* SVG overlay */}
+          <svg
+            width={hubSize.w}
+            height={hubSize.h}
+            viewBox={`0 0 ${hubSize.w} ${hubSize.h}`}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              pointerEvents: 'none',
+              zIndex: 1,
+            }}
+          >
+            {paths.map((p) => (
+              <g key={p.id}>
+                <path
+                  d={p.d}
+                  fill="none"
+                  stroke={p.accent}
+                  strokeWidth="1"
+                  strokeOpacity="0.18"
+                  strokeLinecap="round"
+                />
+                <path
+                  ref={(el) => { dashRefs.current[p.id] = el; }}
+                  d={p.d}
+                  fill="none"
+                  stroke={p.accent}
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeDasharray="20 200"
+                  strokeDashoffset="0"
+                  strokeOpacity="0.9"
+                />
+              </g>
+            ))}
+          </svg>
         </motion.div>
 
         <AnimatePresence mode="wait">
@@ -299,9 +487,23 @@ export default function ProductSuiteV2() {
       </div>
 
       <style>{`
+        @keyframes suiteOuterPulse {
+          0% { transform: scale(1); opacity: 0.6; }
+          60% { transform: scale(1.12); opacity: 0; }
+          100% { transform: scale(1.12); opacity: 0; }
+        }
+        @keyframes suiteInnerPulse {
+          0% { transform: scale(1); opacity: 0.5; }
+          60% { transform: scale(1.07); opacity: 0; }
+          100% { transform: scale(1.07); opacity: 0; }
+        }
         @media (max-width: 768px) {
           .product-suite-grid {
-            grid-template-columns: 1fr !important;
+            flex-direction: column !important;
+          }
+          .product-suite-col {
+            flex: 1 1 auto !important;
+            width: 100%;
           }
           .product-suite-detail {
             grid-template-columns: 1fr !important;
