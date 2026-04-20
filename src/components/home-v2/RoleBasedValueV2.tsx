@@ -167,20 +167,23 @@ export default function RoleBasedValueV2() {
                 width: '88vw',
                 height: '100%',
                 display: 'flex',
-                alignItems: 'stretch',
+                alignItems: 'center',
+                justifyContent: 'center',
                 padding: '0 clamp(16px, 3vw, 40px) clamp(40px, 7vh, 70px)',
                 flexShrink: 0,
                 boxSizing: 'border-box',
               }}
             >
-              {/* Bounding box wraps both card visual + copy */}
+              {/* Bounding box — fixed uniform size across all slides */}
               <div
                 style={{
-                  flex: 1,
+                  width: '100%',
+                  maxWidth: '1100px',
+                  height: '480px',
                   display: 'grid',
                   gridTemplateColumns: '1fr 1fr',
-                  alignItems: 'end',
-                  gap: '48px',
+                  alignItems: 'stretch',
+                  gap: '32px',
                   padding: '24px',
                   borderRadius: '24px',
                   background: 'rgba(255,255,255,0.05)',
@@ -190,14 +193,13 @@ export default function RoleBasedValueV2() {
                   boxSizing: 'border-box',
                 }}
               >
-                {/* Left: gradient visual */}
+                {/* Left: gradient visual — fills bounding box */}
                 <div
                   style={{
                     background: role.gradient,
                     borderRadius: '16px',
                     width: '100%',
                     height: '100%',
-                    minHeight: '260px',
                     position: 'relative',
                     overflow: 'hidden',
                     boxShadow: '0 0 0 1px rgba(255,255,255,0.06)',
@@ -228,7 +230,7 @@ export default function RoleBasedValueV2() {
                 </div>
 
                 {/* Right: copy bottom-aligned */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', paddingBottom: '8px', paddingLeft: '16px', paddingRight: '16px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '16px', padding: '8px 16px 8px 16px' }}>
                   <span
                     className="m8-p6"
                     style={{
