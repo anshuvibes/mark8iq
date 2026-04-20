@@ -302,6 +302,8 @@ export default function AgentMarkV2() {
           </div>
         </motion.div>
 
+          </div>
+        </div>
       </div>
     </section>
   );
