@@ -28,6 +28,27 @@ Never use Tailwind text-sm, text-base, text-lg, text-xl, text-2xl etc on brand c
 .m8-p6          → 14px, weight 300, lh normal, ls 0
 ```
 
+---
+
+## SECTION EYEBROW + HEADLINE PATTERN — UNIVERSAL
+
+Every v2 section heading uses an eyebrow + headline structure. No exceptions.
+
+Eyebrow uses `.m8-eyebrow` (defined in src/index.css):
+- Söhne Mono, 11px, weight 400, letter-spacing 0.12em, uppercase, line-height 1
+- Color: `var(--v2-text-secondary)` for neutral, accent hex for branded sections
+- Margin-bottom: 10–12px before the headline
+
+Headline follows directly after the eyebrow:
+- `.m8-h2` preferred, or inline Saira 40px / 400 / -0.03em
+- HARD RULE: Never place a paragraph sub-heading immediately beneath the headline as a secondary heading.
+- Supporting copy goes as body text with clear visual separation, not as a tagline under the headline.
+
+```tsx
+<p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '12px' }}>AGENT MARK</p>
+<h2 className="m8-h2" style={{ color: 'var(--v2-text)' }}>Your smartest team member never sleeps.</h2>
+```
+
 HARD RULE: font-weight 600 and 700 are permanently banned in this codebase.
 HARD RULE: Maximum allowed font-weight is 500, used only via .m8-p3-medium.
 HARD RULE: Never write fontWeight: 600 or fontWeight: 700 anywhere — not in JSX style props, not in className, not in CSS.
