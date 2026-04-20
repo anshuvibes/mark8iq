@@ -83,8 +83,8 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
       border: '1px solid var(--v2-border)',
       width: '100%',
       height: '100%',
-      paddingTop: '28px',
-      paddingRight: '28px',
+      marginTop: '28px',
+      marginRight: '28px',
       overflow: 'hidden',
     }}>
       <div style={{
