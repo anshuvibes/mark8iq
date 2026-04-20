@@ -350,7 +350,7 @@ export default function ProductSuiteV2() {
         <div style={{
           border: '1px solid var(--v2-border)',
           borderRadius: '20px',
-          overflow: 'hidden',
+          overflow: 'visible',
           background: 'var(--v2-bg-card)',
           marginBottom: '32px',
         }}>
@@ -363,6 +363,7 @@ export default function ProductSuiteV2() {
             alignItems: 'center',
             justifyContent: 'space-between',
             gap: '40px',
+            padding: '40px 32px',
           }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -417,6 +418,7 @@ export default function ProductSuiteV2() {
               animation: 'suiteWave1 3s ease-out infinite',
               pointerEvents: 'none',
               transformOrigin: 'center',
+              zIndex: 0,
             }} />
             <div style={{
               position: 'absolute',
@@ -432,6 +434,7 @@ export default function ProductSuiteV2() {
               animationDelay: '0.8s',
               pointerEvents: 'none',
               transformOrigin: 'center',
+              zIndex: 0,
             }} />
             <div style={{
               position: 'absolute',
@@ -447,6 +450,7 @@ export default function ProductSuiteV2() {
               animationDelay: '1.6s',
               pointerEvents: 'none',
               transformOrigin: 'center',
+              zIndex: 0,
             }} />
 
             {/* Main circle — 3D feel */}
@@ -558,9 +562,9 @@ export default function ProductSuiteV2() {
               background: `#ffffff`,
               backgroundImage: `radial-gradient(ellipse at 0% 100%, ${active.accent}35 0%, ${active.accent}12 50%, transparent 100%)`,
               opacity: 1,
-              borderRadius: '0',
-              border: 'none',
-              borderTop: `1px solid var(--v2-border)`,
+              borderRadius: '12px',
+              border: `1px solid var(--v2-border)`,
+              margin: '0 32px 32px 32px',
               height: '220px',
               overflow: 'hidden',
             }}
