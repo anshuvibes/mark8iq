@@ -116,7 +116,7 @@ export default function RoleBasedValueV2() {
             top: 0,
             left: 0,
             right: 0,
-            padding: 'clamp(80px, 11vh, 110px) clamp(24px, 6vw, 120px) 0',
+            padding: 'clamp(140px, 18vh, 180px) clamp(24px, 6vw, 120px) 0',
             zIndex: 10,
             pointerEvents: 'none',
             textAlign: 'center',
@@ -168,7 +168,7 @@ export default function RoleBasedValueV2() {
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
                 alignItems: 'end',
-                padding: 'clamp(80px, 11vh, 110px) clamp(24px, 5vw, 80px) clamp(40px, 7vh, 70px)',
+                padding: 'clamp(40px, 6vh, 60px) clamp(24px, 5vw, 80px) clamp(40px, 7vh, 70px)',
                 gap: '48px',
                 flexShrink: 0,
               }}
