@@ -365,10 +365,12 @@ export default function ProductSuiteV2() {
         </motion.p>
 
         <div style={{
-          border: '1px solid var(--v2-border)',
+          border: `1px solid ${active.accent}30`,
           borderRadius: '20px',
           overflow: 'visible',
-          background: 'var(--v2-bg-card)',
+          background: '#ffffff',
+          backgroundImage: `radial-gradient(ellipse at 0% 100%, ${active.accent}12 0%, transparent 60%)`,
+          transition: 'background-image 0.3s ease, border-color 0.3s ease',
           marginBottom: '32px',
         }}>
         <motion.div
