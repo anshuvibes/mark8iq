@@ -421,7 +421,7 @@ export default function ProductSuiteV2() {
               borderRadius: '50%',
               background: 'radial-gradient(circle at 50% 50%, rgba(142,89,255,0.18), transparent 65%)',
               pointerEvents: 'none',
-              zIndex: 0,
+              zIndex: 2,
             }} />
 
             {/* Pulse waves — three sonar rings */}
