@@ -388,8 +388,7 @@ export default function ProductSuiteV2() {
             position: 'relative',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            gap: '24px',
+            justifyContent: 'space-between',
             padding: '40px 32px',
             flexWrap: 'nowrap',
           }}
