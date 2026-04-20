@@ -300,9 +300,16 @@ export default function ProductSuiteV2() {
     // Re-measure shortly after mount in case fonts/layout settle
     const t = setTimeout(measure, 100);
     window.addEventListener('resize', measure);
+
+    // Observe hub container for any layout changes (fluid center, card reflow, etc.)
+    const ro = new ResizeObserver(() => measure());
+    if (hubRef.current) ro.observe(hubRef.current);
+    if (centerRef.current) ro.observe(centerRef.current);
+
     return () => {
       clearTimeout(t);
       window.removeEventListener('resize', measure);
+      ro.disconnect();
     };
   }, []);
 
@@ -381,16 +388,17 @@ export default function ProductSuiteV2() {
             position: 'relative',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '40px',
+            justifyContent: 'center',
+            gap: '24px',
             padding: '40px 32px',
+            flexWrap: 'nowrap',
           }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ delay: 0.2 }}
         >
-          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: '0 0 280px', position: 'relative', zIndex: 3 }}>
+          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', width: '300px', flexShrink: 0, minWidth: '220px', position: 'relative', zIndex: 3 }}>
             {leftKeys.map((k) => (
               <ModuleCard
                 key={k}
@@ -406,12 +414,14 @@ export default function ProductSuiteV2() {
           {/* Center circle */}
           <div className="product-suite-center" style={{
             position: 'relative',
-            flex: '0 0 300px',
-            height: '300px',
+            flex: 1,
+            minWidth: '180px',
+            maxWidth: '340px',
+            aspectRatio: '1',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            zIndex: 2,
+            alignSelf: 'center',
             overflow: 'visible',
           }}>
             {/* Outer glow — bleeds into background */}
@@ -424,15 +434,10 @@ export default function ProductSuiteV2() {
               zIndex: 2,
             }} />
 
-            {/* Pulse waves — three sonar rings */}
+            {/* Pulse waves — three sonar rings (scale with center container) */}
             <div style={{
               position: 'absolute',
-              top: '50%',
-              left: '50%',
-              width: '300px',
-              height: '300px',
-              marginTop: '-150px',
-              marginLeft: '-150px',
+              inset: 0,
               borderRadius: '50%',
               border: '1px solid rgba(142,89,255,0.35)',
               animation: 'suiteWave1 3s ease-out infinite',
@@ -442,12 +447,7 @@ export default function ProductSuiteV2() {
             }} />
             <div style={{
               position: 'absolute',
-              top: '50%',
-              left: '50%',
-              width: '300px',
-              height: '300px',
-              marginTop: '-150px',
-              marginLeft: '-150px',
+              inset: 0,
               borderRadius: '50%',
               border: '1px solid rgba(142,89,255,0.3)',
               animation: 'suiteWave1 3s ease-out infinite',
@@ -458,12 +458,7 @@ export default function ProductSuiteV2() {
             }} />
             <div style={{
               position: 'absolute',
-              top: '50%',
-              left: '50%',
-              width: '300px',
-              height: '300px',
-              marginTop: '-150px',
-              marginLeft: '-150px',
+              inset: 0,
               borderRadius: '50%',
               border: '1px solid rgba(142,89,255,0.25)',
               animation: 'suiteWave1 3s ease-out infinite',
@@ -477,8 +472,8 @@ export default function ProductSuiteV2() {
             <div ref={centerRef}
               onMouseEnter={() => setActiveModule('marketone')}
               style={{
-              width: '300px',
-              height: '300px',
+              width: '100%',
+              height: '100%',
               borderRadius: '50%',
               background: 'radial-gradient(circle at 32% 28%, #2a2440 0%, #15182a 40%, #080D19 100%)',
               display: 'flex',
@@ -516,7 +511,7 @@ export default function ProductSuiteV2() {
             </div>
           </div>
 
-          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: '0 0 280px', position: 'relative', zIndex: 3 }}>
+          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', width: '300px', flexShrink: 0, minWidth: '220px', position: 'relative', zIndex: 3 }}>
             {rightKeys.map((k) => (
               <ModuleCard
                 key={k}
