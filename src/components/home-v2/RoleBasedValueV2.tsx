@@ -178,7 +178,7 @@ export default function RoleBasedValueV2() {
                   maxHeight: '520px',
                   position: 'relative',
                   overflow: 'hidden',
-                  boxShadow: '0 40px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.06)',
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.06)',
                 }}
               >
                 <div
