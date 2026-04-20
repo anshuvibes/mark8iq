@@ -545,7 +545,8 @@ export default function ProductSuiteV2() {
                 k={k}
                 mod={modules[k]}
                 active={activeModule === k}
-                onMouseEnter={() => setActiveModule(k)}
+                onMouseEnter={() => { isPausedRef.current = true; setActiveModule(k); }}
+                onMouseLeave={() => { isPausedRef.current = false; }}
                 ref={(el) => { cardRefs.current[k] = el; }}
               />
             ))}
