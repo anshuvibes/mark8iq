@@ -368,7 +368,7 @@ export default function ProductSuiteV2() {
         <div style={{
           border: `1px solid ${active.accent}30`,
           borderRadius: '20px',
-          overflow: 'visible',
+          overflow: 'hidden',
           background: '#ffffff',
           backgroundImage: `radial-gradient(ellipse at 0% 100%, ${active.accent}12 0%, transparent 60%)`,
           transition: 'background-image 0.3s ease, border-color 0.3s ease',
@@ -390,7 +390,7 @@ export default function ProductSuiteV2() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ delay: 0.2 }}
         >
-          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: '0 0 280px', position: 'relative', zIndex: 2 }}>
+          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: '0 0 280px', position: 'relative', zIndex: 3 }}>
             {leftKeys.map((k) => (
               <ModuleCard
                 key={k}
@@ -421,7 +421,7 @@ export default function ProductSuiteV2() {
               borderRadius: '50%',
               background: 'radial-gradient(circle at 50% 50%, rgba(142,89,255,0.18), transparent 65%)',
               pointerEvents: 'none',
-              zIndex: 0,
+              zIndex: 2,
             }} />
 
             {/* Pulse waves — three sonar rings */}
@@ -490,7 +490,7 @@ export default function ProductSuiteV2() {
               position: 'relative',
               overflow: 'hidden',
               boxShadow: '0 18px 50px rgba(8,13,25,0.5), inset 0 -8px 24px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.08)',
-              zIndex: 2,
+              zIndex: 4,
               cursor: 'pointer',
             }}>
               <div style={{
@@ -516,7 +516,7 @@ export default function ProductSuiteV2() {
             </div>
           </div>
 
-          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: '0 0 280px', position: 'relative', zIndex: 2 }}>
+          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: '0 0 280px', position: 'relative', zIndex: 3 }}>
             {rightKeys.map((k) => (
               <ModuleCard
                 key={k}
@@ -590,6 +590,8 @@ export default function ProductSuiteV2() {
               margin: '0 32px 32px 32px',
               height: '220px',
               overflow: 'hidden',
+              position: 'relative',
+              zIndex: 5,
             }}
           >
             {activeModule === 'marketone' ? (
