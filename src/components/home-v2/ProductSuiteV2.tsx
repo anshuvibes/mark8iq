@@ -531,12 +531,18 @@ export default function ProductSuiteV2() {
               opacity: 1,
               borderRadius: '16px',
               border: '1px solid var(--v2-border)',
+              borderTop: `2px solid ${active.accent}`,
               marginBottom: '48px',
             }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <p className="m8-p2" style={{ color: 'var(--v2-text)', marginBottom: '12px' }}>{active.pain}</p>
-              <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)' }}>{active.metric}</p>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '12px' }}>
+              <img
+                src={activeLogo}
+                alt={active.name}
+                style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85 }}
+              />
+              <p className="m8-p2" style={{ color: 'var(--v2-text)', margin: 0 }}>{active.pain}</p>
+              <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)', margin: 0 }}>{active.metric}</p>
             </div>
             <DataTable moduleKey={activeModule} accent={active.accent} />
           </motion.div>
