@@ -397,7 +397,7 @@ export default function ProductSuiteV2() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ delay: 0.2 }}
         >
-          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', width: '300px', flexShrink: 0, minWidth: '220px', position: 'relative', zIndex: 3 }}>
+          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', width: '300px', flexShrink: 0, flexGrow: 0, position: 'relative', zIndex: 3 }}>
             {leftKeys.map((k) => (
               <ModuleCard
                 key={k}
@@ -414,13 +414,11 @@ export default function ProductSuiteV2() {
           <div className="product-suite-center" style={{
             position: 'relative',
             flex: 1,
-            minWidth: '180px',
-            maxWidth: '340px',
-            aspectRatio: '1',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            alignSelf: 'center',
+            alignSelf: 'stretch',
+            padding: '0 24px',
             overflow: 'visible',
           }}>
             {/* Outer glow — bleeds into background */}
@@ -510,7 +508,7 @@ export default function ProductSuiteV2() {
             </div>
           </div>
 
-          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', width: '300px', flexShrink: 0, minWidth: '220px', position: 'relative', zIndex: 3 }}>
+          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', width: '300px', flexShrink: 0, flexGrow: 0, position: 'relative', zIndex: 3 }}>
             {rightKeys.map((k) => (
               <ModuleCard
                 key={k}
