@@ -168,21 +168,24 @@ export default function RoleBasedValueV2() {
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
                 alignItems: 'end',
-                padding: 'clamp(200px, 28vh, 260px) clamp(24px, 6vw, 120px) clamp(60px, 10vh, 100px)',
+                padding: 'clamp(180px, 24vh, 220px) clamp(24px, 6vw, 120px) clamp(48px, 8vh, 80px)',
                 gap: '60px',
                 flexShrink: 0,
               }}
             >
-              {/* Left: gradient placeholder card */}
+              {/* Left: gradient placeholder card — 4:3 ratio */}
               <div
                 style={{
                   background: role.gradient,
-                  borderRadius: '24px',
-                  height: '60vh',
-                  maxHeight: '520px',
+                  borderRadius: '20px',
+                  width: '100%',
+                  aspectRatio: '4 / 3',
+                  maxHeight: '46vh',
                   position: 'relative',
                   overflow: 'hidden',
                   boxShadow: '0 0 0 1px rgba(255,255,255,0.06)',
+                  justifySelf: 'end',
+                  maxWidth: '560px',
                 }}
               >
                 <div
