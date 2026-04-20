@@ -388,8 +388,7 @@ export default function ProductSuiteV2() {
             position: 'relative',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            gap: '24px',
+            justifyContent: 'space-between',
             padding: '40px 32px',
             flexWrap: 'nowrap',
           }}
@@ -398,7 +397,7 @@ export default function ProductSuiteV2() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ delay: 0.2 }}
         >
-          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', width: '300px', flexShrink: 0, minWidth: '220px', position: 'relative', zIndex: 3 }}>
+          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', width: '300px', flexShrink: 0, flexGrow: 0, position: 'relative', zIndex: 3 }}>
             {leftKeys.map((k) => (
               <ModuleCard
                 key={k}
@@ -415,103 +414,111 @@ export default function ProductSuiteV2() {
           <div className="product-suite-center" style={{
             position: 'relative',
             flex: 1,
-            minWidth: '180px',
-            maxWidth: '340px',
-            aspectRatio: '1',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            alignSelf: 'center',
+            alignSelf: 'stretch',
+            padding: '0 24px',
             overflow: 'visible',
           }}>
             {/* Outer glow — bleeds into background */}
             <div style={{
-              position: 'absolute',
-              inset: '-60px',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle at 50% 50%, rgba(142,89,255,0.18), transparent 65%)',
-              pointerEvents: 'none',
-              zIndex: 2,
-            }} />
-
-            {/* Pulse waves — three sonar rings (scale with center container) */}
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              borderRadius: '50%',
-              border: '1px solid rgba(142,89,255,0.35)',
-              animation: 'suiteWave1 3s ease-out infinite',
-              pointerEvents: 'none',
-              transformOrigin: 'center',
-              zIndex: 0,
-            }} />
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              borderRadius: '50%',
-              border: '1px solid rgba(142,89,255,0.3)',
-              animation: 'suiteWave1 3s ease-out infinite',
-              animationDelay: '0.8s',
-              pointerEvents: 'none',
-              transformOrigin: 'center',
-              zIndex: 0,
-            }} />
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              borderRadius: '50%',
-              border: '1px solid rgba(142,89,255,0.25)',
-              animation: 'suiteWave1 3s ease-out infinite',
-              animationDelay: '1.6s',
-              pointerEvents: 'none',
-              transformOrigin: 'center',
-              zIndex: 0,
-            }} />
-
-            {/* Main circle — 3D feel */}
-            <div ref={centerRef}
-              onMouseEnter={() => setActiveModule('marketone')}
-              style={{
-              width: '100%',
-              height: '100%',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle at 32% 28%, #2a2440 0%, #15182a 40%, #080D19 100%)',
+              position: 'relative',
+              width: 'min(100%, 320px)',
+              aspectRatio: '1',
               display: 'flex',
-              flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '6px',
-              padding: '20px',
-              position: 'relative',
-              overflow: 'hidden',
-              boxShadow: '0 18px 50px rgba(8,13,25,0.5), inset 0 -8px 24px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.08)',
-              zIndex: 4,
-              cursor: 'pointer',
             }}>
+              {/* Outer glow — bleeds into background */}
+              <div style={{
+                position: 'absolute',
+                inset: '-60px',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle at 50% 50%, rgba(142,89,255,0.18), transparent 65%)',
+                pointerEvents: 'none',
+                zIndex: 2,
+              }} />
+
+              {/* Pulse waves — three sonar rings (scale with center container) */}
               <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'radial-gradient(circle at 50% 50%, rgba(142,89,255,0.18), transparent 70%)',
+                borderRadius: '50%',
+                border: '1px solid rgba(142,89,255,0.35)',
+                animation: 'suiteWave1 3s ease-out infinite',
                 pointerEvents: 'none',
+                transformOrigin: 'center',
+                zIndex: 0,
               }} />
-              <img
-                src="/img/product-logos/white/market-one.svg"
-                alt="Market One"
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: '50%',
+                border: '1px solid rgba(142,89,255,0.3)',
+                animation: 'suiteWave1 3s ease-out infinite',
+                animationDelay: '0.8s',
+                pointerEvents: 'none',
+                transformOrigin: 'center',
+                zIndex: 0,
+              }} />
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: '50%',
+                border: '1px solid rgba(142,89,255,0.25)',
+                animation: 'suiteWave1 3s ease-out infinite',
+                animationDelay: '1.6s',
+                pointerEvents: 'none',
+                transformOrigin: 'center',
+                zIndex: 0,
+              }} />
+
+              {/* Main circle — 3D feel */}
+              <div ref={centerRef}
+                onMouseEnter={() => setActiveModule('marketone')}
                 style={{
-                  height: '32px',
-                  width: 'auto',
-                  display: 'block',
-                  position: 'relative',
-                  zIndex: 1,
-                }}
-              />
-              <span style={{ color: 'rgba(255,255,255,0.45)', textAlign: 'center', padding: '0 20px', position: 'relative', zIndex: 1, lineHeight: 1.4, fontSize: '11px', fontFamily: "'Saira', sans-serif", fontWeight: 300 }}>
-                Single source of truth
-              </span>
+                width: '100%',
+                height: '100%',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle at 32% 28%, #2a2440 0%, #15182a 40%, #080D19 100%)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                padding: '20px',
+                position: 'relative',
+                overflow: 'hidden',
+                boxShadow: '0 18px 50px rgba(8,13,25,0.5), inset 0 -8px 24px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.08)',
+                zIndex: 4,
+                cursor: 'pointer',
+              }}>
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'radial-gradient(circle at 50% 50%, rgba(142,89,255,0.18), transparent 70%)',
+                  pointerEvents: 'none',
+                }} />
+                <img
+                  src="/img/product-logos/white/market-one.svg"
+                  alt="Market One"
+                  style={{
+                    height: '32px',
+                    width: 'auto',
+                    display: 'block',
+                    position: 'relative',
+                    zIndex: 1,
+                  }}
+                />
+                <span style={{ color: 'rgba(255,255,255,0.45)', textAlign: 'center', padding: '0 20px', position: 'relative', zIndex: 1, lineHeight: 1.4, fontSize: '11px', fontFamily: "'Saira', sans-serif", fontWeight: 300 }}>
+                  Single source of truth
+                </span>
+              </div>
             </div>
           </div>
 
-          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', width: '300px', flexShrink: 0, minWidth: '220px', position: 'relative', zIndex: 3 }}>
+          <div className="product-suite-col" style={{ display: 'flex', flexDirection: 'column', gap: '14px', width: '300px', flexShrink: 0, flexGrow: 0, position: 'relative', zIndex: 3 }}>
             {rightKeys.map((k) => (
               <ModuleCard
                 key={k}
