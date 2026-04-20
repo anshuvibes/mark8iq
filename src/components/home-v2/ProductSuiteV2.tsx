@@ -258,7 +258,7 @@ export default function ProductSuiteV2() {
         const originY = cy + leftOffsets[i];
 
         const span = Math.abs(cardX - originX);
-        const pull = span * 0.42;
+        const pull = span * 0.65;
 
         const cp1x = cardX + pull;
         const cp1y = cardY;
@@ -282,7 +282,7 @@ export default function ProductSuiteV2() {
         const originY = cy + rightOffsets[i];
 
         const span = Math.abs(cardX - originX);
-        const pull = span * 0.42;
+        const pull = span * 0.65;
 
         const cp1x = cardX - pull;
         const cp1y = cardY;
