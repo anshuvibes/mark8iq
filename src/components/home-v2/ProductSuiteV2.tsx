@@ -496,7 +496,8 @@ export default function ProductSuiteV2() {
 
               {/* Main circle — 3D feel */}
               <div ref={centerRef}
-                onMouseEnter={() => setActiveModule('marketone')}
+                onMouseEnter={() => { isPausedRef.current = true; setActiveModule('marketone'); }}
+                onMouseLeave={() => { isPausedRef.current = false; }}
                 style={{
                 width: '100%',
                 height: '100%',
