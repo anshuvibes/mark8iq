@@ -347,6 +347,13 @@ export default function ProductSuiteV2() {
           Every function your brand runs on. Built to work together.
         </motion.p>
 
+        <div style={{
+          border: '1px solid var(--v2-border)',
+          borderRadius: '20px',
+          overflow: 'hidden',
+          background: 'var(--v2-bg-card)',
+          marginBottom: '32px',
+        }}>
         <motion.div
           ref={hubRef}
           className="product-suite-grid"
@@ -356,7 +363,6 @@ export default function ProductSuiteV2() {
             alignItems: 'center',
             justifyContent: 'space-between',
             gap: '40px',
-            marginBottom: '40px',
           }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -552,9 +558,9 @@ export default function ProductSuiteV2() {
               background: `#ffffff`,
               backgroundImage: `radial-gradient(ellipse at 0% 100%, ${active.accent}35 0%, ${active.accent}12 50%, transparent 100%)`,
               opacity: 1,
-              borderRadius: '16px',
-              border: `1px solid ${active.accent}40`,
-              marginBottom: '48px',
+              borderRadius: '0',
+              border: 'none',
+              borderTop: `1px solid var(--v2-border)`,
               height: '220px',
               overflow: 'hidden',
             }}
@@ -584,6 +590,7 @@ export default function ProductSuiteV2() {
             <DataTable moduleKey={activeModule} accent={active.accent} />
           </motion.div>
         </AnimatePresence>
+        </div>
 
         <motion.p
           className="m8-p3"
