@@ -158,21 +158,20 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
   );
 }
 
-const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.ads; active: boolean; onClick: () => void }>(
-  ({ mod, active, onClick }, ref) => (
+const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.ads; active: boolean; onMouseEnter: () => void }>(
+  ({ mod, active, onMouseEnter }, ref) => (
     <div
       ref={ref}
-      onClick={onClick}
-      onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
+      onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px)'; onMouseEnter(); }}
       onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
       style={{
         padding: '20px 20px',
         borderRadius: '14px',
         border: `1px solid ${active ? mod.accent + '50' : 'var(--v2-border)'}`,
-        backgroundColor: active ? mod.accent + '08' : 'var(--v2-bg-card)',
+        backgroundColor: active ? mod.accent + '18' : 'var(--v2-bg-card)',
         cursor: 'pointer',
         boxShadow: active
-          ? `0 4px 24px ${mod.accent}25, inset 0 0 0 1px ${mod.accent}20`
+          ? `0 4px 24px ${mod.accent}30, inset 0 0 0 1px ${mod.accent}30`
           : '0 1px 3px rgba(0,0,0,0.04)',
         transition: 'all 0.2s ease',
         position: 'relative',
@@ -345,7 +344,7 @@ export default function ProductSuiteV2() {
                 k={k}
                 mod={modules[k]}
                 active={activeModule === k}
-                onClick={() => setActiveModule(k)}
+                onMouseEnter={() => setActiveModule(k)}
                 ref={(el) => { cardRefs.current[k] = el; }}
               />
             ))}
@@ -428,24 +427,13 @@ export default function ProductSuiteV2() {
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '10px',
+              gap: '6px',
               padding: '20px',
               position: 'relative',
               overflow: 'hidden',
               boxShadow: '0 18px 50px rgba(8,13,25,0.5), inset 0 -8px 24px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.08)',
               zIndex: 2,
             }}>
-              {/* Highlight arc — top-left light source */}
-              <div style={{
-                position: 'absolute',
-                top: '-30%',
-                left: '-30%',
-                width: '90%',
-                height: '90%',
-                borderRadius: '50%',
-                background: 'radial-gradient(circle at 60% 60%, rgba(255,255,255,0.18), transparent 60%)',
-                pointerEvents: 'none',
-              }} />
               <div style={{
                 position: 'absolute',
                 inset: 0,
@@ -461,15 +449,11 @@ export default function ProductSuiteV2() {
                   display: 'block',
                   position: 'relative',
                   zIndex: 1,
-                  marginBottom: '4px',
                 }}
               />
-              <p className="m8-p6" style={{ color: 'rgba(255,255,255,0.55)', position: 'relative', zIndex: 1, textAlign: 'center' }}>Single source of truth</p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center', position: 'relative', zIndex: 1, marginTop: '4px' }}>
-                {Object.values(modules).map((m) => (
-                  <div key={m.abbr} style={{ width: '8px', height: '8px', borderRadius: '50%', background: m.accent, boxShadow: `0 0 8px ${m.accent}80` }} />
-                ))}
-              </div>
+              <span style={{ color: 'rgba(255,255,255,0.45)', textAlign: 'center', padding: '0 20px', position: 'relative', zIndex: 1, lineHeight: 1.4, fontSize: '11px', fontFamily: "'Saira', sans-serif", fontWeight: 300 }}>
+                Single source of truth
+              </span>
             </div>
           </div>
 
@@ -480,7 +464,7 @@ export default function ProductSuiteV2() {
                 k={k}
                 mod={modules[k]}
                 active={activeModule === k}
-                onClick={() => setActiveModule(k)}
+                onMouseEnter={() => setActiveModule(k)}
                 ref={(el) => { cardRefs.current[k] = el; }}
               />
             ))}
