@@ -174,43 +174,56 @@ export default function RoleBasedValueV2() {
                 flexShrink: 0,
               }}
             >
-              {/* Left: gradient placeholder card — 4:3 ratio */}
+              {/* Left: bounding box wrapping the gradient card */}
               <div
                 style={{
-                  background: role.gradient,
-                  borderRadius: '20px',
                   width: '100%',
+                  maxWidth: '500px',
                   aspectRatio: '4 / 3',
-                  maxHeight: '100%',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  boxShadow: '0 0 0 1px rgba(255,255,255,0.06)',
+                  padding: '24px',
+                  borderRadius: '24px',
+                  background: 'rgba(255,255,255,0.12)',
+                  backdropFilter: 'blur(24px)',
+                  WebkitBackdropFilter: 'blur(24px)',
+                  border: '1px solid rgba(255,255,255,0.08)',
                   justifySelf: 'end',
-                  maxWidth: '460px',
+                  boxSizing: 'border-box',
                 }}
               >
                 <div
                   style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background:
-                      'radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.08) 0%, transparent 60%)',
-                    borderRadius: '24px',
-                  }}
-                />
-                <span
-                  className="m8-p6"
-                  style={{
-                    position: 'absolute',
-                    bottom: '24px',
-                    left: '24px',
-                    color: 'rgba(255,255,255,0.3)',
-                    letterSpacing: '0.08em',
-                    textTransform: 'uppercase',
+                    background: role.gradient,
+                    borderRadius: '16px',
+                    width: '100%',
+                    height: '100%',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    boxShadow: '0 0 0 1px rgba(255,255,255,0.06)',
                   }}
                 >
-                  {role.label} view — screenshot coming
-                </span>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background:
+                        'radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.08) 0%, transparent 60%)',
+                      borderRadius: '16px',
+                    }}
+                  />
+                  <span
+                    className="m8-p6"
+                    style={{
+                      position: 'absolute',
+                      bottom: '20px',
+                      left: '20px',
+                      color: 'rgba(255,255,255,0.3)',
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    {role.label} view — screenshot coming
+                  </span>
+                </div>
               </div>
 
               {/* Right: copy bottom-aligned */}
