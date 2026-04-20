@@ -427,15 +427,10 @@ export default function ProductSuiteV2() {
               zIndex: 2,
             }} />
 
-            {/* Pulse waves — three sonar rings */}
+            {/* Pulse waves — three sonar rings (scale with center container) */}
             <div style={{
               position: 'absolute',
-              top: '50%',
-              left: '50%',
-              width: '300px',
-              height: '300px',
-              marginTop: '-150px',
-              marginLeft: '-150px',
+              inset: 0,
               borderRadius: '50%',
               border: '1px solid rgba(142,89,255,0.35)',
               animation: 'suiteWave1 3s ease-out infinite',
@@ -445,12 +440,7 @@ export default function ProductSuiteV2() {
             }} />
             <div style={{
               position: 'absolute',
-              top: '50%',
-              left: '50%',
-              width: '300px',
-              height: '300px',
-              marginTop: '-150px',
-              marginLeft: '-150px',
+              inset: 0,
               borderRadius: '50%',
               border: '1px solid rgba(142,89,255,0.3)',
               animation: 'suiteWave1 3s ease-out infinite',
@@ -461,12 +451,7 @@ export default function ProductSuiteV2() {
             }} />
             <div style={{
               position: 'absolute',
-              top: '50%',
-              left: '50%',
-              width: '300px',
-              height: '300px',
-              marginTop: '-150px',
-              marginLeft: '-150px',
+              inset: 0,
               borderRadius: '50%',
               border: '1px solid rgba(142,89,255,0.25)',
               animation: 'suiteWave1 3s ease-out infinite',
