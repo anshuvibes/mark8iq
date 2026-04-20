@@ -330,7 +330,7 @@ export default function ProductSuiteV2() {
         duration: 2.4,       // Match pulse cycle exactly (suiteWave1 = 2.4s)
         ease: 'none',
         repeat: -1,
-        delay: i * 0.4,      // Spread 6 paths across the 2.4s cycle: 0, 0.4, 0.8, 1.2, 1.6, 2.0
+        delay: 0,
       });
 
       animations.push(anim);
