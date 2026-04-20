@@ -107,19 +107,19 @@ export default function RoleBasedValueV2() {
           height: '100vh',
           overflow: 'hidden',
           background: 'transparent',
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
-        {/* Fixed heading block */}
+        {/* Heading block — at top */}
         <div
           style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            padding: 'clamp(160px, 22vh, 220px) clamp(24px, 6vw, 120px) 0',
+            padding: 'clamp(96px, 13vh, 140px) clamp(24px, 6vw, 120px) 0',
             zIndex: 10,
             pointerEvents: 'none',
             textAlign: 'center',
+            flexShrink: 0,
+            marginBottom: '48px',
           }}
         >
           <p
@@ -155,7 +155,8 @@ export default function RoleBasedValueV2() {
           style={{
             display: 'flex',
             width: `${roles.length * 88}vw`,
-            height: '100%',
+            flex: 1,
+            minHeight: 0,
             willChange: 'transform',
           }}
         >
@@ -167,8 +168,8 @@ export default function RoleBasedValueV2() {
                 height: '100%',
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
-                alignItems: 'end',
-                padding: 'clamp(40px, 6vh, 60px) clamp(24px, 5vw, 80px) clamp(40px, 7vh, 70px)',
+                alignItems: 'center',
+                padding: '0 clamp(24px, 5vw, 80px) clamp(40px, 7vh, 70px)',
                 gap: '48px',
                 flexShrink: 0,
               }}
@@ -180,7 +181,7 @@ export default function RoleBasedValueV2() {
                   borderRadius: '20px',
                   width: '100%',
                   aspectRatio: '4 / 3',
-                  maxHeight: '58vh',
+                  maxHeight: '100%',
                   position: 'relative',
                   overflow: 'hidden',
                   boxShadow: '0 0 0 1px rgba(255,255,255,0.06)',
