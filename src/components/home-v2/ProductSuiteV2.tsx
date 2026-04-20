@@ -82,6 +82,9 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
       borderRadius: '10px',
       border: '1px solid var(--v2-border)',
       width: '100%',
+      height: '100%',
+      paddingTop: '28px',
+      paddingRight: '28px',
       overflow: 'hidden',
     }}>
       <div style={{
@@ -535,6 +538,7 @@ export default function ProductSuiteV2() {
               borderRadius: '16px',
               border: `1px solid ${active.accent}40`,
               marginBottom: '48px',
+              height: '220px',
               overflow: 'hidden',
             }}
           >
