@@ -227,14 +227,11 @@ export default function RoleBasedValueV2() {
                 </span>
 
                 <h3
+                  className="m8-h3-m"
                   style={{
-                    fontFamily: "'Saira', sans-serif",
-                    fontSize: 'clamp(28px, 2.6vw, 36px)',
-                    fontWeight: 400,
-                    letterSpacing: '-0.02em',
-                    lineHeight: '115%',
                     color: 'var(--v2-text)',
                     margin: 0,
+                    lineHeight: '115%',
                   }}
                 >
                   {role.taglineLine1}<br />{role.taglineLine2}
