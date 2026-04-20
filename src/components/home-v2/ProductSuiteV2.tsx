@@ -16,6 +16,8 @@ const modules: Record<string, { name: string; abbr: string; accent: string; pain
 const leftKeys = ['ads', 'shelf', 'reco'];
 const rightKeys = ['sight', 'returns', 'inventory'];
 
+const cycleOrder = ['marketone', 'ads', 'sight', 'shelf', 'returns', 'reco', 'inventory'];
+
 type TableRow = { cells: string[]; statusColor?: string; statusLabel?: string; actionLabel?: string };
 type TableDef = { headers: string[]; rows: TableRow[] };
 
@@ -163,12 +165,12 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
   );
 }
 
-const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.ads; active: boolean; onMouseEnter: () => void }>(
-  ({ mod, active, onMouseEnter }, ref) => (
+const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.ads; active: boolean; onMouseEnter: () => void; onMouseLeave: () => void }>(
+  ({ mod, active, onMouseEnter, onMouseLeave }, ref) => (
     <div
       ref={ref}
       onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px)'; onMouseEnter(); }}
-      onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; onMouseLeave(); }}
       style={{
         padding: '20px',
         borderRadius: '14px',
@@ -221,8 +223,25 @@ export default function ProductSuiteV2() {
   const centerRef = useRef<HTMLDivElement | null>(null);
   const dashRefs = useRef<Record<string, SVGPathElement | null>>({});
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const isPausedRef = useRef(false);
   const [paths, setPaths] = useState<Array<{ id: string; d: string; accent: string }>>([]);
   const [hubSize, setHubSize] = useState({ w: 0, h: 0 });
+
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      if (isPausedRef.current) return;
+      setActiveModule((current) => {
+        const currentIndex = cycleOrder.indexOf(current);
+        const nextIndex = (currentIndex + 1) % cycleOrder.length;
+        return cycleOrder[nextIndex];
+      });
+    }, 4000);
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     const measure = () => {
@@ -404,7 +423,8 @@ export default function ProductSuiteV2() {
                 k={k}
                 mod={modules[k]}
                 active={activeModule === k}
-                onMouseEnter={() => setActiveModule(k)}
+                onMouseEnter={() => { isPausedRef.current = true; setActiveModule(k); }}
+                onMouseLeave={() => { isPausedRef.current = false; }}
                 ref={(el) => { cardRefs.current[k] = el; }}
               />
             ))}
@@ -476,7 +496,8 @@ export default function ProductSuiteV2() {
 
               {/* Main circle — 3D feel */}
               <div ref={centerRef}
-                onMouseEnter={() => setActiveModule('marketone')}
+                onMouseEnter={() => { isPausedRef.current = true; setActiveModule('marketone'); }}
+                onMouseLeave={() => { isPausedRef.current = false; }}
                 style={{
                 width: '100%',
                 height: '100%',
@@ -525,7 +546,8 @@ export default function ProductSuiteV2() {
                 k={k}
                 mod={modules[k]}
                 active={activeModule === k}
-                onMouseEnter={() => setActiveModule(k)}
+                onMouseEnter={() => { isPausedRef.current = true; setActiveModule(k); }}
+                onMouseLeave={() => { isPausedRef.current = false; }}
                 ref={(el) => { cardRefs.current[k] = el; }}
               />
             ))}
