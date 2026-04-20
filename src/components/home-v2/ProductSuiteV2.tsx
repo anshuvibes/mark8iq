@@ -81,9 +81,7 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
       background: 'var(--v2-bg-card)',
       borderRadius: '10px',
       border: '1px solid var(--v2-border)',
-      overflow: 'hidden',
       width: '100%',
-      height: '160px',
     }}>
       <div style={{
         display: 'grid',
@@ -537,9 +535,6 @@ export default function ProductSuiteV2() {
               borderRadius: '16px',
               border: `1px solid ${active.accent}40`,
               marginBottom: '48px',
-              minHeight: '200px',
-              height: '200px',
-              overflow: 'hidden',
             }}
           >
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', height: '100%' }}>
