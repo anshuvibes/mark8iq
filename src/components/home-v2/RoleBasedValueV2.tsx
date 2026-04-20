@@ -213,41 +213,52 @@ export default function RoleBasedValueV2() {
                 </span>
               </div>
 
-              {/* Right: copy bottom-aligned */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', paddingBottom: '8px' }}>
-                <span
-                  className="m8-p6"
-                  style={{
-                    letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
-                    color: role.accentColor,
-                  }}
-                >
-                  {role.label}
-                </span>
+              {/* Right: copy grouped & bottom-aligned to image card height */}
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  width: '100%',
+                  aspectRatio: '4 / 3',
+                  maxWidth: '460px',
+                }}
+              >
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <span
+                    className="m8-p6"
+                    style={{
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      color: role.accentColor,
+                    }}
+                  >
+                    {role.label}
+                  </span>
 
-                <h3
-                  className="m8-h3-m"
-                  style={{
-                    color: 'var(--v2-text)',
-                    margin: 0,
-                    lineHeight: '115%',
-                  }}
-                >
-                  {role.taglineLine1}<br />{role.taglineLine2}
-                </h3>
+                  <h3
+                    className="m8-h3-m"
+                    style={{
+                      color: 'var(--v2-text)',
+                      margin: 0,
+                      lineHeight: '115%',
+                    }}
+                  >
+                    {role.taglineLine1}<br />{role.taglineLine2}
+                  </h3>
 
-                <p
-                  className="m8-p4"
-                  style={{
-                    color: 'var(--v2-text-secondary)',
-                    margin: 0,
-                    maxWidth: '460px',
-                    lineHeight: '160%',
-                  }}
-                >
-                  {role.body}
-                </p>
+                  <p
+                    className="m8-p4"
+                    style={{
+                      color: 'var(--v2-text-secondary)',
+                      margin: 0,
+                      maxWidth: '460px',
+                      lineHeight: '160%',
+                    }}
+                  >
+                    {role.body}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
