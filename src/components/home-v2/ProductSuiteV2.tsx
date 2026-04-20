@@ -381,9 +381,10 @@ export default function ProductSuiteV2() {
             position: 'relative',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '40px',
+            justifyContent: 'center',
+            gap: '24px',
             padding: '40px 32px',
+            flexWrap: 'nowrap',
           }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
