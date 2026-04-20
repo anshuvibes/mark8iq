@@ -170,14 +170,7 @@ const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.a
         padding: '20px',
         borderRadius: '14px',
         border: `1px solid ${active ? mod.accent + '40' : 'var(--v2-border)'}`,
-        // Solid white card with legacy-style "gradient_wrap" wash:
-        // two blurred accent circles bleeding up from the bottom (col-xs-4 + col-xs-8).
-        backgroundColor: 'var(--v2-bg-card)',
-        backgroundImage: `
-          radial-gradient(circle at 78% 115%, ${mod.accent}66 0%, ${mod.accent}00 45%),
-          radial-gradient(circle at 18% 118%, ${mod.accent}40 0%, ${mod.accent}00 40%)
-        `,
-        backgroundRepeat: 'no-repeat',
+        background: 'var(--v2-bg-card)',
         cursor: 'pointer',
         boxShadow: active
           ? `0 4px 24px ${mod.accent}25`
