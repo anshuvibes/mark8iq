@@ -79,7 +79,7 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
   return (
     <div style={{
       background: 'var(--v2-bg-card)',
-      borderRadius: '10px',
+      borderRadius: '10px 0 0 0',
       border: '1px solid var(--v2-border)',
       width: '100%',
       height: '100%',
