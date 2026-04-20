@@ -94,88 +94,62 @@ export default function RoleBasedValueV2() {
             Same data. Delivered differently. For every role.
           </motion.p>
 
-          <div className="role-cards-row" style={{ display: 'flex', gap: '16px', marginBottom: '24px' }}>
-            {roles.map((role, i) => {
-              const isActive = activeRole === i;
-              return (
-                <motion.div
-                  key={role.label}
-                  style={{
-                    flex: isActive ? 1.4 : 1,
-                    padding: '24px',
-                    background: 'var(--v2-bg-card)',
-                    borderRadius: '12px',
-                    border: '1px solid var(--v2-border)',
-                    borderLeft: isActive ? '3px solid #8E59FF' : '1px solid var(--v2-border)',
-                    boxShadow: isActive ? `0 8px 32px var(--v2-shadow)` : 'none',
-                    transition: 'flex 0.3s ease, box-shadow 0.2s ease',
-                    overflow: 'hidden',
-                  }}
-                  whileHover={!isActive ? { y: -2 } : {}}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-80px' }}
-                  transition={{ delay: i * 0.1 }}
-                >
-                  <h3 className="m8-p3-medium" style={{ color: 'var(--v2-text)', marginBottom: '8px' }}>{role.label}</h3>
-                  <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)', marginBottom: isActive ? '16px' : 0 }}>{role.tagline}</p>
+          <div style={{ height: '420px', position: 'relative', overflow: 'hidden' }}>
+            <div className="role-cards-row" style={{ display: 'flex', gap: '16px', height: '100%' }}>
+              {roles.map((role, i) => {
+                const isActive = activeRole === i;
+                return (
+                  <motion.div
+                    key={role.label}
+                    style={{
+                      flex: isActive ? 2 : 0.5,
+                      padding: '24px',
+                      background: 'var(--v2-bg-card)',
+                      borderRadius: '12px',
+                      border: '1px solid var(--v2-border)',
+                      borderLeft: isActive ? '3px solid #8E59FF' : '1px solid var(--v2-border)',
+                      boxShadow: isActive ? `0 8px 32px var(--v2-shadow)` : 'none',
+                      transition: 'flex 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease',
+                      overflow: 'hidden',
+                      height: '100%',
+                    }}
+                    whileHover={!isActive ? { y: -2 } : {}}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    transition={{ delay: i * 0.1 }}
+                  >
+                    <h3 className="m8-p3-medium" style={{ color: 'var(--v2-text)', marginBottom: '8px' }}>{role.label}</h3>
+                    <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)', marginBottom: isActive ? '16px' : 0 }}>{role.tagline}</p>
 
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        style={{ overflow: 'hidden' }}
-                      >
-                        <p className="m8-p5" style={{ color: 'var(--v2-text)', marginBottom: '16px' }}>{role.body}</p>
-                        <div style={{
-                          background: 'var(--v2-bg-subtle-2)',
-                          borderRadius: '8px',
-                          height: '120px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}>
-                          <span className="m8-p6" style={{ color: 'var(--v2-text-muted)' }}>{role.visual}</span>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              );
-            })}
+                    <AnimatePresence>
+                      {isActive && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          style={{ overflow: 'hidden' }}
+                        >
+                          <p className="m8-p5" style={{ color: 'var(--v2-text)', marginBottom: '16px' }}>{role.body}</p>
+                          <div style={{
+                            background: 'var(--v2-bg-subtle-2)',
+                            borderRadius: '8px',
+                            height: '120px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}>
+                            <span className="m8-p6" style={{ color: 'var(--v2-text-muted)' }}>{role.visual}</span>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
-
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', marginTop: '24px' }}>
-            {roles.map((_, i) => (
-              <div
-                key={i}
-                style={{
-                  width: activeRole === i ? '24px' : '8px',
-                  height: '8px',
-                  borderRadius: '999px',
-                  background: activeRole === i ? '#8E59FF' : 'var(--v2-border)',
-                  transition: 'all 0.3s ease',
-                }}
-              />
-            ))}
-          </div>
-
-          <AnimatePresence>
-            {activeRole === 0 && (
-              <motion.p
-                className="m8-p6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                style={{ color: 'var(--v2-text-muted)', textAlign: 'center', marginTop: '12px' }}
-              >
-                Scroll to explore each role
-              </motion.p>
-            )}
-          </AnimatePresence>
 
           <motion.p
             className="m8-p3"
