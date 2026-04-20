@@ -240,38 +240,55 @@ export default function ProductSuiteV2() {
 
       const computed: Array<{ id: string; d: string; accent: string }> = [];
 
-      [...leftKeys, ...rightKeys].forEach((k) => {
+      // Entry point offsets — 24px spacing between each path at circle edge
+      const leftOffsets  = [-24, 0, 24];  // ads, shelf, reco (top to bottom)
+      const rightOffsets = [-24, 0, 24];  // sight, returns, inventory (top to bottom)
+
+      leftKeys.forEach((k, i) => {
         const card = cardRefs.current[k];
         if (!card) return;
 
         const cardRect = card.getBoundingClientRect();
-        const isLeft = leftKeys.includes(k);
-
-        // Card connection point: right edge midpoint for left cards, left edge for right cards
-        const cardX = isLeft
-          ? cardRect.right - hubRect.left
-          : cardRect.left - hubRect.left;
+        const cardX = cardRect.right - hubRect.left;
         const cardY = cardRect.top - hubRect.top + cardRect.height / 2;
 
-        // Circle origin: single west pole for all left cards, single east pole for all right cards
-        const originX = isLeft ? cx - r : cx + r;
-        const originY = cy;
+        // West pole with vertical offset
+        const originX = cx - r;
+        const originY = cy + leftOffsets[i];
 
-        // Horizontal span between card and circle pole
         const span = Math.abs(cardX - originX);
         const pull = span * 0.42;
 
-        // CP1: horizontal departure from card edge (perpendicular to card surface)
-        const cp1x = isLeft ? cardX + pull : cardX - pull;
+        const cp1x = cardX + pull;
         const cp1y = cardY;
-
-        // CP2: horizontal approach to circle pole (perpendicular to circle surface at pole)
-        const cp2x = isLeft ? originX - pull * 0.5 : originX + pull * 0.5;
+        const cp2x = originX - pull * 0.5;
         const cp2y = originY;
 
-        // Path: card → circle (inward direction)
         const d = `M ${cardX} ${cardY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${originX} ${originY}`;
+        computed.push({ id: k, d, accent: modules[k].accent });
+      });
 
+      rightKeys.forEach((k, i) => {
+        const card = cardRefs.current[k];
+        if (!card) return;
+
+        const cardRect = card.getBoundingClientRect();
+        const cardX = cardRect.left - hubRect.left;
+        const cardY = cardRect.top - hubRect.top + cardRect.height / 2;
+
+        // East pole with vertical offset
+        const originX = cx + r;
+        const originY = cy + rightOffsets[i];
+
+        const span = Math.abs(cardX - originX);
+        const pull = span * 0.42;
+
+        const cp1x = cardX - pull;
+        const cp1y = cardY;
+        const cp2x = originX + pull * 0.5;
+        const cp2y = originY;
+
+        const d = `M ${cardX} ${cardY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${originX} ${originY}`;
         computed.push({ id: k, d, accent: modules[k].accent });
       });
 
