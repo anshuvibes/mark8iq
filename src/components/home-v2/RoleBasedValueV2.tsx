@@ -160,7 +160,8 @@ export default function RoleBasedValueV2() {
           ref={trackRef}
           style={{
             display: 'flex',
-            width: `${roles.length * 88}vw`,
+            paddingLeft: '6vw',
+            gap: '10.4vw',
             flex: 1,
             minHeight: 0,
             willChange: 'transform',
@@ -170,12 +171,12 @@ export default function RoleBasedValueV2() {
             <div
               key={role.label}
               style={{
-                width: '88vw',
+                width: '76vw',
                 height: '100%',
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
                 alignItems: 'start',
-                padding: '0 clamp(24px, 5vw, 80px) clamp(40px, 7vh, 70px)',
+                paddingBottom: 'clamp(40px, 7vh, 70px)',
                 gap: '48px',
                 flexShrink: 0,
               }}
