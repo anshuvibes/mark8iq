@@ -2,13 +2,13 @@ import { useState, useRef, useEffect, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import gsap from 'gsap';
 
-const modules: Record<string, { name: string; abbr: string; accent: string; pain: string; metric: string }> = {
-  ads: { name: 'Mark8 Ads', abbr: 'AD', accent: '#FC7459', pain: 'Your ad spend across every marketplace. Optimized in real time.', metric: '105 Cr in ad spend optimized. 35% average ROAS improvement.' },
-  sight: { name: 'Mark8 Sight', abbr: 'SI', accent: '#6895FC', pain: 'Know exactly where your brand ranks. Before your competitor does.', metric: 'Real-time rank tracking across 15+ marketplaces.' },
-  shelf: { name: 'Mark8 Shelf', abbr: 'SH', accent: '#6895FC', pain: 'Your listings, your content, your digital shelf. Always at its best.', metric: 'ASIN-level visibility across every platform.' },
-  returns: { name: 'Mark8 Returns', abbr: 'RE', accent: '#52BFBC', pain: 'Stop losing money to returns you cannot see coming.', metric: 'Returns analyzed and flagged before they hit your P&L.' },
-  reco: { name: 'Mark8 Reco', abbr: 'RC', accent: '#7CBC71', pain: 'Reconciliation that closes itself. No chasing. No leakage.', metric: 'Financial leakages identified in real time.' },
-  inventory: { name: 'Mark8 Inventory', abbr: 'PO', accent: '#FCB24F', pain: 'Never stockout. Never overstock. Always exactly right.', metric: 'Inventory decisions automated across all warehouses.' },
+const modules: Record<string, { name: string; abbr: string; accent: string; pain: string; metric: string; logo: string }> = {
+  ads: { name: 'Mark8 Ads', abbr: 'AD', accent: '#FC7459', logo: '/img/product-logos/black/mark8-ads.svg', pain: 'Your ad spend across every marketplace. Optimized in real time.', metric: '105 Cr in ad spend optimized. 35% average ROAS improvement.' },
+  sight: { name: 'Mark8 Sight', abbr: 'SI', accent: '#6895FC', logo: '/img/product-logos/black/mark8-sight.svg', pain: 'Know exactly where your brand ranks. Before your competitor does.', metric: 'Real-time rank tracking across 15+ marketplaces.' },
+  shelf: { name: 'Mark8 Shelf', abbr: 'SH', accent: '#6895FC', logo: '/img/product-logos/black/mark8-shelf.svg', pain: 'Your listings, your content, your digital shelf. Always at its best.', metric: 'ASIN-level visibility across every platform.' },
+  returns: { name: 'Mark8 Returns', abbr: 'RE', accent: '#52BFBC', logo: '/img/product-logos/black/mark8-returns.svg', pain: 'Stop losing money to returns you cannot see coming.', metric: 'Returns analyzed and flagged before they hit your P&L.' },
+  reco: { name: 'Mark8 Reco', abbr: 'RC', accent: '#7CBC71', logo: '/img/product-logos/black/mark8-reco.svg', pain: 'Reconciliation that closes itself. No chasing. No leakage.', metric: 'Financial leakages identified in real time.' },
+  inventory: { name: 'Mark8 Inventory', abbr: 'PO', accent: '#FCB24F', logo: '/img/product-logos/black/mark8-po.svg', pain: 'Never stockout. Never overstock. Always exactly right.', metric: 'Inventory decisions automated across all warehouses.' },
 };
 
 const leftKeys = ['ads', 'shelf', 'reco'];
@@ -163,22 +163,40 @@ const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.a
     <div
       ref={ref}
       onClick={onClick}
-      style={{
-        padding: '18px 20px',
-        borderRadius: '12px',
-        border: `1px solid ${active ? mod.accent + '40' : 'var(--v2-border)'}`,
-        borderLeft: `3px solid ${mod.accent}`,
-        backgroundColor: active ? mod.accent + '0d' : 'var(--v2-bg-card)',
-        cursor: 'pointer',
-        boxShadow: active ? `0 4px 20px ${mod.accent}20` : 'none',
-        transition: 'all 0.2s ease, transform 0.15s ease',
-      }}
       onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
       onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
+      style={{
+        padding: '20px 20px',
+        borderRadius: '14px',
+        border: `1px solid ${active ? mod.accent + '50' : 'var(--v2-border)'}`,
+        backgroundColor: active ? mod.accent + '08' : 'var(--v2-bg-card)',
+        cursor: 'pointer',
+        boxShadow: active
+          ? `0 4px 24px ${mod.accent}25, inset 0 0 0 1px ${mod.accent}20`
+          : '0 1px 3px rgba(0,0,0,0.04)',
+        transition: 'all 0.2s ease',
+        position: 'relative',
+        zIndex: 1,
+        overflow: 'hidden',
+      }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-        <span className="m8-p6" style={{ color: mod.accent, fontWeight: 500 }}>{mod.abbr}</span>
-        <span className="m8-p5" style={{ fontWeight: 500, color: 'var(--v2-text)' }}>{mod.name}</span>
+      {active && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '2px',
+          background: `linear-gradient(90deg, transparent, ${mod.accent}, transparent)`,
+          pointerEvents: 'none',
+        }} />
+      )}
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+        <img
+          src={mod.logo}
+          alt={mod.name}
+          style={{ height: '24px', width: 'auto', display: 'block' }}
+        />
       </div>
       <p className="m8-p6" style={{ color: 'var(--v2-text-subtle)' }}>{mod.pain}</p>
     </div>
@@ -230,10 +248,10 @@ export default function ProductSuiteV2() {
         const circleX = cx + Math.cos(angle) * r;
         const circleY = cy + Math.sin(angle) * r;
 
-        const cp1x = isLeft ? circleX - 120 : circleX + 120;
-        const cp1y = circleY;
-        const cp2x = isLeft ? cardX + 80 : cardX - 80;
-        const cp2y = cardY;
+        const cp1x = isLeft ? circleX - 200 : circleX + 200;
+        const cp1y = circleY + (cardY - cy) * 0.3;
+        const cp2x = isLeft ? cardX + 140 : cardX - 140;
+        const cp2y = cardY - (cardY - cy) * 0.1;
 
         const d = `M ${circleX} ${circleY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${cardX} ${cardY}`;
 
@@ -336,38 +354,76 @@ export default function ProductSuiteV2() {
           {/* Center circle */}
           <div className="product-suite-center" style={{
             position: 'relative',
-            flex: '0 0 240px',
-            height: '240px',
+            flex: '0 0 260px',
+            height: '260px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 2,
+            overflow: 'visible',
           }}>
-            {/* Pulse rings */}
+            {/* Outer glow — bleeds into background */}
             <div style={{
               position: 'absolute',
-              inset: 0,
+              inset: '-60px',
               borderRadius: '50%',
-              border: '1px solid rgba(142,89,255,0.25)',
-              animation: 'suiteOuterPulse 2.8s ease-out infinite',
+              background: 'radial-gradient(circle at 50% 50%, rgba(142,89,255,0.18), transparent 65%)',
               pointerEvents: 'none',
-            }} />
-            <div style={{
-              position: 'absolute',
-              inset: '12px',
-              borderRadius: '50%',
-              border: '1px solid rgba(142,89,255,0.35)',
-              animation: 'suiteInnerPulse 2.8s ease-out infinite',
-              animationDelay: '0.6s',
-              pointerEvents: 'none',
+              zIndex: 0,
             }} />
 
-            {/* Main circle */}
+            {/* Pulse waves — three sonar rings */}
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '200px',
+              height: '200px',
+              marginTop: '-100px',
+              marginLeft: '-100px',
+              borderRadius: '50%',
+              border: '1px solid rgba(142,89,255,0.35)',
+              animation: 'suiteWave1 3s ease-out infinite',
+              pointerEvents: 'none',
+              transformOrigin: 'center',
+            }} />
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '200px',
+              height: '200px',
+              marginTop: '-100px',
+              marginLeft: '-100px',
+              borderRadius: '50%',
+              border: '1px solid rgba(142,89,255,0.3)',
+              animation: 'suiteWave1 3s ease-out infinite',
+              animationDelay: '0.8s',
+              pointerEvents: 'none',
+              transformOrigin: 'center',
+            }} />
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '200px',
+              height: '200px',
+              marginTop: '-100px',
+              marginLeft: '-100px',
+              borderRadius: '50%',
+              border: '1px solid rgba(142,89,255,0.25)',
+              animation: 'suiteWave1 3s ease-out infinite',
+              animationDelay: '1.6s',
+              pointerEvents: 'none',
+              transformOrigin: 'center',
+            }} />
+
+            {/* Main circle — 3D feel */}
             <div ref={centerRef} style={{
               width: '200px',
               height: '200px',
               borderRadius: '50%',
-              background: '#080D19',
+              background: 'radial-gradient(circle at 32% 28%, #2a2440 0%, #15182a 40%, #080D19 100%)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -376,19 +432,31 @@ export default function ProductSuiteV2() {
               padding: '20px',
               position: 'relative',
               overflow: 'hidden',
-              boxShadow: '0 12px 40px rgba(8,13,25,0.35)',
+              boxShadow: '0 18px 50px rgba(8,13,25,0.5), inset 0 -8px 24px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.08)',
+              zIndex: 2,
             }}>
+              {/* Highlight arc — top-left light source */}
+              <div style={{
+                position: 'absolute',
+                top: '-30%',
+                left: '-30%',
+                width: '90%',
+                height: '90%',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle at 60% 60%, rgba(255,255,255,0.18), transparent 60%)',
+                pointerEvents: 'none',
+              }} />
               <div style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'radial-gradient(circle at 50% 50%, rgba(142,89,255,0.22), transparent 70%)',
+                background: 'radial-gradient(circle at 50% 50%, rgba(142,89,255,0.18), transparent 70%)',
                 pointerEvents: 'none',
               }} />
               <h3 className="m8-p3-medium" style={{ color: '#fff', position: 'relative', zIndex: 1, textAlign: 'center' }}>Market One</h3>
               <p className="m8-p6" style={{ color: 'rgba(255,255,255,0.55)', position: 'relative', zIndex: 1, textAlign: 'center' }}>Single source of truth</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center', position: 'relative', zIndex: 1, marginTop: '4px' }}>
                 {Object.values(modules).map((m) => (
-                  <div key={m.abbr} style={{ width: '8px', height: '8px', borderRadius: '50%', background: m.accent }} />
+                  <div key={m.abbr} style={{ width: '8px', height: '8px', borderRadius: '50%', background: m.accent, boxShadow: `0 0 8px ${m.accent}80` }} />
                 ))}
               </div>
             </div>
@@ -429,7 +497,7 @@ export default function ProductSuiteV2() {
                   fill="none"
                   stroke={p.accent}
                   strokeWidth="1"
-                  strokeOpacity="0.18"
+                  strokeOpacity="0.12"
                   strokeLinecap="round"
                 />
                 <path
@@ -487,15 +555,9 @@ export default function ProductSuiteV2() {
       </div>
 
       <style>{`
-        @keyframes suiteOuterPulse {
-          0% { transform: scale(1); opacity: 0.6; }
-          60% { transform: scale(1.12); opacity: 0; }
-          100% { transform: scale(1.12); opacity: 0; }
-        }
-        @keyframes suiteInnerPulse {
-          0% { transform: scale(1); opacity: 0.5; }
-          60% { transform: scale(1.07); opacity: 0; }
-          100% { transform: scale(1.07); opacity: 0; }
+        @keyframes suiteWave1 {
+          0%   { transform: scale(1);   opacity: 0.7; }
+          100% { transform: scale(2.2); opacity: 0; }
         }
         @media (max-width: 768px) {
           .product-suite-grid {
