@@ -407,12 +407,14 @@ export default function ProductSuiteV2() {
           {/* Center circle */}
           <div className="product-suite-center" style={{
             position: 'relative',
-            flex: '0 0 300px',
-            height: '300px',
+            flex: 1,
+            minWidth: '180px',
+            maxWidth: '340px',
+            aspectRatio: '1',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            zIndex: 2,
+            alignSelf: 'center',
             overflow: 'visible',
           }}>
             {/* Outer glow — bleeds into background */}
