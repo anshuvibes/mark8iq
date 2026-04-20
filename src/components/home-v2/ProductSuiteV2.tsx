@@ -223,8 +223,25 @@ export default function ProductSuiteV2() {
   const centerRef = useRef<HTMLDivElement | null>(null);
   const dashRefs = useRef<Record<string, SVGPathElement | null>>({});
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const isPausedRef = useRef(false);
   const [paths, setPaths] = useState<Array<{ id: string; d: string; accent: string }>>([]);
   const [hubSize, setHubSize] = useState({ w: 0, h: 0 });
+
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      if (isPausedRef.current) return;
+      setActiveModule((current) => {
+        const currentIndex = cycleOrder.indexOf(current);
+        const nextIndex = (currentIndex + 1) % cycleOrder.length;
+        return cycleOrder[nextIndex];
+      });
+    }, 4000);
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     const measure = () => {
