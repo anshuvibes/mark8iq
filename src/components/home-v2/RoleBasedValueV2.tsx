@@ -136,12 +136,8 @@ export default function RoleBasedValueV2() {
             Built for every role
           </p>
           <h2
+            className="m8-h1-large"
             style={{
-              fontFamily: "'Saira', sans-serif",
-              fontSize: '36px',
-              fontWeight: 400,
-              letterSpacing: '-0.03em',
-              lineHeight: '110%',
               color: 'var(--v2-text)',
               margin: 0,
             }}
