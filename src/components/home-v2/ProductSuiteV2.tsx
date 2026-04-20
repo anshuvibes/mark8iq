@@ -168,7 +168,7 @@ const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.a
         padding: '20px 20px',
         borderRadius: '14px',
         border: `1px solid ${active ? mod.accent + '50' : 'var(--v2-border)'}`,
-        backgroundColor: 'var(--v2-bg-card)',
+        backgroundColor: active ? `color-mix(in srgb, ${mod.accent} 8%, var(--v2-bg-card))` : 'var(--v2-bg-card)',
         cursor: 'pointer',
         boxShadow: active
           ? `0 4px 24px ${mod.accent}40`
