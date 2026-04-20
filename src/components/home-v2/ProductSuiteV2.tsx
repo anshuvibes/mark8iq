@@ -83,6 +83,7 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
       border: '1px solid var(--v2-border)',
       overflow: 'hidden',
       width: '100%',
+      height: '160px',
     }}>
       <div style={{
         display: 'grid',
@@ -553,15 +554,17 @@ export default function ProductSuiteV2() {
               opacity: 1,
               borderRadius: '16px',
               border: '1px solid var(--v2-border)',
-              borderTop: `2px solid ${active.accent}`,
               marginBottom: '48px',
+              minHeight: '200px',
+              height: '200px',
+              overflow: 'hidden',
             }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '12px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', height: '100%' }}>
               <img
                 src={activeLogo}
                 alt={active.name}
-                style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85 }}
+                style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85, alignSelf: 'flex-start' }}
               />
               <p className="m8-p2" style={{ color: 'var(--v2-text)', margin: 0 }}>{active.pain}</p>
               <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)', margin: 0 }}>{active.metric}</p>
