@@ -465,8 +465,8 @@ export default function ProductSuiteV2() {
             <div ref={centerRef}
               onMouseEnter={() => setActiveModule('marketone')}
               style={{
-              width: '300px',
-              height: '300px',
+              width: '100%',
+              height: '100%',
               borderRadius: '50%',
               background: 'radial-gradient(circle at 32% 28%, #2a2440 0%, #15182a 40%, #080D19 100%)',
               display: 'flex',
