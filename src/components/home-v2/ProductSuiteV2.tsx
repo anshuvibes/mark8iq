@@ -16,6 +16,8 @@ const modules: Record<string, { name: string; abbr: string; accent: string; pain
 const leftKeys = ['ads', 'shelf', 'reco'];
 const rightKeys = ['sight', 'returns', 'inventory'];
 
+const cycleOrder = ['marketone', 'ads', 'sight', 'shelf', 'returns', 'reco', 'inventory'];
+
 type TableRow = { cells: string[]; statusColor?: string; statusLabel?: string; actionLabel?: string };
 type TableDef = { headers: string[]; rows: TableRow[] };
 
