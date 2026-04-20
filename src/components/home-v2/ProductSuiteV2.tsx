@@ -368,7 +368,7 @@ export default function ProductSuiteV2() {
         <div style={{
           border: `1px solid ${active.accent}30`,
           borderRadius: '20px',
-          overflow: 'visible',
+          overflow: 'hidden',
           background: '#ffffff',
           backgroundImage: `radial-gradient(ellipse at 0% 100%, ${active.accent}12 0%, transparent 60%)`,
           transition: 'background-image 0.3s ease, border-color 0.3s ease',
