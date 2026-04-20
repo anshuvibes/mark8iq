@@ -371,25 +371,25 @@ export default function ProductSuiteV2() {
   return (
     <section style={{ padding: '100px 0', position: 'relative', zIndex: 1 }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+        <motion.p
+          className="m8-eyebrow"
+          style={{ color: 'var(--v2-text-secondary)', textAlign: 'center', marginBottom: '12px' }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+        >
+          PRODUCT SUITE
+        </motion.p>
         <motion.h2
           className="m8-h1-large"
-          style={{ color: 'var(--v2-text)', textAlign: 'center' }}
+          style={{ color: 'var(--v2-text)', textAlign: 'center', marginBottom: '64px' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
+          transition={{ delay: 0.05 }}
         >
           Six products. One operating system.
         </motion.h2>
-        <motion.p
-          className="m8-p2"
-          style={{ color: 'var(--v2-text-secondary)', textAlign: 'center', maxWidth: '500px', margin: '0 auto 64px' }}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ delay: 0.1 }}
-        >
-          Every function your brand runs on. Built to work together.
-        </motion.p>
 
         <div className="v2-force-light" style={{
           border: `1px solid ${active.accent}30`,
