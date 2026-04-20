@@ -1034,8 +1034,29 @@ body {
   --v2-frag-sub-text:       rgba(255,255,255,0.6);
 }
 
-
-/* V2 dark mode — smooth synchronized transition */
+/* Lock-to-light scope: forces V2 light-mode variables regardless of .v2-dark on ancestor */
+.v2-force-light,
+.v2-dark .v2-force-light {
+  --v2-bg:              #FFFFFF;
+  --v2-bg-alt:          #EDF0F7;
+  --v2-bg-alt2:         #F2F2F4;
+  --v2-bg-card:         #FFFFFF;
+  --v2-bg-card-hover:   #F9F9FB;
+  --v2-bg-subtle:       rgba(8,13,25,0.03);
+  --v2-bg-subtle-2:     rgba(8,13,25,0.04);
+  --v2-text:            #080D19;
+  --v2-text-body:       #12182B;
+  --v2-text-secondary:  rgba(8,13,25,0.6);
+  --v2-text-muted:      rgba(8,13,25,0.45);
+  --v2-text-subtle:     rgba(8,13,25,0.55);
+  --v2-border:          rgba(8,13,25,0.08);
+  --v2-border-strong:   rgba(8,13,25,0.12);
+  --v2-shadow:          rgba(0,0,0,0.08);
+  --v2-shadow-strong:   rgba(0,0,0,0.3);
+  --v2-badge-bg:        rgba(8,13,25,0.04);
+  --v2-badge-border:    rgba(8,13,25,0.1);
+  --v2-overlay:         rgba(8,13,25,0.06);
+}
 .v2-dark *,
 .v2-dark *::before,
 .v2-dark *::after {
