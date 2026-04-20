@@ -214,7 +214,7 @@ export default function DesignSystem() {
           <h3 className="m8-p3-medium" style={{ color: '#080D19', marginBottom: 16 }}>Titles</h3>
           {[
             { cls: 'm8-h1-display', label: 'Headline 1 Display', specs: '80px / Regular 400 / LH 110% / LS -0.03em' },
-            { cls: 'm8-h1-large', label: 'Headline 1 Large', specs: '60px / Regular 400 / LH 110% / LS -0.03em' },
+            { cls: 'm8-h1-large', label: 'Headline 1 Large', specs: '48px / Regular 400 / LH 110% / LS -0.03em' },
             { cls: 'm8-h2', label: 'Headline 2', specs: '50px / Regular 400 / LH 60px / LS -0.03em' },
             { cls: 'm8-h3-xl', label: 'Headline 3 XL', specs: '40px / Regular 400 / LH 30px / LS -0.03em' },
             { cls: 'm8-h3-l', label: 'Headline 3 L', specs: '35px / Regular 400 / LH 45px / LS -0.03em' },
