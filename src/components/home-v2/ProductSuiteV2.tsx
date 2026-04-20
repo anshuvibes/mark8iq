@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import gsap from 'gsap';
+import { useV2Theme } from './ThemeContext';
 
 const modules: Record<string, { name: string; abbr: string; accent: string; pain: string; metric: string; logo: string }> = {
   ads: { name: 'Mark8 Ads', abbr: 'AD', accent: '#FC7459', logo: '/img/product-logos/black/mark8-ads.svg', pain: 'Your ad spend across every marketplace. Optimized in real time.', metric: '105 Cr in ad spend optimized. 35% average ROAS improvement.' },
@@ -168,7 +169,7 @@ const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.a
         padding: '20px 20px',
         borderRadius: '14px',
         border: `1px solid ${active ? mod.accent + '50' : 'var(--v2-border)'}`,
-        backgroundColor: 'var(--v2-bg-card)',
+        backgroundColor: active ? `color-mix(in srgb, ${mod.accent} 8%, var(--v2-bg-card))` : 'var(--v2-bg-card)',
         cursor: 'pointer',
         boxShadow: active
           ? `0 4px 24px ${mod.accent}40`
@@ -206,6 +207,8 @@ ModuleCard.displayName = 'ModuleCard';
 export default function ProductSuiteV2() {
   const [activeModule, setActiveModule] = useState('ads');
   const active = modules[activeModule];
+  const { theme } = useV2Theme();
+  const activeLogo = active.logo.replace('/black/', `/${theme === 'dark' ? 'white' : 'black'}/`);
 
   const hubRef = useRef<HTMLDivElement | null>(null);
   const centerRef = useRef<HTMLDivElement | null>(null);
@@ -528,12 +531,18 @@ export default function ProductSuiteV2() {
               opacity: 1,
               borderRadius: '16px',
               border: '1px solid var(--v2-border)',
+              borderTop: `2px solid ${active.accent}`,
               marginBottom: '48px',
             }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <p className="m8-p2" style={{ color: 'var(--v2-text)', marginBottom: '12px' }}>{active.pain}</p>
-              <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)' }}>{active.metric}</p>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '12px' }}>
+              <img
+                src={activeLogo}
+                alt={active.name}
+                style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85 }}
+              />
+              <p className="m8-p2" style={{ color: 'var(--v2-text)', margin: 0 }}>{active.pain}</p>
+              <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)', margin: 0 }}>{active.metric}</p>
             </div>
             <DataTable moduleKey={activeModule} accent={active.accent} />
           </motion.div>
