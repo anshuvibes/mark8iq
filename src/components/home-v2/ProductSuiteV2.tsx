@@ -83,6 +83,7 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
       border: '1px solid var(--v2-border)',
       overflow: 'hidden',
       width: '100%',
+      height: '160px',
     }}>
       <div style={{
         display: 'grid',
@@ -166,13 +167,15 @@ const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.a
       onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-3px)'; onMouseEnter(); }}
       onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
       style={{
-        padding: '20px 20px',
+        padding: '20px',
         borderRadius: '14px',
-        border: `1px solid ${active ? mod.accent + '50' : 'var(--v2-border)'}`,
-        backgroundColor: active ? `color-mix(in srgb, ${mod.accent} 8%, var(--v2-bg-card))` : 'var(--v2-bg-card)',
+        border: `1px solid ${active ? mod.accent + '40' : 'var(--v2-border)'}`,
+        background: active
+          ? `radial-gradient(ellipse at 0% 100%, ${mod.accent}18 0%, var(--v2-bg-card) 70%)`
+          : 'var(--v2-bg-card)',
         cursor: 'pointer',
         boxShadow: active
-          ? `0 4px 24px ${mod.accent}40`
+          ? `0 4px 24px ${mod.accent}25`
           : '0 1px 3px rgba(0,0,0,0.04)',
         transition: 'all 0.2s ease',
         position: 'relative',
@@ -180,25 +183,45 @@ const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.a
         overflow: 'hidden',
       }}
     >
-      {active && (
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '2px',
-          background: `linear-gradient(90deg, transparent, ${mod.accent}, transparent)`,
-          pointerEvents: 'none',
-        }} />
-      )}
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-        <img
-          src={mod.logo}
-          alt={mod.name}
-          style={{ height: '24px', width: 'auto', display: 'block' }}
-        />
+      {/* Accent badge top-left */}
+      <div style={{
+        width: '36px',
+        height: '36px',
+        borderRadius: '8px',
+        background: mod.accent,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: '14px',
+        flexShrink: 0,
+      }}>
+        <span style={{
+          fontSize: '11px',
+          fontWeight: 500,
+          color: '#fff',
+          fontFamily: "'Saira', sans-serif",
+          letterSpacing: '0.02em',
+        }}>{mod.abbr}</span>
       </div>
-      <p className="m8-p6" style={{ color: 'var(--v2-text-subtle)' }}>{mod.pain}</p>
+
+      {/* Logo */}
+      <img
+        src={mod.logo}
+        alt={mod.name}
+        style={{
+          height: '20px',
+          width: 'auto',
+          display: 'block',
+          marginBottom: '8px',
+          opacity: active ? 1 : 0.75,
+          transition: 'opacity 0.2s ease',
+        }}
+      />
+
+      {/* Pain copy */}
+      <p className="m8-p6" style={{ color: 'var(--v2-text-subtle)', margin: 0, lineHeight: '1.5' }}>
+        {mod.pain}
+      </p>
     </div>
   )
 );
@@ -531,15 +554,17 @@ export default function ProductSuiteV2() {
               opacity: 1,
               borderRadius: '16px',
               border: '1px solid var(--v2-border)',
-              borderTop: `2px solid ${active.accent}`,
               marginBottom: '48px',
+              minHeight: '200px',
+              height: '200px',
+              overflow: 'hidden',
             }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '12px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', height: '100%' }}>
               <img
                 src={activeLogo}
                 alt={active.name}
-                style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85 }}
+                style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85, alignSelf: 'flex-start' }}
               />
               <p className="m8-p2" style={{ color: 'var(--v2-text)', margin: 0 }}>{active.pain}</p>
               <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)', margin: 0 }}>{active.metric}</p>
