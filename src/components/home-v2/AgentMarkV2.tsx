@@ -21,7 +21,8 @@ export default function AgentMarkV2() {
           border: '1px solid var(--v2-border)',
           borderRadius: '20px',
           overflow: 'hidden',
-          background: 'var(--v2-bg-card)',
+          background: '#ffffff',
+          backgroundImage: 'linear-gradient(118.99deg, #F3EFFD 1.54%, #EBF5FE 25.36%, #D9C8FE 49.17%)',
           padding: '60px 40px',
         }}>
           <div style={{
