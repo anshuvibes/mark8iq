@@ -490,7 +490,7 @@ export default function ProductSuiteV2() {
               position: 'relative',
               overflow: 'hidden',
               boxShadow: '0 18px 50px rgba(8,13,25,0.5), inset 0 -8px 24px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.08)',
-              zIndex: 2,
+              zIndex: 4,
               cursor: 'pointer',
             }}>
               <div style={{
