@@ -47,12 +47,12 @@ Cool gray section: #F2F2F4
 Violet tint:       #F5F0FF
 
 Product accent colors — use ONLY for left-borders, badge fills, icon tints:
-  Mark8 Ads:       #FC7459
-  Mark8 Sight:     #6895FC
-  Mark8 Shelf:     #6895FC
-  Mark8 Returns:   #52BFBC
-  Mark8 Reco:      #7CBC71
-  Mark8 Inventory: #FCB24F
+  Mark8 Ads:       #dd4062  (magenta-red)
+  Mark8 Sight:     #52bfbc  (teal)
+  Mark8 Shelf:     #6895fc  (blue)
+  Mark8 Returns:   #fc7459  (red-orange)
+  Mark8 Reco:      #7cbc71  (green)
+  Mark8 PO:        #fcb24f  (amber)
 ```
 
 HARD RULE: Never use Tailwind slate, zinc, gray, purple, indigo, or violet color classes.

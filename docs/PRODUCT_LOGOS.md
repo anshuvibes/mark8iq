@@ -35,16 +35,16 @@ public/img/product-logos/
 
 ## Product ↔ File Mapping
 
-| Product | Slug (used in filenames & routes) |
-|---|---|
-| Market One | `market-one` |
-| Mark8 Ads | `mark8-ads` |
-| Mark8 IQ | `mark8-iq` |
-| Mark8 PO | `mark8-po` |
-| Mark8 Reco | `mark8-reco` |
-| Mark8 Returns | `mark8-returns` |
-| Mark8 Shelf | `mark8-shelf` |
-| Mark8 Sight | `mark8-sight` |
+| Product | Slug (used in filenames & routes) | Accent color |
+|---|---|---|
+| Market One | `market-one` | — |
+| Mark8 Ads | `mark8-ads` | `#dd4062` (magenta-red) |
+| Mark8 IQ | `mark8-iq` | — |
+| Mark8 PO | `mark8-po` | `#fcb24f` (amber) |
+| Mark8 Reco | `mark8-reco` | `#7cbc71` (green) |
+| Mark8 Returns | `mark8-returns` | `#fc7459` (red-orange) |
+| Mark8 Shelf | `mark8-shelf` | `#6895fc` (blue) |
+| Mark8 Sight | `mark8-sight` | `#52bfbc` (teal) |
 
 ## Helper Pattern
 

@@ -4,12 +4,12 @@ import gsap from 'gsap';
 import { useV2Theme } from './ThemeContext';
 
 const modules: Record<string, { name: string; abbr: string; accent: string; pain: string; metric: string; logo: string }> = {
-  ads: { name: 'Mark8 Ads', abbr: 'AD', accent: '#FC7459', logo: '/img/product-logos/black/mark8-ads.svg', pain: 'Your ad spend across every marketplace. Optimized in real time.', metric: '105 Cr in ad spend optimized. 35% average ROAS improvement.' },
-  sight: { name: 'Mark8 Sight', abbr: 'SI', accent: '#6895FC', logo: '/img/product-logos/black/mark8-sight.svg', pain: 'Know exactly where your brand ranks. Before your competitor does.', metric: 'Real-time rank tracking across 15+ marketplaces.' },
-  shelf: { name: 'Mark8 Shelf', abbr: 'SH', accent: '#6895FC', logo: '/img/product-logos/black/mark8-shelf.svg', pain: 'Your listings, your content, your digital shelf. Always at its best.', metric: 'ASIN-level visibility across every platform.' },
-  returns: { name: 'Mark8 Returns', abbr: 'RE', accent: '#52BFBC', logo: '/img/product-logos/black/mark8-returns.svg', pain: 'Stop losing money to returns you cannot see coming.', metric: 'Returns analyzed and flagged before they hit your P&L.' },
-  reco: { name: 'Mark8 Reco', abbr: 'RC', accent: '#7CBC71', logo: '/img/product-logos/black/mark8-reco.svg', pain: 'Reconciliation that closes itself. No chasing. No leakage.', metric: 'Financial leakages identified in real time.' },
-  inventory: { name: 'Mark8 Inventory', abbr: 'PO', accent: '#FCB24F', logo: '/img/product-logos/black/mark8-po.svg', pain: 'Never stockout. Never overstock. Always exactly right.', metric: 'Inventory decisions automated across all warehouses.' },
+  ads: { name: 'Mark8 Ads', abbr: 'AD', accent: '#dd4062', logo: '/img/product-logos/black/mark8-ads.svg', pain: 'Your ad spend across every marketplace. Optimized in real time.', metric: '105 Cr in ad spend optimized. 35% average ROAS improvement.' },
+  sight: { name: 'Mark8 Sight', abbr: 'SI', accent: '#52bfbc', logo: '/img/product-logos/black/mark8-sight.svg', pain: 'Know exactly where your brand ranks. Before your competitor does.', metric: 'Real-time rank tracking across 15+ marketplaces.' },
+  shelf: { name: 'Mark8 Shelf', abbr: 'SH', accent: '#6895fc', logo: '/img/product-logos/black/mark8-shelf.svg', pain: 'Your listings, your content, your digital shelf. Always at its best.', metric: 'ASIN-level visibility across every platform.' },
+  returns: { name: 'Mark8 Returns', abbr: 'RE', accent: '#fc7459', logo: '/img/product-logos/black/mark8-returns.svg', pain: 'Stop losing money to returns you cannot see coming.', metric: 'Returns analyzed and flagged before they hit your P&L.' },
+  reco: { name: 'Mark8 Reco', abbr: 'RC', accent: '#7cbc71', logo: '/img/product-logos/black/mark8-reco.svg', pain: 'Reconciliation that closes itself. No chasing. No leakage.', metric: 'Financial leakages identified in real time.' },
+  inventory: { name: 'Mark8 Inventory', abbr: 'PO', accent: '#fcb24f', logo: '/img/product-logos/black/mark8-po.svg', pain: 'Never stockout. Never overstock. Always exactly right.', metric: 'Inventory decisions automated across all warehouses.' },
 };
 
 const leftKeys = ['ads', 'shelf', 'reco'];
