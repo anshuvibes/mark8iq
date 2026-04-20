@@ -924,7 +924,7 @@ All colors MUST be HSL.
   z-index: 1;
   background-image: url("/img/Pattern_BG_for_white.svg");
   background-repeat: repeat-y;
-  background-size: 100% auto;
+  background-size: 70% auto;
   opacity: 1;
 }
 
