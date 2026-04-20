@@ -350,7 +350,7 @@ export default function ProductSuiteV2() {
         <div style={{
           border: '1px solid var(--v2-border)',
           borderRadius: '20px',
-          overflow: 'hidden',
+          overflow: 'visible',
           background: 'var(--v2-bg-card)',
           marginBottom: '32px',
         }}>
@@ -363,6 +363,7 @@ export default function ProductSuiteV2() {
             alignItems: 'center',
             justifyContent: 'space-between',
             gap: '40px',
+            padding: '40px 32px',
           }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
