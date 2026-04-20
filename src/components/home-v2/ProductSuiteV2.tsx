@@ -606,7 +606,7 @@ export default function ProductSuiteV2() {
                 <img
                   src="/img/product-logos/black/market-one.svg"
                   alt="Market One"
-                  style={{ height: '26px', width: 'auto', marginBottom: '4px' }}
+                  style={{ height: '20px', width: 'auto', marginBottom: '4px' }}
                 />
                 <p className="m8-p2" style={{ color: 'var(--v2-text)', margin: 0, maxWidth: 'none', whiteSpace: 'nowrap' }}>
                   Every product is a consolidated product.<br />Market One is the consolidation of all consolidations.
