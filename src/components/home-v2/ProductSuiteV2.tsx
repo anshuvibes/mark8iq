@@ -223,7 +223,7 @@ const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.a
 ModuleCard.displayName = 'ModuleCard';
 
 export default function ProductSuiteV2() {
-  const [activeModule, setActiveModule] = useState('ads');
+  const [activeModule, setActiveModule] = useState('marketone');
   const active = modules[activeModule];
   const { theme } = useV2Theme();
   const activeLogo = active.logo.replace('/black/', `/${theme === 'dark' ? 'white' : 'black'}/`);
@@ -485,7 +485,9 @@ export default function ProductSuiteV2() {
             }} />
 
             {/* Main circle — 3D feel */}
-            <div ref={centerRef} style={{
+            <div ref={centerRef}
+              onMouseEnter={() => setActiveModule('marketone')}
+              style={{
               width: '300px',
               height: '300px',
               borderRadius: '50%',
@@ -500,6 +502,7 @@ export default function ProductSuiteV2() {
               overflow: 'hidden',
               boxShadow: '0 18px 50px rgba(8,13,25,0.5), inset 0 -8px 24px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.08)',
               zIndex: 2,
+              cursor: 'pointer',
             }}>
               <div style={{
                 position: 'absolute',
