@@ -590,6 +590,7 @@ export default function ProductSuiteV2() {
             <DataTable moduleKey={activeModule} accent={active.accent} />
           </motion.div>
         </AnimatePresence>
+        </div>
 
         <motion.p
           className="m8-p3"
