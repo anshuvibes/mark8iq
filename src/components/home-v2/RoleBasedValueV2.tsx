@@ -14,8 +14,8 @@ const roles = [
   },
   {
     label: 'E-Commerce Manager',
-    taglineLine1: 'See what is moving, what is stuck, and why.',
-    taglineLine2: 'Before your morning meeting.',
+    taglineLine1: 'See what is moving, what is stuck, and why before your morning meeting.',
+    taglineLine2: '',
     body: 'Trend lines. Week-on-week movement. Marketplace comparison. Inventory alerts.',
     gradient: 'linear-gradient(135deg, #52bfbc 0%, #2a6b69 50%, #12182b 100%)',
     accentColor: '#52bfbc',
