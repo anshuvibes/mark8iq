@@ -247,33 +247,30 @@ export default function ProductSuiteV2() {
         const cardRect = card.getBoundingClientRect();
         const isLeft = leftKeys.includes(k);
 
+        // Card connection point: right edge midpoint for left cards, left edge for right cards
         const cardX = isLeft
           ? cardRect.right - hubRect.left
           : cardRect.left - hubRect.left;
         const cardY = cardRect.top - hubRect.top + cardRect.height / 2;
 
-        const angle = Math.atan2(cardY - cy, cardX - cx);
-        const circleX = cx + Math.cos(angle) * r;
-        const circleY = cy + Math.sin(angle) * r;
+        // Circle origin: single west pole for all left cards, single east pole for all right cards
+        const originX = isLeft ? cx - r : cx + r;
+        const originY = cy;
 
-        // Pull distance: ~45% of horizontal span between circle edge and card edge
-        const horizontalSpan = Math.abs(cardX - circleX);
-        const pull = horizontalSpan * 0.45;
+        // Horizontal span between card and circle pole
+        const span = Math.abs(cardX - originX);
+        const pull = span * 0.42;
 
-        // CP1: extends from circle connection point along the radius outward
-        // This makes the path leave the circle perpendicular to its surface
-        const cp1x = circleX + Math.cos(angle) * pull;
-        const cp1y = circleY + Math.sin(angle) * pull;
+        // CP1: horizontal departure from card edge (perpendicular to card surface)
+        const cp1x = isLeft ? cardX + pull : cardX - pull;
+        const cp1y = cardY;
 
-        // CP2: horizontally aligned with card connection point
-        // This makes the path arrive at the card perpendicular to its vertical edge
-        const cp2x = isLeft ? cardX + pull * 0.5 : cardX - pull * 0.5;
-        const cp2y = cardY;
+        // CP2: horizontal approach to circle pole (perpendicular to circle surface at pole)
+        const cp2x = isLeft ? originX - pull * 0.5 : originX + pull * 0.5;
+        const cp2y = originY;
 
-        // PATH DIRECTION: card → circle (inward)
-        // Start at card edge, end at circle edge
-        // This allows the GSAP dash to travel inward (card → Market One)
-        const d = `M ${cardX} ${cardY} C ${cp2x} ${cp2y}, ${cp1x} ${cp1y}, ${circleX} ${circleY}`;
+        // Path: card → circle (inward direction)
+        const d = `M ${cardX} ${cardY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${originX} ${originY}`;
 
         computed.push({ id: k, d, accent: modules[k].accent });
       });
