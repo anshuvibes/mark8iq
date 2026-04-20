@@ -58,6 +58,23 @@ export default function RoleBasedValueV2() {
     };
   }, []);
 
+  const scrollToRole = (index: number) => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const containerTop = container.getBoundingClientRect().top + window.scrollY;
+    const containerHeight = container.offsetHeight;
+    // Nudge slightly past the threshold to land cleanly inside the role's zone
+    const targetScroll = containerTop + (containerHeight / 3) * index + 4;
+
+    const lenis = (window as any).__lenis;
+    if (lenis && typeof lenis.scrollTo === 'function') {
+      lenis.scrollTo(targetScroll, { duration: 1 });
+    } else {
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div ref={containerRef} style={{ height: '192vh', position: 'relative' }}>
       <div
@@ -101,6 +118,7 @@ export default function RoleBasedValueV2() {
                 return (
                   <motion.div
                     key={role.label}
+                    onClick={() => scrollToRole(i)}
                     style={{
                       flex: isActive ? 2 : 0.5,
                       padding: '24px',
@@ -112,6 +130,7 @@ export default function RoleBasedValueV2() {
                       transition: 'flex 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease',
                       overflow: 'hidden',
                       height: '100%',
+                      cursor: 'pointer',
                     }}
                     whileHover={!isActive ? { y: -2 } : {}}
                     initial={{ opacity: 0, y: 20 }}
