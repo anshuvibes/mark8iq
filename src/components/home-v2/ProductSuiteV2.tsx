@@ -82,6 +82,7 @@ function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string })
       borderRadius: '10px',
       border: '1px solid var(--v2-border)',
       width: '100%',
+      overflow: 'hidden',
     }}>
       <div style={{
         display: 'grid',
@@ -528,23 +529,36 @@ export default function ProductSuiteV2() {
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
               gap: '32px',
-              padding: '32px',
               background: `#ffffff`,
               backgroundImage: `radial-gradient(ellipse at 0% 100%, ${active.accent}35 0%, ${active.accent}12 50%, transparent 100%)`,
               opacity: 1,
               borderRadius: '16px',
               border: `1px solid ${active.accent}40`,
               marginBottom: '48px',
+              overflow: 'hidden',
             }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', height: '100%' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', padding: '28px 28px' }}>
               <img
                 src={activeLogo}
                 alt={active.name}
                 style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85, alignSelf: 'flex-start' }}
               />
-              <p className="m8-p2" style={{ color: 'var(--v2-text)', margin: 0 }}>{active.pain}</p>
-              <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)', margin: 0 }}>{active.metric}</p>
+              <p className="m8-p2" style={{
+                color: 'var(--v2-text)',
+                margin: 0,
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+              }}>{active.pain}</p>
+              <p className="m8-p5" style={{
+                color: 'var(--v2-text-subtle)',
+                margin: 0,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}>{active.metric}</p>
             </div>
             <DataTable moduleKey={activeModule} accent={active.accent} />
           </motion.div>
