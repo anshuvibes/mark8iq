@@ -562,9 +562,9 @@ export default function ProductSuiteV2() {
               background: `#ffffff`,
               backgroundImage: `radial-gradient(ellipse at 0% 100%, ${active.accent}35 0%, ${active.accent}12 50%, transparent 100%)`,
               opacity: 1,
-              borderRadius: '0',
-              border: 'none',
-              borderTop: `1px solid var(--v2-border)`,
+              borderRadius: '12px',
+              border: `1px solid var(--v2-border)`,
+              margin: '0 32px 32px 32px',
               height: '220px',
               overflow: 'hidden',
             }}
