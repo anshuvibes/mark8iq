@@ -19,7 +19,7 @@ export default function AgentMarkV2() {
       {/* Eyebrow + headline — outside bounding box */}
       <div className="container" style={{ textAlign: 'center', marginBottom: '40px', position: 'relative', zIndex: 1 }}>
         <motion.p
-          className="m8-mono"
+          className="m8-eyebrow"
           style={{ color: '#8E59FF', marginBottom: '12px' }}
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
