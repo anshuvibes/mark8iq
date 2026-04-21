@@ -49,26 +49,16 @@ export default function AgentFoundryV2() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             style={{
               fontFamily: "'Saira', sans-serif",
-              fontSize: '28px',
+              fontSize: '24px',
               fontWeight: 400,
               lineHeight: '1.55',
               color: '#ffffff',
               margin: '0 0 32px 0',
-              fontStyle: 'italic',
               letterSpacing: '-0.01em',
             }}
           >
-            While your competitors wait for Monday morning reports, what if your agents already acted on Friday night's data?
+            While your competitors wait for Monday morning reports,<br />what if your agents already acted on Friday night's data?
           </motion.p>
-
-          {/* Violet accent line */}
-          <div style={{
-            width: '48px',
-            height: '2px',
-            background: '#8e59ff',
-            margin: '0 auto',
-            borderRadius: '2px',
-          }} />
         </div>
       </section>
 
