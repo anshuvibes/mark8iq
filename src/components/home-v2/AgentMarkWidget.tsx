@@ -370,8 +370,8 @@ export default function AgentMarkWidget() {
           onChange={(e) => setPillInputText(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handlePillSend()}
           onFocus={() => setState('expanded')}
-          placeholder="Ask Agent Mark…"
-          className="m8-p6"
+          placeholder="Ask Agent Mark anything about Mark8 IQ…"
+          className="agent-mark-pill-input m8-p6"
           style={{
             flex: 1,
             background: 'none',
@@ -379,8 +379,15 @@ export default function AgentMarkWidget() {
             outline: 'none',
             color: '#12182b',
             padding: '8px 0',
+            fontSize: '14px',
           }}
         />
+        <style>{`
+          .agent-mark-pill-input::placeholder {
+            color: #656981;
+            opacity: 1;
+          }
+        `}</style>
         <button
           onClick={handlePillSend}
           className="m8-p6"
