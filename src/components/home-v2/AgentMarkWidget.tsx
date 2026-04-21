@@ -291,22 +291,18 @@ export default function AgentMarkWidget() {
       animate={{
         opacity: 1,
         y: 0,
-        width: state === 'expanded' ? 480 : 480,
-        transition: {
-          y: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
-          opacity: { duration: 0.25, ease: 'easeOut' },
-          width: { duration: 0.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] },
-        },
+        width: 480,
       }}
       exit={{
         opacity: 0,
         y: 48,
         width: 148,
-        transition: {
-          width: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
-          opacity: { duration: 0.25, delay: 0.2, ease: 'easeIn' },
-          y: { duration: 0.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] },
-        },
+      }}
+      transition={{
+        type: 'spring',
+        stiffness: 260,
+        damping: 28,
+        mass: 0.8,
       }}
       onHoverStart={() => setState('expanded')}
       onHoverEnd={() => setState('pill')}
@@ -425,7 +421,7 @@ export default function AgentMarkWidget() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.25 }}
+          transition={{ type: 'spring', stiffness: 260, damping: 28, mass: 0.8 }}
           style={{ flex: 1, overflow: 'hidden', minWidth: 0 }}
         >
           <input
