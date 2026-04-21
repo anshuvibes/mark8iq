@@ -344,6 +344,12 @@ export default function AgentMarkWidget() {
     return () => window.removeEventListener('resize', onResize);
   }, [docked, mode]);
 
+  // Update floating coords when mode changes while free (pill ↔ expanded ↔ chat)
+  useEffect(() => {
+    if (docked !== 'free') return;
+    setCoords(getFloatingCoords(mode));
+  }, [mode, docked]);
+
   // Sync to context dockState
   useEffect(() => {
     const map: Record<typeof docked, DockState> = {
