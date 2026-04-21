@@ -310,24 +310,21 @@ export default function AgentMarkWidget() {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px',
-                    padding: '16px',
-                    borderRadius: '30px',
-                    background: 'transparent',
+                    padding: '12px 14px',
+                    borderRadius: '16px',
+                    background: '#ffffff',
                     border: 'none',
                     cursor: 'pointer',
                     textAlign: 'left',
-                    boxShadow: '0 4px 16px 6px rgba(130,130,130,0.05)',
+                    boxShadow: '0 2px 8px rgba(130,130,130,0.06)',
                     width: '100%',
                   }}
                 >
                   <p
+                    className="m8-p6"
                     style={{
                       flex: 1,
-                      fontFamily: "'Saira', sans-serif",
-                      fontSize: '14px',
-                      fontWeight: 400,
                       color: '#12182b',
-                      lineHeight: '22px',
                       margin: 0,
                     }}
                   >
@@ -335,8 +332,8 @@ export default function AgentMarkWidget() {
                   </p>
                   <div
                     style={{
-                      width: '32px',
-                      height: '32px',
+                      width: '26px',
+                      height: '26px',
                       borderRadius: '40px',
                       background: '#8e59ff',
                       display: 'flex',
@@ -345,7 +342,7 @@ export default function AgentMarkWidget() {
                       flexShrink: 0,
                     }}
                   >
-                    <ArrowUpRight size={16} color="#fff" />
+                    <ArrowUpRight size={13} color="#fff" />
                   </div>
                 </motion.button>
               ))}
@@ -359,8 +356,8 @@ export default function AgentMarkWidget() {
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '8px',
-          padding: '6px 6px 6px 20px',
+          gap: '6px',
+          padding: '4px 4px 4px 16px',
           background: '#ffffff',
           border: '1px solid #8e59ff',
           borderRadius: '9999px',
@@ -374,36 +371,33 @@ export default function AgentMarkWidget() {
           onKeyDown={(e) => e.key === 'Enter' && handlePillSend()}
           onFocus={() => setState('expanded')}
           placeholder="Ask Agent Mark…"
+          className="m8-p6"
           style={{
             flex: 1,
             background: 'none',
             border: 'none',
             outline: 'none',
-            fontFamily: "'Saira', sans-serif",
-            fontSize: '14px',
-            fontWeight: 400,
             color: '#12182b',
-            padding: '10px 0',
+            padding: '8px 0',
           }}
         />
         <button
           onClick={handlePillSend}
+          className="m8-p6"
           style={{
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
-            padding: '8px 16px',
+            padding: '7px 14px',
             borderRadius: '9999px',
             border: 'none',
             background: '#8e59ff',
             color: '#fff',
-            fontFamily: "'Saira', sans-serif",
-            fontSize: '13px',
             fontWeight: 500,
             cursor: 'pointer',
           }}
         >
-          <SparkleIcon size={14} color="#fff" />
+          <SparkleIcon size={13} color="#fff" />
           Ask Mark
         </button>
       </div>
