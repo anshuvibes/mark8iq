@@ -275,7 +275,7 @@ export default function AgentMarkV2() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ delay: 0.1, duration: 0.6 }}
             >
-              <AgentMarkOrb size={140} />
+              <AgentMarkOrb size="180px" />
             </motion.div>
 
             {/* Intro text */}
