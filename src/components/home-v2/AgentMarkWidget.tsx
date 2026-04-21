@@ -450,26 +450,16 @@ export default function AgentMarkWidget() {
     setEmail('');
   };
 
-  // Visibility resolution: fragmentation > docked > floating-pill (E7)
-  if (fragmentationHidden && docked === 'free') return null;
+  // Visibility resolution: fragmentation > hiddenBelow > docked > floating-pill (E7)
+  if (fragmentationHidden) return null;
+  if (hiddenBelow) return null;
 
-  // What content shows in the morphing container
-  // - 'demo' when docked and no live chat
-  // - 'chat' when live chat is active
-  // - 'pill' when free + pill mode
-  // - 'expanded' when free + expanded (suggestions)
+  // What content shows in the container
   const showDemo = docked === 'docked' && mode !== 'chat';
   const showChat = mode === 'chat';
   const showPillContent = !showDemo && !showChat && mode === 'pill';
   // Only show suggestions when truly free-floating (not docking/docked/undocking)
   const showExpanded = !showDemo && !showChat && mode === 'expanded' && docked === 'free';
-
-  // Spring transition only when docking/undocking. When toggling pill↔chat while floating,
-  // snap instantly to avoid the ugly circular morph between very different shapes.
-  const isMorphing = docked === 'docking' || docked === 'undocking';
-  const transition = isMorphing && animateEnabled && !prefersReducedMotion()
-    ? { type: 'spring' as const, stiffness: 220, damping: 28 }
-    : { duration: 0 };
 
   // Suggestions card — anchored to pill's current floating coords with hover bridge
   const renderSuggestions = () => {
