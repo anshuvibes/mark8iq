@@ -397,66 +397,77 @@ export default function AgentMarkWidget() {
   const showDemo = docked === 'docked' && mode !== 'chat';
   const showChat = mode === 'chat';
   const showPillContent = !showDemo && !showChat && mode === 'pill';
-  const showExpanded = !showDemo && !showChat && mode === 'expanded';
+  // Only show suggestions when truly free-floating (not docking/docked/undocking)
+  const showExpanded = !showDemo && !showChat && mode === 'expanded' && docked === 'free';
 
   const transition = animateEnabled && !prefersReducedMotion()
     ? { type: 'spring' as const, stiffness: 220, damping: 28 }
     : { duration: 0 };
 
-  // Suggestions card (only floating-expanded)
-  const renderSuggestions = () => (
-    <motion.div
-      key="suggestions"
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 12 }}
-      transition={{ duration: 0.22, ease: 'easeOut' }}
-      style={{
-        position: 'fixed',
-        bottom: FLOAT_BOTTOM + FLOAT_PILL_HEIGHT + 10,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: `min(${FLOAT_PILL_WIDTH}px, calc(100vw - 32px))`,
-        background: '#f9f9fb',
-        borderRadius: '20px',
-        padding: '16px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '10px',
-        boxShadow: '0 8px 32px rgba(8,13,25,0.08)',
-        zIndex: 100000,
-        pointerEvents: 'auto',
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <SparkleIcon size={16} color="#12182b" />
-        <p className="m8-p5" style={{ color: '#12182b', margin: 0, fontWeight: 500 }}>Suggestions</p>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        {starters.map((s, i) => (
-          <motion.button
-            key={s.key}
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.04 }}
-            onClick={() => handleStarterClick(s)}
-            whileHover={{ background: '#f5f0ff' }}
-            style={{
-              display: 'flex', alignItems: 'center', gap: '8px',
-              padding: '12px 14px', borderRadius: '16px', background: '#ffffff',
-              border: 'none', cursor: 'pointer', textAlign: 'left',
-              boxShadow: '0 2px 8px rgba(130,130,130,0.06)', width: '100%',
-            }}
-          >
-            <p className="m8-p6" style={{ flex: 1, color: '#12182b', margin: 0 }}>{s.text}</p>
-            <div style={{ width: '26px', height: '26px', borderRadius: '40px', background: '#8e59ff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <ArrowUpRight size={13} color="#fff" />
-            </div>
-          </motion.button>
-        ))}
-      </div>
-    </motion.div>
-  );
+  // Suggestions card — anchored to pill's current floating coords with hover bridge
+  const renderSuggestions = () => {
+    const pillCoords = getFloatingCoords('pill');
+    const cardWidth = pillCoords.width;
+    const cardLeft = pillCoords.left;
+    // Position card directly above pill; use bottom anchored to viewport bottom
+    const bottomFromViewport = window.innerHeight - pillCoords.top + 10;
+    return (
+      <motion.div
+        key="suggestions"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 12 }}
+        transition={{ duration: 0.22, ease: 'easeOut' }}
+        onMouseEnter={() => setMode('expanded')}
+        onMouseLeave={() => setMode('pill')}
+        style={{
+          position: 'fixed',
+          bottom: bottomFromViewport,
+          left: cardLeft,
+          width: cardWidth,
+          background: '#f9f9fb',
+          borderRadius: '20px',
+          padding: '16px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          boxShadow: '0 8px 32px rgba(8,13,25,0.08)',
+          zIndex: 100000,
+          pointerEvents: 'auto',
+        }}
+      >
+        {/* Invisible hover bridge between card and pill so hover doesn't break */}
+        <div style={{ position: 'absolute', left: 0, right: 0, bottom: -12, height: 12 }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <SparkleIcon size={16} color="#12182b" />
+          <p className="m8-p5" style={{ color: '#12182b', margin: 0, fontWeight: 500 }}>Suggestions</p>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          {starters.map((s, i) => (
+            <motion.button
+              key={s.key}
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.04 }}
+              onClick={() => handleStarterClick(s)}
+              whileHover={{ background: '#f5f0ff' }}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '8px',
+                padding: '12px 14px', borderRadius: '16px', background: '#ffffff',
+                border: 'none', cursor: 'pointer', textAlign: 'left',
+                boxShadow: '0 2px 8px rgba(130,130,130,0.06)', width: '100%',
+              }}
+            >
+              <p className="m8-p6" style={{ flex: 1, color: '#12182b', margin: 0 }}>{s.text}</p>
+              <div style={{ width: '26px', height: '26px', borderRadius: '40px', background: '#8e59ff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <ArrowUpRight size={13} color="#fff" />
+              </div>
+            </motion.button>
+          ))}
+        </div>
+      </motion.div>
+    );
+  };
 
   // Pill content (input bar) — shown inside the morphing container when floating + pill/expanded
   const renderPillContent = () => (
