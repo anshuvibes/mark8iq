@@ -307,7 +307,7 @@ export default function AgentMarkV2() {
                 color: '#12182b',
                 margin: 0,
               }}>
-                Here's what I found while you were away.
+                Ask me anything about your commerce data.
               </p>
             </motion.div>
 
