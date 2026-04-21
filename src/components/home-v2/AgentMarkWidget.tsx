@@ -397,7 +397,8 @@ export default function AgentMarkWidget() {
   const showDemo = docked === 'docked' && mode !== 'chat';
   const showChat = mode === 'chat';
   const showPillContent = !showDemo && !showChat && mode === 'pill';
-  const showExpanded = !showDemo && !showChat && mode === 'expanded';
+  // Only show suggestions when truly free-floating (not docking/docked/undocking)
+  const showExpanded = !showDemo && !showChat && mode === 'expanded' && docked === 'free';
 
   const transition = animateEnabled && !prefersReducedMotion()
     ? { type: 'spring' as const, stiffness: 220, damping: 28 }
