@@ -202,12 +202,15 @@ export default function AgentMarkV2() {
   const showResponse = ['insights', 'rootcause', 'recommendations', 'complete', 'closing'].includes(phase);
 
   return (
-    <section style={{
-      padding: '100px 0',
-      position: 'relative',
-      background: 'transparent',
-      overflow: 'hidden',
-    }}>
+    <section
+      data-section="agent-mark"
+      style={{
+        padding: '100px 0',
+        position: 'relative',
+        background: 'transparent',
+        overflow: 'hidden',
+      }}
+    >
       <style>{`
         @keyframes dotPulse {
           0%, 60%, 100% { opacity: 0.3; transform: scale(1); }
@@ -238,7 +241,7 @@ export default function AgentMarkV2() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ delay: 0.05 }}
         >
-          While you slept, Agent Mark found 4 things you need to see.
+          While you slept, Agent Mark found<br />4 things you need to see.
         </motion.h2>
       </div>
 
@@ -258,6 +261,54 @@ export default function AgentMarkV2() {
             gap: '0',
           }}>
 
+            {/* Orb */}
+            <motion.div
+              style={{ marginBottom: '16px', display: 'flex', justifyContent: 'center' }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+            >
+              <img
+                src="/img/home-v2/agent-mark-orb.png"
+                alt="Agent Mark"
+                style={{ width: '140px', height: '140px', objectFit: 'contain', display: 'block' }}
+              />
+            </motion.div>
+
+            {/* Intro text */}
+            <motion.div
+              style={{ textAlign: 'center', marginBottom: '32px' }}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ delay: 0.15 }}
+            >
+              <p style={{
+                fontFamily: "'Saira', sans-serif",
+                fontSize: '24px',
+                fontWeight: 500,
+                lineHeight: '36px',
+                background: 'linear-gradient(90deg, #c192cf, #608ff6 50%, #6a26fa)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                margin: '0 0 4px 0',
+              }}>
+                Hello, I'm Agent Mark!
+              </p>
+              <p style={{
+                fontFamily: "'Saira', sans-serif",
+                fontSize: '24px',
+                fontWeight: 500,
+                lineHeight: '36px',
+                color: '#12182b',
+                margin: 0,
+              }}>
+                What data should I brew for you today?
+              </p>
+            </motion.div>
+
             {/* Animated chat window */}
             <div style={{
               width: '100%',
@@ -265,7 +316,7 @@ export default function AgentMarkV2() {
             }}>
               <div style={{
                 background: '#ffffff',
-                borderRadius: '16px',
+                borderRadius: '5px',
                 boxShadow: '0 4px 24px rgba(130,130,130,0.08)',
                 overflow: 'hidden',
                 display: 'flex',
