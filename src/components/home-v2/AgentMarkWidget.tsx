@@ -19,8 +19,8 @@ const FLOAT_PILL_WIDTH = 480;
 const FLOAT_PILL_HEIGHT = 56;
 const FLOAT_CHAT_WIDTH = 480;
 const FLOAT_CHAT_HEIGHT = 560;
-const PILL_RADIUS = 9999;
-const CHAT_RADIUS = 16;
+const PILL_RADIUS = 5;
+const CHAT_RADIUS = 5;
 const DOCK_HEIGHT_DESKTOP = 520;
 
 const SESSION_EMAIL_KEY = 'agentMark.emailSent';
@@ -536,7 +536,7 @@ export default function AgentMarkWidget() {
         padding: '4px 8px 4px 16px',
         background: '#ffffff',
         border: '1px solid #8e59ff',
-        borderRadius: '9999px',
+        borderRadius: '5px',
         boxShadow: '0 8px 24px rgba(142,89,255,0.12)',
         width: '100%', height: '100%',
       }}
@@ -556,7 +556,7 @@ export default function AgentMarkWidget() {
         className="m8-p6"
         style={{
           display: 'flex', alignItems: 'center', gap: '6px',
-          padding: '7px 14px', borderRadius: '9999px', border: 'none',
+          padding: '7px 14px', borderRadius: '5px', border: 'none',
           background: '#8e59ff', color: '#fff', fontWeight: 500, cursor: 'pointer',
         }}
       >
@@ -764,7 +764,7 @@ export default function AgentMarkWidget() {
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 32, background: 'linear-gradient(to top, #f9f9fb 0%, rgba(249,249,251,0) 100%)', pointerEvents: 'none', zIndex: 2 }} />
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 6px 6px 20px', background: '#ffffff', border: '1px solid #8e59ff', borderRadius: '9999px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 6px 6px 20px', background: '#ffffff', border: '1px solid #8e59ff', borderRadius: '5px' }}>
         <input
           type="text" value={inputText}
           onChange={(e) => setInputText(e.target.value)}
@@ -775,7 +775,7 @@ export default function AgentMarkWidget() {
         />
         <button
           onClick={handleSend} disabled={isLoading}
-          style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 16px', borderRadius: '9999px', border: 'none', background: isLoading ? '#e6dcff' : '#8e59ff', color: isLoading ? '#8e59ff' : '#fff', fontFamily: "'Saira', sans-serif", fontSize: '13px', fontWeight: 500, cursor: isLoading ? 'default' : 'pointer' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 16px', borderRadius: '5px', border: 'none', background: isLoading ? '#e6dcff' : '#8e59ff', color: isLoading ? '#8e59ff' : '#fff', fontFamily: "'Saira', sans-serif", fontSize: '13px', fontWeight: 500, cursor: isLoading ? 'default' : 'pointer' }}
         >
           {isLoading ? (
             <>
