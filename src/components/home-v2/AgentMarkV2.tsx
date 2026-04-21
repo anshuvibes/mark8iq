@@ -345,68 +345,21 @@ export default function AgentMarkV2() {
                   </p>
                 </div>
 
-                {/* Continuous scrolling messages area */}
+                {/* Single-finding messages area */}
                 <div
-                  ref={scrollContainerRef}
-                  className="agent-mark-scroll"
                   style={{
                     padding: '24px',
                     minHeight: '420px',
                     maxHeight: '420px',
-                    overflowY: 'auto',
-                    opacity: containerOpacity,
-                    transition: `opacity ${FADE_TIME}ms ease-out`,
+                    overflow: 'hidden',
+                    opacity,
+                    transform: `translateY(${slideY}px)`,
+                    transition: `opacity ${FADE_TIME}ms ease-out, transform ${FADE_TIME}ms ease-out`,
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '24px',
-                    scrollbarWidth: 'none',
                   }}
                 >
-                  {/* Completed findings — fully visible */}
-                  {completedFindings.map((f) => (
-                    <div key={f.id} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                      {/* User query */}
-                      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <div style={{
-                          background: '#F5F0FF',
-                          border: '1px solid #E2D6FF',
-                          borderRadius: '12px 12px 2px 12px',
-                          padding: '10px 16px',
-                          maxWidth: '70%',
-                        }}>
-                          <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 400, color: '#12182b', margin: 0, lineHeight: '20px' }}>
-                            {f.query}
-                          </p>
-                        </div>
-                      </div>
-                      {/* Agent response — fully revealed */}
-                      <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                        <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'linear-gradient(135deg, #8E59FF, #608ff6)', flexShrink: 0, marginTop: '2px' }} />
-                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                          <div>
-                            <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '6px' }}>INSIGHTS</p>
-                            <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 400, lineHeight: '22px', color: '#12182b', margin: 0 }}>{f.insights}</p>
-                          </div>
-                          <div>
-                            <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '6px' }}>ROOT CAUSE</p>
-                            <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 400, lineHeight: '22px', color: '#12182b', margin: 0 }}>{f.rootCause}</p>
-                          </div>
-                          <div>
-                            <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '8px' }}>RECOMMENDATIONS</p>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                              {f.recommendations.map((rec, i) => (
-                                <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                                  <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: '#8E59FF', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Saira', sans-serif", fontSize: '11px', fontWeight: 500, flexShrink: 0, marginTop: '1px' }}>{i + 1}</div>
-                                  <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 400, lineHeight: '22px', color: '#12182b', margin: 0, flex: 1 }}>{rec}</p>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-
                   {/* Active finding */}
                   {phase !== 'idle' && (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
