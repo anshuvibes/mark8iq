@@ -489,7 +489,7 @@ export default function AgentMarkWidget() {
           left: cardLeft,
           width: cardWidth,
           background: '#f9f9fb',
-          borderRadius: '20px',
+          borderRadius: '16px',
           padding: '16px',
           display: 'flex',
           flexDirection: 'column',
