@@ -75,20 +75,10 @@ type Phase =
   | 'complete'
   | 'closing';
 
-type CompletedFinding = {
-  id: string;
-  query: string;
-  insights: string;
-  rootCause: string;
-  recommendations: string[];
-  roleIndicator: string | null;
-};
-
 // ─── COMPONENT ────────────────────────────────────────────────────────────────
 
 export default function AgentMarkV2() {
-  const [completedFindings, setCompletedFindings] = useState<CompletedFinding[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [findingIndex, setFindingIndex] = useState(0);
 
   const [phase, setPhase] = useState<Phase>('idle');
   const [visibleQueryChars, setVisibleQueryChars] = useState(0);
@@ -97,19 +87,21 @@ export default function AgentMarkV2() {
   const [visibleBullets, setVisibleBullets] = useState(0);
   const [showRoleIndicator, setShowRoleIndicator] = useState(false);
   const [closingVisible, setClosingVisible] = useState(false);
-  const [containerOpacity, setContainerOpacity] = useState(1);
 
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  // Transition between findings
+  const [opacity, setOpacity] = useState(1);
+  const [slideY, setSlideY] = useState(0);
 
   useEffect(() => {
     const ts: ReturnType<typeof setTimeout>[] = [];
-    const finding = FINDINGS[currentIndex % FINDINGS.length];
-    const isLastFinding = currentIndex % FINDINGS.length === FINDINGS.length - 1;
+    const idx = findingIndex % FINDINGS.length;
+    const finding = FINDINGS[idx];
+    const isLastFinding = idx === FINDINGS.length - 1;
     const query = finding.query;
     const insightsWords = finding.insights.split(' ');
     const rcWords = finding.rootCause.split(' ');
 
-    // Reset active typing state only
+    // Reset typing state for the new finding
     setVisibleQueryChars(0);
     setVisibleWords(0);
     setVisibleRcWords(0);
@@ -117,6 +109,8 @@ export default function AgentMarkV2() {
     setShowRoleIndicator(false);
     setClosingVisible(false);
     setPhase('idle');
+    setOpacity(1);
+    setSlideY(0);
 
     // Phase: typing query
     ts.push(setTimeout(() => {
@@ -182,43 +176,31 @@ export default function AgentMarkV2() {
         setClosingVisible(true);
       }, holdEnd));
 
-      // Fade out, reset everything, restart
+      // Fade out after closing hold, then loop back to Finding 1
       ts.push(setTimeout(() => {
-        setContainerOpacity(0);
+        setOpacity(0);
+        setSlideY(-20);
       }, holdEnd + CLOSING_HOLD));
 
       ts.push(setTimeout(() => {
-        setCompletedFindings([]);
-        setCurrentIndex(0);
-        setClosingVisible(false);
-        setContainerOpacity(1);
+        setFindingIndex(0);
       }, holdEnd + CLOSING_HOLD + FADE_TIME + 300));
     } else {
-      // Add current to completed, advance to next
+      // Fade out current, advance to next
       ts.push(setTimeout(() => {
-        setCompletedFindings(prev => [...prev, {
-          id: `finding-${currentIndex}`,
-          query: finding.query,
-          insights: finding.insights,
-          rootCause: finding.rootCause,
-          recommendations: finding.recommendations,
-          roleIndicator: finding.roleIndicator,
-        }]);
-        setCurrentIndex(i => i + 1);
-      }, holdEnd + 200));
+        setOpacity(0);
+        setSlideY(-20);
+      }, holdEnd));
+
+      ts.push(setTimeout(() => {
+        setFindingIndex(i => i + 1);
+      }, holdEnd + FADE_TIME + 300));
     }
 
     return () => ts.forEach(clearTimeout);
-  }, [currentIndex]);
+  }, [findingIndex]);
 
-  // Auto-scroll the chat container only (not the page)
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
-  }, [completedFindings, phase, visibleWords, visibleRcWords, visibleBullets, closingVisible]);
-
-  const activeFinding = FINDINGS[currentIndex % FINDINGS.length];
+  const activeFinding = FINDINGS[findingIndex % FINDINGS.length];
   const insightsWordList = activeFinding.insights.split(' ');
   const rcWordList = activeFinding.rootCause.split(' ');
   const showResponse = ['insights', 'rootcause', 'recommendations', 'complete', 'closing'].includes(phase);
@@ -363,68 +345,21 @@ export default function AgentMarkV2() {
                   </p>
                 </div>
 
-                {/* Continuous scrolling messages area */}
+                {/* Single-finding messages area */}
                 <div
-                  ref={scrollContainerRef}
-                  className="agent-mark-scroll"
                   style={{
                     padding: '24px',
                     minHeight: '420px',
                     maxHeight: '420px',
-                    overflowY: 'auto',
-                    opacity: containerOpacity,
-                    transition: `opacity ${FADE_TIME}ms ease-out`,
+                    overflow: 'hidden',
+                    opacity,
+                    transform: `translateY(${slideY}px)`,
+                    transition: `opacity ${FADE_TIME}ms ease-out, transform ${FADE_TIME}ms ease-out`,
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '24px',
-                    scrollbarWidth: 'none',
                   }}
                 >
-                  {/* Completed findings — fully visible */}
-                  {completedFindings.map((f) => (
-                    <div key={f.id} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                      {/* User query */}
-                      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <div style={{
-                          background: '#F5F0FF',
-                          border: '1px solid #E2D6FF',
-                          borderRadius: '12px 12px 2px 12px',
-                          padding: '10px 16px',
-                          maxWidth: '70%',
-                        }}>
-                          <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 400, color: '#12182b', margin: 0, lineHeight: '20px' }}>
-                            {f.query}
-                          </p>
-                        </div>
-                      </div>
-                      {/* Agent response — fully revealed */}
-                      <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                        <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'linear-gradient(135deg, #8E59FF, #608ff6)', flexShrink: 0, marginTop: '2px' }} />
-                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                          <div>
-                            <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '6px' }}>INSIGHTS</p>
-                            <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 400, lineHeight: '22px', color: '#12182b', margin: 0 }}>{f.insights}</p>
-                          </div>
-                          <div>
-                            <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '6px' }}>ROOT CAUSE</p>
-                            <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 400, lineHeight: '22px', color: '#12182b', margin: 0 }}>{f.rootCause}</p>
-                          </div>
-                          <div>
-                            <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '8px' }}>RECOMMENDATIONS</p>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                              {f.recommendations.map((rec, i) => (
-                                <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                                  <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: '#8E59FF', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Saira', sans-serif", fontSize: '11px', fontWeight: 500, flexShrink: 0, marginTop: '1px' }}>{i + 1}</div>
-                                  <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 400, lineHeight: '22px', color: '#12182b', margin: 0, flex: 1 }}>{rec}</p>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-
                   {/* Active finding */}
                   {phase !== 'idle' && (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
