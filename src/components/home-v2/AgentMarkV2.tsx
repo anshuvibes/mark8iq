@@ -581,22 +581,18 @@ export default function AgentMarkV2() {
                     Ask Agent Mark anything...
                   </p>
                   <div style={{
-                    height: '32px',
-                    padding: '0 14px',
-                    borderRadius: '40px',
-                    background: '#e2e6ff',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
+                    padding: '7px 14px',
+                    borderRadius: '5px',
+                    background: '#8e59ff',
+                    color: '#fff',
+                    fontFamily: "'Saira', sans-serif",
+                    fontSize: '13px',
+                    fontWeight: 500,
                   }}>
-                    <span style={{
-                      fontFamily: "'Saira', sans-serif",
-                      fontSize: '12px',
-                      fontWeight: 500,
-                      color: '#8E59FF',
-                    }}>
-                      ✦ Ask Mark
-                    </span>
+                    ✦ Ask Mark
                   </div>
                 </div>
 
