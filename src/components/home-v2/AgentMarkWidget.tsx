@@ -686,6 +686,20 @@ export default function AgentMarkWidget() {
         )}
 
         <div ref={messagesEndRef} />
+        </div>
+        {/* Bottom fade — cosmetic match to AISummaryPanel */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 32,
+            background: 'linear-gradient(to top, #f9f9fb 0%, rgba(249,249,251,0) 100%)',
+            pointerEvents: 'none',
+            zIndex: 2,
+          }}
+        />
       </div>
 
       {/* Input bar */}
