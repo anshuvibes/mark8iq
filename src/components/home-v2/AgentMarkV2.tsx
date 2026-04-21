@@ -75,20 +75,10 @@ type Phase =
   | 'complete'
   | 'closing';
 
-type CompletedFinding = {
-  id: string;
-  query: string;
-  insights: string;
-  rootCause: string;
-  recommendations: string[];
-  roleIndicator: string | null;
-};
-
 // ─── COMPONENT ────────────────────────────────────────────────────────────────
 
 export default function AgentMarkV2() {
-  const [completedFindings, setCompletedFindings] = useState<CompletedFinding[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [findingIndex, setFindingIndex] = useState(0);
 
   const [phase, setPhase] = useState<Phase>('idle');
   const [visibleQueryChars, setVisibleQueryChars] = useState(0);
@@ -97,19 +87,21 @@ export default function AgentMarkV2() {
   const [visibleBullets, setVisibleBullets] = useState(0);
   const [showRoleIndicator, setShowRoleIndicator] = useState(false);
   const [closingVisible, setClosingVisible] = useState(false);
-  const [containerOpacity, setContainerOpacity] = useState(1);
 
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  // Transition between findings
+  const [opacity, setOpacity] = useState(1);
+  const [slideY, setSlideY] = useState(0);
 
   useEffect(() => {
     const ts: ReturnType<typeof setTimeout>[] = [];
-    const finding = FINDINGS[currentIndex % FINDINGS.length];
-    const isLastFinding = currentIndex % FINDINGS.length === FINDINGS.length - 1;
+    const idx = findingIndex % FINDINGS.length;
+    const finding = FINDINGS[idx];
+    const isLastFinding = idx === FINDINGS.length - 1;
     const query = finding.query;
     const insightsWords = finding.insights.split(' ');
     const rcWords = finding.rootCause.split(' ');
 
-    // Reset active typing state only
+    // Reset typing state for the new finding
     setVisibleQueryChars(0);
     setVisibleWords(0);
     setVisibleRcWords(0);
@@ -117,6 +109,8 @@ export default function AgentMarkV2() {
     setShowRoleIndicator(false);
     setClosingVisible(false);
     setPhase('idle');
+    setOpacity(1);
+    setSlideY(0);
 
     // Phase: typing query
     ts.push(setTimeout(() => {
@@ -182,43 +176,31 @@ export default function AgentMarkV2() {
         setClosingVisible(true);
       }, holdEnd));
 
-      // Fade out, reset everything, restart
+      // Fade out after closing hold, then loop back to Finding 1
       ts.push(setTimeout(() => {
-        setContainerOpacity(0);
+        setOpacity(0);
+        setSlideY(-20);
       }, holdEnd + CLOSING_HOLD));
 
       ts.push(setTimeout(() => {
-        setCompletedFindings([]);
-        setCurrentIndex(0);
-        setClosingVisible(false);
-        setContainerOpacity(1);
+        setFindingIndex(0);
       }, holdEnd + CLOSING_HOLD + FADE_TIME + 300));
     } else {
-      // Add current to completed, advance to next
+      // Fade out current, advance to next
       ts.push(setTimeout(() => {
-        setCompletedFindings(prev => [...prev, {
-          id: `finding-${currentIndex}`,
-          query: finding.query,
-          insights: finding.insights,
-          rootCause: finding.rootCause,
-          recommendations: finding.recommendations,
-          roleIndicator: finding.roleIndicator,
-        }]);
-        setCurrentIndex(i => i + 1);
-      }, holdEnd + 200));
+        setOpacity(0);
+        setSlideY(-20);
+      }, holdEnd));
+
+      ts.push(setTimeout(() => {
+        setFindingIndex(i => i + 1);
+      }, holdEnd + FADE_TIME + 300));
     }
 
     return () => ts.forEach(clearTimeout);
-  }, [currentIndex]);
+  }, [findingIndex]);
 
-  // Auto-scroll the chat container only (not the page)
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
-  }, [completedFindings, phase, visibleWords, visibleRcWords, visibleBullets, closingVisible]);
-
-  const activeFinding = FINDINGS[currentIndex % FINDINGS.length];
+  const activeFinding = FINDINGS[findingIndex % FINDINGS.length];
   const insightsWordList = activeFinding.insights.split(' ');
   const rcWordList = activeFinding.rootCause.split(' ');
   const showResponse = ['insights', 'rootcause', 'recommendations', 'complete', 'closing'].includes(phase);
