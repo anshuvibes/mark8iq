@@ -303,7 +303,7 @@ export default function AgentMarkWidget() {
             transition={{ duration: 0.22, ease: 'easeOut' }}
             style={{
               background: '#f9f9fb',
-              borderRadius: '20px',
+              borderRadius: '16px',
               padding: '16px',
               display: 'flex',
               flexDirection: 'column',
@@ -390,7 +390,7 @@ export default function AgentMarkWidget() {
           padding: '4px 4px 4px 16px',
           background: '#ffffff',
           border: '1px solid #8e59ff',
-          borderRadius: '9999px',
+          borderRadius: '16px',
           boxShadow: '0 8px 24px rgba(142,89,255,0.12)',
         }}
       >
@@ -414,7 +414,11 @@ export default function AgentMarkWidget() {
         />
         <style>{`
           .agent-mark-pill-input::placeholder {
-            color: #656981;
+            color: rgba(18, 24, 43, 0.55);
+            opacity: 1;
+          }
+          .agent-mark-chat-input::placeholder {
+            color: rgba(18, 24, 43, 0.55);
             opacity: 1;
           }
         `}</style>
@@ -426,7 +430,7 @@ export default function AgentMarkWidget() {
             alignItems: 'center',
             gap: '6px',
             padding: '7px 14px',
-            borderRadius: '9999px',
+            borderRadius: '16px',
             border: 'none',
             background: '#8e59ff',
             color: '#fff',
@@ -463,8 +467,8 @@ export default function AgentMarkWidget() {
       exit={{ opacity: 0, y: 40, scale: 0.96 }}
       transition={{ type: 'spring', stiffness: 280, damping: 26 }}
       style={{
-        width: 'min(560px, calc(100vw - 32px))',
-        height: 'min(520px, calc(100vh - 80px))',
+        width: 'min(640px, calc(100vw - 32px))',
+        height: 'min(680px, calc(100vh - 80px))',
         background: '#f9f9fb',
         borderRadius: '16px',
         padding: '20px',
@@ -711,7 +715,7 @@ export default function AgentMarkWidget() {
           padding: '6px 6px 6px 20px',
           background: '#ffffff',
           border: '1px solid #8e59ff',
-          borderRadius: '9999px',
+          borderRadius: '16px',
         }}
       >
         <input
@@ -721,6 +725,7 @@ export default function AgentMarkWidget() {
           onKeyDown={(e) => e.key === 'Enter' && !isLoading && handleSend()}
           placeholder={isLoading ? 'Agent Mark is thinking…' : 'Continue the conversation with Agent Mark…'}
           disabled={isLoading}
+          className="agent-mark-chat-input"
           style={{
             flex: 1,
             background: 'none',
@@ -741,7 +746,7 @@ export default function AgentMarkWidget() {
             alignItems: 'center',
             gap: '6px',
             padding: '8px 16px',
-            borderRadius: '9999px',
+            borderRadius: '16px',
             border: 'none',
             background: isLoading ? '#e6dcff' : '#8e59ff',
             color: isLoading ? '#8e59ff' : '#fff',
