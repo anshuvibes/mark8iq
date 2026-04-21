@@ -161,8 +161,14 @@ export default function AgentMarkWidget() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Hide during fragmentation scroll
-  const [visible, setVisible] = useState(true);
+  // Hide during fragmentation scroll. `visible` drives AnimatePresence so the
+  // exit animation can play before unmount.
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    // Small delay so the entrance fires after first paint
+    const t = setTimeout(() => setVisible(true), 120);
+    return () => clearTimeout(t);
+  }, []);
   useEffect(() => {
     const fragSection = document.querySelector('[data-section="fragmentation"]');
     if (!fragSection) return;
@@ -259,7 +265,7 @@ export default function AgentMarkWidget() {
     ]);
   };
 
-  if (!visible && state === 'pill') return null;
+  // Don't early-return — let AnimatePresence handle exit animation below.
 
   // ============ PILL + EXPANDED ============
   const renderPillView = () => (
