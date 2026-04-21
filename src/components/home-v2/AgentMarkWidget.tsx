@@ -233,6 +233,18 @@ export default function AgentMarkWidget() {
 
   // ============ PILL + EXPANDED ============
   const renderPillView = () => (
+    <div
+      style={{
+        position: 'fixed',
+        bottom: '24px',
+        left: 0,
+        right: 0,
+        zIndex: 99999,
+        display: 'flex',
+        justifyContent: 'center',
+        pointerEvents: 'none',
+      }}
+    >
     <motion.div
       key="pill-shell"
       initial={{ opacity: 0, y: 20 }}
@@ -242,16 +254,12 @@ export default function AgentMarkWidget() {
       onHoverStart={() => setState('expanded')}
       onHoverEnd={() => setState('pill')}
       style={{
-        position: 'fixed',
-        bottom: '32px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        zIndex: 99999,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',
-        gap: '12px',
-        width: 'min(652px, calc(100vw - 32px))',
+        gap: '10px',
+        width: 'min(480px, calc(100vw - 32px))',
+        pointerEvents: 'auto',
       }}
     >
       {/* Suggestions card — appears above pill on hover */}
@@ -412,10 +420,23 @@ export default function AgentMarkWidget() {
         </button>
       </div>
     </motion.div>
+    </div>
   );
 
   // ============ CHAT PANEL ============
   const renderChatView = () => (
+    <div
+      style={{
+        position: 'fixed',
+        bottom: '24px',
+        left: 0,
+        right: 0,
+        zIndex: 99999,
+        display: 'flex',
+        justifyContent: 'center',
+        pointerEvents: 'none',
+      }}
+    >
     <motion.div
       key="chat-panel"
       initial={{ opacity: 0, y: 40, scale: 0.96 }}
@@ -423,21 +444,17 @@ export default function AgentMarkWidget() {
       exit={{ opacity: 0, y: 40, scale: 0.96 }}
       transition={{ type: 'spring', stiffness: 280, damping: 26 }}
       style={{
-        position: 'fixed',
-        bottom: '40px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: 'min(700px, calc(100vw - 32px))',
-        height: 'min(600px, calc(100vh - 80px))',
-        zIndex: 99999,
+        width: 'min(560px, calc(100vw - 32px))',
+        height: 'min(520px, calc(100vh - 80px))',
         background: '#f9f9fb',
         borderRadius: '16px',
-        padding: '24px',
+        padding: '20px',
         boxShadow: '0 4px 16px 6px rgba(130,130,130,0.05), 0 24px 60px rgba(8,13,25,0.18)',
         display: 'flex',
         flexDirection: 'column',
-        gap: '24px',
+        gap: '16px',
         overflow: 'hidden',
+        pointerEvents: 'auto',
       }}
     >
       {/* Header */}
@@ -702,6 +719,7 @@ export default function AgentMarkWidget() {
         </button>
       </div>
     </motion.div>
+    </div>
   );
 
   return (
