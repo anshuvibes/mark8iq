@@ -421,6 +421,10 @@ export default function AgentMarkWidget() {
             color: rgba(18, 24, 43, 0.55);
             opacity: 1;
           }
+          .agent-mark-email-input::placeholder {
+            color: rgba(18, 24, 43, 0.55);
+            opacity: 1;
+          }
         `}</style>
         <button
           onClick={handlePillSend}
@@ -564,18 +568,16 @@ export default function AgentMarkWidget() {
                 key={i}
                 style={{
                   display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-end',
-                  gap: '8px',
+                  justifyContent: 'flex-end',
                   width: '100%',
                 }}
               >
                 <div
                   style={{
-                    width: '100%',
+                    maxWidth: '75%',
                     background: 'linear-gradient(to right, #e6e9f4, #eee5ff)',
-                    padding: '16px',
-                    borderRadius: '8px',
+                    padding: '10px 14px',
+                    borderRadius: '5px',
                   }}
                 >
                   <p
@@ -585,8 +587,9 @@ export default function AgentMarkWidget() {
                       fontWeight: 400,
                       color: '#12182b',
                       lineHeight: '22px',
-                      textAlign: 'right',
+                      textAlign: 'left',
                       margin: 0,
+                      wordBreak: 'break-word',
                     }}
                   >
                     {msg.text}
@@ -622,6 +625,7 @@ export default function AgentMarkWidget() {
                     onChange={(e) => setEmail(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleEmailSubmit()}
                     placeholder="your@email.com"
+                    className="agent-mark-email-input"
                     style={{
                       flex: 1,
                       padding: '10px 14px',
