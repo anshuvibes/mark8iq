@@ -161,8 +161,14 @@ export default function AgentMarkWidget() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Hide during fragmentation scroll
-  const [visible, setVisible] = useState(true);
+  // Hide during fragmentation scroll. `visible` drives AnimatePresence so the
+  // exit animation can play before unmount.
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    // Small delay so the entrance fires after first paint
+    const t = setTimeout(() => setVisible(true), 120);
+    return () => clearTimeout(t);
+  }, []);
   useEffect(() => {
     const fragSection = document.querySelector('[data-section="fragmentation"]');
     if (!fragSection) return;
@@ -259,7 +265,7 @@ export default function AgentMarkWidget() {
     ]);
   };
 
-  if (!visible && state === 'pill') return null;
+  // Don't early-return — let AnimatePresence handle exit animation below.
 
   // ============ PILL + EXPANDED ============
   const renderPillView = () => (
@@ -277,10 +283,31 @@ export default function AgentMarkWidget() {
     >
     <motion.div
       key="pill-shell"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 20 }}
-      transition={{ duration: 0.3 }}
+      initial={{
+        opacity: 0,
+        y: 48,
+        width: 148,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        width: state === 'expanded' ? 480 : 480,
+        transition: {
+          y: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
+          opacity: { duration: 0.25, ease: 'easeOut' },
+          width: { duration: 0.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] },
+        },
+      }}
+      exit={{
+        opacity: 0,
+        y: 48,
+        width: 148,
+        transition: {
+          width: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
+          opacity: { duration: 0.25, delay: 0.2, ease: 'easeIn' },
+          y: { duration: 0.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] },
+        },
+      }}
       onHoverStart={() => setState('expanded')}
       onHoverEnd={() => setState('pill')}
       style={{
@@ -288,8 +315,9 @@ export default function AgentMarkWidget() {
         flexDirection: 'column',
         alignItems: 'stretch',
         gap: '10px',
-        width: 'min(480px, calc(100vw - 32px))',
+        maxWidth: 'calc(100vw - 32px)',
         pointerEvents: 'auto',
+        overflow: 'hidden',
       }}
     >
       {/* Suggestions card — appears above pill on hover */}
@@ -394,24 +422,31 @@ export default function AgentMarkWidget() {
           boxShadow: '0 8px 24px rgba(142,89,255,0.12)',
         }}
       >
-        <input
-          type="text"
-          value={pillInputText}
-          onChange={(e) => setPillInputText(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handlePillSend()}
-          onFocus={() => setState('expanded')}
-          placeholder="Ask Agent Mark anything about Mark8 IQ…"
-          className="agent-mark-pill-input m8-p6"
-          style={{
-            flex: 1,
-            background: 'none',
-            border: 'none',
-            outline: 'none',
-            color: '#12182b',
-            padding: '8px 0',
-            fontSize: '14px',
-          }}
-        />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.25 }}
+          style={{ flex: 1, overflow: 'hidden', minWidth: 0 }}
+        >
+          <input
+            type="text"
+            value={pillInputText}
+            onChange={(e) => setPillInputText(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handlePillSend()}
+            onFocus={() => setState('expanded')}
+            placeholder="Ask Agent Mark anything about Mark8 IQ…"
+            className="agent-mark-pill-input m8-p6"
+            style={{
+              width: '100%',
+              background: 'none',
+              border: 'none',
+              outline: 'none',
+              color: '#12182b',
+              padding: '8px 0',
+              fontSize: '14px',
+            }}
+          />
+        </motion.div>
         <style>{`
           .agent-mark-pill-input::placeholder {
             color: #656981;
@@ -782,8 +817,8 @@ export default function AgentMarkWidget() {
   return (
     <>
       <AnimatePresence mode="wait">
-        {(state === 'pill' || state === 'expanded') && renderPillView()}
-        {state === 'chat' && renderChatView()}
+        {visible && (state === 'pill' || state === 'expanded') && renderPillView()}
+        {visible && state === 'chat' && renderChatView()}
       </AnimatePresence>
 
       <style>{`
