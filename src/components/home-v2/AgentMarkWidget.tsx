@@ -752,7 +752,6 @@ export default function AgentMarkWidget() {
           left: coords.left,
           width: coords.width,
           height: coords.height,
-          borderRadius: coords.borderRadius,
         }}
         transition={transition}
         onAnimationComplete={() => {
@@ -770,6 +769,7 @@ export default function AgentMarkWidget() {
           zIndex: 99999,
           pointerEvents: 'auto',
           overflow: 'hidden',
+          borderRadius: coords.borderRadius,
         }}
       >
         {showDemo && renderDemoContent()}
