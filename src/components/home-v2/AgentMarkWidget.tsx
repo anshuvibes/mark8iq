@@ -170,14 +170,32 @@ export default function AgentMarkWidget() {
     return () => clearTimeout(t);
   }, []);
   useEffect(() => {
-    const fragSection = document.querySelector('[data-section="fragmentation"]');
-    if (!fragSection) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setVisible(!entry.isIntersecting),
-      { threshold: 0.05 }
-    );
-    observer.observe(fragSection);
-    return () => observer.disconnect();
+    const sectionsToHide = [
+      document.querySelector('[data-section="fragmentation"]'),
+      document.querySelector('[data-section="agent-mark"]'),
+    ].filter(Boolean) as Element[];
+
+    if (sectionsToHide.length === 0) return;
+
+    let hiddenCount = 0;
+
+    const observers = sectionsToHide.map((section) => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            hiddenCount++;
+          } else {
+            hiddenCount = Math.max(0, hiddenCount - 1);
+          }
+          setVisible(hiddenCount === 0);
+        },
+        { threshold: 0.05 }
+      );
+      observer.observe(section);
+      return observer;
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   // Auto-scroll
