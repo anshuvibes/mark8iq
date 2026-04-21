@@ -479,7 +479,7 @@ export default function AgentMarkWidget() {
       onMouseLeave={() => setMode('pill')}
       style={{
         display: 'flex', alignItems: 'center', gap: '6px',
-        padding: '4px 4px 4px 16px',
+        padding: '4px 8px 4px 16px',
         background: '#ffffff',
         border: '1px solid #8e59ff',
         borderRadius: '9999px',
