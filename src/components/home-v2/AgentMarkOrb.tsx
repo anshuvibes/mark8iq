@@ -1,151 +1,222 @@
-export default function AgentMarkOrb({ size = 180 }: { size?: number }) {
+import { cn } from '@/lib/utils';
+
+const SIZE_THRESHOLD_SMALL = 50;
+const SIZE_THRESHOLD_TINY = 30;
+const SIZE_THRESHOLD_MEDIUM = 100;
+const BLUR_MULTIPLIER_SMALL = 0.008;
+const BLUR_MIN_SMALL = 1;
+const BLUR_MULTIPLIER_LARGE = 0.015;
+const BLUR_MIN_LARGE = 4;
+const CONTRAST_MULTIPLIER_SMALL = 0.004;
+const CONTRAST_MIN_SMALL = 1.2;
+const CONTRAST_MULTIPLIER_LARGE = 0.008;
+const CONTRAST_MIN_LARGE = 1.5;
+const DOT_SIZE_MULTIPLIER_SMALL = 0.004;
+const DOT_SIZE_MIN_SMALL = 0.05;
+const DOT_SIZE_MULTIPLIER_LARGE = 0.008;
+const DOT_SIZE_MIN_LARGE = 0.1;
+const SHADOW_MULTIPLIER_SMALL = 0.004;
+const SHADOW_MIN_SMALL = 0.5;
+const SHADOW_MULTIPLIER_LARGE = 0.008;
+const SHADOW_MIN_LARGE = 2;
+const MASK_RADIUS_TINY = '0%';
+const MASK_RADIUS_SMALL = '5%';
+const MASK_RADIUS_MEDIUM = '15%';
+const MASK_RADIUS_LARGE = '25%';
+const CONTRAST_TINY = 1.1;
+const CONTRAST_MULTIPLIER_FINAL = 1.2;
+const CONTRAST_MIN_FINAL = 1.3;
+
+export interface SiriOrbProps {
+  animationDuration?: number;
+  className?: string;
+  colors?: {
+    bg?: string;
+    c1?: string;
+    c2?: string;
+    c3?: string;
+  };
+  size?: string;
+}
+
+export default function AgentMarkOrb({
+  size = '180px',
+  className,
+  colors,
+  animationDuration = 20,
+}: SiriOrbProps) {
+  // Mark8 brand palette: violet primary, blue accent, soft pink-violet highlight
+  const defaultColors = {
+    bg: 'oklch(96% 0.015 280)',
+    c1: 'oklch(70% 0.22 295)', // Mark8 violet (#8E59FF family)
+    c2: 'oklch(72% 0.16 250)', // Blue (#608ff6 family)
+    c3: 'oklch(80% 0.14 320)', // Soft pink-violet
+  };
+
+  const finalColors = { ...defaultColors, ...colors };
+  const sizeValue = Number.parseInt(size.replace('px', ''), 10);
+
+  const blurAmount =
+    sizeValue < SIZE_THRESHOLD_SMALL
+      ? Math.max(sizeValue * BLUR_MULTIPLIER_SMALL, BLUR_MIN_SMALL)
+      : Math.max(sizeValue * BLUR_MULTIPLIER_LARGE, BLUR_MIN_LARGE);
+
+  const contrastAmount =
+    sizeValue < SIZE_THRESHOLD_SMALL
+      ? Math.max(sizeValue * CONTRAST_MULTIPLIER_SMALL, CONTRAST_MIN_SMALL)
+      : Math.max(sizeValue * CONTRAST_MULTIPLIER_LARGE, CONTRAST_MIN_LARGE);
+
+  const dotSize =
+    sizeValue < SIZE_THRESHOLD_SMALL
+      ? Math.max(sizeValue * DOT_SIZE_MULTIPLIER_SMALL, DOT_SIZE_MIN_SMALL)
+      : Math.max(sizeValue * DOT_SIZE_MULTIPLIER_LARGE, DOT_SIZE_MIN_LARGE);
+
+  const shadowSpread =
+    sizeValue < SIZE_THRESHOLD_SMALL
+      ? Math.max(sizeValue * SHADOW_MULTIPLIER_SMALL, SHADOW_MIN_SMALL)
+      : Math.max(sizeValue * SHADOW_MULTIPLIER_LARGE, SHADOW_MIN_LARGE);
+
+  const getMaskRadius = (value: number) => {
+    if (value < SIZE_THRESHOLD_TINY) return MASK_RADIUS_TINY;
+    if (value < SIZE_THRESHOLD_SMALL) return MASK_RADIUS_SMALL;
+    if (value < SIZE_THRESHOLD_MEDIUM) return MASK_RADIUS_MEDIUM;
+    return MASK_RADIUS_LARGE;
+  };
+
+  const maskRadius = getMaskRadius(sizeValue);
+
+  const getFinalContrast = (value: number) => {
+    if (value < SIZE_THRESHOLD_TINY) return CONTRAST_TINY;
+    if (value < SIZE_THRESHOLD_SMALL) {
+      return Math.max(contrastAmount * CONTRAST_MULTIPLIER_FINAL, CONTRAST_MIN_FINAL);
+    }
+    return contrastAmount;
+  };
+
+  const finalContrast = getFinalContrast(sizeValue);
+
   return (
     <div
-      style={{
-        position: 'relative',
-        width: size,
-        height: size,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: size * 0.15,
-        boxSizing: 'content-box',
-      }}
+      className={cn('siri-orb', className)}
+      style={
+        {
+          width: size,
+          height: size,
+          '--bg': finalColors.bg,
+          '--c1': finalColors.c1,
+          '--c2': finalColors.c2,
+          '--c3': finalColors.c3,
+          '--animation-duration': `${animationDuration}s`,
+          '--blur-amount': `${blurAmount}px`,
+          '--contrast-amount': finalContrast,
+          '--dot-size': `${dotSize}px`,
+          '--shadow-spread': `${shadowSpread}px`,
+          '--mask-radius': maskRadius,
+        } as React.CSSProperties
+      }
     >
       <style>{`
-        @keyframes orbSpin1 {
-          0%   { transform: rotate(0deg)   scale(1); }
-          50%  { transform: rotate(180deg) scale(1.06); }
-          100% { transform: rotate(360deg) scale(1); }
+        @property --angle {
+          syntax: "<angle>";
+          inherits: false;
+          initial-value: 0deg;
         }
-        @keyframes orbSpin2 {
-          0%   { transform: rotate(0deg)    scale(0.94); }
-          50%  { transform: rotate(-200deg) scale(1.02); }
-          100% { transform: rotate(-360deg) scale(0.94); }
+
+        .siri-orb {
+          display: grid;
+          grid-template-areas: "stack";
+          overflow: hidden;
+          border-radius: 50%;
+          position: relative;
         }
-        @keyframes orbSpin3 {
-          0%   { transform: rotate(0deg)   scale(0.98); }
-          33%  { transform: rotate(120deg) scale(1.04); }
-          66%  { transform: rotate(240deg) scale(0.96); }
-          100% { transform: rotate(360deg) scale(0.98); }
+
+        .siri-orb::before,
+        .siri-orb::after {
+          content: "";
+          display: block;
+          grid-area: stack;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
         }
-        @keyframes orbPulse {
-          0%,  100% { opacity: 0.85; }
-          50%       { opacity: 1; }
+
+        .siri-orb::before {
+          background:
+            conic-gradient(
+              from calc(var(--angle) * 2) at 25% 70%,
+              var(--c3),
+              transparent 20% 80%,
+              var(--c3)
+            ),
+            conic-gradient(
+              from calc(var(--angle) * 2) at 45% 75%,
+              var(--c2),
+              transparent 30% 60%,
+              var(--c2)
+            ),
+            conic-gradient(
+              from calc(var(--angle) * -3) at 80% 20%,
+              var(--c1),
+              transparent 40% 60%,
+              var(--c1)
+            ),
+            conic-gradient(
+              from calc(var(--angle) * 2) at 15% 5%,
+              var(--c2),
+              transparent 10% 90%,
+              var(--c2)
+            ),
+            conic-gradient(
+              from calc(var(--angle) * 1) at 20% 80%,
+              var(--c1),
+              transparent 10% 90%,
+              var(--c1)
+            ),
+            conic-gradient(
+              from calc(var(--angle) * -2) at 85% 10%,
+              var(--c3),
+              transparent 20% 80%,
+              var(--c3)
+            );
+          box-shadow: inset var(--bg) 0 0 var(--shadow-spread) calc(var(--shadow-spread) * 0.2);
+          filter: blur(var(--blur-amount)) contrast(var(--contrast-amount));
+          animation: siriOrbRotate var(--animation-duration) linear infinite;
         }
-        @keyframes orbGlow {
-          0%,  100% { box-shadow: 0 0 40px 10px rgba(142,89,255,0.25), 0 0 80px 20px rgba(142,89,255,0.12); }
-          50%       { box-shadow: 0 0 56px 16px rgba(142,89,255,0.35), 0 0 100px 30px rgba(142,89,255,0.18); }
+
+        .siri-orb::after {
+          background-image: radial-gradient(
+            circle at center,
+            var(--bg) var(--dot-size),
+            transparent var(--dot-size)
+          );
+          background-size: calc(var(--dot-size) * 2) calc(var(--dot-size) * 2);
+          backdrop-filter: blur(calc(var(--blur-amount) * 2)) contrast(calc(var(--contrast-amount) * 2));
+          mix-blend-mode: overlay;
         }
+
+        .siri-orb[style*="--mask-radius: 0%"]::after {
+          mask-image: none;
+        }
+
+        .siri-orb:not([style*="--mask-radius: 0%"])::after {
+          mask-image: radial-gradient(
+            black var(--mask-radius),
+            transparent 75%
+          );
+        }
+
+        @keyframes siriOrbRotate {
+          to {
+            --angle: 360deg;
+          }
+        }
+
         @media (prefers-reduced-motion: reduce) {
-          .agent-mark-orb-layer { animation-play-state: paused !important; }
+          .siri-orb::before {
+            animation: none;
+          }
         }
       `}</style>
-
-      {/* Outer glow ring (sits outside clipped circle) */}
-      <div
-        className="agent-mark-orb-layer"
-        style={{
-          position: 'absolute',
-          width: size,
-          height: size,
-          borderRadius: '50%',
-          animation: 'orbGlow 4s ease-in-out infinite',
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* Clipped circle container */}
-      <div
-        style={{
-          position: 'relative',
-          width: size,
-          height: size,
-          borderRadius: '50%',
-          overflow: 'hidden',
-          background: '#2a1a5e',
-        }}
-      >
-        {/* Base layer — dark violet */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'radial-gradient(circle at 50% 60%, #4a2db5 0%, #1f1147 100%)',
-          }}
-        />
-
-        {/* Blob layer 1 — primary violet, clockwise slow */}
-        <div
-          className="agent-mark-orb-layer"
-          style={{
-            position: 'absolute',
-            inset: '-30%',
-            background: 'radial-gradient(circle at 30% 30%, #8E59FF 0%, transparent 55%)',
-            animation: 'orbSpin1 9s linear infinite',
-            mixBlendMode: 'screen',
-          }}
-        />
-
-        {/* Blob layer 2 — light violet, counter-clockwise faster */}
-        <div
-          className="agent-mark-orb-layer"
-          style={{
-            position: 'absolute',
-            inset: '-30%',
-            background: 'radial-gradient(circle at 70% 40%, #c8a8ff 0%, transparent 50%)',
-            animation: 'orbSpin2 7s linear infinite',
-            mixBlendMode: 'screen',
-          }}
-        />
-
-        {/* Blob layer 3 — blue-violet, medium */}
-        <div
-          className="agent-mark-orb-layer"
-          style={{
-            position: 'absolute',
-            inset: '-30%',
-            background: 'radial-gradient(circle at 50% 70%, #608ff6 0%, transparent 50%)',
-            animation: 'orbSpin3 11s linear infinite',
-            mixBlendMode: 'screen',
-          }}
-        />
-
-        {/* Blob layer 4 — warm pink-violet highlight */}
-        <div
-          className="agent-mark-orb-layer"
-          style={{
-            position: 'absolute',
-            inset: '-30%',
-            background: 'radial-gradient(circle at 35% 65%, #d98ff0 0%, transparent 45%)',
-            animation: 'orbSpin1 13s linear infinite reverse',
-            mixBlendMode: 'screen',
-            opacity: 0.7,
-          }}
-        />
-
-        {/* Inner highlight — top-left light source */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'radial-gradient(circle at 30% 25%, rgba(255,255,255,0.45) 0%, transparent 35%)',
-            pointerEvents: 'none',
-          }}
-        />
-
-        {/* Pulse overlay */}
-        <div
-          className="agent-mark-orb-layer"
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'radial-gradient(circle at 50% 50%, rgba(142,89,255,0.15) 0%, transparent 70%)',
-            animation: 'orbPulse 3s ease-in-out infinite',
-            pointerEvents: 'none',
-          }}
-        />
-      </div>
     </div>
   );
 }
