@@ -237,7 +237,7 @@ export default function AgentMarkV2() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
         >
-          AGENT MARK
+          MEET AGENT MARK
         </motion.p>
         <motion.h2
           className="m8-h2"
@@ -247,7 +247,7 @@ export default function AgentMarkV2() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ delay: 0.05 }}
         >
-          Agent Mark.<br />Your round-the-clock commerce analyst.
+          Your round-the-clock commerce analyst.
         </motion.h2>
       </div>
 
