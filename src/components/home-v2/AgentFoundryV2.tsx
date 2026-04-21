@@ -215,5 +215,6 @@ export default function AgentFoundryV2() {
         }
       `}</style>
     </section>
+    </>
   );
 }
