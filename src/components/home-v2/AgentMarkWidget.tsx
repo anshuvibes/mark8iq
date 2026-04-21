@@ -414,15 +414,15 @@ export default function AgentMarkWidget() {
         />
         <style>{`
           .agent-mark-pill-input::placeholder {
-            color: rgba(18, 24, 43, 0.55);
+            color: #656981;
             opacity: 1;
           }
           .agent-mark-chat-input::placeholder {
-            color: rgba(18, 24, 43, 0.55);
+            color: #656981;
             opacity: 1;
           }
           .agent-mark-email-input::placeholder {
-            color: rgba(18, 24, 43, 0.55);
+            color: #656981;
             opacity: 1;
           }
         `}</style>
