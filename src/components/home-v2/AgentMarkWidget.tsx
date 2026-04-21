@@ -21,6 +21,7 @@ const FLOAT_CHAT_WIDTH = 480;
 const FLOAT_CHAT_HEIGHT = 560;
 const PILL_RADIUS = 9999;
 const CHAT_RADIUS = 16;
+const DOCK_HEIGHT_DESKTOP = 520;
 
 const SESSION_EMAIL_KEY = 'agentMark.emailSent';
 
