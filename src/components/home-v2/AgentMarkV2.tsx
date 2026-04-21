@@ -99,7 +99,6 @@ export default function AgentMarkV2() {
   const [closingVisible, setClosingVisible] = useState(false);
   const [containerOpacity, setContainerOpacity] = useState(1);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -212,9 +211,11 @@ export default function AgentMarkV2() {
     return () => ts.forEach(clearTimeout);
   }, [currentIndex]);
 
-  // Auto-scroll to bottom on any content change
+  // Auto-scroll the chat container only (not the page)
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
   }, [completedFindings, phase, visibleWords, visibleRcWords, visibleBullets, closingVisible]);
 
   const activeFinding = FINDINGS[currentIndex % FINDINGS.length];
@@ -595,8 +596,6 @@ export default function AgentMarkV2() {
                     </div>
                   )}
 
-                  {/* Scroll anchor */}
-                  <div ref={messagesEndRef} />
                 </div>
 
                 {/* Input bar — flush, only top border */}
