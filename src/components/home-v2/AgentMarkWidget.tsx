@@ -817,8 +817,8 @@ export default function AgentMarkWidget() {
   return (
     <>
       <AnimatePresence mode="wait">
-        {(state === 'pill' || state === 'expanded') && renderPillView()}
-        {state === 'chat' && renderChatView()}
+        {visible && (state === 'pill' || state === 'expanded') && renderPillView()}
+        {visible && state === 'chat' && renderChatView()}
       </AnimatePresence>
 
       <style>{`
