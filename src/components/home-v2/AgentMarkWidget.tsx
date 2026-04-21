@@ -283,10 +283,31 @@ export default function AgentMarkWidget() {
     >
     <motion.div
       key="pill-shell"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 20 }}
-      transition={{ duration: 0.3 }}
+      initial={{
+        opacity: 0,
+        y: 48,
+        width: 148,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        width: state === 'expanded' ? 480 : 480,
+        transition: {
+          y: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
+          opacity: { duration: 0.25, ease: 'easeOut' },
+          width: { duration: 0.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] },
+        },
+      }}
+      exit={{
+        opacity: 0,
+        y: 48,
+        width: 148,
+        transition: {
+          width: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
+          opacity: { duration: 0.25, delay: 0.2, ease: 'easeIn' },
+          y: { duration: 0.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] },
+        },
+      }}
       onHoverStart={() => setState('expanded')}
       onHoverEnd={() => setState('pill')}
       style={{
@@ -294,8 +315,9 @@ export default function AgentMarkWidget() {
         flexDirection: 'column',
         alignItems: 'stretch',
         gap: '10px',
-        width: 'min(480px, calc(100vw - 32px))',
+        maxWidth: 'calc(100vw - 32px)',
         pointerEvents: 'auto',
+        overflow: 'hidden',
       }}
     >
       {/* Suggestions card — appears above pill on hover */}
