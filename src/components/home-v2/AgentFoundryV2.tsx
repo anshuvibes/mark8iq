@@ -42,19 +42,6 @@ export default function AgentFoundryV2() {
           zIndex: 1,
           textAlign: 'center',
         }}>
-          {/* Decorative open quote */}
-          <div style={{
-            fontFamily: 'Georgia, serif',
-            fontSize: '120px',
-            lineHeight: '60px',
-            color: '#8e59ff',
-            opacity: 0.4,
-            marginBottom: '24px',
-            userSelect: 'none',
-          }}>
-            "
-          </div>
-
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -71,8 +58,7 @@ export default function AgentFoundryV2() {
               letterSpacing: '-0.01em',
             }}
           >
-            While your competitors wait for Monday morning reports,<br />
-            your agents already acted on Friday night's data.
+            While your competitors wait for Monday morning reports, what if your agents already acted on Friday night's data?
           </motion.p>
 
           {/* Violet accent line */}
