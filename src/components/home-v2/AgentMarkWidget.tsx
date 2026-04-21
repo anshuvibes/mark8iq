@@ -273,35 +273,23 @@ export default function AgentMarkWidget() {
             transition={{ duration: 0.22, ease: 'easeOut' }}
             style={{
               background: '#f9f9fb',
-              borderRadius: '30px',
-              padding: '24px',
+              borderRadius: '20px',
+              padding: '16px',
               display: 'flex',
               flexDirection: 'column',
-              gap: '12px',
+              gap: '10px',
               boxShadow: '0 8px 32px rgba(8,13,25,0.08)',
             }}
           >
             {/* Header */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div
-                style={{
-                  width: '32px',
-                  height: '32px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <SparkleIcon size={24} color="#12182b" />
-              </div>
+              <SparkleIcon size={16} color="#12182b" />
               <p
+                className="m8-p5"
                 style={{
-                  fontFamily: "'Saira', sans-serif",
-                  fontSize: '16px',
-                  fontWeight: 500,
                   color: '#12182b',
-                  lineHeight: '20px',
                   margin: 0,
+                  fontWeight: 500,
                 }}
               >
                 Suggestions
