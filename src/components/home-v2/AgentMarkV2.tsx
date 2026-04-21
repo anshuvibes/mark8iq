@@ -1,101 +1,205 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'motion/react';
-import { mockHalts, mockResponses } from '@/data/aiPanelMockData';
+import { motion, AnimatePresence } from 'motion/react';
 
-const ORB_URL = '/img/home-v2/agent-mark-orb.png';
+// ─── FINDINGS DATA ────────────────────────────────────────────────────────────
 
-const DEMO_CYCLE = [
-  { halt: mockHalts.find(h => h.id === 'h1')!, response: mockResponses.h1 },
-  { halt: mockHalts.find(h => h.id === 'h2')!, response: mockResponses.h2 },
-  { halt: mockHalts.find(h => h.id === 'h3')!, response: mockResponses.h3 },
-  { halt: mockHalts.find(h => h.id === 'h4')!, response: mockResponses.h4 },
-  { halt: mockHalts.find(h => h.id === 'h5')!, response: mockResponses.h5 },
+const FINDINGS = [
+  {
+    query: 'Your Amazon ROAS dropped overnight.',
+    insights: 'Amazon ROAS dropped 14% between 11pm and 6am across Home and Kitchen. 3 campaigns affected. Estimated missed revenue overnight: ₹34,000.',
+    rootCause: 'A competitor increased bids on your top 3 exact match keywords. Your bids are now 18% below category average during high-traffic slots.',
+    recommendations: [
+      'Raise bids by 15% on these 3 keywords immediately. Estimated ROAS recovery: 4 to 6 hours.',
+    ],
+    queryDuration: 2000,
+    holdTime: 4000,
+    roleIndicator: null as string | null,
+  },
+  {
+    query: 'How is Blinkit performing vs Amazon this week?',
+    insights: 'Blinkit GMV up 23% week on week. Amazon GMV flat for the same period. Quick commerce delivering 40% lower ad spend for equivalent revenue.',
+    rootCause: "Blinkit visibility score improved after last week's content update. Amazon listing has not been refreshed in 31 days. Algorithm is deprioritising it.",
+    recommendations: [
+      'Refresh Amazon listing this week.',
+      'Reallocate 12% of Amazon ad budget to Blinkit to capitalise on current momentum.',
+    ],
+    queryDuration: 2500,
+    holdTime: 4000,
+    roleIndicator: null as string | null,
+  },
+  {
+    query: 'Give me the CXO view of this month.',
+    insights: 'Blended ROAS across all marketplaces: 4.2x. GMV on track for monthly target. One financial leakage identified requiring immediate attention.',
+    rootCause: 'Returns on Myntra up 34% this month. Concentrated in one SKU. Estimated monthly leakage: ₹8.4 lakh.',
+    recommendations: [
+      'Flag to ops team for listing review immediately.',
+      'If unresolved in 48 hours, consider temporary delisting of that SKU to stop leakage.',
+    ],
+    queryDuration: 2000,
+    holdTime: 5000,
+    roleIndicator: 'Responding as: CXO view' as string | null,
+  },
+  {
+    query: 'What did I miss while I was in meetings today?',
+    insights: '4 signals flagged while you were offline today. 1 critical. Flagged at 2.14pm. Flipkart search rank dropped for your top keyword. Now position 14. Was position 6 this morning.',
+    rootCause: 'A new seller entered the category at 11am with aggressive pricing 12% below yours. Already capturing 31% of impressions on that keyword.',
+    recommendations: [
+      'Three competitive response options prepared. Review and approve your preferred action.',
+      'Time-sensitive: every hour at current rate costs approximately ₹18,000 in lost visibility.',
+    ],
+    queryDuration: 2500,
+    holdTime: 4000,
+    roleIndicator: null as string | null,
+  },
 ];
 
-type DemoPhase =
+// ─── TIMING CONSTANTS ─────────────────────────────────────────────────────────
+
+const CHAR_SPEED = 50;
+const WORD_SPEED = 28;
+const SECTION_GAP = 80;
+const LOADING_TIME = 700;
+const REC_STAGGER = 700;
+const FADE_TIME = 500;
+const CLOSING_HOLD = 4000;
+const ROLE_INDICATOR_HOLD = 3000;
+
+type Phase =
   | 'idle'
-  | 'pill'
+  | 'typing-query'
   | 'loading'
   | 'insights'
   | 'rootcause'
   | 'recommendations'
   | 'complete'
-  | 'fading';
+  | 'fading'
+  | 'closing';
 
-const WORD_SPEED = 25;
-const SECTION_GAP = 80;
-const HOLD_TIME = 3000;
-const FADE_TIME = 600;
-const LOADING_TIME = 800;
+// ─── COMPONENT ────────────────────────────────────────────────────────────────
 
 export default function AgentMarkV2() {
-  const [phase, setPhase] = useState<DemoPhase>('idle');
-  const [cycleIndex, setCycleIndex] = useState(0);
+  const [phase, setPhase] = useState<Phase>('idle');
+  const [findingIndex, setFindingIndex] = useState(0);
+  const [visibleQueryChars, setVisibleQueryChars] = useState(0);
   const [visibleWords, setVisibleWords] = useState(0);
   const [visibleRcWords, setVisibleRcWords] = useState(0);
   const [visibleBullets, setVisibleBullets] = useState(0);
+  const [showRoleIndicator, setShowRoleIndicator] = useState(false);
   const [opacity, setOpacity] = useState(1);
+  const [slideY, setSlideY] = useState(0);
+  const [closingVisible, setClosingVisible] = useState(false);
 
   useEffect(() => {
-    const timeouts: ReturnType<typeof setTimeout>[] = [];
-    const item = DEMO_CYCLE[cycleIndex % DEMO_CYCLE.length];
-    const insightsWords = item.response.insights.split(' ');
-    const rcWordsArr = item.response.rootCause.split(' ');
+    const ts: ReturnType<typeof setTimeout>[] = [];
+    const finding = FINDINGS[findingIndex];
+    const isLastFinding = findingIndex === FINDINGS.length - 1;
+    const query = finding.query;
+    const insightsWords = finding.insights.split(' ');
+    const rcWords = finding.rootCause.split(' ');
 
+    // Reset
     setOpacity(1);
+    setSlideY(0);
+    setVisibleQueryChars(0);
     setVisibleWords(0);
     setVisibleRcWords(0);
     setVisibleBullets(0);
+    setShowRoleIndicator(false);
+    setClosingVisible(false);
     setPhase('idle');
 
-    timeouts.push(setTimeout(() => setPhase('pill'), 300));
-    timeouts.push(setTimeout(() => setPhase('loading'), 900));
+    // Phase: typing query
+    ts.push(setTimeout(() => {
+      setPhase('typing-query');
+      query.split('').forEach((_, i) => {
+        ts.push(setTimeout(() => setVisibleQueryChars(i + 1), i * CHAR_SPEED));
+      });
+    }, 400));
 
-    const insightsStart = 900 + LOADING_TIME;
-    timeouts.push(setTimeout(() => {
+    const queryEnd = 400 + query.length * CHAR_SPEED;
+
+    // Phase: loading
+    ts.push(setTimeout(() => setPhase('loading'), queryEnd + 100));
+
+    // Role indicator — Finding 3 only
+    if (finding.roleIndicator) {
+      ts.push(setTimeout(() => setShowRoleIndicator(true), queryEnd + 100 + Math.floor(LOADING_TIME * 0.4)));
+      ts.push(setTimeout(() => setShowRoleIndicator(false), queryEnd + 100 + Math.floor(LOADING_TIME * 0.4) + ROLE_INDICATOR_HOLD));
+    }
+
+    // Phase: insights
+    const insightsStart = queryEnd + 100 + LOADING_TIME;
+    ts.push(setTimeout(() => {
       setPhase('insights');
       insightsWords.forEach((_, i) => {
-        timeouts.push(setTimeout(() => setVisibleWords(i + 1), i * WORD_SPEED));
+        ts.push(setTimeout(() => setVisibleWords(i + 1), i * WORD_SPEED));
       });
     }, insightsStart));
 
-    const insightsDuration = insightsWords.length * WORD_SPEED;
-    const rcStart = insightsStart + insightsDuration + SECTION_GAP;
-    timeouts.push(setTimeout(() => {
+    const insightsDone = insightsStart + insightsWords.length * WORD_SPEED;
+
+    // Phase: rootcause
+    const rcStart = insightsDone + SECTION_GAP;
+    ts.push(setTimeout(() => {
       setPhase('rootcause');
-      rcWordsArr.forEach((_, i) => {
-        timeouts.push(setTimeout(() => setVisibleRcWords(i + 1), i * WORD_SPEED));
+      rcWords.forEach((_, i) => {
+        ts.push(setTimeout(() => setVisibleRcWords(i + 1), i * WORD_SPEED));
       });
     }, rcStart));
 
-    const rcDuration = rcWordsArr.length * WORD_SPEED;
-    const recsStart = rcStart + rcDuration + SECTION_GAP;
-    timeouts.push(setTimeout(() => {
+    const rcDone = rcStart + rcWords.length * WORD_SPEED;
+
+    // Phase: recommendations
+    const recsStart = rcDone + SECTION_GAP;
+    ts.push(setTimeout(() => {
       setPhase('recommendations');
-      item.response.recommendations.forEach((_, i) => {
-        timeouts.push(setTimeout(() => setVisibleBullets(i + 1), i * 600));
+      finding.recommendations.forEach((_, i) => {
+        ts.push(setTimeout(() => setVisibleBullets(i + 1), i * REC_STAGGER));
       });
     }, recsStart));
 
-    const totalTyping = recsStart + item.response.recommendations.length * 600;
-    timeouts.push(setTimeout(() => setPhase('complete'), totalTyping + 200));
+    const recsDone = recsStart + finding.recommendations.length * REC_STAGGER;
 
-    timeouts.push(setTimeout(() => {
-      setPhase('fading');
-      setOpacity(0);
-    }, totalTyping + 200 + HOLD_TIME));
+    // Phase: complete (hold)
+    ts.push(setTimeout(() => setPhase('complete'), recsDone + 200));
 
-    timeouts.push(setTimeout(() => {
-      setCycleIndex(i => i + 1);
-    }, totalTyping + 200 + HOLD_TIME + FADE_TIME));
+    const holdEnd = recsDone + 200 + finding.holdTime;
 
-    return () => timeouts.forEach(clearTimeout);
-  }, [cycleIndex]);
+    if (isLastFinding) {
+      // Closing line after Finding 4
+      ts.push(setTimeout(() => {
+        setPhase('closing');
+        setClosingVisible(true);
+      }, holdEnd));
 
-  const current = DEMO_CYCLE[cycleIndex % DEMO_CYCLE.length];
-  const insightsWordList = current.response.insights.split(' ');
-  const rcWordList = current.response.rootCause.split(' ');
-  const showResponse = ['insights', 'rootcause', 'recommendations', 'complete'].includes(phase);
+      ts.push(setTimeout(() => {
+        setOpacity(0);
+        setSlideY(-20);
+      }, holdEnd + CLOSING_HOLD));
+
+      ts.push(setTimeout(() => {
+        setFindingIndex(0);
+      }, holdEnd + CLOSING_HOLD + FADE_TIME + 300));
+    } else {
+      // Fade + slide up, advance to next finding
+      ts.push(setTimeout(() => {
+        setPhase('fading');
+        setOpacity(0);
+        setSlideY(-20);
+      }, holdEnd));
+
+      ts.push(setTimeout(() => {
+        setFindingIndex(i => i + 1);
+      }, holdEnd + FADE_TIME + 300));
+    }
+
+    return () => ts.forEach(clearTimeout);
+  }, [findingIndex]);
+
+  const finding = FINDINGS[findingIndex];
+  const insightsWordList = finding.insights.split(' ');
+  const rcWordList = finding.rootCause.split(' ');
+  const showResponse = ['insights', 'rootcause', 'recommendations', 'complete', 'closing'].includes(phase);
 
   return (
     <section style={{
@@ -115,7 +219,7 @@ export default function AgentMarkV2() {
         }
       `}</style>
 
-      {/* Eyebrow + headline — outside bounding box */}
+      {/* Eyebrow + headline */}
       <div className="container" style={{ textAlign: 'center', marginBottom: '40px', position: 'relative', zIndex: 1 }}>
         <motion.p
           className="m8-eyebrow"
@@ -134,7 +238,7 @@ export default function AgentMarkV2() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ delay: 0.05 }}
         >
-          Your smartest team member never sleeps.
+          While you slept, Agent Mark found 4 things you need to see.
         </motion.h2>
       </div>
 
@@ -154,67 +258,6 @@ export default function AgentMarkV2() {
             gap: '0',
           }}>
 
-            {/* Orb */}
-            <motion.div
-              style={{ marginBottom: '24px' }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-            >
-              <img
-                src={ORB_URL}
-                alt="Agent Mark"
-                style={{
-                  width: '180px',
-                  height: '180px',
-                  objectFit: 'contain',
-                  display: 'block',
-                }}
-              />
-            </motion.div>
-
-            {/* Intro text */}
-            <motion.div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '4px',
-                marginBottom: '40px',
-                textAlign: 'center',
-              }}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ delay: 0.15 }}
-            >
-              <p style={{
-                fontFamily: "'Saira', sans-serif",
-                fontSize: '28px',
-                fontWeight: 500,
-                lineHeight: '42px',
-                background: 'linear-gradient(90deg, #c192cf, #608ff6 50%, #6a26fa)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                margin: 0,
-              }}>
-                Hello, I'm Agent Mark!
-              </p>
-              <p style={{
-                fontFamily: "'Saira', sans-serif",
-                fontSize: '28px',
-                fontWeight: 500,
-                lineHeight: '42px',
-                color: '#12182b',
-                margin: 0,
-                whiteSpace: 'nowrap',
-              }}>
-                What data should I brew for you today?
-              </p>
-            </motion.div>
-
             {/* Animated chat window */}
             <div style={{
               width: '100%',
@@ -228,19 +271,42 @@ export default function AgentMarkV2() {
                 display: 'flex',
                 flexDirection: 'column',
               }}>
+
+                {/* Opening state header — static, always visible */}
+                <div style={{
+                  padding: '20px 24px 16px',
+                  borderBottom: '1px solid #EDF0F7',
+                }}>
+                  <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '6px' }}>
+                    WHILE YOU WERE AWAY
+                  </p>
+                  <p style={{
+                    fontFamily: "'Saira', sans-serif",
+                    fontSize: '14px',
+                    fontWeight: 400,
+                    lineHeight: '22px',
+                    color: '#12182b',
+                    margin: 0,
+                  }}>
+                    4 signals flagged. 1 critical. Reviewed at 3.47am.
+                  </p>
+                </div>
+
                 {/* Messages area */}
                 <div style={{
                   padding: '24px',
-                  minHeight: '420px',
-                  maxHeight: '420px',
+                  minHeight: '460px',
+                  maxHeight: '460px',
                   overflow: 'hidden',
                   opacity,
-                  transition: `opacity ${FADE_TIME}ms ease-out`,
+                  transform: `translateY(${slideY}px)`,
+                  transition: `opacity ${FADE_TIME}ms ease-out, transform ${FADE_TIME}ms ease-out`,
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '16px',
                 }}>
-                  {/* User context pill */}
+
+                  {/* User query bubble — char by char */}
                   {phase !== 'idle' && (
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                       <div style={{
@@ -258,11 +324,37 @@ export default function AgentMarkV2() {
                           margin: 0,
                           lineHeight: '20px',
                         }}>
-                          {current.halt.statement}
+                          {finding.query.slice(0, visibleQueryChars)}
+                          {phase === 'typing-query' && (
+                            <span style={{ animation: 'caretBlink 1s infinite', marginLeft: '2px' }}>|</span>
+                          )}
                         </p>
                       </div>
                     </div>
                   )}
+
+                  {/* Role indicator — Finding 3 only */}
+                  <AnimatePresence>
+                    {showRoleIndicator && (
+                      <motion.div
+                        key="role-indicator"
+                        initial={{ opacity: 0, y: 4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -4 }}
+                        transition={{ duration: 0.3 }}
+                        style={{
+                          fontFamily: "'Saira', sans-serif",
+                          fontSize: '12px',
+                          fontWeight: 400,
+                          color: '#8E59FF',
+                          fontStyle: 'italic',
+                          paddingLeft: '36px',
+                        }}
+                      >
+                        {finding.roleIndicator}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
                   {/* Loading dots */}
                   {phase === 'loading' && (
@@ -292,7 +384,7 @@ export default function AgentMarkV2() {
                     </div>
                   )}
 
-                  {/* AI Response */}
+                  {/* AI response */}
                   {showResponse && (
                     <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                       <div style={{
@@ -304,6 +396,7 @@ export default function AgentMarkV2() {
                         marginTop: '2px',
                       }} />
                       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '14px' }}>
+
                         {/* INSIGHTS */}
                         <div>
                           <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '6px' }}>INSIGHTS</p>
@@ -323,7 +416,7 @@ export default function AgentMarkV2() {
                         </div>
 
                         {/* ROOT CAUSE */}
-                        {['rootcause', 'recommendations', 'complete'].includes(phase) && (
+                        {['rootcause', 'recommendations', 'complete', 'closing'].includes(phase) && (
                           <div>
                             <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '6px' }}>ROOT CAUSE</p>
                             <p style={{
@@ -343,11 +436,11 @@ export default function AgentMarkV2() {
                         )}
 
                         {/* RECOMMENDATIONS */}
-                        {['recommendations', 'complete'].includes(phase) && (
+                        {['recommendations', 'complete', 'closing'].includes(phase) && (
                           <div>
                             <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '8px' }}>RECOMMENDATIONS</p>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                              {current.response.recommendations.slice(0, visibleBullets).map((rec, i) => (
+                              {finding.recommendations.slice(0, visibleBullets).map((rec, i) => (
                                 <motion.div
                                   key={i}
                                   initial={{ opacity: 0, y: 6 }}
@@ -388,9 +481,34 @@ export default function AgentMarkV2() {
                             </div>
                           </div>
                         )}
+
+                        {/* Closing line — Finding 4 only, after hold */}
+                        <AnimatePresence>
+                          {closingVisible && (
+                            <motion.p
+                              key="closing-line"
+                              initial={{ opacity: 0, y: 6 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.5 }}
+                              style={{
+                                fontFamily: "'Saira', sans-serif",
+                                fontSize: '15px',
+                                fontWeight: 500,
+                                lineHeight: '22px',
+                                color: '#8E59FF',
+                                margin: '8px 0 0 0',
+                              }}
+                            >
+                              Ready for today. What do you want to act on first?
+                            </motion.p>
+                          )}
+                        </AnimatePresence>
+
                       </div>
                     </div>
                   )}
+
                 </div>
 
                 {/* Static input bar */}
@@ -430,6 +548,7 @@ export default function AgentMarkV2() {
                     </span>
                   </div>
                 </div>
+
               </div>
             </div>
 
