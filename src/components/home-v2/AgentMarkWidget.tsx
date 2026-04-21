@@ -1,92 +1,68 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, LayoutGroup } from 'motion/react';
+
+type WidgetState = 'pill' | 'expanded' | 'chat' | 'complete';
+
+type Message = {
+  from: 'user' | 'agent';
+  text: string;
+  type?: 'text' | 'loading' | 'email';
+};
 
 const starters = [
-  'What does Mark8 IQ actually do?',
-  'How does it work for a brand on Amazon and Flipkart?',
-  'What happened to Asian Shoes after using Mark8 IQ?',
-  'How is this different from what I already use?',
-  'Can I see a live example?',
+  { text: 'What does Mark8 IQ actually do for a D2C brand?', key: 'what' },
+  { text: 'How did Asian Shoes save ₹60 lakh a month?', key: 'casestudy' },
+  { text: 'How is this different from what I already use?', key: 'differentiation' },
 ];
 
-type Message = { from: 'user' | 'agent'; text: string; action?: string };
-
-const scriptedResponses: Record<string, Message[]> = {
-  'What does Mark8 IQ actually do?': [
-    { from: 'agent', text: 'Mark8 IQ is the operating system for e-commerce brands. It unifies every marketplace (Amazon, Flipkart, Myntra, Meesho, and more) into one dashboard, then layers AI on top to analyse, recommend, and act — automatically.' },
-    { from: 'agent', text: 'Six product modules cover ads, visibility, shelf health, returns, reconciliation, and inventory. Agent Mark thinks with your data. Agent Foundry executes while you sleep.' },
+const conversationFlows: Record<string, Message[]> = {
+  what: [
+    { from: 'agent', text: 'Mark8 IQ is the operating system for e-commerce brands. It pulls data from every marketplace — Amazon, Flipkart, Myntra, Meesho, Zepto, Blinkit — standardises it through PRISM, and gives you one unified view across ads, inventory, returns, shelf health, and reconciliation.' },
+    { from: 'agent', text: 'Agent Mark sits on top and tells you exactly what to act on. No more spreadsheets. No more switching tabs. Just decisions.' },
+    { from: 'agent', text: 'Which marketplaces are you currently selling on? I can show you how this works specifically for your setup.' },
   ],
-  'How does it work for a brand on Amazon and Flipkart?': [
-    { from: 'agent', text: 'Your Amazon and Flipkart data flows into Market One — our single source of truth. From there, Mark8 Ads optimizes spend across both platforms simultaneously, Mark8 Sight tracks your rank in real time, and Mark8 Returns flags problem SKUs before they hit your P&L.' },
-    { from: 'agent', text: 'One dashboard. Two marketplaces. Zero manual cross-referencing.' },
+  casestudy: [
+    { from: 'agent', text: 'Asian Shoes was spending ₹90 lakh a month on Amazon ads. Mark8 IQ identified that 70% of their budget was going to campaigns that were not converting during peak hours.' },
+    { from: 'agent', text: 'After optimising campaign budgets, bid rules, and keyword targeting — same ₹6.5 Cr in monthly sales. Ad spend dropped to ₹28 lakh. ₹62 lakh saved. Every single month.' },
+    { from: 'agent', text: 'This is a real client. What brand are you managing? I can run a rough estimate on what this might look like for you.' },
   ],
-  'What happened to Asian Shoes after using Mark8 IQ?': [
-    { from: 'agent', text: 'Asian Shoes was spending ₹90 lakh per month on Amazon ads. After Mark8 IQ optimized their campaigns, spend dropped to ₹28 lakh — with the same ₹6.5 Cr in monthly sales.' },
-    { from: 'agent', text: 'That is ₹60 lakh saved every single month. Same sales. 68% less ad spend.' },
-  ],
-  'How is this different from what I already use?': [
-    { from: 'agent', text: 'Most tools give you one function: ads management, or inventory tracking, or reconciliation. Mark8 IQ connects all six functions into one system. When your ad spend changes, your inventory forecasts update. When returns spike, your reconciliation flags it. Everything talks to everything.' },
-  ],
-  'Can I see a live example?': [
-    { from: 'agent', text: 'I would love to show you a live walkthrough tailored to your specific setup. A 20-minute demo would show you exactly how this works for your brand.' },
-    { from: 'agent', text: 'Based on what you have told me, I think a demo would be the fastest way to see the impact. Can I grab your email and have someone from the team reach out today?', action: 'capture_email' },
+  differentiation: [
+    { from: 'agent', text: 'Most tools give you one function — ads management, or inventory tracking, or reconciliation. They do not talk to each other.' },
+    { from: 'agent', text: 'Mark8 IQ connects all six functions. When your ad spend changes, inventory forecasts update. When returns spike, reconciliation flags it. When rank drops, your ads team gets alerted. Everything is connected through Market One — one source of truth.' },
+    { from: 'agent', text: 'What tool are you using right now? I can tell you exactly where the gaps are.' },
   ],
 };
 
-const fallbackResponse: Message[] = [
-  { from: 'agent', text: 'Great question. Mark8 IQ covers ads, visibility, shelf health, returns, reconciliation, and inventory — all in one platform. Would you like me to explain a specific module, or would a quick demo be more helpful?' },
+const followUpFlow: Message[] = [
+  { from: 'agent', text: 'Got it. And what is the biggest headache right now — is it ads performance, inventory visibility, returns, or something else?' },
 ];
 
+const emailAsk: Message = {
+  from: 'agent',
+  text: 'Based on what you have told me, I think a 20-minute live demo would show you the exact impact for your brand. Can I grab your email? Someone from the Mark8 IQ team will reach out today.',
+  type: 'email',
+};
+
 export default function AgentMarkWidget() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [showNudge, setShowNudge] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    { from: 'agent', text: 'Hi. I am Agent Mark. I can tell you anything about Mark8 IQ, or show you what I can do for your brand. Where do you want to start?' },
-  ]);
-  const [emailCapture, setEmailCapture] = useState(false);
+  const [state, setState] = useState<WidgetState>('pill');
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputText, setInputText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [turnCount, setTurnCount] = useState(0);
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Nudge after 45 seconds
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!isOpen) setShowNudge(true);
-    }, 45000);
-    return () => clearTimeout(timer);
-  }, [isOpen]);
-
-  // Auto-scroll messages
+  // Auto-scroll
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handleStarter = (text: string) => {
-    const userMsg: Message = { from: 'user', text };
-    const responses = scriptedResponses[text] || fallbackResponse;
-    setMessages((prev) => [...prev, userMsg, ...responses]);
-
-    if (responses.some((r) => r.action === 'capture_email')) {
-      setTimeout(() => setEmailCapture(true), 500);
-    }
-  };
-
-  const handleEmailSubmit = () => {
-    if (!email.includes('@')) return;
-    setEmailSent(true);
-    setEmailCapture(false);
-    setMessages((prev) => [
-      ...prev,
-      { from: 'agent', text: 'Done. Someone from Mark8 IQ will reach out within 24 hours. In the meantime, feel free to keep exploring.' },
-    ]);
-  };
-
-  // Hide during fragmentation scroll using IntersectionObserver
+  // Hide during fragmentation scroll
   const [visible, setVisible] = useState(true);
   useEffect(() => {
     const fragSection = document.querySelector('[data-section="fragmentation"]');
     if (!fragSection) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => setVisible(!entry.isIntersecting),
       { threshold: 0.05 }
@@ -95,195 +71,414 @@ export default function AgentMarkWidget() {
     return () => observer.disconnect();
   }, []);
 
-  if (!visible && !isOpen) return null;
+  const addMessages = (newMsgs: Message[], delay = 800) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        { from: 'agent', text: 'Interesting ask 👀 — let me pull this up for you...', type: 'loading' },
+      ]);
+      setTimeout(() => {
+        setMessages((prev) => [...prev.filter((m) => m.type !== 'loading'), ...newMsgs]);
+        setIsLoading(false);
+        setTurnCount((t) => t + 1);
+      }, 1200);
+    }, delay);
+  };
+
+  const handleStarterClick = (starter: typeof starters[0]) => {
+    setState('chat');
+    const userMsg: Message = { from: 'user', text: starter.text };
+    setMessages([userMsg]);
+    addMessages(conversationFlows[starter.key], 400);
+  };
+
+  const handleSend = () => {
+    if (!inputText.trim() || isLoading) return;
+    const userMsg: Message = { from: 'user', text: inputText };
+    setInputText('');
+    setMessages((prev) => [...prev, userMsg]);
+    if (turnCount >= 2) {
+      addMessages([emailAsk]);
+    } else {
+      addMessages(followUpFlow);
+    }
+  };
+
+  const handleEmailSubmit = () => {
+    if (!email.includes('@')) return;
+    setEmailSent(true);
+    setMessages((prev) => [
+      ...prev,
+      { from: 'user', text: email },
+      { from: 'agent', text: 'Perfect. Someone from Mark8 IQ will reach out within a few hours. In the meantime, feel free to keep exploring the site.' },
+    ]);
+  };
+
+  if (!visible && state === 'pill') return null;
+
+  const renderMessage = (msg: Message, i: number) => {
+    if (msg.from === 'user') {
+      return (
+        <div key={i} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <div
+            style={{
+              maxWidth: '75%',
+              padding: '10px 14px',
+              borderRadius: '12px 12px 4px 12px',
+              background: '#8E59FF',
+            }}
+          >
+            <p className="m8-p6" style={{ color: '#fff', lineHeight: 1.5 }}>{msg.text}</p>
+          </div>
+        </div>
+      );
+    }
+
+    if (msg.type === 'loading') {
+      return (
+        <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxWidth: '85%' }}>
+          <p className="m8-p6" style={{ color: '#656981', fontStyle: 'italic' }}>{msg.text}</p>
+          <div style={{ display: 'flex', gap: '4px', padding: '4px 0' }}>
+            {[0, 1, 2].map((j) => (
+              <div
+                key={j}
+                style={{
+                  width: '6px',
+                  height: '6px',
+                  borderRadius: '50%',
+                  background: '#8E59FF',
+                  animation: `dotPulse 1.4s infinite`,
+                  animationDelay: `${j * 0.2}s`,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    if (msg.type === 'email') {
+      return (
+        <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '85%' }}>
+          <p className="m8-p6" style={{ color: '#12182b', lineHeight: 1.6 }}>{msg.text}</p>
+          {!emailSent && (
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                onKeyDown={(e) => e.key === 'Enter' && handleEmailSubmit()}
+                style={{
+                  flex: 1,
+                  padding: '8px 14px',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(142,89,255,0.3)',
+                  fontFamily: "'Saira', sans-serif",
+                  fontSize: '13px',
+                  outline: 'none',
+                  background: 'white',
+                  color: '#12182b',
+                }}
+              />
+              <button
+                onClick={handleEmailSubmit}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  background: '#8E59FF',
+                  color: '#fff',
+                  fontFamily: "'Saira', sans-serif",
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                }}
+              >
+                Send
+              </button>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <div key={i} style={{ display: 'flex', maxWidth: '85%' }}>
+        <p className="m8-p6" style={{ color: '#12182b', lineHeight: 1.6 }}>{msg.text}</p>
+      </div>
+    );
+  };
 
   return (
     <>
-      {/* Pill / Nudge */}
-      <AnimatePresence>
-        {!isOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            style={{
-              position: 'fixed',
-              bottom: '24px',
-              right: '24px',
-              zIndex: 99999,
-              cursor: 'pointer',
-            }}
-            onClick={() => { setIsOpen(true); setShowNudge(false); }}
-          >
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              padding: '12px 20px',
-              background: '#080D19',
-              borderRadius: '9999px',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
-            }}>
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#8E59FF', animation: 'pulse 2s infinite' }} />
-              <span className="m8-p5" style={{ color: '#fff', fontWeight: 400 }}>Ask Agent Mark</span>
-            </div>
-            <AnimatePresence>
-              {showNudge && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 8 }}
+      <LayoutGroup>
+        {/* PILL + EXPANDED */}
+        <AnimatePresence>
+          {(state === 'pill' || state === 'expanded') && (
+            <motion.div
+              key="pill-shell"
+              layout
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.3 }}
+              onHoverStart={() => setState('expanded')}
+              onHoverEnd={() => setState('pill')}
+              style={{
+                position: 'fixed',
+                bottom: '32px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 99999,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '10px',
+              }}
+            >
+              {/* Pill */}
+              <motion.button
+                layout
+                onClick={() => setState((s) => (s === 'expanded' ? 'pill' : 'expanded'))}
+                whileHover={{ y: -2 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  padding: '12px 20px',
+                  background: '#080D19',
+                  borderRadius: '9999px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
+                  fontFamily: "'Saira', sans-serif",
+                }}
+              >
+                <span
                   style={{
-                    position: 'absolute',
-                    bottom: '100%',
-                    right: 0,
-                    marginBottom: '8px',
-                    padding: '10px 16px',
-                    background: '#fff',
-                    borderRadius: '10px',
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.12)',
-                    whiteSpace: 'nowrap',
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    background: '#8E59FF',
+                    animation: 'agentPulse 2s infinite',
                   }}
-                >
-                  <span className="m8-p6" style={{ color: '#080D19' }}>Ask me how Asian Shoes saved 60 lakh a month.</span>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                />
+                <span className="m8-p5" style={{ color: '#fff', fontWeight: 400 }}>
+                  Ask Agent Mark
+                </span>
+              </motion.button>
 
-      {/* Chat overlay */}
+              {/* Expanded starter chips */}
+              <AnimatePresence>
+                {state === 'expanded' && (
+                  <motion.div
+                    key="starters"
+                    initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                    transition={{ duration: 0.2 }}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '8px',
+                      width: 'min(420px, calc(100vw - 32px))',
+                    }}
+                  >
+                    {starters.map((s, i) => (
+                      <motion.button
+                        key={s.key}
+                        initial={{ opacity: 0, y: -6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.05 }}
+                        onClick={() => handleStarterClick(s)}
+                        whileHover={{ x: 2 }}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: '12px 16px',
+                          background: 'white',
+                          border: '1px solid rgba(142,89,255,0.15)',
+                          borderRadius: '10px',
+                          cursor: 'pointer',
+                          textAlign: 'left',
+                          gap: '12px',
+                          boxShadow: '0 4px 16px rgba(8,13,25,0.06)',
+                          fontFamily: "'Saira', sans-serif",
+                        }}
+                      >
+                        <span className="m8-p6" style={{ color: '#12182b', flex: 1 }}>
+                          {s.text}
+                        </span>
+                        <span style={{ color: '#8E59FF', fontSize: '16px', flexShrink: 0 }}>→</span>
+                      </motion.button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </LayoutGroup>
+
+      {/* CHAT PANEL */}
       <AnimatePresence>
-        {isOpen && (
+        {state === 'chat' && (
           <motion.div
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
+            key="chat-panel"
+            initial={{ opacity: 0, y: 40, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 40, scale: 0.95 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+            exit={{ opacity: 0, y: 40, scale: 0.96 }}
+            transition={{ type: 'spring', stiffness: 280, damping: 26 }}
             style={{
               position: 'fixed',
-              bottom: '24px',
-              right: '24px',
-              width: '400px',
-              maxHeight: '600px',
-              background: '#0D1117',
-              borderRadius: '16px',
-              overflow: 'hidden',
+              bottom: '32px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: 'min(700px, calc(100vw - 32px))',
+              maxHeight: '70vh',
               zIndex: 99999,
               display: 'flex',
               flexDirection: 'column',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
-              border: '1px solid rgba(255,255,255,0.06)',
             }}
           >
-            {/* Header */}
-            <div style={{ padding: '14px 18px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'linear-gradient(135deg, #8E59FF, #6C3AE0)', flexShrink: 0 }} />
-              <div style={{ flex: 1 }}>
-                <span className="m8-p5" style={{ color: '#fff', fontWeight: 500 }}>Agent Mark</span>
-              </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', fontSize: '20px', cursor: 'pointer', padding: '4px' }}
+            {/* Blob glow */}
+            <div
+              style={{
+                position: 'absolute',
+                inset: '-40px',
+                background: 'radial-gradient(circle at 50% 50%, rgba(142,89,255,0.18), transparent 70%)',
+                filter: 'blur(40px)',
+                pointerEvents: 'none',
+                zIndex: -1,
+              }}
+            />
+
+            <div
+              style={{
+                background: '#FFFFFF',
+                borderRadius: '20px',
+                border: '1px solid rgba(142,89,255,0.12)',
+                boxShadow: '0 24px 60px rgba(8,13,25,0.18)',
+                display: 'flex',
+                flexDirection: 'column',
+                overflow: 'hidden',
+              }}
+            >
+              {/* Header */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '16px 20px',
+                  borderBottom: '1px solid rgba(8,13,25,0.06)',
+                }}
               >
-                ×
-              </button>
-            </div>
-
-            {/* Messages */}
-            <div style={{ flex: 1, overflow: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              {messages.map((msg, i) => (
-                <div key={i} style={{ display: 'flex', justifyContent: msg.from === 'user' ? 'flex-end' : 'flex-start', gap: '8px' }}>
-                  {msg.from === 'agent' && (
-                    <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: 'linear-gradient(135deg, #8E59FF, #6C3AE0)', flexShrink: 0, marginTop: '4px' }} />
-                  )}
-                  <div style={{
-                    padding: '10px 14px',
-                    borderRadius: msg.from === 'user' ? '10px 10px 4px 10px' : '4px 10px 10px 10px',
-                    background: msg.from === 'user' ? '#8E59FF' : 'rgba(255,255,255,0.06)',
-                    maxWidth: '80%',
-                  }}>
-                    <p className="m8-p6" style={{ color: msg.from === 'user' ? '#fff' : 'rgba(255,255,255,0.85)', lineHeight: '1.5' }}>{msg.text}</p>
-                  </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span
+                    style={{
+                      width: '8px',
+                      height: '8px',
+                      borderRadius: '50%',
+                      background: '#8E59FF',
+                      animation: 'agentPulse 2s infinite',
+                    }}
+                  />
+                  <span className="m8-p5" style={{ color: '#12182b', fontWeight: 500 }}>
+                    Your conversation with Agent Mark
+                  </span>
                 </div>
-              ))}
+                <button
+                  onClick={() => setState('pill')}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    color: '#656981',
+                    fontSize: '20px',
+                    padding: '4px 8px',
+                    lineHeight: 1,
+                  }}
+                >
+                  ×
+                </button>
+              </div>
 
-              {/* Email capture */}
-              {emailCapture && !emailSent && (
-                <div style={{ display: 'flex', gap: '8px', padding: '8px 0' }}>
+              {/* Messages */}
+              <div
+                style={{
+                  flex: 1,
+                  overflowY: 'auto',
+                  padding: '20px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '16px',
+                  maxHeight: '50vh',
+                }}
+              >
+                {messages.map((msg, i) => renderMessage(msg, i))}
+                <div ref={messagesEndRef} />
+              </div>
+
+              {/* Input */}
+              <div
+                style={{
+                  padding: '12px 16px',
+                  borderTop: '1px solid rgba(8,13,25,0.06)',
+                  background: 'rgba(245,240,255,0.4)',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    background: 'white',
+                    border: '1px solid rgba(142,89,255,0.25)',
+                    borderRadius: '10px',
+                    padding: '8px 8px 8px 14px',
+                  }}
+                >
                   <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your@email.com"
+                    type="text"
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && !isLoading && handleSend()}
+                    placeholder={isLoading ? 'Agent Mark is thinking...' : 'Continue the conversation with Agent Mark...'}
+                    disabled={isLoading}
                     style={{
                       flex: 1,
-                      background: 'rgba(255,255,255,0.06)',
-                      border: '1px solid rgba(255,255,255,0.12)',
-                      borderRadius: '8px',
-                      padding: '8px 12px',
-                      color: '#fff',
-                      fontSize: '14px',
-                      fontFamily: "'Saira', sans-serif",
+                      background: 'none',
+                      border: 'none',
                       outline: 'none',
+                      fontFamily: "'Saira', sans-serif",
+                      fontSize: '14px',
+                      fontWeight: 300,
+                      color: '#12182b',
                     }}
-                    onKeyDown={(e) => e.key === 'Enter' && handleEmailSubmit()}
                   />
                   <button
-                    onClick={handleEmailSubmit}
+                    onClick={handleSend}
+                    disabled={!inputText.trim() && !isLoading}
                     style={{
-                      background: '#8E59FF',
-                      border: 'none',
+                      padding: '8px 14px',
                       borderRadius: '8px',
-                      padding: '8px 16px',
+                      border: 'none',
+                      background: '#8E59FF',
                       color: '#fff',
-                      fontSize: '14px',
-                      cursor: 'pointer',
                       fontFamily: "'Saira', sans-serif",
+                      fontSize: '13px',
+                      cursor: 'pointer',
+                      whiteSpace: 'nowrap',
+                      opacity: !inputText.trim() && !isLoading ? 0.5 : 1,
                     }}
                   >
-                    Send
+                    {isLoading ? 'Stop Mark' : '✦ Ask Mark'}
                   </button>
                 </div>
-              )}
-
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Starter chips */}
-            {messages.length <= 1 && (
-              <div style={{ padding: '0 16px 12px', display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                {starters.map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => handleStarter(s)}
-                    style={{
-                      background: 'rgba(142,89,255,0.1)',
-                      border: '1px solid rgba(142,89,255,0.2)',
-                      borderRadius: '9999px',
-                      padding: '6px 12px',
-                      color: '#8E59FF',
-                      fontSize: '12px',
-                      fontFamily: "'Saira', sans-serif",
-                      cursor: 'pointer',
-                      transition: 'background 0.15s',
-                    }}
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Input */}
-            <div style={{ padding: '10px 16px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-              <div style={{
-                background: 'rgba(255,255,255,0.04)',
-                borderRadius: '8px',
-                padding: '10px 14px',
-              }}>
-                <span className="m8-p6" style={{ color: 'rgba(255,255,255,0.25)' }}>Ask Agent Mark anything...</span>
               </div>
             </div>
           </motion.div>
@@ -291,12 +486,13 @@ export default function AgentMarkWidget() {
       </AnimatePresence>
 
       <style>{`
-        @keyframes pulse {
+        @keyframes agentPulse {
           0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(1.3); }
+          50% { opacity: 0.5; transform: scale(1.4); }
         }
-        @media (max-width: 480px) {
-          div[style*="width: 400px"] { width: calc(100vw - 32px) !important; right: 16px !important; bottom: 16px !important; }
+        @keyframes dotPulse {
+          0%, 60%, 100% { opacity: 0.3; transform: scale(1); }
+          30% { opacity: 1; transform: scale(1.3); }
         }
       `}</style>
     </>
