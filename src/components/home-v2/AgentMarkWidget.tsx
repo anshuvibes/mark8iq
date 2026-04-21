@@ -17,8 +17,8 @@ const FADE_TIME = 600;
 const FLOAT_BOTTOM = 24;
 const FLOAT_PILL_WIDTH = 480;
 const FLOAT_PILL_HEIGHT = 56;
-const FLOAT_CHAT_WIDTH = 560;
-const FLOAT_CHAT_HEIGHT = 520;
+const FLOAT_CHAT_WIDTH = 480;
+const FLOAT_CHAT_HEIGHT = 560;
 const PILL_RADIUS = 9999;
 const CHAT_RADIUS = 16;
 
@@ -400,7 +400,10 @@ export default function AgentMarkWidget() {
   // Only show suggestions when truly free-floating (not docking/docked/undocking)
   const showExpanded = !showDemo && !showChat && mode === 'expanded' && docked === 'free';
 
-  const transition = animateEnabled && !prefersReducedMotion()
+  // Spring transition only when docking/undocking. When toggling pill↔chat while floating,
+  // snap instantly to avoid the ugly circular morph between very different shapes.
+  const isMorphing = docked === 'docking' || docked === 'undocking';
+  const transition = isMorphing && animateEnabled && !prefersReducedMotion()
     ? { type: 'spring' as const, stiffness: 220, damping: 28 }
     : { duration: 0 };
 
@@ -752,7 +755,6 @@ export default function AgentMarkWidget() {
           left: coords.left,
           width: coords.width,
           height: coords.height,
-          borderRadius: coords.borderRadius,
         }}
         transition={transition}
         onAnimationComplete={() => {
@@ -770,6 +772,7 @@ export default function AgentMarkWidget() {
           zIndex: 99999,
           pointerEvents: 'auto',
           overflow: 'hidden',
+          borderRadius: coords.borderRadius,
         }}
       >
         {showDemo && renderDemoContent()}
