@@ -99,7 +99,6 @@ export default function AgentMarkV2() {
   const [closingVisible, setClosingVisible] = useState(false);
   const [containerOpacity, setContainerOpacity] = useState(1);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -597,8 +596,6 @@ export default function AgentMarkV2() {
                     </div>
                   )}
 
-                  {/* Scroll anchor */}
-                  <div ref={messagesEndRef} />
                 </div>
 
                 {/* Input bar — flush, only top border */}
