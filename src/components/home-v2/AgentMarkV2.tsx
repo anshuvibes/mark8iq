@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import AgentMarkInput from './AgentMarkInput';
 
 // ─── FINDINGS DATA ────────────────────────────────────────────────────────────
 
@@ -562,38 +563,9 @@ export default function AgentMarkV2() {
 
                 </div>
 
-                {/* Static input bar */}
-                <div style={{
-                  borderTop: '1px solid #EDF0F7',
-                  padding: '16px 24px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  background: '#f9f9fb',
-                }}>
-                  <p style={{
-                    fontFamily: "'Saira', sans-serif",
-                    fontSize: '14px',
-                    fontWeight: 400,
-                    color: '#656981',
-                    margin: 0,
-                  }}>
-                    Ask Agent Mark anything...
-                  </p>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    padding: '7px 14px',
-                    borderRadius: '5px',
-                    background: '#8e59ff',
-                    color: '#fff',
-                    fontFamily: "'Saira', sans-serif",
-                    fontSize: '13px',
-                    fontWeight: 500,
-                  }}>
-                    ✦ Ask Mark
-                  </div>
+                {/* Input bar */}
+                <div style={{ padding: '12px', borderTop: '1px solid #EDF0F7' }}>
+                  <AgentMarkInput />
                 </div>
 
               </div>
