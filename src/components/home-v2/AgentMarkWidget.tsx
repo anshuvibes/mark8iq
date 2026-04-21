@@ -283,21 +283,9 @@ export default function AgentMarkWidget() {
     >
     <motion.div
       key="pill-shell"
-      initial={{
-        opacity: 0,
-        y: 48,
-        width: 148,
-      }}
-      animate={{
-        opacity: 1,
-        y: 0,
-        width: 480,
-      }}
-      exit={{
-        opacity: 0,
-        y: 48,
-        width: 148,
-      }}
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 16 }}
       transition={{
         type: 'spring',
         stiffness: 260,
@@ -311,9 +299,8 @@ export default function AgentMarkWidget() {
         flexDirection: 'column',
         alignItems: 'stretch',
         gap: '10px',
-        maxWidth: 'calc(100vw - 32px)',
+        width: 'min(480px, calc(100vw - 32px))',
         pointerEvents: 'auto',
-        overflow: 'hidden',
       }}
     >
       {/* Suggestions card — appears above pill on hover */}
@@ -405,24 +392,32 @@ export default function AgentMarkWidget() {
         )}
       </AnimatePresence>
 
-      {/* Pill input */}
+      {/* Pill input — button is stationary on the right; input expands left into view */}
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
           gap: '6px',
-          padding: '4px 4px 4px 16px',
+          padding: '4px 4px 4px 0px',
           background: '#ffffff',
           border: '1px solid #8e59ff',
           borderRadius: '5px',
           boxShadow: '0 8px 24px rgba(142,89,255,0.12)',
+          width: '100%',
+          overflow: 'hidden',
         }}
       >
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ width: 0 }}
+          animate={{ width: '100%' }}
+          exit={{ width: 0 }}
           transition={{ type: 'spring', stiffness: 260, damping: 28, mass: 0.8 }}
-          style={{ flex: 1, overflow: 'hidden', minWidth: 0 }}
+          style={{
+            overflow: 'hidden',
+            flex: 1,
+            minWidth: 0,
+            paddingLeft: '16px',
+          }}
         >
           <input
             type="text"
@@ -440,6 +435,7 @@ export default function AgentMarkWidget() {
               color: '#12182b',
               padding: '8px 0',
               fontSize: '14px',
+              whiteSpace: 'nowrap',
             }}
           />
         </motion.div>
@@ -471,6 +467,8 @@ export default function AgentMarkWidget() {
             color: '#fff',
             fontWeight: 500,
             cursor: 'pointer',
+            flexShrink: 0,
+            whiteSpace: 'nowrap',
           }}
         >
           <SparkleIcon size={13} color="#fff" />
