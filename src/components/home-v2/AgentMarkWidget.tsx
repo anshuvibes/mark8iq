@@ -400,7 +400,10 @@ export default function AgentMarkWidget() {
   // Only show suggestions when truly free-floating (not docking/docked/undocking)
   const showExpanded = !showDemo && !showChat && mode === 'expanded' && docked === 'free';
 
-  const transition = animateEnabled && !prefersReducedMotion()
+  // Spring transition only when docking/undocking. When toggling pill↔chat while floating,
+  // snap instantly to avoid the ugly circular morph between very different shapes.
+  const isMorphing = docked === 'docking' || docked === 'undocking';
+  const transition = isMorphing && animateEnabled && !prefersReducedMotion()
     ? { type: 'spring' as const, stiffness: 220, damping: 28 }
     : { duration: 0 };
 
