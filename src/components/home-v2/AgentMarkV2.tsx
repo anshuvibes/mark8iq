@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import AgentMarkInput from './AgentMarkInput';
 
@@ -73,34 +73,44 @@ type Phase =
   | 'rootcause'
   | 'recommendations'
   | 'complete'
-  | 'fading'
   | 'closing';
+
+type CompletedFinding = {
+  id: string;
+  query: string;
+  insights: string;
+  rootCause: string;
+  recommendations: string[];
+  roleIndicator: string | null;
+};
 
 // ─── COMPONENT ────────────────────────────────────────────────────────────────
 
 export default function AgentMarkV2() {
+  const [completedFindings, setCompletedFindings] = useState<CompletedFinding[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   const [phase, setPhase] = useState<Phase>('idle');
-  const [findingIndex, setFindingIndex] = useState(0);
   const [visibleQueryChars, setVisibleQueryChars] = useState(0);
   const [visibleWords, setVisibleWords] = useState(0);
   const [visibleRcWords, setVisibleRcWords] = useState(0);
   const [visibleBullets, setVisibleBullets] = useState(0);
   const [showRoleIndicator, setShowRoleIndicator] = useState(false);
-  const [opacity, setOpacity] = useState(1);
-  const [slideY, setSlideY] = useState(0);
   const [closingVisible, setClosingVisible] = useState(false);
+  const [containerOpacity, setContainerOpacity] = useState(1);
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ts: ReturnType<typeof setTimeout>[] = [];
-    const finding = FINDINGS[findingIndex];
-    const isLastFinding = findingIndex === FINDINGS.length - 1;
+    const finding = FINDINGS[currentIndex % FINDINGS.length];
+    const isLastFinding = currentIndex % FINDINGS.length === FINDINGS.length - 1;
     const query = finding.query;
     const insightsWords = finding.insights.split(' ');
     const rcWords = finding.rootCause.split(' ');
 
-    // Reset
-    setOpacity(1);
-    setSlideY(0);
+    // Reset active typing state only
     setVisibleQueryChars(0);
     setVisibleWords(0);
     setVisibleRcWords(0);
@@ -115,14 +125,14 @@ export default function AgentMarkV2() {
       query.split('').forEach((_, i) => {
         ts.push(setTimeout(() => setVisibleQueryChars(i + 1), i * CHAR_SPEED));
       });
-    }, 400));
+    }, 300));
 
-    const queryEnd = 400 + query.length * CHAR_SPEED;
+    const queryEnd = 300 + query.length * CHAR_SPEED;
 
     // Phase: loading
     ts.push(setTimeout(() => setPhase('loading'), queryEnd + 100));
 
-    // Role indicator — Finding 3 only
+    // Role indicator (Finding 3 only)
     if (finding.roleIndicator) {
       ts.push(setTimeout(() => setShowRoleIndicator(true), queryEnd + 100 + Math.floor(LOADING_TIME * 0.4)));
       ts.push(setTimeout(() => setShowRoleIndicator(false), queryEnd + 100 + Math.floor(LOADING_TIME * 0.4) + ROLE_INDICATOR_HOLD));
@@ -173,33 +183,43 @@ export default function AgentMarkV2() {
         setClosingVisible(true);
       }, holdEnd));
 
+      // Fade out, reset everything, restart
       ts.push(setTimeout(() => {
-        setOpacity(0);
-        setSlideY(-20);
+        setContainerOpacity(0);
       }, holdEnd + CLOSING_HOLD));
 
       ts.push(setTimeout(() => {
-        setFindingIndex(0);
+        setCompletedFindings([]);
+        setCurrentIndex(0);
+        setClosingVisible(false);
+        setContainerOpacity(1);
       }, holdEnd + CLOSING_HOLD + FADE_TIME + 300));
     } else {
-      // Fade + slide up, advance to next finding
+      // Add current to completed, advance to next
       ts.push(setTimeout(() => {
-        setPhase('fading');
-        setOpacity(0);
-        setSlideY(-20);
-      }, holdEnd));
-
-      ts.push(setTimeout(() => {
-        setFindingIndex(i => i + 1);
-      }, holdEnd + FADE_TIME + 300));
+        setCompletedFindings(prev => [...prev, {
+          id: `finding-${currentIndex}`,
+          query: finding.query,
+          insights: finding.insights,
+          rootCause: finding.rootCause,
+          recommendations: finding.recommendations,
+          roleIndicator: finding.roleIndicator,
+        }]);
+        setCurrentIndex(i => i + 1);
+      }, holdEnd + 200));
     }
 
     return () => ts.forEach(clearTimeout);
-  }, [findingIndex]);
+  }, [currentIndex]);
 
-  const finding = FINDINGS[findingIndex];
-  const insightsWordList = finding.insights.split(' ');
-  const rcWordList = finding.rootCause.split(' ');
+  // Auto-scroll to bottom on any content change
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }, [completedFindings, phase, visibleWords, visibleRcWords, visibleBullets, closingVisible]);
+
+  const activeFinding = FINDINGS[currentIndex % FINDINGS.length];
+  const insightsWordList = activeFinding.insights.split(' ');
+  const rcWordList = activeFinding.rootCause.split(' ');
   const showResponse = ['insights', 'rootcause', 'recommendations', 'complete', 'closing'].includes(phase);
 
   return (
@@ -221,6 +241,7 @@ export default function AgentMarkV2() {
           0%, 100% { opacity: 1; }
           50% { opacity: 0; }
         }
+        .agent-mark-scroll::-webkit-scrollbar { display: none; }
       `}</style>
 
       {/* Eyebrow + headline */}
@@ -311,10 +332,7 @@ export default function AgentMarkV2() {
             </motion.div>
 
             {/* Animated chat window */}
-            <div style={{
-              width: '100%',
-              maxWidth: '960px',
-            }}>
+            <div style={{ width: '100%', maxWidth: '960px' }}>
               <div style={{
                 background: '#ffffff',
                 borderRadius: '5px',
@@ -324,7 +342,7 @@ export default function AgentMarkV2() {
                 flexDirection: 'column',
               }}>
 
-                {/* Opening state header — static, always visible */}
+                {/* Opening state header */}
                 <div style={{
                   padding: '20px 24px 16px',
                   borderBottom: '1px solid #EDF0F7',
@@ -344,227 +362,245 @@ export default function AgentMarkV2() {
                   </p>
                 </div>
 
-                {/* Messages area */}
-                <div style={{
-                  padding: '24px',
-                  minHeight: '460px',
-                  maxHeight: '460px',
-                  overflow: 'hidden',
-                  opacity,
-                  transform: `translateY(${slideY}px)`,
-                  transition: `opacity ${FADE_TIME}ms ease-out, transform ${FADE_TIME}ms ease-out`,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '16px',
-                }}>
-
-                  {/* User query bubble — char by char */}
-                  {phase !== 'idle' && (
-                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <div style={{
-                        background: '#F5F0FF',
-                        border: '1px solid #E2D6FF',
-                        borderRadius: '20px',
-                        padding: '8px 16px',
-                        maxWidth: '70%',
-                      }}>
-                        <p style={{
-                          fontFamily: "'Saira', sans-serif",
-                          fontSize: '14px',
-                          fontWeight: 400,
-                          color: '#12182b',
-                          margin: 0,
-                          lineHeight: '20px',
+                {/* Continuous scrolling messages area */}
+                <div
+                  ref={scrollContainerRef}
+                  className="agent-mark-scroll"
+                  style={{
+                    padding: '24px',
+                    minHeight: '420px',
+                    maxHeight: '420px',
+                    overflowY: 'auto',
+                    opacity: containerOpacity,
+                    transition: `opacity ${FADE_TIME}ms ease-out`,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '24px',
+                    scrollbarWidth: 'none',
+                  }}
+                >
+                  {/* Completed findings — fully visible */}
+                  {completedFindings.map((f) => (
+                    <div key={f.id} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      {/* User query */}
+                      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <div style={{
+                          background: '#F5F0FF',
+                          border: '1px solid #E2D6FF',
+                          borderRadius: '12px 12px 2px 12px',
+                          padding: '10px 16px',
+                          maxWidth: '70%',
                         }}>
-                          {finding.query.slice(0, visibleQueryChars)}
-                          {phase === 'typing-query' && (
-                            <span style={{ animation: 'caretBlink 1s infinite', marginLeft: '2px' }}>|</span>
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Role indicator — Finding 3 only */}
-                  <AnimatePresence>
-                    {showRoleIndicator && (
-                      <motion.div
-                        key="role-indicator"
-                        initial={{ opacity: 0, y: 4 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -4 }}
-                        transition={{ duration: 0.3 }}
-                        style={{
-                          fontFamily: "'Saira', sans-serif",
-                          fontSize: '12px',
-                          fontWeight: 400,
-                          color: '#8E59FF',
-                          fontStyle: 'italic',
-                          paddingLeft: '36px',
-                        }}
-                      >
-                        {finding.roleIndicator}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  {/* Loading dots */}
-                  {phase === 'loading' && (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <div style={{
-                        width: '24px',
-                        height: '24px',
-                        borderRadius: '50%',
-                        background: 'linear-gradient(135deg, #8E59FF, #608ff6)',
-                        flexShrink: 0,
-                      }} />
-                      <div style={{ display: 'flex', gap: '4px' }}>
-                        {[0, 1, 2].map(i => (
-                          <span
-                            key={i}
-                            style={{
-                              width: '6px',
-                              height: '6px',
-                              borderRadius: '50%',
-                              background: '#8E59FF',
-                              display: 'inline-block',
-                              animation: `dotPulse 1.4s ease-in-out ${i * 0.2}s infinite`,
-                            }}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* AI response */}
-                  {showResponse && (
-                    <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                      <div style={{
-                        width: '24px',
-                        height: '24px',
-                        borderRadius: '50%',
-                        background: 'linear-gradient(135deg, #8E59FF, #608ff6)',
-                        flexShrink: 0,
-                        marginTop: '2px',
-                      }} />
-                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '14px' }}>
-
-                        {/* INSIGHTS */}
-                        <div>
-                          <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '6px' }}>INSIGHTS</p>
-                          <p style={{
-                            fontFamily: "'Saira', sans-serif",
-                            fontSize: '14px',
-                            fontWeight: 400,
-                            lineHeight: '22px',
-                            color: '#12182b',
-                            margin: 0,
-                          }}>
-                            {insightsWordList.slice(0, visibleWords).join(' ')}
-                            {visibleWords < insightsWordList.length && phase === 'insights' && (
-                              <span style={{ animation: 'caretBlink 1s infinite', marginLeft: '2px' }}>|</span>
-                            )}
+                          <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 400, color: '#12182b', margin: 0, lineHeight: '20px' }}>
+                            {f.query}
                           </p>
                         </div>
-
-                        {/* ROOT CAUSE */}
-                        {['rootcause', 'recommendations', 'complete', 'closing'].includes(phase) && (
+                      </div>
+                      {/* Agent response — fully revealed */}
+                      <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                        <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'linear-gradient(135deg, #8E59FF, #608ff6)', flexShrink: 0, marginTop: '2px' }} />
+                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                          <div>
+                            <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '6px' }}>INSIGHTS</p>
+                            <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 400, lineHeight: '22px', color: '#12182b', margin: 0 }}>{f.insights}</p>
+                          </div>
                           <div>
                             <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '6px' }}>ROOT CAUSE</p>
-                            <p style={{
-                              fontFamily: "'Saira', sans-serif",
-                              fontSize: '14px',
-                              fontWeight: 400,
-                              lineHeight: '22px',
-                              color: '#12182b',
-                              margin: 0,
-                            }}>
-                              {rcWordList.slice(0, visibleRcWords).join(' ')}
-                              {visibleRcWords < rcWordList.length && phase === 'rootcause' && (
-                                <span style={{ animation: 'caretBlink 1s infinite', marginLeft: '2px' }}>|</span>
-                              )}
-                            </p>
+                            <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 400, lineHeight: '22px', color: '#12182b', margin: 0 }}>{f.rootCause}</p>
                           </div>
-                        )}
-
-                        {/* RECOMMENDATIONS */}
-                        {['recommendations', 'complete', 'closing'].includes(phase) && (
                           <div>
                             <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '8px' }}>RECOMMENDATIONS</p>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                              {finding.recommendations.slice(0, visibleBullets).map((rec, i) => (
-                                <motion.div
-                                  key={i}
-                                  initial={{ opacity: 0, y: 6 }}
-                                  animate={{ opacity: 1, y: 0 }}
-                                  transition={{ duration: 0.3 }}
-                                  style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}
-                                >
-                                  <div style={{
-                                    width: '20px',
-                                    height: '20px',
-                                    borderRadius: '50%',
-                                    background: '#8E59FF',
-                                    color: '#ffffff',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    fontFamily: "'Saira', sans-serif",
-                                    fontSize: '11px',
-                                    fontWeight: 500,
-                                    flexShrink: 0,
-                                    marginTop: '1px',
-                                  }}>
-                                    {i + 1}
-                                  </div>
-                                  <p style={{
-                                    fontFamily: "'Saira', sans-serif",
-                                    fontSize: '14px',
-                                    fontWeight: 400,
-                                    lineHeight: '22px',
-                                    color: '#12182b',
-                                    margin: 0,
-                                    flex: 1,
-                                  }}>
-                                    {rec}
-                                  </p>
-                                </motion.div>
+                              {f.recommendations.map((rec, i) => (
+                                <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                                  <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: '#8E59FF', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Saira', sans-serif", fontSize: '11px', fontWeight: 500, flexShrink: 0, marginTop: '1px' }}>{i + 1}</div>
+                                  <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 400, lineHeight: '22px', color: '#12182b', margin: 0, flex: 1 }}>{rec}</p>
+                                </div>
                               ))}
                             </div>
                           </div>
-                        )}
-
-                        {/* Closing line — Finding 4 only, after hold */}
-                        <AnimatePresence>
-                          {closingVisible && (
-                            <motion.p
-                              key="closing-line"
-                              initial={{ opacity: 0, y: 6 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0 }}
-                              transition={{ duration: 0.5 }}
-                              style={{
-                                fontFamily: "'Saira', sans-serif",
-                                fontSize: '15px',
-                                fontWeight: 500,
-                                lineHeight: '22px',
-                                color: '#8E59FF',
-                                margin: '8px 0 0 0',
-                              }}
-                            >
-                              Ready for today. What do you want to act on first?
-                            </motion.p>
-                          )}
-                        </AnimatePresence>
-
+                        </div>
                       </div>
+                    </div>
+                  ))}
+
+                  {/* Active finding */}
+                  {phase !== 'idle' && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      {/* User query — char by char */}
+                      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <div style={{
+                          background: '#F5F0FF',
+                          border: '1px solid #E2D6FF',
+                          borderRadius: '12px 12px 2px 12px',
+                          padding: '10px 16px',
+                          maxWidth: '70%',
+                        }}>
+                          <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 400, color: '#12182b', margin: 0, lineHeight: '20px' }}>
+                            {activeFinding.query.slice(0, visibleQueryChars)}
+                            {phase === 'typing-query' && (
+                              <span style={{ animation: 'caretBlink 0.8s infinite', marginLeft: '1px' }}>|</span>
+                            )}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Role indicator */}
+                      <AnimatePresence>
+                        {showRoleIndicator && (
+                          <motion.div
+                            key="role-indicator"
+                            initial={{ opacity: 0, y: 4 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -4 }}
+                            transition={{ duration: 0.3 }}
+                            style={{
+                              fontFamily: "'Saira', sans-serif",
+                              fontSize: '12px',
+                              fontWeight: 400,
+                              color: '#8E59FF',
+                              fontStyle: 'italic',
+                              paddingLeft: '36px',
+                            }}
+                          >
+                            {activeFinding.roleIndicator}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      {/* Loading dots */}
+                      {phase === 'loading' && (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'linear-gradient(135deg, #8E59FF, #608ff6)', flexShrink: 0 }} />
+                          <div style={{ display: 'flex', gap: '4px' }}>
+                            {[0, 1, 2].map(i => (
+                              <span key={i} style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#8E59FF', display: 'inline-block', animation: `dotPulse 1.4s ease-in-out ${i * 0.2}s infinite` }} />
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* AI response in progress */}
+                      {showResponse && (
+                        <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                          <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'linear-gradient(135deg, #8E59FF, #608ff6)', flexShrink: 0, marginTop: '2px' }} />
+                          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                            <div>
+                              <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '6px' }}>INSIGHTS</p>
+                              <p style={{
+                                fontFamily: "'Saira', sans-serif",
+                                fontSize: '14px',
+                                fontWeight: 400,
+                                lineHeight: '22px',
+                                color: '#12182b',
+                                margin: 0,
+                              }}>
+                                {insightsWordList.slice(0, visibleWords).join(' ')}
+                                {visibleWords < insightsWordList.length && phase === 'insights' && (
+                                  <span style={{ animation: 'caretBlink 1s infinite', marginLeft: '2px' }}>|</span>
+                                )}
+                              </p>
+                            </div>
+
+                            {['rootcause', 'recommendations', 'complete', 'closing'].includes(phase) && (
+                              <div>
+                                <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '6px' }}>ROOT CAUSE</p>
+                                <p style={{
+                                  fontFamily: "'Saira', sans-serif",
+                                  fontSize: '14px',
+                                  fontWeight: 400,
+                                  lineHeight: '22px',
+                                  color: '#12182b',
+                                  margin: 0,
+                                }}>
+                                  {rcWordList.slice(0, visibleRcWords).join(' ')}
+                                  {visibleRcWords < rcWordList.length && phase === 'rootcause' && (
+                                    <span style={{ animation: 'caretBlink 1s infinite', marginLeft: '2px' }}>|</span>
+                                  )}
+                                </p>
+                              </div>
+                            )}
+
+                            {['recommendations', 'complete', 'closing'].includes(phase) && (
+                              <div>
+                                <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '8px' }}>RECOMMENDATIONS</p>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                  {activeFinding.recommendations.slice(0, visibleBullets).map((rec, i) => (
+                                    <motion.div
+                                      key={i}
+                                      initial={{ opacity: 0, y: 6 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      transition={{ duration: 0.3 }}
+                                      style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}
+                                    >
+                                      <div style={{
+                                        width: '20px',
+                                        height: '20px',
+                                        borderRadius: '50%',
+                                        background: '#8E59FF',
+                                        color: '#ffffff',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        fontFamily: "'Saira', sans-serif",
+                                        fontSize: '11px',
+                                        fontWeight: 500,
+                                        flexShrink: 0,
+                                        marginTop: '1px',
+                                      }}>
+                                        {i + 1}
+                                      </div>
+                                      <p style={{
+                                        fontFamily: "'Saira', sans-serif",
+                                        fontSize: '14px',
+                                        fontWeight: 400,
+                                        lineHeight: '22px',
+                                        color: '#12182b',
+                                        margin: 0,
+                                        flex: 1,
+                                      }}>
+                                        {rec}
+                                      </p>
+                                    </motion.div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Closing line */}
+                            <AnimatePresence>
+                              {closingVisible && (
+                                <motion.p
+                                  key="closing-line"
+                                  initial={{ opacity: 0, y: 6 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  exit={{ opacity: 0 }}
+                                  transition={{ duration: 0.5 }}
+                                  style={{
+                                    fontFamily: "'Saira', sans-serif",
+                                    fontSize: '15px',
+                                    fontWeight: 500,
+                                    lineHeight: '22px',
+                                    color: '#8E59FF',
+                                    margin: '8px 0 0 0',
+                                  }}
+                                >
+                                  Ready for today. What do you want to act on first?
+                                </motion.p>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
 
+                  {/* Scroll anchor */}
+                  <div ref={messagesEndRef} />
                 </div>
 
-                {/* Input bar */}
-                <div style={{ padding: '12px', borderTop: '1px solid #EDF0F7' }}>
+                {/* Input bar — flush, only top border */}
+                <div style={{ padding: '0' }}>
                   <AgentMarkInput />
                 </div>
 

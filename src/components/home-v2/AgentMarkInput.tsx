@@ -30,8 +30,8 @@ export default function AgentMarkInput() {
     <div
       style={{
         background: '#f9f9fb',
-        borderRadius: '16px',
-        boxShadow: '0px 4px 16px 6px rgba(130,130,130,0.05)',
+        borderTop: '1px solid rgba(18,24,43,0.08)',
+        borderRadius: '0 0 5px 5px',
         padding: '20px 24px',
         display: 'flex',
         flexDirection: 'column',
