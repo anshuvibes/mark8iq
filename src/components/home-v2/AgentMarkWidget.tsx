@@ -422,24 +422,31 @@ export default function AgentMarkWidget() {
           boxShadow: '0 8px 24px rgba(142,89,255,0.12)',
         }}
       >
-        <input
-          type="text"
-          value={pillInputText}
-          onChange={(e) => setPillInputText(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handlePillSend()}
-          onFocus={() => setState('expanded')}
-          placeholder="Ask Agent Mark anything about Mark8 IQ…"
-          className="agent-mark-pill-input m8-p6"
-          style={{
-            flex: 1,
-            background: 'none',
-            border: 'none',
-            outline: 'none',
-            color: '#12182b',
-            padding: '8px 0',
-            fontSize: '14px',
-          }}
-        />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.25 }}
+          style={{ flex: 1, overflow: 'hidden', minWidth: 0 }}
+        >
+          <input
+            type="text"
+            value={pillInputText}
+            onChange={(e) => setPillInputText(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handlePillSend()}
+            onFocus={() => setState('expanded')}
+            placeholder="Ask Agent Mark anything about Mark8 IQ…"
+            className="agent-mark-pill-input m8-p6"
+            style={{
+              width: '100%',
+              background: 'none',
+              border: 'none',
+              outline: 'none',
+              color: '#12182b',
+              padding: '8px 0',
+              fontSize: '14px',
+            }}
+          />
+        </motion.div>
         <style>{`
           .agent-mark-pill-input::placeholder {
             color: #656981;
