@@ -212,9 +212,11 @@ export default function AgentMarkV2() {
     return () => ts.forEach(clearTimeout);
   }, [currentIndex]);
 
-  // Auto-scroll to bottom on any content change
+  // Auto-scroll the chat container only (not the page)
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
   }, [completedFindings, phase, visibleWords, visibleRcWords, visibleBullets, closingVisible]);
 
   const activeFinding = FINDINGS[currentIndex % FINDINGS.length];
