@@ -232,7 +232,7 @@ export default function AgentMarkWidget() {
         setDocked('undocking');
       }
     }
-  }, [dockInView, dockCtx, mode]);
+  }, [dockInView, dockCtx, mode, docked]);
 
   // Compute target coords based on docking state
   const recalcCoords = useCallback(() => {
@@ -298,7 +298,7 @@ export default function AgentMarkWidget() {
 
   // Lock page scroll only when LIVE chat is open AND we're floating (E3 — also lock if chat open while docked)
   useEffect(() => {
-    const isLiveChatOpen = mode === 'chat' || (mode === 'expanded' && docked === 'free');
+    const isLiveChatOpen = mode === 'chat';
     if (!isLiveChatOpen) return;
 
     const lenis = (window as any).__lenis;
@@ -759,7 +759,10 @@ export default function AgentMarkWidget() {
         transition={transition}
         onAnimationComplete={() => {
           if (docked === 'docking') setDocked('docked');
-          if (docked === 'undocking') setDocked('free');
+          if (docked === 'undocking') {
+            setDocked('free');
+            setMode('pill');
+          }
         }}
         onMouseEnter={() => {
           if (docked === 'free' && mode === 'pill') setMode('expanded');
