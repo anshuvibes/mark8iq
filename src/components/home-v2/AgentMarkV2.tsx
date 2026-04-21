@@ -275,11 +275,7 @@ export default function AgentMarkV2() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ delay: 0.1, duration: 0.6 }}
             >
-              <img
-                src="/img/home-v2/agent-mark-orb.png"
-                alt="Agent Mark"
-                style={{ width: '140px', height: '140px', objectFit: 'contain', display: 'block' }}
-              />
+              <AgentMarkOrb size={140} />
             </motion.div>
 
             {/* Intro text */}
