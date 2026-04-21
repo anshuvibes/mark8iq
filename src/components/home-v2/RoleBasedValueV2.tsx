@@ -124,12 +124,12 @@ export default function RoleBasedValueV2() {
         {/* Heading block — at top */}
         <div
           style={{
-            padding: 'clamp(176px, 21vh, 224px) clamp(24px, 6vw, 120px) 0',
+            padding: 'clamp(112px, 13vh, 152px) clamp(24px, 6vw, 120px) 0',
             zIndex: 10,
             pointerEvents: 'none',
             textAlign: 'center',
             flexShrink: 0,
-            marginBottom: '100px',
+            marginBottom: '64px',
           }}
         >
           <p
