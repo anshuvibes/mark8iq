@@ -247,7 +247,7 @@ export default function AgentMarkV2() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ delay: 0.05 }}
         >
-          While you slept, Agent Mark found<br />4 things you need to see.
+          Agent Mark.<br />Your round-the-clock commerce analyst.
         </motion.h2>
       </div>
 
@@ -297,7 +297,7 @@ export default function AgentMarkV2() {
                 backgroundClip: 'text',
                 margin: '0 0 4px 0',
               }}>
-                Hello, I'm Agent Mark!
+                Hello, I'm Agent Mark.
               </p>
               <p style={{
                 fontFamily: "'Saira', sans-serif",
@@ -307,7 +307,7 @@ export default function AgentMarkV2() {
                 color: '#12182b',
                 margin: 0,
               }}>
-                What data should I brew for you today?
+                Here's what I found while you were away.
               </p>
             </motion.div>
 
