@@ -422,7 +422,8 @@ export default function AgentMarkWidget() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ type: 'spring', stiffness: 260, damping: 28, mass: 0.8 }}
+          exit={{ opacity: 0 }}
+          transition={{ type: 'spring', stiffness: 280, damping: 26, mass: 0.7 }}
           style={{ flex: 1, overflow: 'hidden', minWidth: 0 }}
         >
           <input
