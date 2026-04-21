@@ -83,6 +83,27 @@ export default function AgentFoundryV2() {
             margin: '0 auto',
             borderRadius: '2px',
           }} />
+
+          <motion.p
+            className="m8-eyebrow"
+            style={{ color: '#FCB24F', marginBottom: '12px', marginTop: '48px' }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+          >
+            AGENT FOUNDRY
+          </motion.p>
+
+          <motion.h2
+            className="m8-h2"
+            style={{ color: '#ffffff', margin: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ delay: 0.1 }}
+          >
+            Set it once. Let it run forever.
+          </motion.h2>
         </div>
       </section>
 
@@ -148,27 +169,6 @@ export default function AgentFoundryV2() {
           </motion.div>
 
           <div style={{ flex: '0 0 44%', maxWidth: '44%' }}>
-            <motion.p
-              className="m8-eyebrow"
-              style={{ color: '#FCB24F', marginBottom: '12px' }}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-            >
-              AGENT FOUNDRY
-            </motion.p>
-
-            <motion.h2
-              className="m8-h1-large"
-              style={{ color: 'var(--v2-text)', marginBottom: '40px' }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ delay: 0.1 }}
-            >
-              Set it once. Let it run forever.
-            </motion.h2>
-
             {beats.map((beat, i) => (
               <motion.div
                 key={beat.num}
