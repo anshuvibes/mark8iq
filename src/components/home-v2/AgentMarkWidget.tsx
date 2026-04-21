@@ -526,18 +526,33 @@ export default function AgentMarkWidget() {
         </button>
       </div>
 
-      {/* Messages scroll area */}
-      <div
-        ref={scrollContainerRef}
-        style={{
-          flex: 1,
-          overflowY: 'auto',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '24px',
-          paddingRight: '4px',
-        }}
-      >
+      {/* Messages scroll area with top fade — cosmetic match to AISummaryPanel */}
+      <div style={{ position: 'relative', flex: 1, minHeight: 0 }}>
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 24,
+            background: 'linear-gradient(to bottom, #f9f9fb 0%, rgba(249,249,251,0) 100%)',
+            pointerEvents: 'none',
+            zIndex: 2,
+          }}
+        />
+        <div
+          ref={scrollContainerRef}
+          className="ai-panel-scroll"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            overflowY: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '24px',
+            paddingRight: '6px',
+          }}
+        >
         {messages.map((msg, i) => {
           if (msg.from === 'user') {
             return (
@@ -671,6 +686,20 @@ export default function AgentMarkWidget() {
         )}
 
         <div ref={messagesEndRef} />
+        </div>
+        {/* Bottom fade — cosmetic match to AISummaryPanel */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 32,
+            background: 'linear-gradient(to top, #f9f9fb 0%, rgba(249,249,251,0) 100%)',
+            pointerEvents: 'none',
+            zIndex: 2,
+          }}
+        />
       </div>
 
       {/* Input bar */}
