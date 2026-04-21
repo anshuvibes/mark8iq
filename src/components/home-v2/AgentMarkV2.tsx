@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import AgentMarkInput from './AgentMarkInput';
+import AgentMarkOrb from './AgentMarkOrb';
 
 // ─── FINDINGS DATA ────────────────────────────────────────────────────────────
 
