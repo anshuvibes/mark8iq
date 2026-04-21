@@ -16,49 +16,57 @@ const agents = [
 export default function AgentFoundryV2() {
   return (
     <>
-      {/* Full-bleed dark callout */}
+      {/* Contained dark card callout */}
       <section style={{
-        background: '#080d19',
-        padding: '80px 40px',
+        padding: '80px 0',
+        background: 'transparent',
         position: 'relative',
-        overflow: 'hidden',
       }}>
-        {/* Violet glow */}
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '600px',
-          height: '300px',
-          background: 'radial-gradient(ellipse, rgba(142,89,255,0.15) 0%, transparent 70%)',
-          pointerEvents: 'none',
-        }} />
-
-        <div style={{
-          maxWidth: '860px',
-          margin: '0 auto',
-          position: 'relative',
-          zIndex: 1,
-          textAlign: 'center',
-        }}>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             style={{
+              background: '#080d19',
+              borderRadius: '20px',
+              border: '1px solid rgba(142,89,255,0.2)',
+              padding: '72px 60px',
+              position: 'relative',
+              overflow: 'hidden',
+              textAlign: 'center',
+            }}
+          >
+            {/* Violet glow */}
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '500px',
+              height: '250px',
+              background: 'radial-gradient(ellipse, rgba(142,89,255,0.18) 0%, transparent 70%)',
+              pointerEvents: 'none',
+            }} />
+
+            <p style={{
               fontFamily: "'Saira', sans-serif",
               fontSize: '24px',
               fontWeight: 400,
-              lineHeight: '1.55',
+              lineHeight: '1.6',
               color: '#ffffff',
-              margin: '0 0 32px 0',
-              letterSpacing: '-0.01em',
-            }}
-          >
-            While your competitors wait for Monday morning reports,<br />what if your agents already acted on Friday night's data?
-          </motion.p>
+              margin: 0,
+              position: 'relative',
+              zIndex: 1,
+              maxWidth: '760px',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            }}>
+              While your competitors wait for Monday morning reports,<br />
+              what if your agents already acted on Friday night's data?
+            </p>
+          </motion.div>
         </div>
       </section>
 
