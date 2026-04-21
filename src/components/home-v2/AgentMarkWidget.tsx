@@ -303,7 +303,7 @@ export default function AgentMarkWidget() {
             transition={{ duration: 0.22, ease: 'easeOut' }}
             style={{
               background: '#f9f9fb',
-              borderRadius: '16px',
+              borderRadius: '5px',
               padding: '16px',
               display: 'flex',
               flexDirection: 'column',
@@ -341,7 +341,7 @@ export default function AgentMarkWidget() {
                     alignItems: 'center',
                     gap: '8px',
                     padding: '12px 14px',
-                    borderRadius: '16px',
+                    borderRadius: '5px',
                     background: '#ffffff',
                     border: 'none',
                     cursor: 'pointer',
@@ -390,7 +390,7 @@ export default function AgentMarkWidget() {
           padding: '4px 4px 4px 16px',
           background: '#ffffff',
           border: '1px solid #8e59ff',
-          borderRadius: '16px',
+          borderRadius: '5px',
           boxShadow: '0 8px 24px rgba(142,89,255,0.12)',
         }}
       >
@@ -430,7 +430,7 @@ export default function AgentMarkWidget() {
             alignItems: 'center',
             gap: '6px',
             padding: '7px 14px',
-            borderRadius: '16px',
+            borderRadius: '5px',
             border: 'none',
             background: '#8e59ff',
             color: '#fff',
@@ -470,7 +470,7 @@ export default function AgentMarkWidget() {
         width: 'min(640px, calc(100vw - 32px))',
         height: 'min(680px, calc(100vh - 80px))',
         background: '#f9f9fb',
-        borderRadius: '16px',
+        borderRadius: '5px',
         padding: '20px',
         boxShadow: '0 4px 16px 6px rgba(130,130,130,0.05), 0 24px 60px rgba(8,13,25,0.18)',
         display: 'flex',
@@ -715,7 +715,7 @@ export default function AgentMarkWidget() {
           padding: '6px 6px 6px 20px',
           background: '#ffffff',
           border: '1px solid #8e59ff',
-          borderRadius: '16px',
+          borderRadius: '5px',
         }}
       >
         <input
@@ -746,7 +746,7 @@ export default function AgentMarkWidget() {
             alignItems: 'center',
             gap: '6px',
             padding: '8px 16px',
-            borderRadius: '16px',
+            borderRadius: '5px',
             border: 'none',
             background: isLoading ? '#e6dcff' : '#8e59ff',
             color: isLoading ? '#8e59ff' : '#fff',
