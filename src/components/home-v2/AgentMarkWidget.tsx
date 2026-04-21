@@ -184,6 +184,8 @@ export default function AgentMarkWidget() {
   const [docked, setDocked] = useState<'free' | 'docking' | 'docked' | 'undocking'>('free');
   const [coords, setCoords] = useState<Coords>(() => getFloatingCoords('pill'));
   const [animateEnabled, setAnimateEnabled] = useState(true);
+  const [isExpanding, setIsExpanding] = useState(false);
+  const [hiddenBelow, setHiddenBelow] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -208,78 +210,139 @@ export default function AgentMarkWidget() {
     }
   }, [emailSent]);
 
-  // Resolve docking state from dockInView + chat open
-  // E1: chat open + dock entering => auto-close chat then dock
+  // Detect when section is scrolled past (above viewport) — hide widget entirely
+  useEffect(() => {
+    const el = dockRef?.current;
+    if (!el) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          const rect = entry.boundingClientRect;
+          if (rect.top < 0) {
+            // Section scrolled above viewport — hide widget, reset to free
+            setHiddenBelow(true);
+            setDocked('free');
+            setMode('pill');
+            setIsExpanding(false);
+          } else {
+            // Section is below viewport — normal float state
+            setHiddenBelow(false);
+          }
+        } else {
+          setHiddenBelow(false);
+        }
+      },
+      { threshold: 0.01 }
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, [dockRef]);
+
+  // Snap-dock + CSS height expand. No spring morph.
   useEffect(() => {
     if (!dockCtx) return;
+
     if (dockInView) {
-      // If user has chat open while floating, close it before docking
       if (mode === 'chat' && docked === 'free') {
         setMode('pill');
         setMessages([]);
         setTurnCount(0);
         setEmail('');
       }
-      if (docked === 'free') {
-        // Deep-link case (E12): if dock already in view on first measurement, snap
-        const isInitial = animateEnabled === true && coords.top === getFloatingCoords('pill').top && messages.length === 0;
+
+      if (docked === 'free' || docked === 'undocking') {
+        const el = dockRef?.current;
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+
+        // Snap directly to dock position. No spring. No morph.
+        setCoords({
+          top: r.top,
+          left: r.left,
+          width: r.width,
+          height: FLOAT_PILL_HEIGHT,
+          borderRadius: CHAT_RADIUS,
+        });
+
         setDocked('docking');
-        if (isInitial && prefersReducedMotion()) setAnimateEnabled(false);
-      } else if (docked === 'undocking') {
-        setDocked('docking');
+
+        // After one frame (position snap complete), expand height with CSS transition
+        requestAnimationFrame(() => {
+          setIsExpanding(true);
+          setCoords((prev) => ({
+            ...prev,
+            height: DOCK_HEIGHT_DESKTOP,
+          }));
+          setTimeout(() => {
+            setDocked('docked');
+          }, 380);
+        });
       }
     } else {
       if (docked === 'docked' || docked === 'docking') {
-        setDocked('undocking');
+        // Shrink height back, then undock to floating
+        setIsExpanding(true);
+        setCoords((prev) => ({
+          ...prev,
+          height: FLOAT_PILL_HEIGHT,
+        }));
+        setTimeout(() => {
+          setIsExpanding(false);
+          setDocked('undocking');
+          setMode('pill');
+          const floatCoords = getFloatingCoords('pill');
+          setCoords(floatCoords);
+          setTimeout(() => setDocked('free'), 50);
+        }, 380);
       }
     }
-  }, [dockInView, dockCtx, mode, docked]);
+  }, [dockInView, dockCtx]);
 
-  // Compute target coords based on docking state
-  const recalcCoords = useCallback(() => {
-    if (docked === 'docked' || docked === 'docking') {
-      const dc = getDockCoords(dockRef?.current ?? null);
-      if (dc) {
-        setCoords(dc);
-        return;
-      }
-    }
-    setCoords(getFloatingCoords(mode));
-  }, [docked, mode, dockRef]);
-
+  // Direct scroll-sync: when docked, track dock position on every frame
   useEffect(() => {
-    recalcCoords();
-  }, [recalcCoords]);
+    if (docked !== 'docking' && docked !== 'docked') return;
 
-  // Window resize (E4) + ResizeObserver on dock
-  useEffect(() => {
-    const onResize = () => recalcCoords();
-    window.addEventListener('resize', onResize);
-    let ro: ResizeObserver | null = null;
-    if (dockRef?.current && typeof ResizeObserver !== 'undefined') {
-      ro = new ResizeObserver(() => recalcCoords());
-      ro.observe(dockRef.current);
-    }
-    return () => {
-      window.removeEventListener('resize', onResize);
-      ro?.disconnect();
+    let rafId = 0;
+
+    const syncPosition = () => {
+      const el = dockRef?.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      setCoords((prev) => ({
+        top: r.top,
+        left: r.left,
+        width: r.width,
+        height: prev.height,
+        borderRadius: CHAT_RADIUS,
+      }));
     };
-  }, [recalcCoords, dockRef]);
 
-  // Scroll: during docking/undocking, follow dock position
-  useEffect(() => {
-    if (docked !== 'docking' && docked !== 'undocking' && docked !== 'docked') return;
-    let raf = 0;
     const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => recalcCoords());
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(syncPosition);
     };
+
+    syncPosition();
+
     window.addEventListener('scroll', onScroll, { passive: true });
+
     return () => {
       window.removeEventListener('scroll', onScroll);
-      cancelAnimationFrame(raf);
+      cancelAnimationFrame(rafId);
     };
-  }, [docked, recalcCoords]);
+  }, [docked, dockRef]);
+
+  // Window resize: keep floating coords correct when free
+  useEffect(() => {
+    if (docked !== 'free') return;
+    const onResize = () => {
+      setCoords(getFloatingCoords(mode));
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [docked, mode]);
 
   // Sync to context dockState
   useEffect(() => {
