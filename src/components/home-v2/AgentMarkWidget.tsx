@@ -277,8 +277,7 @@ export default function AgentMarkWidget() {
         right: 0,
         zIndex: 99999,
         display: 'flex',
-        justifyContent: 'flex-end',
-        paddingRight: 'max(16px, calc(50vw - 240px))',
+        justifyContent: 'center',
         pointerEvents: 'none',
       }}
     >
@@ -286,8 +285,8 @@ export default function AgentMarkWidget() {
       key="pill-shell"
       initial={{
         opacity: 0,
-        y: 32,
-        width: 48,
+        y: 48,
+        width: 148,
       }}
       animate={{
         opacity: 1,
@@ -296,14 +295,14 @@ export default function AgentMarkWidget() {
       }}
       exit={{
         opacity: 0,
-        y: 32,
-        width: 48,
+        y: 48,
+        width: 148,
       }}
       transition={{
         type: 'spring',
-        stiffness: 280,
-        damping: 26,
-        mass: 0.7,
+        stiffness: 260,
+        damping: 28,
+        mass: 0.8,
       }}
       onHoverStart={() => setState('expanded')}
       onHoverEnd={() => setState('pill')}
@@ -422,8 +421,7 @@ export default function AgentMarkWidget() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ type: 'spring', stiffness: 280, damping: 26, mass: 0.7 }}
+          transition={{ type: 'spring', stiffness: 260, damping: 28, mass: 0.8 }}
           style={{ flex: 1, overflow: 'hidden', minWidth: 0 }}
         >
           <input
