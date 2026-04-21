@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, LayoutGroup } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 
-type WidgetState = 'pill' | 'expanded' | 'chat' | 'complete';
+type WidgetState = 'pill' | 'expanded' | 'chat';
 
 type Message = {
   from: 'user' | 'agent';
   text: string;
-  type?: 'text' | 'loading' | 'email';
+  type?: 'text' | 'loading' | 'response';
 };
 
 const starters = [
@@ -17,46 +17,149 @@ const starters = [
 
 const conversationFlows: Record<string, Message[]> = {
   what: [
-    { from: 'agent', text: 'Mark8 IQ is the operating system for e-commerce brands. It pulls data from every marketplace — Amazon, Flipkart, Myntra, Meesho, Zepto, Blinkit — standardises it through PRISM, and gives you one unified view across ads, inventory, returns, shelf health, and reconciliation.' },
-    { from: 'agent', text: 'Agent Mark sits on top and tells you exactly what to act on. No more spreadsheets. No more switching tabs. Just decisions.' },
-    { from: 'agent', text: 'Which marketplaces are you currently selling on? I can show you how this works specifically for your setup.' },
+    {
+      from: 'agent',
+      type: 'response',
+      text: `**What Mark8 IQ does**\n\n- Pulls data from Amazon, Flipkart, Myntra, Meesho, Zepto, Blinkit into one source of truth\n- Standardises every metric through PRISM so you stop reconciling spreadsheets\n- Layers Agent Mark on top to tell you exactly what to act on next\n\n**Where it fits**\n\n- Replaces fragmented dashboards across ads, inventory, returns, shelf health, reconciliation\n- One operating system for the full e-commerce stack`,
+    },
   ],
   casestudy: [
-    { from: 'agent', text: 'Asian Shoes was spending ₹90 lakh a month on Amazon ads. Mark8 IQ identified that 70% of their budget was going to campaigns that were not converting during peak hours.' },
-    { from: 'agent', text: 'After optimising campaign budgets, bid rules, and keyword targeting — same ₹6.5 Cr in monthly sales. Ad spend dropped to ₹28 lakh. ₹62 lakh saved. Every single month.' },
-    { from: 'agent', text: 'This is a real client. What brand are you managing? I can run a rough estimate on what this might look like for you.' },
+    {
+      from: 'agent',
+      type: 'response',
+      text: `**Asian Shoes — ₹62 lakh saved per month**\n\n- Was spending ₹90 lakh a month on Amazon ads\n- Mark8 IQ flagged that 70% of budget was hitting non-converting hours\n- After re-targeting, ad spend dropped to ₹28 lakh\n\n**Outcome**\n\n- Same ₹6.5 Cr in monthly sales\n- 68% reduction in ad spend, every single month`,
+    },
   ],
   differentiation: [
-    { from: 'agent', text: 'Most tools give you one function — ads management, or inventory tracking, or reconciliation. They do not talk to each other.' },
-    { from: 'agent', text: 'Mark8 IQ connects all six functions. When your ad spend changes, inventory forecasts update. When returns spike, reconciliation flags it. When rank drops, your ads team gets alerted. Everything is connected through Market One — one source of truth.' },
-    { from: 'agent', text: 'What tool are you using right now? I can tell you exactly where the gaps are.' },
+    {
+      from: 'agent',
+      type: 'response',
+      text: `**Why Mark8 IQ is different**\n\n- Most tools cover one function — ads, or inventory, or reconciliation\n- They do not talk to each other and you end up stitching insights manually\n\n**How we connect it**\n\n- Six modules feed Market One — one shared source of truth\n- When ad spend changes, inventory forecasts update automatically\n- When returns spike, reconciliation flags it and the ads team gets alerted`,
+    },
   ],
 };
 
 const followUpFlow: Message[] = [
-  { from: 'agent', text: 'Got it. And what is the biggest headache right now — is it ads performance, inventory visibility, returns, or something else?' },
+  {
+    from: 'agent',
+    type: 'response',
+    text: `**Quick follow-up**\n\n- What is the biggest headache right now — ads performance, inventory visibility, returns, or something else?\n- I can pull a tailored answer once I know your stack`,
+  },
 ];
 
 const emailAsk: Message = {
   from: 'agent',
-  text: 'Based on what you have told me, I think a 20-minute live demo would show you the exact impact for your brand. Can I grab your email? Someone from the Mark8 IQ team will reach out today.',
-  type: 'email',
+  type: 'response',
+  text: `**A 20-minute live demo will show you the exact impact**\n\n- Drop your email below\n- Someone from the Mark8 IQ team reaches out today\n- You get a tailored walk-through against your own data`,
 };
+
+// Markdown-ish renderer: supports **bold** lines and `-` bullets
+function RenderMarkdown({ text }: { text: string }) {
+  const blocks = text.split('\n\n');
+  return (
+    <>
+      {blocks.map((block, bi) => {
+        const lines = block.split('\n');
+        const isBulletBlock = lines.every((l) => l.trim().startsWith('-'));
+        if (isBulletBlock) {
+          return (
+            <ul
+              key={bi}
+              style={{
+                margin: '0 0 12px 0',
+                paddingLeft: '20px',
+                listStyle: 'disc',
+                color: '#12182b',
+              }}
+            >
+              {lines.map((l, li) => (
+                <li
+                  key={li}
+                  style={{
+                    fontFamily: "'Saira', sans-serif",
+                    fontSize: '14px',
+                    fontWeight: 400,
+                    lineHeight: '22px',
+                    marginBottom: '4px',
+                  }}
+                >
+                  {l.replace(/^-\s*/, '')}
+                </li>
+              ))}
+            </ul>
+          );
+        }
+        // Heading-ish bold-only line
+        if (lines.length === 1 && /^\*\*.+\*\*$/.test(lines[0].trim())) {
+          return (
+            <p
+              key={bi}
+              style={{
+                fontFamily: "'Saira', sans-serif",
+                fontSize: '16px',
+                fontWeight: 500,
+                color: '#12182b',
+                margin: '0 0 8px 0',
+                lineHeight: '20px',
+              }}
+            >
+              {lines[0].replace(/\*\*/g, '')}
+            </p>
+          );
+        }
+        return (
+          <p
+            key={bi}
+            style={{
+              fontFamily: "'Saira', sans-serif",
+              fontSize: '14px',
+              fontWeight: 400,
+              color: '#12182b',
+              lineHeight: '22px',
+              margin: '0 0 12px 0',
+            }}
+          >
+            {block}
+          </p>
+        );
+      })}
+    </>
+  );
+}
+
+const SparkleIcon = ({ size = 16, color = '#fff' }: { size?: number; color?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M12 2L13.5 8.5L20 10L13.5 11.5L12 18L10.5 11.5L4 10L10.5 8.5L12 2Z"
+      fill={color}
+    />
+    <path d="M19 3L19.7 5.3L22 6L19.7 6.7L19 9L18.3 6.7L16 6L18.3 5.3L19 3Z" fill={color} opacity={0.7} />
+  </svg>
+);
+
+const ArrowUpRight = ({ size = 14, color = '#fff' }: { size?: number; color?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M7 17L17 7M17 7H8M17 7V16"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 
 export default function AgentMarkWidget() {
   const [state, setState] = useState<WidgetState>('pill');
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
+  const [pillInputText, setPillInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [turnCount, setTurnCount] = useState(0);
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  // Auto-scroll
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Hide during fragmentation scroll
   const [visible, setVisible] = useState(true);
@@ -71,37 +174,44 @@ export default function AgentMarkWidget() {
     return () => observer.disconnect();
   }, []);
 
-  const addMessages = (newMsgs: Message[], delay = 800) => {
+  // Auto-scroll
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }, [messages, isLoading]);
+
+  const addAgentResponse = (responses: Message[]) => {
     setIsLoading(true);
     setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { from: 'agent', text: 'Interesting ask 👀 — let me pull this up for you...', type: 'loading' },
-      ]);
-      setTimeout(() => {
-        setMessages((prev) => [...prev.filter((m) => m.type !== 'loading'), ...newMsgs]);
-        setIsLoading(false);
-        setTurnCount((t) => t + 1);
-      }, 1200);
-    }, delay);
+      setMessages((prev) => [...prev, ...responses]);
+      setIsLoading(false);
+      setTurnCount((t) => t + 1);
+    }, 1400);
   };
 
   const handleStarterClick = (starter: typeof starters[0]) => {
     setState('chat');
-    const userMsg: Message = { from: 'user', text: starter.text };
-    setMessages([userMsg]);
-    addMessages(conversationFlows[starter.key], 400);
+    setMessages([{ from: 'user', text: starter.text }]);
+    addAgentResponse(conversationFlows[starter.key]);
+  };
+
+  const handlePillSend = () => {
+    const text = pillInputText.trim();
+    if (!text) return;
+    setPillInputText('');
+    setState('chat');
+    setMessages([{ from: 'user', text }]);
+    addAgentResponse(conversationFlows.what);
   };
 
   const handleSend = () => {
-    if (!inputText.trim() || isLoading) return;
-    const userMsg: Message = { from: 'user', text: inputText };
+    const text = inputText.trim();
+    if (!text || isLoading) return;
     setInputText('');
-    setMessages((prev) => [...prev, userMsg]);
-    if (turnCount >= 2) {
-      addMessages([emailAsk]);
+    setMessages((prev) => [...prev, { from: 'user', text }]);
+    if (turnCount >= 1) {
+      addAgentResponse([emailAsk]);
     } else {
-      addMessages(followUpFlow);
+      addAgentResponse(followUpFlow);
     }
   };
 
@@ -111,386 +221,498 @@ export default function AgentMarkWidget() {
     setMessages((prev) => [
       ...prev,
       { from: 'user', text: email },
-      { from: 'agent', text: 'Perfect. Someone from Mark8 IQ will reach out within a few hours. In the meantime, feel free to keep exploring the site.' },
+      {
+        from: 'agent',
+        type: 'response',
+        text: `**You're in**\n\n- Someone from Mark8 IQ reaches out within a few hours\n- Meanwhile, keep exploring the rest of the site`,
+      },
     ]);
   };
 
   if (!visible && state === 'pill') return null;
 
-  const renderMessage = (msg: Message, i: number) => {
-    if (msg.from === 'user') {
-      return (
-        <div key={i} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <div
-            style={{
-              maxWidth: '75%',
-              padding: '10px 14px',
-              borderRadius: '12px 12px 4px 12px',
-              background: '#8E59FF',
-            }}
-          >
-            <p className="m8-p6" style={{ color: '#fff', lineHeight: 1.5 }}>{msg.text}</p>
-          </div>
-        </div>
-      );
-    }
-
-    if (msg.type === 'loading') {
-      return (
-        <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxWidth: '85%' }}>
-          <p className="m8-p6" style={{ color: '#656981', fontStyle: 'italic' }}>{msg.text}</p>
-          <div style={{ display: 'flex', gap: '4px', padding: '4px 0' }}>
-            {[0, 1, 2].map((j) => (
-              <div
-                key={j}
-                style={{
-                  width: '6px',
-                  height: '6px',
-                  borderRadius: '50%',
-                  background: '#8E59FF',
-                  animation: `dotPulse 1.4s infinite`,
-                  animationDelay: `${j * 0.2}s`,
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      );
-    }
-
-    if (msg.type === 'email') {
-      return (
-        <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '85%' }}>
-          <p className="m8-p6" style={{ color: '#12182b', lineHeight: 1.6 }}>{msg.text}</p>
-          {!emailSent && (
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                onKeyDown={(e) => e.key === 'Enter' && handleEmailSubmit()}
-                style={{
-                  flex: 1,
-                  padding: '8px 14px',
-                  borderRadius: '8px',
-                  border: '1px solid rgba(142,89,255,0.3)',
-                  fontFamily: "'Saira', sans-serif",
-                  fontSize: '13px',
-                  outline: 'none',
-                  background: 'white',
-                  color: '#12182b',
-                }}
-              />
-              <button
-                onClick={handleEmailSubmit}
-                style={{
-                  padding: '8px 16px',
-                  borderRadius: '8px',
-                  border: 'none',
-                  background: '#8E59FF',
-                  color: '#fff',
-                  fontFamily: "'Saira', sans-serif",
-                  fontSize: '13px',
-                  cursor: 'pointer',
-                }}
-              >
-                Send
-              </button>
-            </div>
-          )}
-        </div>
-      );
-    }
-
-    return (
-      <div key={i} style={{ display: 'flex', maxWidth: '85%' }}>
-        <p className="m8-p6" style={{ color: '#12182b', lineHeight: 1.6 }}>{msg.text}</p>
-      </div>
-    );
-  };
-
-  return (
-    <>
-      <LayoutGroup>
-        {/* PILL + EXPANDED */}
-        <AnimatePresence>
-          {(state === 'pill' || state === 'expanded') && (
-            <motion.div
-              key="pill-shell"
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.3 }}
-              onHoverStart={() => setState('expanded')}
-              onHoverEnd={() => setState('pill')}
-              style={{
-                position: 'fixed',
-                bottom: '32px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 99999,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '10px',
-              }}
-            >
-              {/* Pill */}
-              <motion.button
-                layout
-                onClick={() => setState((s) => (s === 'expanded' ? 'pill' : 'expanded'))}
-                whileHover={{ y: -2 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  padding: '12px 20px',
-                  background: '#080D19',
-                  borderRadius: '9999px',
-                  border: 'none',
-                  cursor: 'pointer',
-                  boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
-                  fontFamily: "'Saira', sans-serif",
-                }}
-              >
-                <span
-                  style={{
-                    width: '8px',
-                    height: '8px',
-                    borderRadius: '50%',
-                    background: '#8E59FF',
-                    animation: 'agentPulse 2s infinite',
-                  }}
-                />
-                <span className="m8-p5" style={{ color: '#fff', fontWeight: 400 }}>
-                  Ask Agent Mark
-                </span>
-              </motion.button>
-
-              {/* Expanded starter chips */}
-              <AnimatePresence>
-                {state === 'expanded' && (
-                  <motion.div
-                    key="starters"
-                    initial={{ opacity: 0, y: -8, scale: 0.96 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -8, scale: 0.96 }}
-                    transition={{ duration: 0.2 }}
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '8px',
-                      width: 'min(420px, calc(100vw - 32px))',
-                    }}
-                  >
-                    {starters.map((s, i) => (
-                      <motion.button
-                        key={s.key}
-                        initial={{ opacity: 0, y: -6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.05 }}
-                        onClick={() => handleStarterClick(s)}
-                        whileHover={{ x: 2 }}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '12px 16px',
-                          background: 'white',
-                          border: '1px solid rgba(142,89,255,0.15)',
-                          borderRadius: '10px',
-                          cursor: 'pointer',
-                          textAlign: 'left',
-                          gap: '12px',
-                          boxShadow: '0 4px 16px rgba(8,13,25,0.06)',
-                          fontFamily: "'Saira', sans-serif",
-                        }}
-                      >
-                        <span className="m8-p6" style={{ color: '#12182b', flex: 1 }}>
-                          {s.text}
-                        </span>
-                        <span style={{ color: '#8E59FF', fontSize: '16px', flexShrink: 0 }}>→</span>
-                      </motion.button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </LayoutGroup>
-
-      {/* CHAT PANEL */}
+  // ============ PILL + EXPANDED ============
+  const renderPillView = () => (
+    <motion.div
+      key="pill-shell"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.3 }}
+      onHoverStart={() => setState('expanded')}
+      onHoverEnd={() => setState('pill')}
+      style={{
+        position: 'fixed',
+        bottom: '32px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 99999,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        gap: '12px',
+        width: 'min(652px, calc(100vw - 32px))',
+      }}
+    >
+      {/* Suggestions card — appears above pill on hover */}
       <AnimatePresence>
-        {state === 'chat' && (
+        {state === 'expanded' && (
           <motion.div
-            key="chat-panel"
-            initial={{ opacity: 0, y: 40, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 40, scale: 0.96 }}
-            transition={{ type: 'spring', stiffness: 280, damping: 26 }}
+            key="suggestions"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 12 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
             style={{
-              position: 'fixed',
-              bottom: '32px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: 'min(700px, calc(100vw - 32px))',
-              maxHeight: '70vh',
-              zIndex: 99999,
+              background: '#f9f9fb',
+              borderRadius: '30px',
+              padding: '24px',
               display: 'flex',
               flexDirection: 'column',
+              gap: '12px',
+              boxShadow: '0 8px 32px rgba(8,13,25,0.08)',
             }}
           >
-            {/* Blob glow */}
-            <div
-              style={{
-                position: 'absolute',
-                inset: '-40px',
-                background: 'radial-gradient(circle at 50% 50%, rgba(142,89,255,0.18), transparent 70%)',
-                filter: 'blur(40px)',
-                pointerEvents: 'none',
-                zIndex: -1,
-              }}
-            />
-
-            <div
-              style={{
-                background: '#FFFFFF',
-                borderRadius: '20px',
-                border: '1px solid rgba(142,89,255,0.12)',
-                boxShadow: '0 24px 60px rgba(8,13,25,0.18)',
-                display: 'flex',
-                flexDirection: 'column',
-                overflow: 'hidden',
-              }}
-            >
-              {/* Header */}
+            {/* Header */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <div
                 style={{
+                  width: '32px',
+                  height: '32px',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '16px 20px',
-                  borderBottom: '1px solid rgba(8,13,25,0.06)',
+                  justifyContent: 'center',
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span
-                    style={{
-                      width: '8px',
-                      height: '8px',
-                      borderRadius: '50%',
-                      background: '#8E59FF',
-                      animation: 'agentPulse 2s infinite',
-                    }}
-                  />
-                  <span className="m8-p5" style={{ color: '#12182b', fontWeight: 500 }}>
-                    Your conversation with Agent Mark
-                  </span>
-                </div>
-                <button
-                  onClick={() => setState('pill')}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    color: '#656981',
-                    fontSize: '20px',
-                    padding: '4px 8px',
-                    lineHeight: 1,
-                  }}
-                >
-                  ×
-                </button>
+                <SparkleIcon size={24} color="#12182b" />
               </div>
-
-              {/* Messages */}
-              <div
+              <p
                 style={{
-                  flex: 1,
-                  overflowY: 'auto',
-                  padding: '20px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '16px',
-                  maxHeight: '50vh',
+                  fontFamily: "'Saira', sans-serif",
+                  fontSize: '16px',
+                  fontWeight: 500,
+                  color: '#12182b',
+                  lineHeight: '20px',
+                  margin: 0,
                 }}
               >
-                {messages.map((msg, i) => renderMessage(msg, i))}
-                <div ref={messagesEndRef} />
-              </div>
+                Suggestions
+              </p>
+            </div>
 
-              {/* Input */}
-              <div
-                style={{
-                  padding: '12px 16px',
-                  borderTop: '1px solid rgba(8,13,25,0.06)',
-                  background: 'rgba(245,240,255,0.4)',
-                }}
-              >
-                <div
+            {/* Cards */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              {starters.map((s, i) => (
+                <motion.button
+                  key={s.key}
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.04 }}
+                  onClick={() => handleStarterClick(s)}
+                  whileHover={{ background: '#f5f0ff' }}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '10px',
-                    background: 'white',
-                    border: '1px solid rgba(142,89,255,0.25)',
-                    borderRadius: '10px',
-                    padding: '8px 8px 8px 14px',
+                    gap: '8px',
+                    padding: '16px',
+                    borderRadius: '30px',
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    boxShadow: '0 4px 16px 6px rgba(130,130,130,0.05)',
+                    width: '100%',
                   }}
                 >
-                  <input
-                    type="text"
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && !isLoading && handleSend()}
-                    placeholder={isLoading ? 'Agent Mark is thinking...' : 'Continue the conversation with Agent Mark...'}
-                    disabled={isLoading}
+                  <p
                     style={{
                       flex: 1,
-                      background: 'none',
-                      border: 'none',
-                      outline: 'none',
                       fontFamily: "'Saira', sans-serif",
                       fontSize: '14px',
-                      fontWeight: 300,
+                      fontWeight: 400,
                       color: '#12182b',
-                    }}
-                  />
-                  <button
-                    onClick={handleSend}
-                    disabled={!inputText.trim() && !isLoading}
-                    style={{
-                      padding: '8px 14px',
-                      borderRadius: '8px',
-                      border: 'none',
-                      background: '#8E59FF',
-                      color: '#fff',
-                      fontFamily: "'Saira', sans-serif",
-                      fontSize: '13px',
-                      cursor: 'pointer',
-                      whiteSpace: 'nowrap',
-                      opacity: !inputText.trim() && !isLoading ? 0.5 : 1,
+                      lineHeight: '22px',
+                      margin: 0,
                     }}
                   >
-                    {isLoading ? 'Stop Mark' : '✦ Ask Mark'}
-                  </button>
-                </div>
-              </div>
+                    {s.text}
+                  </p>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '40px',
+                      background: '#8e59ff',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <ArrowUpRight size={16} color="#fff" />
+                  </div>
+                </motion.button>
+              ))}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
+      {/* Pill input */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          padding: '6px 6px 6px 20px',
+          background: '#ffffff',
+          border: '1px solid #8e59ff',
+          borderRadius: '9999px',
+          boxShadow: '0 8px 24px rgba(142,89,255,0.12)',
+        }}
+      >
+        <input
+          type="text"
+          value={pillInputText}
+          onChange={(e) => setPillInputText(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handlePillSend()}
+          onFocus={() => setState('expanded')}
+          placeholder="Ask Agent Mark…"
+          style={{
+            flex: 1,
+            background: 'none',
+            border: 'none',
+            outline: 'none',
+            fontFamily: "'Saira', sans-serif",
+            fontSize: '14px',
+            fontWeight: 400,
+            color: '#12182b',
+            padding: '10px 0',
+          }}
+        />
+        <button
+          onClick={handlePillSend}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            padding: '8px 16px',
+            borderRadius: '9999px',
+            border: 'none',
+            background: '#8e59ff',
+            color: '#fff',
+            fontFamily: "'Saira', sans-serif",
+            fontSize: '13px',
+            fontWeight: 500,
+            cursor: 'pointer',
+          }}
+        >
+          <SparkleIcon size={14} color="#fff" />
+          Ask Mark
+        </button>
+      </div>
+    </motion.div>
+  );
+
+  // ============ CHAT PANEL ============
+  const renderChatView = () => (
+    <motion.div
+      key="chat-panel"
+      initial={{ opacity: 0, y: 40, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 40, scale: 0.96 }}
+      transition={{ type: 'spring', stiffness: 280, damping: 26 }}
+      style={{
+        position: 'fixed',
+        bottom: '40px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: 'min(700px, calc(100vw - 32px))',
+        height: 'min(600px, calc(100vh - 80px))',
+        zIndex: 99999,
+        background: '#f9f9fb',
+        borderRadius: '16px',
+        padding: '24px',
+        boxShadow: '0 4px 16px 6px rgba(130,130,130,0.05), 0 24px 60px rgba(8,13,25,0.18)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Header */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "'Saira', sans-serif",
+            fontSize: '16px',
+            fontWeight: 500,
+            color: '#656981',
+            lineHeight: '20px',
+            margin: 0,
+          }}
+        >
+          Your conversation with Agent Mark
+        </p>
+        <button
+          onClick={() => {
+            setState('pill');
+            setMessages([]);
+            setTurnCount(0);
+            setEmail('');
+            setEmailSent(false);
+          }}
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '4px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          aria-label="Close"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M6 6L18 18M18 6L6 18"
+              stroke="#656981"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+        </button>
+      </div>
+
+      {/* Messages scroll area */}
+      <div
+        ref={scrollContainerRef}
+        style={{
+          flex: 1,
+          overflowY: 'auto',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '24px',
+          paddingRight: '4px',
+        }}
+      >
+        {messages.map((msg, i) => {
+          if (msg.from === 'user') {
+            return (
+              <div
+                key={i}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-end',
+                  gap: '8px',
+                  width: '100%',
+                }}
+              >
+                <div
+                  style={{
+                    width: '100%',
+                    background: 'linear-gradient(to right, #e6e9f4, #eee5ff)',
+                    padding: '16px',
+                    borderRadius: '8px',
+                  }}
+                >
+                  <p
+                    style={{
+                      fontFamily: "'Saira', sans-serif",
+                      fontSize: '14px',
+                      fontWeight: 400,
+                      color: '#12182b',
+                      lineHeight: '22px',
+                      textAlign: 'right',
+                      margin: 0,
+                    }}
+                  >
+                    {msg.text}
+                  </p>
+                </div>
+              </div>
+            );
+          }
+
+          // Agent response
+          return (
+            <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <p
+                style={{
+                  fontFamily: "'Saira', sans-serif",
+                  fontSize: '13px',
+                  fontWeight: 400,
+                  fontStyle: 'italic',
+                  color: '#656981',
+                  margin: '0 0 8px 0',
+                }}
+              >
+                Interesting ask ✨ — let me crunch this data and turn it into something useful.
+              </p>
+              <RenderMarkdown text={msg.text} />
+
+              {/* Email capture inline */}
+              {msg === emailAsk && !emailSent && (
+                <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleEmailSubmit()}
+                    placeholder="your@email.com"
+                    style={{
+                      flex: 1,
+                      padding: '10px 14px',
+                      borderRadius: '8px',
+                      border: '1px solid rgba(142,89,255,0.3)',
+                      fontFamily: "'Saira', sans-serif",
+                      fontSize: '13px',
+                      outline: 'none',
+                      background: 'white',
+                      color: '#12182b',
+                    }}
+                  />
+                  <button
+                    onClick={handleEmailSubmit}
+                    style={{
+                      padding: '10px 18px',
+                      borderRadius: '8px',
+                      border: 'none',
+                      background: '#8e59ff',
+                      color: '#fff',
+                      fontFamily: "'Saira', sans-serif",
+                      fontSize: '13px',
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Send
+                  </button>
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        {/* Loading state */}
+        {isLoading && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <p
+              style={{
+                fontFamily: "'Saira', sans-serif",
+                fontSize: '13px',
+                fontWeight: 400,
+                fontStyle: 'italic',
+                color: '#656981',
+                margin: 0,
+              }}
+            >
+              Brewing insights… should take a few seconds 🍵 lining up the right target…
+            </p>
+            <div style={{ display: 'flex', gap: '4px', alignItems: 'center', paddingTop: '4px' }}>
+              {[0, 1, 2].map((j) => (
+                <div
+                  key={j}
+                  style={{
+                    width: '6px',
+                    height: '6px',
+                    borderRadius: '50%',
+                    background: '#8e59ff',
+                    animation: 'agentDotPulse 1.4s infinite',
+                    animationDelay: `${j * 0.2}s`,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Input bar */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          padding: '6px 6px 6px 20px',
+          background: '#ffffff',
+          border: '1px solid #8e59ff',
+          borderRadius: '9999px',
+        }}
+      >
+        <input
+          type="text"
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && !isLoading && handleSend()}
+          placeholder={isLoading ? 'Agent Mark is thinking…' : 'Continue the conversation with Agent Mark…'}
+          disabled={isLoading}
+          style={{
+            flex: 1,
+            background: 'none',
+            border: 'none',
+            outline: 'none',
+            fontFamily: "'Saira', sans-serif",
+            fontSize: '14px',
+            fontWeight: 400,
+            color: '#12182b',
+            padding: '10px 0',
+          }}
+        />
+        <button
+          onClick={handleSend}
+          disabled={isLoading}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            padding: '8px 16px',
+            borderRadius: '9999px',
+            border: 'none',
+            background: isLoading ? '#e6dcff' : '#8e59ff',
+            color: isLoading ? '#8e59ff' : '#fff',
+            fontFamily: "'Saira', sans-serif",
+            fontSize: '13px',
+            fontWeight: 500,
+            cursor: isLoading ? 'default' : 'pointer',
+          }}
+        >
+          {isLoading ? (
+            <>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" />
+              </svg>
+              Stop Mark
+            </>
+          ) : (
+            <>
+              <SparkleIcon size={14} color="#fff" />
+              Ask Mark
+            </>
+          )}
+        </button>
+      </div>
+    </motion.div>
+  );
+
+  return (
+    <>
+      <AnimatePresence mode="wait">
+        {(state === 'pill' || state === 'expanded') && renderPillView()}
+        {state === 'chat' && renderChatView()}
+      </AnimatePresence>
+
       <style>{`
-        @keyframes agentPulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(1.4); }
-        }
-        @keyframes dotPulse {
+        @keyframes agentDotPulse {
           0%, 60%, 100% { opacity: 0.3; transform: scale(1); }
           30% { opacity: 1; transform: scale(1.3); }
         }
