@@ -13,30 +13,27 @@ import ProofV2 from '../components/home-v2/ProofV2';
 import CredentialsV2 from '../components/home-v2/CredentialsV2';
 import CtaBlockV2 from '../components/home-v2/CtaBlockV2';
 import AgentMarkWidget from '../components/home-v2/AgentMarkWidget';
-import { AgentMarkDockProvider } from '../components/home-v2/AgentMarkDockContext';
 
 export default function HomePageV2() {
   useEffect(() => { window.scrollTo(0, 0); }, []);
   return (
     <V2ThemeProvider>
-      <AgentMarkDockProvider>
-        <Layout>
-          <main>
-            <HeroV2 />
-            <TrustStripV2 />
-            <FragmentationV2 />
-            <ProductSuiteV2 />
-            <RoleBasedValueV2 />
-            <AgentMarkV2 />
-            <AgentFoundryV2 />
-            <ProofV2 />
-            <CredentialsV2 />
-            <CtaBlockV2 />
-          </main>
-          <Footer />
-          <AgentMarkWidget />
-        </Layout>
-      </AgentMarkDockProvider>
+      <Layout>
+        <main>
+          <HeroV2 />
+          <TrustStripV2 />
+          <FragmentationV2 />
+          <ProductSuiteV2 />
+          <RoleBasedValueV2 />
+          <AgentMarkV2 />
+          <AgentFoundryV2 />
+          <ProofV2 />
+          <CredentialsV2 />
+          <CtaBlockV2 />
+        </main>
+        <Footer />
+        <AgentMarkWidget />
+      </Layout>
     </V2ThemeProvider>
   );
 }

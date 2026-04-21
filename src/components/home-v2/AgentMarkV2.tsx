@@ -1,15 +1,101 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { useAgentMarkDock } from './AgentMarkDockContext';
+import { mockHalts, mockResponses } from '@/data/aiPanelMockData';
 
 const ORB_URL = '/img/home-v2/agent-mark-orb.png';
 
-// Dock dimensions — must match the floating chat panel target morph size
-const DOCK_WIDTH_DESKTOP = 960;
-const DOCK_HEIGHT_DESKTOP = 520;
+const DEMO_CYCLE = [
+  { halt: mockHalts.find(h => h.id === 'h1')!, response: mockResponses.h1 },
+  { halt: mockHalts.find(h => h.id === 'h2')!, response: mockResponses.h2 },
+  { halt: mockHalts.find(h => h.id === 'h3')!, response: mockResponses.h3 },
+  { halt: mockHalts.find(h => h.id === 'h4')!, response: mockResponses.h4 },
+  { halt: mockHalts.find(h => h.id === 'h5')!, response: mockResponses.h5 },
+];
+
+type DemoPhase =
+  | 'idle'
+  | 'pill'
+  | 'loading'
+  | 'insights'
+  | 'rootcause'
+  | 'recommendations'
+  | 'complete'
+  | 'fading';
+
+const WORD_SPEED = 25;
+const SECTION_GAP = 80;
+const HOLD_TIME = 3000;
+const FADE_TIME = 600;
+const LOADING_TIME = 800;
 
 export default function AgentMarkV2() {
-  const ctx = useAgentMarkDock();
-  const dockRef = ctx?.dockRef;
+  const [phase, setPhase] = useState<DemoPhase>('idle');
+  const [cycleIndex, setCycleIndex] = useState(0);
+  const [visibleWords, setVisibleWords] = useState(0);
+  const [visibleRcWords, setVisibleRcWords] = useState(0);
+  const [visibleBullets, setVisibleBullets] = useState(0);
+  const [opacity, setOpacity] = useState(1);
+
+  useEffect(() => {
+    const timeouts: ReturnType<typeof setTimeout>[] = [];
+    const item = DEMO_CYCLE[cycleIndex % DEMO_CYCLE.length];
+    const insightsWords = item.response.insights.split(' ');
+    const rcWordsArr = item.response.rootCause.split(' ');
+
+    setOpacity(1);
+    setVisibleWords(0);
+    setVisibleRcWords(0);
+    setVisibleBullets(0);
+    setPhase('idle');
+
+    timeouts.push(setTimeout(() => setPhase('pill'), 300));
+    timeouts.push(setTimeout(() => setPhase('loading'), 900));
+
+    const insightsStart = 900 + LOADING_TIME;
+    timeouts.push(setTimeout(() => {
+      setPhase('insights');
+      insightsWords.forEach((_, i) => {
+        timeouts.push(setTimeout(() => setVisibleWords(i + 1), i * WORD_SPEED));
+      });
+    }, insightsStart));
+
+    const insightsDuration = insightsWords.length * WORD_SPEED;
+    const rcStart = insightsStart + insightsDuration + SECTION_GAP;
+    timeouts.push(setTimeout(() => {
+      setPhase('rootcause');
+      rcWordsArr.forEach((_, i) => {
+        timeouts.push(setTimeout(() => setVisibleRcWords(i + 1), i * WORD_SPEED));
+      });
+    }, rcStart));
+
+    const rcDuration = rcWordsArr.length * WORD_SPEED;
+    const recsStart = rcStart + rcDuration + SECTION_GAP;
+    timeouts.push(setTimeout(() => {
+      setPhase('recommendations');
+      item.response.recommendations.forEach((_, i) => {
+        timeouts.push(setTimeout(() => setVisibleBullets(i + 1), i * 600));
+      });
+    }, recsStart));
+
+    const totalTyping = recsStart + item.response.recommendations.length * 600;
+    timeouts.push(setTimeout(() => setPhase('complete'), totalTyping + 200));
+
+    timeouts.push(setTimeout(() => {
+      setPhase('fading');
+      setOpacity(0);
+    }, totalTyping + 200 + HOLD_TIME));
+
+    timeouts.push(setTimeout(() => {
+      setCycleIndex(i => i + 1);
+    }, totalTyping + 200 + HOLD_TIME + FADE_TIME));
+
+    return () => timeouts.forEach(clearTimeout);
+  }, [cycleIndex]);
+
+  const current = DEMO_CYCLE[cycleIndex % DEMO_CYCLE.length];
+  const insightsWordList = current.response.insights.split(' ');
+  const rcWordList = current.response.rootCause.split(' ');
+  const showResponse = ['insights', 'rootcause', 'recommendations', 'complete'].includes(phase);
 
   return (
     <section style={{
@@ -18,6 +104,17 @@ export default function AgentMarkV2() {
       background: 'transparent',
       overflow: 'hidden',
     }}>
+      <style>{`
+        @keyframes dotPulse {
+          0%, 60%, 100% { opacity: 0.3; transform: scale(1); }
+          30% { opacity: 1; transform: scale(1.3); }
+        }
+        @keyframes caretBlink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+      `}</style>
+
       {/* Eyebrow + headline — outside bounding box */}
       <div className="container" style={{ textAlign: 'center', marginBottom: '40px', position: 'relative', zIndex: 1 }}>
         <motion.p
@@ -56,6 +153,7 @@ export default function AgentMarkV2() {
             alignItems: 'center',
             gap: '0',
           }}>
+
             {/* Orb */}
             <motion.div
               style={{ marginBottom: '24px' }}
@@ -117,16 +215,224 @@ export default function AgentMarkV2() {
               </p>
             </motion.div>
 
-            {/* Dock placeholder — widget docks here */}
-            <div
-              ref={dockRef}
-              data-agent-mark-dock
-              style={{
-                width: '100%',
-                maxWidth: `${DOCK_WIDTH_DESKTOP}px`,
-                height: `${DOCK_HEIGHT_DESKTOP}px`,
-              }}
-            />
+            {/* Animated chat window */}
+            <div style={{
+              width: '100%',
+              maxWidth: '960px',
+            }}>
+              <div style={{
+                background: '#ffffff',
+                borderRadius: '16px',
+                boxShadow: '0 4px 24px rgba(130,130,130,0.08)',
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
+              }}>
+                {/* Messages area */}
+                <div style={{
+                  padding: '24px',
+                  minHeight: '420px',
+                  maxHeight: '420px',
+                  overflow: 'hidden',
+                  opacity,
+                  transition: `opacity ${FADE_TIME}ms ease-out`,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '16px',
+                }}>
+                  {/* User context pill */}
+                  {phase !== 'idle' && (
+                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      <div style={{
+                        background: '#F5F0FF',
+                        border: '1px solid #E2D6FF',
+                        borderRadius: '20px',
+                        padding: '8px 16px',
+                        maxWidth: '70%',
+                      }}>
+                        <p style={{
+                          fontFamily: "'Saira', sans-serif",
+                          fontSize: '14px',
+                          fontWeight: 400,
+                          color: '#12182b',
+                          margin: 0,
+                          lineHeight: '20px',
+                        }}>
+                          {current.halt.statement}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Loading dots */}
+                  {phase === 'loading' && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <div style={{
+                        width: '24px',
+                        height: '24px',
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #8E59FF, #608ff6)',
+                        flexShrink: 0,
+                      }} />
+                      <div style={{ display: 'flex', gap: '4px' }}>
+                        {[0, 1, 2].map(i => (
+                          <span
+                            key={i}
+                            style={{
+                              width: '6px',
+                              height: '6px',
+                              borderRadius: '50%',
+                              background: '#8E59FF',
+                              display: 'inline-block',
+                              animation: `dotPulse 1.4s ease-in-out ${i * 0.2}s infinite`,
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* AI Response */}
+                  {showResponse && (
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                      <div style={{
+                        width: '24px',
+                        height: '24px',
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #8E59FF, #608ff6)',
+                        flexShrink: 0,
+                        marginTop: '2px',
+                      }} />
+                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                        {/* INSIGHTS */}
+                        <div>
+                          <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '6px' }}>INSIGHTS</p>
+                          <p style={{
+                            fontFamily: "'Saira', sans-serif",
+                            fontSize: '14px',
+                            fontWeight: 400,
+                            lineHeight: '22px',
+                            color: '#12182b',
+                            margin: 0,
+                          }}>
+                            {insightsWordList.slice(0, visibleWords).join(' ')}
+                            {visibleWords < insightsWordList.length && phase === 'insights' && (
+                              <span style={{ animation: 'caretBlink 1s infinite', marginLeft: '2px' }}>|</span>
+                            )}
+                          </p>
+                        </div>
+
+                        {/* ROOT CAUSE */}
+                        {['rootcause', 'recommendations', 'complete'].includes(phase) && (
+                          <div>
+                            <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '6px' }}>ROOT CAUSE</p>
+                            <p style={{
+                              fontFamily: "'Saira', sans-serif",
+                              fontSize: '14px',
+                              fontWeight: 400,
+                              lineHeight: '22px',
+                              color: '#12182b',
+                              margin: 0,
+                            }}>
+                              {rcWordList.slice(0, visibleRcWords).join(' ')}
+                              {visibleRcWords < rcWordList.length && phase === 'rootcause' && (
+                                <span style={{ animation: 'caretBlink 1s infinite', marginLeft: '2px' }}>|</span>
+                              )}
+                            </p>
+                          </div>
+                        )}
+
+                        {/* RECOMMENDATIONS */}
+                        {['recommendations', 'complete'].includes(phase) && (
+                          <div>
+                            <p className="m8-eyebrow" style={{ color: '#8E59FF', marginBottom: '8px' }}>RECOMMENDATIONS</p>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                              {current.response.recommendations.slice(0, visibleBullets).map((rec, i) => (
+                                <motion.div
+                                  key={i}
+                                  initial={{ opacity: 0, y: 6 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ duration: 0.3 }}
+                                  style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}
+                                >
+                                  <div style={{
+                                    width: '20px',
+                                    height: '20px',
+                                    borderRadius: '50%',
+                                    background: '#8E59FF',
+                                    color: '#ffffff',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    fontFamily: "'Saira', sans-serif",
+                                    fontSize: '11px',
+                                    fontWeight: 500,
+                                    flexShrink: 0,
+                                    marginTop: '1px',
+                                  }}>
+                                    {i + 1}
+                                  </div>
+                                  <p style={{
+                                    fontFamily: "'Saira', sans-serif",
+                                    fontSize: '14px',
+                                    fontWeight: 400,
+                                    lineHeight: '22px',
+                                    color: '#12182b',
+                                    margin: 0,
+                                    flex: 1,
+                                  }}>
+                                    {rec}
+                                  </p>
+                                </motion.div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Static input bar */}
+                <div style={{
+                  borderTop: '1px solid #EDF0F7',
+                  padding: '16px 24px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  background: '#f9f9fb',
+                }}>
+                  <p style={{
+                    fontFamily: "'Saira', sans-serif",
+                    fontSize: '14px',
+                    fontWeight: 400,
+                    color: '#656981',
+                    margin: 0,
+                  }}>
+                    Ask Agent Mark anything...
+                  </p>
+                  <div style={{
+                    height: '32px',
+                    padding: '0 14px',
+                    borderRadius: '40px',
+                    background: '#e2e6ff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                  }}>
+                    <span style={{
+                      fontFamily: "'Saira', sans-serif",
+                      fontSize: '12px',
+                      fontWeight: 500,
+                      color: '#8E59FF',
+                    }}>
+                      ✦ Ask Mark
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
