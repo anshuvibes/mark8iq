@@ -233,6 +233,18 @@ export default function AgentMarkWidget() {
 
   // ============ PILL + EXPANDED ============
   const renderPillView = () => (
+    <div
+      style={{
+        position: 'fixed',
+        bottom: '24px',
+        left: 0,
+        right: 0,
+        zIndex: 99999,
+        display: 'flex',
+        justifyContent: 'center',
+        pointerEvents: 'none',
+      }}
+    >
     <motion.div
       key="pill-shell"
       initial={{ opacity: 0, y: 20 }}
@@ -242,16 +254,12 @@ export default function AgentMarkWidget() {
       onHoverStart={() => setState('expanded')}
       onHoverEnd={() => setState('pill')}
       style={{
-        position: 'fixed',
-        bottom: '32px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        zIndex: 99999,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',
-        gap: '12px',
-        width: 'min(652px, calc(100vw - 32px))',
+        gap: '10px',
+        width: 'min(480px, calc(100vw - 32px))',
+        pointerEvents: 'auto',
       }}
     >
       {/* Suggestions card — appears above pill on hover */}
@@ -265,35 +273,23 @@ export default function AgentMarkWidget() {
             transition={{ duration: 0.22, ease: 'easeOut' }}
             style={{
               background: '#f9f9fb',
-              borderRadius: '30px',
-              padding: '24px',
+              borderRadius: '20px',
+              padding: '16px',
               display: 'flex',
               flexDirection: 'column',
-              gap: '12px',
+              gap: '10px',
               boxShadow: '0 8px 32px rgba(8,13,25,0.08)',
             }}
           >
             {/* Header */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div
-                style={{
-                  width: '32px',
-                  height: '32px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <SparkleIcon size={24} color="#12182b" />
-              </div>
+              <SparkleIcon size={16} color="#12182b" />
               <p
+                className="m8-p5"
                 style={{
-                  fontFamily: "'Saira', sans-serif",
-                  fontSize: '16px',
-                  fontWeight: 500,
                   color: '#12182b',
-                  lineHeight: '20px',
                   margin: 0,
+                  fontWeight: 500,
                 }}
               >
                 Suggestions
@@ -314,24 +310,21 @@ export default function AgentMarkWidget() {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px',
-                    padding: '16px',
-                    borderRadius: '30px',
-                    background: 'transparent',
+                    padding: '12px 14px',
+                    borderRadius: '16px',
+                    background: '#ffffff',
                     border: 'none',
                     cursor: 'pointer',
                     textAlign: 'left',
-                    boxShadow: '0 4px 16px 6px rgba(130,130,130,0.05)',
+                    boxShadow: '0 2px 8px rgba(130,130,130,0.06)',
                     width: '100%',
                   }}
                 >
                   <p
+                    className="m8-p6"
                     style={{
                       flex: 1,
-                      fontFamily: "'Saira', sans-serif",
-                      fontSize: '14px',
-                      fontWeight: 400,
                       color: '#12182b',
-                      lineHeight: '22px',
                       margin: 0,
                     }}
                   >
@@ -339,8 +332,8 @@ export default function AgentMarkWidget() {
                   </p>
                   <div
                     style={{
-                      width: '32px',
-                      height: '32px',
+                      width: '26px',
+                      height: '26px',
                       borderRadius: '40px',
                       background: '#8e59ff',
                       display: 'flex',
@@ -349,7 +342,7 @@ export default function AgentMarkWidget() {
                       flexShrink: 0,
                     }}
                   >
-                    <ArrowUpRight size={16} color="#fff" />
+                    <ArrowUpRight size={13} color="#fff" />
                   </div>
                 </motion.button>
               ))}
@@ -363,8 +356,8 @@ export default function AgentMarkWidget() {
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '8px',
-          padding: '6px 6px 6px 20px',
+          gap: '6px',
+          padding: '4px 4px 4px 16px',
           background: '#ffffff',
           border: '1px solid #8e59ff',
           borderRadius: '9999px',
@@ -378,44 +371,54 @@ export default function AgentMarkWidget() {
           onKeyDown={(e) => e.key === 'Enter' && handlePillSend()}
           onFocus={() => setState('expanded')}
           placeholder="Ask Agent Mark…"
+          className="m8-p6"
           style={{
             flex: 1,
             background: 'none',
             border: 'none',
             outline: 'none',
-            fontFamily: "'Saira', sans-serif",
-            fontSize: '14px',
-            fontWeight: 400,
             color: '#12182b',
-            padding: '10px 0',
+            padding: '8px 0',
           }}
         />
         <button
           onClick={handlePillSend}
+          className="m8-p6"
           style={{
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
-            padding: '8px 16px',
+            padding: '7px 14px',
             borderRadius: '9999px',
             border: 'none',
             background: '#8e59ff',
             color: '#fff',
-            fontFamily: "'Saira', sans-serif",
-            fontSize: '13px',
             fontWeight: 500,
             cursor: 'pointer',
           }}
         >
-          <SparkleIcon size={14} color="#fff" />
+          <SparkleIcon size={13} color="#fff" />
           Ask Mark
         </button>
       </div>
     </motion.div>
+    </div>
   );
 
   // ============ CHAT PANEL ============
   const renderChatView = () => (
+    <div
+      style={{
+        position: 'fixed',
+        bottom: '24px',
+        left: 0,
+        right: 0,
+        zIndex: 99999,
+        display: 'flex',
+        justifyContent: 'center',
+        pointerEvents: 'none',
+      }}
+    >
     <motion.div
       key="chat-panel"
       initial={{ opacity: 0, y: 40, scale: 0.96 }}
@@ -423,21 +426,17 @@ export default function AgentMarkWidget() {
       exit={{ opacity: 0, y: 40, scale: 0.96 }}
       transition={{ type: 'spring', stiffness: 280, damping: 26 }}
       style={{
-        position: 'fixed',
-        bottom: '40px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: 'min(700px, calc(100vw - 32px))',
-        height: 'min(600px, calc(100vh - 80px))',
-        zIndex: 99999,
+        width: 'min(560px, calc(100vw - 32px))',
+        height: 'min(520px, calc(100vh - 80px))',
         background: '#f9f9fb',
         borderRadius: '16px',
-        padding: '24px',
+        padding: '20px',
         boxShadow: '0 4px 16px 6px rgba(130,130,130,0.05), 0 24px 60px rgba(8,13,25,0.18)',
         display: 'flex',
         flexDirection: 'column',
-        gap: '24px',
+        gap: '16px',
         overflow: 'hidden',
+        pointerEvents: 'auto',
       }}
     >
       {/* Header */}
@@ -702,6 +701,7 @@ export default function AgentMarkWidget() {
         </button>
       </div>
     </motion.div>
+    </div>
   );
 
   return (
