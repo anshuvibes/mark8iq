@@ -179,6 +179,36 @@ export default function AgentMarkWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, [messages, isLoading]);
 
+  // Lock page scroll while the widget is expanded or in chat mode
+  useEffect(() => {
+    const isOpen = state === 'expanded' || state === 'chat';
+    if (!isOpen) return;
+
+    const lenis = (window as any).__lenis;
+    lenis?.stop?.();
+
+    const preventWheel = (e: WheelEvent) => {
+      const target = e.target as HTMLElement;
+      // Allow scrolling inside the chat messages container
+      if (scrollContainerRef.current?.contains(target)) return;
+      e.preventDefault();
+    };
+    const preventTouch = (e: TouchEvent) => {
+      const target = e.target as HTMLElement;
+      if (scrollContainerRef.current?.contains(target)) return;
+      e.preventDefault();
+    };
+
+    window.addEventListener('wheel', preventWheel, { passive: false });
+    window.addEventListener('touchmove', preventTouch, { passive: false });
+
+    return () => {
+      lenis?.start?.();
+      window.removeEventListener('wheel', preventWheel);
+      window.removeEventListener('touchmove', preventTouch);
+    };
+  }, [state]);
+
   const addAgentResponse = (responses: Message[]) => {
     setIsLoading(true);
     setTimeout(() => {
