@@ -802,22 +802,8 @@ export default function AgentMarkWidget() {
         {showExpanded && renderSuggestions()}
       </AnimatePresence>
 
-      {/* Morphing container */}
-      <motion.div
-        animate={{
-          top: coords.top,
-          left: coords.left,
-          width: coords.width,
-          height: coords.height,
-        }}
-        transition={transition}
-        onAnimationComplete={() => {
-          if (docked === 'docking') setDocked('docked');
-          if (docked === 'undocking') {
-            setDocked('free');
-            setMode('pill');
-          }
-        }}
+      {/* Container — position is direct, only height transitions via CSS */}
+      <div
         onMouseEnter={() => {
           if (docked === 'free' && mode === 'pill') setMode('expanded');
         }}
@@ -826,16 +812,21 @@ export default function AgentMarkWidget() {
         }}
         style={{
           position: 'fixed',
+          top: coords.top,
+          left: coords.left,
+          width: coords.width,
+          height: coords.height,
+          borderRadius: coords.borderRadius,
           zIndex: 99999,
           pointerEvents: 'auto',
           overflow: 'hidden',
-          borderRadius: coords.borderRadius,
+          transition: isExpanding ? 'height 0.35s ease' : 'none',
         }}
       >
         {showDemo && renderDemoContent()}
         {showChat && renderChatContent()}
         {(showPillContent || showExpanded) && renderPillContent()}
-      </motion.div>
+      </div>
 
       <style>{`
         @keyframes agentDotPulse {
