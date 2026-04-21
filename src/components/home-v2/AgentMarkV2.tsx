@@ -247,7 +247,7 @@ export default function AgentMarkV2() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ delay: 0.05 }}
         >
-          While you slept, Agent Mark found<br />4 things you need to see.
+          Agent Mark.<br />Your round-the-clock commerce analyst.
         </motion.h2>
       </div>
 
