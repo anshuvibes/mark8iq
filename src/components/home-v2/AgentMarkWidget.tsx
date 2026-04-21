@@ -467,7 +467,7 @@ export default function AgentMarkWidget() {
       exit={{ opacity: 0, y: 40, scale: 0.96 }}
       transition={{ type: 'spring', stiffness: 280, damping: 26 }}
       style={{
-        width: 'min(80vw, calc(100vw - 32px))',
+        width: 'min(60vw, calc(100vw - 32px))',
         height: 'min(680px, calc(100vh - 80px))',
         background: '#f9f9fb',
         borderRadius: '5px',
