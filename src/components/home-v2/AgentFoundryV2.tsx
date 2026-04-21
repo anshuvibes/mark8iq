@@ -15,24 +15,79 @@ const agents = [
 
 export default function AgentFoundryV2() {
   return (
+    <>
+      {/* Full-bleed dark callout */}
+      <section style={{
+        background: '#080d19',
+        padding: '80px 40px',
+        position: 'relative',
+        overflow: 'hidden',
+      }}>
+        {/* Violet glow */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '600px',
+          height: '300px',
+          background: 'radial-gradient(ellipse, rgba(142,89,255,0.15) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }} />
+
+        <div style={{
+          maxWidth: '860px',
+          margin: '0 auto',
+          position: 'relative',
+          zIndex: 1,
+          textAlign: 'center',
+        }}>
+          {/* Decorative open quote */}
+          <div style={{
+            fontFamily: 'Georgia, serif',
+            fontSize: '120px',
+            lineHeight: '60px',
+            color: '#8e59ff',
+            opacity: 0.4,
+            marginBottom: '24px',
+            userSelect: 'none',
+          }}>
+            "
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              fontFamily: "'Saira', sans-serif",
+              fontSize: '28px',
+              fontWeight: 400,
+              lineHeight: '1.55',
+              color: '#ffffff',
+              margin: '0 0 32px 0',
+              fontStyle: 'italic',
+              letterSpacing: '-0.01em',
+            }}
+          >
+            While your competitors wait for Monday morning reports,<br />
+            your agents already acted on Friday night's data.
+          </motion.p>
+
+          {/* Violet accent line */}
+          <div style={{
+            width: '48px',
+            height: '2px',
+            background: '#8e59ff',
+            margin: '0 auto',
+            borderRadius: '2px',
+          }} />
+        </div>
+      </section>
+
     <section style={{ padding: '100px 0', position: 'relative' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          style={{
-            textAlign: 'center',
-            marginBottom: '64px',
-            padding: '32px',
-            background: 'var(--v2-bg-subtle)',
-            borderRadius: '12px',
-          }}
-        >
-          <p className="m8-p2" style={{ color: 'var(--v2-text-secondary)', fontStyle: 'italic' }}>
-            While your competitors wait for Monday morning reports, your agents already acted on Friday night's data.
-          </p>
-        </motion.div>
 
         <div style={{ display: 'flex', gap: '64px', alignItems: 'center' }}>
           <motion.div
@@ -160,5 +215,6 @@ export default function AgentFoundryV2() {
         }
       `}</style>
     </section>
+    </>
   );
 }
