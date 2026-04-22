@@ -93,19 +93,8 @@ export default function AgentFoundryV2() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ delay: 0.1 }}
           >
-            Deploy a workforce that never clocks out.
+            Deploy a workforce<br />that never clocks out.
           </motion.h2>
-
-          <motion.p
-            className="m8-p3"
-            style={{ color: 'var(--v2-text-subtle)' }}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ delay: 0.15 }}
-          >
-            Configure agents on your business data. Deploy across every marketplace. Run automated logic 24/7. Add as many agents as your operation demands. From anywhere.
-          </motion.p>
         </div>
 
         {/* BLOCK 2 — Two columns: dashboard left, beats right */}
