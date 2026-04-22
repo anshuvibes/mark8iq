@@ -18,7 +18,7 @@ export default function AgentFoundryV2() {
     <>
       {/* Contained dark card callout */}
       <section style={{
-        padding: '80px 0',
+        padding: '40px 0',
         background: 'transparent',
         position: 'relative',
       }}>
