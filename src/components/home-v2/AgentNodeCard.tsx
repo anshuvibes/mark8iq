@@ -21,7 +21,7 @@ export default function AgentNodeCard({
   kicker = 'AGENT FOUNDRY',
   products = ['SIGHT'],
   ariaLabel = 'Price Tracker Agent node',
-  scale = 1,
+  scale = 0.8,
   logoVariant = 'white',
   tone,
 }: AgentNodeCardProps) {
