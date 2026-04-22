@@ -569,6 +569,65 @@ export default function AgentFoundryV2() {
         </motion.p>
 
         <style>{`
+          .agent-flow-canvas {
+            width: 100%;
+            height: 220px;
+            border: 1px solid rgba(142, 89, 255, 0.16);
+            border-radius: 5px;
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(142, 89, 255, 0.08), rgba(8, 13, 25, 0.44));
+          }
+
+          .agent-flow-canvas .react-flow__pane,
+          .agent-flow-canvas .react-flow__renderer,
+          .agent-flow-canvas .react-flow__viewport {
+            cursor: default;
+          }
+
+          .agent-flow-node {
+            min-width: 154px;
+            border: 1px solid rgba(142, 89, 255, 0.2);
+            border-radius: 5px;
+            padding: 12px 14px;
+            background: rgba(8, 13, 25, 0.88);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.26);
+          }
+
+          .agent-flow-node--agent {
+            min-width: 192px;
+            border-color: rgba(142, 89, 255, 0.46);
+            background: rgba(142, 89, 255, 0.14);
+          }
+
+          .agent-flow-node__label,
+          .agent-flow-node__meta {
+            font-family: 'Saira', sans-serif;
+            margin: 0;
+          }
+
+          .agent-flow-node__label {
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 17px;
+            color: var(--v2-text);
+            white-space: nowrap;
+          }
+
+          .agent-flow-node__meta {
+            margin-top: 4px;
+            font-size: 10px;
+            font-weight: 400;
+            line-height: 15px;
+            color: var(--v2-text-muted);
+          }
+
+          .agent-flow-handle {
+            width: 7px;
+            height: 7px;
+            border: 1px solid rgba(142, 89, 255, 0.64);
+            background: var(--v2-accent);
+          }
+
           @media (max-width: 991px) {
             .agent-foundry-tabs { flex-direction: column !important; }
             .agent-foundry-tabs > div { flex: 1 1 100% !important; }
