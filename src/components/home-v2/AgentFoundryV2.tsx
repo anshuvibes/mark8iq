@@ -380,14 +380,14 @@ export default function AgentFoundryV2() {
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                       {CXO_AGENTS.map((agent) => (
                         <div key={agent.name} style={{
-                          background: 'rgba(142,89,255,0.04)',
+                          background: 'rgba(142,89,255,0.08)',
                           border: '1px solid rgba(142,89,255,0.12)',
-                          borderRadius: '10px',
+                          borderRadius: '5px',
                           padding: '14px 16px',
                         }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                             <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4ade80', boxShadow: '0 0 4px rgba(74,222,128,0.6)', flexShrink: 0 }} />
-                            <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '13px', fontWeight: 500, color: 'var(--v2-text)' }}>
+                            <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.85)' }}>
                               {agent.name}
                             </span>
                           </div>
@@ -403,7 +403,7 @@ export default function AgentFoundryV2() {
                               </span>
                             ))}
                           </div>
-                          <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '11px', color: 'var(--v2-text-muted)', margin: '8px 0 0 0' }}>
+                          <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.35)', margin: '8px 0 0 0' }}>
                             Last: {agent.lastAction}
                           </p>
                         </div>
@@ -416,14 +416,14 @@ export default function AgentFoundryV2() {
                     <div style={{
                       background: 'rgba(142,89,255,0.06)',
                       border: '1px dashed rgba(142,89,255,0.25)',
-                      borderRadius: '10px',
+                      borderRadius: '5px',
                       padding: '24px',
                       textAlign: 'center',
                     }}>
                       <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '13px', color: '#8e59ff', margin: '0 0 8px 0', fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                         AGENT FOUNDRY — CUSTOM BUILDER
                       </p>
-                      <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', color: 'var(--v2-text-subtle)', margin: 0, lineHeight: '1.6' }}>
+                      <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', color: 'rgba(255,255,255,0.55)', margin: 0, lineHeight: '1.6' }}>
                         Drag. Connect. Deploy. Your workflow. Your rules.
                       </p>
                     </div>
@@ -444,7 +444,7 @@ export default function AgentFoundryV2() {
             fontFamily: "'Saira', sans-serif",
             fontSize: '20px',
             fontWeight: 400,
-            color: 'var(--v2-text-subtle)',
+            color: 'rgba(255,255,255,0.35)',
             textAlign: 'center',
             padding: '80px 40px',
             fontStyle: 'italic',
