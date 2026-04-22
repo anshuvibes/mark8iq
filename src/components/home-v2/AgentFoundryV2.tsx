@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import { useV2Theme } from './ThemeContext';
 
 const TABS = [
   {
@@ -74,24 +77,43 @@ const CXO_AGENTS = [
 export default function AgentFoundryV2() {
   const [activeTab, setActiveTab] = useState(0);
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const { setTheme } = useV2Theme();
+  const setThemeRef = useRef(setTheme);
+  setThemeRef.current = setTheme;
 
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
     const section = document.querySelector('[data-section="agent-foundry"]');
     if (!section) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          document.dispatchEvent(new CustomEvent('cursor-hide'));
-        } else {
-          document.dispatchEvent(new CustomEvent('cursor-show'));
-        }
+    const trigger = ScrollTrigger.create({
+      trigger: section,
+      start: 'top 80%',
+      end: 'bottom 20%',
+      onEnter: () => {
+        setThemeRef.current('dark');
+        document.dispatchEvent(new CustomEvent('cursor-hide'));
       },
-      { threshold: 0.1 }
-    );
+      onLeave: () => {
+        setThemeRef.current('light');
+        document.dispatchEvent(new CustomEvent('cursor-show'));
+      },
+      onEnterBack: () => {
+        setThemeRef.current('dark');
+        document.dispatchEvent(new CustomEvent('cursor-hide'));
+      },
+      onLeaveBack: () => {
+        setThemeRef.current('light');
+        document.dispatchEvent(new CustomEvent('cursor-show'));
+      },
+    });
 
-    observer.observe(section);
-    return () => observer.disconnect();
+    return () => {
+      trigger.kill();
+      setThemeRef.current('light');
+      document.dispatchEvent(new CustomEvent('cursor-show'));
+    };
   }, []);
 
   useEffect(() => {
