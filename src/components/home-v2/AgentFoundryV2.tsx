@@ -266,18 +266,18 @@ export default function AgentFoundryV2() {
                   key={tab.id}
                   ref={(el) => { panelRefs.current[i] = el; }}
                   style={{
-                    background: '#ffffff',
-                    border: '1px solid rgba(18,24,43,0.08)',
-                    boxShadow: '0 4px 24px rgba(18,24,43,0.06)',
-                    borderRadius: '16px',
+                    background: '#0d1117',
+                    border: '1px solid rgba(255,255,255,0.06)',
+                    boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+                    borderRadius: '5px',
                     padding: '40px',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '24px',
                     transition: 'box-shadow 0.3s ease',
                     ...(activeTab === i ? {
-                      boxShadow: '0 8px 40px rgba(18,24,43,0.1)',
-                      border: '1px solid rgba(142,89,255,0.15)',
+                      boxShadow: '0 8px 40px rgba(0,0,0,0.4)',
+                      border: '1px solid rgba(142,89,255,0.25)',
                     } : {}),
                   }}
                 >
@@ -301,7 +301,7 @@ export default function AgentFoundryV2() {
                         fontWeight: 400,
                         letterSpacing: '0.08em',
                         textTransform: 'uppercase',
-                        color: 'rgba(18,24,43,0.3)',
+                        color: 'rgba(255,255,255,0.25)',
                         margin: 0,
                       }}>
                         AGENTIC WORKFLOW
@@ -314,7 +314,7 @@ export default function AgentFoundryV2() {
                     fontFamily: "'Saira', sans-serif",
                     fontSize: '22px',
                     fontWeight: 500,
-                    color: 'var(--v2-text)',
+                    color: '#ffffff',
                     margin: 0,
                     lineHeight: '1.4',
                   }}>
@@ -326,7 +326,7 @@ export default function AgentFoundryV2() {
                     fontFamily: "'Saira', sans-serif",
                     fontSize: '15px',
                     fontWeight: 400,
-                    color: 'var(--v2-text-subtle)',
+                    color: 'rgba(255,255,255,0.55)',
                     lineHeight: '1.7',
                     margin: 0,
                   }}>
@@ -336,9 +336,9 @@ export default function AgentFoundryV2() {
                   {/* Standard: agent card */}
                   {tab.type === 'standard' && (
                     <div style={{
-                      background: 'rgba(142,89,255,0.04)',
+                      background: 'rgba(142,89,255,0.08)',
                       border: '1px solid rgba(142,89,255,0.12)',
-                      borderRadius: '10px',
+                      borderRadius: '5px',
                       padding: '16px 20px',
                     }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
@@ -349,11 +349,11 @@ export default function AgentFoundryV2() {
                             boxShadow: '0 0 6px rgba(74,222,128,0.6)',
                             flexShrink: 0,
                           }} />
-                          <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 500, color: 'var(--v2-text)' }}>
+                          <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 500, color: 'rgba(255,255,255,0.85)' }}>
                             {tab.agentName}
                           </span>
                         </div>
-                        <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '12px', color: 'var(--v2-text-muted)' }}>
+                        <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '12px', color: 'rgba(255,255,255,0.35)' }}>
                           Last action: {tab.lastAction}
                         </span>
                       </div>
