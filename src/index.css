@@ -1327,7 +1327,7 @@ body {
 .agent-marquee-track {
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 10px;
   width: max-content;
   animation: agentMarqueeScroll 40s linear infinite;
 }
@@ -1338,6 +1338,13 @@ body {
 
 .agent-marquee-item {
   flex-shrink: 0;
+}
+
+.agent-marquee-item:hover .agent-node-card {
+  border-color: hsl(var(--agent-node-violet) / 0.72);
+  box-shadow:
+    0 0 0 1px hsl(var(--agent-node-violet) / 0.2),
+    0 10px 36px hsl(var(--agent-node-violet) / 0.18);
 }
 
 @keyframes agentMarqueeScroll {
