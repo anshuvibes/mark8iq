@@ -4,6 +4,7 @@ type AgentNodeCardProps = {
   products?: string[];
   ariaLabel?: string;
   scale?: number;
+  logoVariant?: 'white' | 'black';
   tone?: {
     surface?: string;
     violet?: string;
@@ -21,6 +22,7 @@ export default function AgentNodeCard({
   products = ['SIGHT'],
   ariaLabel = 'Price Tracker Agent node',
   scale = 1,
+  logoVariant = 'white',
   tone,
 }: AgentNodeCardProps) {
   const cssVariables = {
@@ -34,8 +36,18 @@ export default function AgentNodeCard({
     ...(tone?.metal ? { '--agent-node-metal': tone.metal } : {}),
   } as React.CSSProperties;
 
+  const PRODUCT_LOGO_MAP: Record<string, { white: string; black: string; accent: string }> = {
+    'ADS': { white: '/img/product-logos/white/mark8-ads.svg', black: '/img/product-logos/black/mark8-ads.svg', accent: '#fc7459' },
+    'SIGHT': { white: '/img/product-logos/white/mark8-sight.svg', black: '/img/product-logos/black/mark8-sight.svg', accent: '#52bfbc' },
+    'SHELF': { white: '/img/product-logos/white/mark8-shelf.svg', black: '/img/product-logos/black/mark8-shelf.svg', accent: '#6895fc' },
+    'RETURNS': { white: '/img/product-logos/white/mark8-returns.svg', black: '/img/product-logos/black/mark8-returns.svg', accent: '#52bfbc' },
+    'RECO': { white: '/img/product-logos/white/mark8-reco.svg', black: '/img/product-logos/black/mark8-reco.svg', accent: '#7cbc71' },
+    'INVENTORY': { white: '/img/product-logos/white/mark8-po.svg', black: '/img/product-logos/black/mark8-po.svg', accent: '#fcb24f' },
+    'ONE': { white: '/img/product-logos/white/market-one.svg', black: '/img/product-logos/black/market-one.svg', accent: '#8e59ff' },
+  };
+
   return (
-    <div className="agent-node-card" style={cssVariables} aria-label={ariaLabel}>
+    <div className="agent-node-card agent-node-card--hoverable" style={cssVariables} aria-label={ariaLabel}>
       <div className="agent-node-robot-tile" aria-hidden="true">
         <svg className="agent-node-robot-svg" xmlns="http://www.w3.org/2000/svg" width="106" height="106" viewBox="0 0 106 106" fill="none">
           <rect width="106" height="106" rx="13.3978" fill="hsl(var(--agent-node-port))" fillOpacity="0.12" />
@@ -53,9 +65,40 @@ export default function AgentNodeCard({
         <h3 className="agent-node-title">{title}</h3>
         <p className="agent-node-kicker">{kicker}</p>
         <div className="agent-node-badges" aria-label="Connected products">
-          {products.map((product) => (
-            <span key={product} className="agent-node-badge agent-node-badge-sight"><span>mark8</span>{product}</span>
-          ))}
+          {products.map((product) => {
+            const productKey = product.toUpperCase();
+            const logoData = PRODUCT_LOGO_MAP[productKey];
+            const logoSrc = logoData ? (logoVariant === 'black' ? logoData.black : logoData.white) : null;
+            const accentColor = logoData?.accent ?? '#8e59ff';
+
+            return (
+              <span
+                key={product}
+                className="agent-node-badge"
+                style={{
+                  borderColor: `${accentColor}40`,
+                  background: `${accentColor}10`,
+                }}
+              >
+                {logoSrc ? (
+                  <img
+                    src={logoSrc}
+                    alt={`Mark8 ${product}`}
+                    style={{
+                      height: '14px',
+                      width: 'auto',
+                      display: 'block',
+                      objectFit: 'contain',
+                    }}
+                  />
+                ) : (
+                  <span style={{ color: accentColor, fontSize: '11px', fontWeight: 500 }}>
+                    {product}
+                  </span>
+                )}
+              </span>
+            );
+          })}
         </div>
       </div>
       <div className="agent-node-left-port" aria-hidden="true" />
