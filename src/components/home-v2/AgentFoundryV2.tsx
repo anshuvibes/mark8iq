@@ -434,7 +434,7 @@ export default function AgentFoundryV2() {
                       borderRadius: '5px',
                       padding: '16px 20px',
                     }}>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: tab.id === 'ads' ? '16px' : '10px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                           <div style={{
                             width: '8px', height: '8px', borderRadius: '50%',
@@ -450,7 +450,29 @@ export default function AgentFoundryV2() {
                           Last action: {tab.lastAction}
                         </span>
                       </div>
-                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      {tab.id === 'ads' && (
+                        <div className="agent-flow-canvas" aria-label="Keyword harvesting workflow canvas">
+                          <ReactFlow
+                            nodes={adsWorkflowNodes}
+                            edges={adsWorkflowEdges}
+                            nodeTypes={agentFlowNodeTypes}
+                            fitView
+                            fitViewOptions={{ padding: 0.18 }}
+                            nodesDraggable={false}
+                            nodesConnectable={false}
+                            elementsSelectable={false}
+                            panOnDrag={false}
+                            zoomOnScroll={false}
+                            zoomOnPinch={false}
+                            zoomOnDoubleClick={false}
+                            preventScrolling={false}
+                            proOptions={{ hideAttribution: true }}
+                          >
+                            <Background color="var(--v2-border)" gap={18} size={1} />
+                          </ReactFlow>
+                        </div>
+                      )}
+                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: tab.id === 'ads' ? '14px' : 0 }}>
                         {tab.connects.map((tag) => (
                           <span key={tag} style={{
                             fontFamily: "'Saira', sans-serif",
