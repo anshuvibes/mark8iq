@@ -71,13 +71,13 @@ export default function AgentFoundryV2() {
       </section>
 
     <section style={{ padding: '100px 0', position: 'relative' }}>
-      <div className="container" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '64px' }}>
+      <div className="container" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '40px' }}>
 
         {/* BLOCK 1 — Centered intro */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', maxWidth: '760px', marginLeft: 'auto', marginRight: 'auto' }}>
           <motion.p
             className="m8-eyebrow"
-            style={{ color: '#FCB24F', marginBottom: '12px' }}
+            style={{ color: '#8e59ff', marginBottom: '12px' }}
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
@@ -98,7 +98,7 @@ export default function AgentFoundryV2() {
         </div>
 
         {/* BLOCK 2 — Two columns: beats left, dashboard right */}
-        <div className="agent-foundry-cols" style={{ display: 'flex', flexDirection: 'row', gap: '64px', alignItems: 'center' }}>
+        <div className="agent-foundry-cols" style={{ display: 'flex', flexDirection: 'row', gap: '64px', alignItems: 'flex-start' }}>
           {/* LEFT — Beats */}
           <div style={{ flex: '0 0 44%', maxWidth: '44%' }}>
             {beats.map((beat, i) => (
@@ -117,10 +117,10 @@ export default function AgentFoundryV2() {
                   width: '36px',
                   height: '36px',
                   borderRadius: '8px',
-                  background: 'rgba(252,180,79,0.12)',
+                  background: 'rgba(142,89,255,0.08)',
                   marginBottom: '10px',
                 }}>
-                  <span className="m8-p6" style={{ color: '#FCB24F', fontWeight: 500 }}>{beat.num}</span>
+                  <span className="m8-p6" style={{ color: '#8e59ff', fontWeight: 500 }}>{beat.num}</span>
                 </div>
                 <h4 className="m8-p3-medium" style={{ color: 'var(--v2-text)', marginBottom: '6px' }}>{beat.label}</h4>
                 <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)' }}>{beat.desc}</p>
