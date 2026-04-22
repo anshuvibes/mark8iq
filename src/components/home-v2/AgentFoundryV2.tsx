@@ -445,6 +445,7 @@ export default function AgentFoundryV2() {
               </div>
             </div>
           </div>
+        </div>
 
           {/* Closing power line */}
           <motion.p
@@ -458,15 +459,12 @@ export default function AgentFoundryV2() {
               fontWeight: 400,
               color: 'var(--v2-text-subtle)',
               textAlign: 'center',
-              margin: '72px auto 0',
-              maxWidth: '600px',
+              padding: '80px 40px',
               fontStyle: 'italic',
-              lineHeight: '1.6',
             }}
           >
             While you were in that meeting, your agents closed the gap.
           </motion.p>
-        </div>
 
         <style>{`
           @media (max-width: 991px) {
@@ -475,7 +473,6 @@ export default function AgentFoundryV2() {
           }
         `}</style>
 
-      </div>
     </section>
     </>
   );
