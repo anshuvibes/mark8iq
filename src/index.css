@@ -1305,6 +1305,13 @@ body {
 
 /* ── AGENT FOUNDRY MARQUEE STRIP ─────────────────────────────── */
 
+.agent-marquee-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 72px;
+}
+
 .agent-marquee-outer {
   width: 100%;
   overflow: hidden;
@@ -1332,8 +1339,12 @@ body {
   animation: agentMarqueeScroll 40s linear infinite;
 }
 
-.agent-marquee-track:hover {
-  animation-play-state: paused;
+.agent-marquee-track--reverse {
+  animation-name: agentMarqueeScrollReverse;
+}
+
+.agent-marquee-stack:hover .agent-marquee-track {
+  animation-duration: 200s;
 }
 
 .agent-marquee-item {
@@ -1350,6 +1361,11 @@ body {
 @keyframes agentMarqueeScroll {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
+}
+
+@keyframes agentMarqueeScrollReverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
