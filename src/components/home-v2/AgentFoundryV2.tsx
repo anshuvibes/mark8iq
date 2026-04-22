@@ -76,6 +76,25 @@ export default function AgentFoundryV2() {
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
+    const section = document.querySelector('[data-section="agent-foundry"]');
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          document.dispatchEvent(new CustomEvent('cursor-hide'));
+        } else {
+          document.dispatchEvent(new CustomEvent('cursor-show'));
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const observers: IntersectionObserver[] = [];
 
     panelRefs.current.forEach((panel, i) => {
@@ -158,7 +177,7 @@ export default function AgentFoundryV2() {
 
       <section
         data-section="agent-foundry"
-        style={{ padding: '60px 0 0 0', position: 'relative', background: '#080d19' }}
+        style={{ padding: '60px 0 0 0', position: 'relative' }}
       >
         {/* Headline block — normal scroll, no sticky involvement */}
         <div className="container" style={{ textAlign: 'center', paddingBottom: '48px' }}>
@@ -174,7 +193,7 @@ export default function AgentFoundryV2() {
 
           <motion.h2
             className="m8-h2"
-            style={{ color: '#ffffff', marginBottom: 0 }}
+            style={{ color: 'var(--v2-text)', marginBottom: 0 }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
@@ -216,7 +235,7 @@ export default function AgentFoundryV2() {
                     padding: '16px 20px',
                     background: 'none',
                     border: 'none',
-                    borderLeft: `2px solid ${activeTab === i ? '#8e59ff' : 'rgba(255,255,255,0.08)'}`,
+                    borderLeft: `2px solid ${activeTab === i ? '#8e59ff' : 'var(--v2-border)'}`,
                     cursor: 'pointer',
                     textAlign: 'left',
                     transition: 'border-color 0.2s ease',
@@ -226,7 +245,7 @@ export default function AgentFoundryV2() {
                     fontFamily: "'Saira', sans-serif",
                     fontSize: '15px',
                     fontWeight: activeTab === i ? 500 : 400,
-                    color: activeTab === i ? '#ffffff' : 'rgba(255,255,255,0.35)',
+                    color: activeTab === i ? 'var(--v2-text)' : 'var(--v2-text-subtle)',
                     transition: 'color 0.2s ease',
                     lineHeight: '22px',
                   }}>
@@ -243,7 +262,7 @@ export default function AgentFoundryV2() {
                     fontFamily: "'Saira', sans-serif",
                     fontSize: '12px',
                     fontWeight: 400,
-                    color: activeTab === i ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.2)',
+                    color: activeTab === i ? 'var(--v2-text-subtle)' : 'var(--v2-text-muted)',
                     lineHeight: '17px',
                     transition: 'color 0.2s ease',
                   }}>
@@ -266,8 +285,8 @@ export default function AgentFoundryV2() {
                   key={tab.id}
                   ref={(el) => { panelRefs.current[i] = el; }}
                   style={{
-                    background: '#0d1117',
-                    border: '1px solid rgba(255,255,255,0.06)',
+                    background: 'var(--v2-bg-card)',
+                    border: '1px solid var(--v2-border)',
                     boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
                     borderRadius: '5px',
                     padding: '40px',
@@ -301,7 +320,7 @@ export default function AgentFoundryV2() {
                         fontWeight: 400,
                         letterSpacing: '0.08em',
                         textTransform: 'uppercase',
-                        color: 'rgba(255,255,255,0.25)',
+                        color: 'var(--v2-text-muted)',
                         margin: 0,
                       }}>
                         AGENTIC WORKFLOW
@@ -314,7 +333,7 @@ export default function AgentFoundryV2() {
                     fontFamily: "'Saira', sans-serif",
                     fontSize: '22px',
                     fontWeight: 500,
-                    color: '#ffffff',
+                    color: 'var(--v2-text)',
                     margin: 0,
                     lineHeight: '1.4',
                   }}>
@@ -326,7 +345,7 @@ export default function AgentFoundryV2() {
                     fontFamily: "'Saira', sans-serif",
                     fontSize: '15px',
                     fontWeight: 400,
-                    color: 'rgba(255,255,255,0.55)',
+                    color: 'var(--v2-text-subtle)',
                     lineHeight: '1.7',
                     margin: 0,
                   }}>
@@ -349,11 +368,11 @@ export default function AgentFoundryV2() {
                             boxShadow: '0 0 6px rgba(74,222,128,0.6)',
                             flexShrink: 0,
                           }} />
-                          <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 500, color: 'rgba(255,255,255,0.85)' }}>
+                          <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 500, color: 'var(--v2-text)' }}>
                             {tab.agentName}
                           </span>
                         </div>
-                        <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '12px', color: 'rgba(255,255,255,0.35)' }}>
+                        <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '12px', color: 'var(--v2-text-muted)' }}>
                           Last action: {tab.lastAction}
                         </span>
                       </div>
@@ -387,7 +406,7 @@ export default function AgentFoundryV2() {
                         }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                             <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4ade80', boxShadow: '0 0 4px rgba(74,222,128,0.6)', flexShrink: 0 }} />
-                            <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.85)' }}>
+                            <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '13px', fontWeight: 500, color: 'var(--v2-text)' }}>
                               {agent.name}
                             </span>
                           </div>
@@ -403,7 +422,7 @@ export default function AgentFoundryV2() {
                               </span>
                             ))}
                           </div>
-                          <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.35)', margin: '8px 0 0 0' }}>
+                          <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '11px', color: 'var(--v2-text-muted)', margin: '8px 0 0 0' }}>
                             Last: {agent.lastAction}
                           </p>
                         </div>
@@ -423,7 +442,7 @@ export default function AgentFoundryV2() {
                       <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '13px', color: '#8e59ff', margin: '0 0 8px 0', fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                         AGENT FOUNDRY — CUSTOM BUILDER
                       </p>
-                      <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', color: 'rgba(255,255,255,0.55)', margin: 0, lineHeight: '1.6' }}>
+                      <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', color: 'var(--v2-text-subtle)', margin: 0, lineHeight: '1.6' }}>
                         Drag. Connect. Deploy. Your workflow. Your rules.
                       </p>
                     </div>
@@ -444,7 +463,7 @@ export default function AgentFoundryV2() {
             fontFamily: "'Saira', sans-serif",
             fontSize: '20px',
             fontWeight: 400,
-            color: 'rgba(255,255,255,0.35)',
+            color: 'var(--v2-text-subtle)',
             textAlign: 'center',
             padding: '80px 40px',
             fontStyle: 'italic',
