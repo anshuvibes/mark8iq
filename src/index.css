@@ -1217,19 +1217,20 @@ body {
 .agent-node-badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  align-items: center;
+  gap: 24px;
 }
 
 .agent-node-badge {
   font-family: 'Soehne Mono', 'Saira', monospace;
-  font-size: 8.18px;
+  font-size: 24px;
   font-weight: 400;
-  line-height: 13px;
+  line-height: 1;
   letter-spacing: 0;
   text-transform: uppercase;
-  padding: 3px 6px;
-  border-radius: 3px;
-  color: hsl(var(--agent-node-green));
+  padding: 14px 23px;
+  border-radius: 8px;
+  color: hsl(var(--agent-node-ads));
 }
 
 .agent-node-badge span {
@@ -1238,21 +1239,21 @@ body {
   text-transform: lowercase;
 }
 
-.agent-node-badge-sight {
-  background: hsl(var(--agent-node-green) / 0.12);
-  border: 1px solid hsl(var(--agent-node-green) / 0.33);
+.agent-node-badge-ads {
+  background: hsl(var(--agent-node-ads) / 0.12);
+  border: 2px solid hsl(var(--agent-node-ads) / 0.4);
 }
 
 .agent-node-robot-tile {
   position: relative;
-  width: 85px;
-  height: 85px;
-  flex: 0 0 85px;
+  width: 164px;
+  height: 164px;
+  flex: 0 0 164px;
 }
 
 .agent-node-robot-svg {
-  width: 85px;
-  height: 85px;
+  width: 164px;
+  height: 164px;
   display: block;
 }
 
