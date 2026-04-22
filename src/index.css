@@ -1334,7 +1334,7 @@ body {
 .agent-marquee-track {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 6px;
   width: max-content;
   animation: agentMarqueeScroll 40s linear infinite;
 }
