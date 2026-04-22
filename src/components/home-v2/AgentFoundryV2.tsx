@@ -195,7 +195,7 @@ export default function AgentFoundryV2() {
             display: 'flex',
             flexDirection: 'row',
             gap: '64px',
-            alignItems: 'stretch',
+            alignItems: 'flex-start',
           }}>
 
             {/* LEFT — Tab list */}
@@ -204,9 +204,6 @@ export default function AgentFoundryV2() {
               display: 'flex',
               flexDirection: 'column',
               gap: '0',
-              height: '520px',
-              overflowY: 'auto',
-              scrollbarWidth: 'none',
             }}>
               {TABS.map((tab, i) => (
                 <button
@@ -258,12 +255,7 @@ export default function AgentFoundryV2() {
             </div>
 
             {/* RIGHT — Active tab content */}
-            <div style={{
-              flex: 1,
-              minWidth: 0,
-              height: '520px',
-              position: 'relative',
-            }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeTab}
@@ -280,9 +272,6 @@ export default function AgentFoundryV2() {
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '32px',
-                    height: '100%',
-                    overflowY: 'auto',
-                    scrollbarWidth: 'none',
                   }}
                 >
                   {/* Role label + workflow label */}
