@@ -1188,61 +1188,54 @@ body {
   text-align: left;
 }
 
-.agent-node-kicker {
-  font-family: 'Soehne Mono', 'Saira', monospace;
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: 0.12em;
-  color: hsl(var(--agent-node-muted));
-  margin: 0 0 8px 0;
-}
-
 .agent-node-title {
   font-family: var(--font_primary);
-  font-size: 24px;
+  font-size: 20.697px;
   font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: 0;
-  color: hsl(var(--agent-node-white));
-  margin: 0;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: hsl(var(--agent-node-honest));
+  margin: 0 0 18px 0;
+}
+
+.agent-node-kicker {
+  font-family: 'Soehne Mono', 'Saira', monospace;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: hsl(var(--agent-node-muted) / 0.56);
+  margin: 0 0 17px 0;
 }
 
 .agent-node-badges {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 14px;
 }
 
 .agent-node-badge {
   font-family: 'Soehne Mono', 'Saira', monospace;
-  font-size: 10px;
+  font-size: 10.23px;
   font-weight: 400;
-  line-height: 1;
-  letter-spacing: 0.08em;
+  line-height: 16px;
+  letter-spacing: 0;
   text-transform: uppercase;
-  padding: 7px 9px;
-  border-radius: 999px;
-  color: hsl(var(--agent-node-white));
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: hsl(var(--agent-node-green));
+}
+
+.agent-node-badge span {
+  color: hsl(var(--agent-node-honest));
+  margin-right: 2px;
+  text-transform: lowercase;
 }
 
 .agent-node-badge-sight {
-  background: hsl(var(--agent-node-sight) / 0.28);
-  border: 1px solid hsl(var(--agent-node-sight) / 0.44);
-}
-
-.agent-node-badge-returns {
-  background: hsl(var(--agent-node-returns) / 0.28);
-  border: 1px solid hsl(var(--agent-node-returns) / 0.44);
-}
-
-.agent-node-status {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: hsl(var(--agent-node-violet));
-  box-shadow: 0 0 18px hsl(var(--agent-node-violet) / 0.75);
+  background: hsl(var(--agent-node-green) / 0.12);
+  border: 1px solid hsl(var(--agent-node-green) / 0.33);
 }
 
 @media (max-width: 640px) {
