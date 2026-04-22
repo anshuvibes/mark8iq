@@ -180,13 +180,32 @@ export default function AgentFoundryV2() {
         </div>
 
         <div style={{ marginTop: '40px' }}>
-          {/* Two column layout */}
-          <div ref={sectionRef} className="agent-foundry-tabs" style={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: '64px',
-            alignItems: 'flex-start',
-          }}>
+          {/* Outer — tall div that creates scroll distance */}
+          <div
+            ref={outerRef}
+            style={{
+              height: `${TABS.length * 50 + 100}vh`,
+              position: 'relative',
+            }}
+          >
+            {/* Sticky inner — stays centered in viewport */}
+            <div
+              ref={stickyRef}
+              style={{
+                position: 'sticky',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                paddingTop: '40px',
+                paddingBottom: '40px',
+              }}
+            >
+              {/* Two column layout */}
+              <div className="agent-foundry-tabs" style={{
+                display: 'flex',
+                flexDirection: 'row',
+                gap: '64px',
+                alignItems: 'flex-start',
+              }}>
 
             {/* LEFT — Tab list */}
             <div style={{
@@ -426,6 +445,8 @@ export default function AgentFoundryV2() {
               </AnimatePresence>
             </div>
 
+              </div>
+            </div>
           </div>
 
           {/* Closing power line */}
