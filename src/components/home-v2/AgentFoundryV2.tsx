@@ -152,11 +152,9 @@ export default function AgentFoundryV2() {
         </div>
       </section>
 
-    <section style={{ padding: '100px 0', position: 'relative' }}>
-      <div className="container" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', gap: '40px' }}>
-
-        {/* BLOCK 1 — Centered intro */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', maxWidth: '760px', marginLeft: 'auto', marginRight: 'auto' }}>
+    <section style={{ padding: '100px 0 0 0', position: 'relative' }}>
+        {/* Headline block — normal scroll, no sticky involvement */}
+        <div className="container" style={{ textAlign: 'center', paddingBottom: '80px' }}>
           <motion.p
             className="m8-eyebrow"
             style={{ color: '#8e59ff', marginBottom: '12px' }}
@@ -168,38 +166,37 @@ export default function AgentFoundryV2() {
           </motion.p>
 
           <motion.h2
-            className="m8-h1-large"
-            style={{ color: 'var(--v2-text)', marginBottom: '24px' }}
+            className="m8-h2"
+            style={{ color: 'var(--v2-text)', marginBottom: 0 }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.08 }}
           >
             Deploy a workforce<br />that never clocks out.
           </motion.h2>
         </div>
 
-        <div style={{ marginTop: '40px' }}>
-          {/* Outer — tall div that creates scroll distance */}
+        {/* Outer scroll container — starts AFTER headline */}
+        <div
+          ref={outerRef}
+          style={{
+            height: `${TABS.length * 50 + 100}vh`,
+            position: 'relative',
+          }}
+        >
+          {/* Sticky panel — centers in viewport */}
           <div
-            ref={outerRef}
+            ref={stickyRef}
             style={{
-              height: `${TABS.length * 50 + 100}vh`,
-              position: 'relative',
+              position: 'sticky',
+              top: '50vh',
+              transform: 'translateY(-50%)',
+              padding: '0',
             }}
           >
-            {/* Sticky inner — stays centered in viewport */}
-            <div
-              ref={stickyRef}
-              style={{
-                position: 'sticky',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                paddingTop: '40px',
-                paddingBottom: '40px',
-              }}
-            >
-              {/* Two column layout */}
+            <div className="container">
+              {/* Two-column tab layout — exactly as-is */}
               <div className="agent-foundry-tabs" style={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -448,6 +445,7 @@ export default function AgentFoundryV2() {
               </div>
             </div>
           </div>
+        </div>
 
           {/* Closing power line */}
           <motion.p
@@ -461,15 +459,12 @@ export default function AgentFoundryV2() {
               fontWeight: 400,
               color: 'var(--v2-text-subtle)',
               textAlign: 'center',
-              margin: '72px auto 0',
-              maxWidth: '600px',
+              padding: '80px 40px',
               fontStyle: 'italic',
-              lineHeight: '1.6',
             }}
           >
             While you were in that meeting, your agents closed the gap.
           </motion.p>
-        </div>
 
         <style>{`
           @media (max-width: 991px) {
@@ -478,7 +473,6 @@ export default function AgentFoundryV2() {
           }
         `}</style>
 
-      </div>
     </section>
     </>
   );
