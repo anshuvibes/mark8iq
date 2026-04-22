@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { Background, Handle, Position, ReactFlow, type Edge, type Node, type NodeProps, type NodeTypes } from '@xyflow/react';
+import '@xyflow/react/dist/style.css';
 import { useV2Theme } from './ThemeContext';
 import AgentMarqueeStrip from './AgentMarqueeStrip';
 
@@ -73,6 +75,38 @@ const CXO_AGENTS = [
   { name: 'Visibility Booster Agent', connects: ['Mark8 Sight', 'Mark8 Ads'], lastAction: '22 min ago' },
   { name: 'Price Tracker Agent', connects: ['Mark8 Sight'], lastAction: '2 min ago' },
   { name: 'Low Stock AdFlow Agent', connects: ['Mark8 Shelf', 'Mark8 Ads'], lastAction: '45 min ago' },
+];
+
+type WorkflowNodeData = {
+  label: string;
+  meta: string;
+  tone: 'source' | 'agent' | 'action';
+};
+
+type WorkflowNode = Node<WorkflowNodeData, 'agentWorkflow'>;
+
+function AgentWorkflowNode({ data }: NodeProps<WorkflowNode>) {
+  return (
+    <div className={`agent-flow-node agent-flow-node--${data.tone}`}>
+      <Handle type="target" position={Position.Left} className="agent-flow-handle" />
+      <p className="agent-flow-node__label">{data.label}</p>
+      <p className="agent-flow-node__meta">{data.meta}</p>
+      <Handle type="source" position={Position.Right} className="agent-flow-handle" />
+    </div>
+  );
+}
+
+const agentFlowNodeTypes: NodeTypes = { agentWorkflow: AgentWorkflowNode };
+
+const adsWorkflowNodes: WorkflowNode[] = [
+  { id: 'sight', type: 'agentWorkflow', position: { x: 18, y: 78 }, data: { label: 'Mark8 Sight', meta: 'Competitor search scan', tone: 'source' } },
+  { id: 'agent', type: 'agentWorkflow', position: { x: 220, y: 38 }, data: { label: 'Keyword Harvesting Agent', meta: 'Ranks, clusters, validates', tone: 'agent' } },
+  { id: 'ads', type: 'agentWorkflow', position: { x: 474, y: 78 }, data: { label: 'Mark8 Ads', meta: 'Queues bid deployment', tone: 'action' } },
+];
+
+const adsWorkflowEdges: Edge[] = [
+  { id: 'sight-agent', source: 'sight', target: 'agent', animated: true, style: { stroke: 'var(--v2-accent)', strokeWidth: 1.4 } },
+  { id: 'agent-ads', source: 'agent', target: 'ads', animated: true, style: { stroke: 'var(--v2-accent)', strokeWidth: 1.4 } },
 ];
 
 export default function AgentFoundryV2() {
