@@ -152,9 +152,9 @@ export default function AgentFoundryV2() {
         </div>
       </section>
 
-    <section style={{ padding: '100px 0 0 0', position: 'relative' }}>
+    <section style={{ padding: '60px 0 0 0', position: 'relative' }}>
         {/* Headline block — normal scroll, no sticky involvement */}
-        <div className="container" style={{ textAlign: 'center', paddingBottom: '80px' }}>
+        <div className="container" style={{ textAlign: 'center', paddingBottom: '32px' }}>
           <motion.p
             className="m8-eyebrow"
             style={{ color: '#8e59ff', marginBottom: '12px' }}
