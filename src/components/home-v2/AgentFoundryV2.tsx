@@ -249,7 +249,7 @@ export default function AgentFoundryV2() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.14 }}
           >
-            <div className="agent-node-card" aria-label="Price Tracker Agent node">
+            <div className="agent-node-card" aria-label="Ad Optimizer Agent node">
               <div className="agent-node-robot-tile" aria-hidden="true">
                 <svg className="agent-node-robot-svg" xmlns="http://www.w3.org/2000/svg" width="106" height="106" viewBox="0 0 106 106" fill="none">
                   <rect width="106" height="106" rx="13.3978" fill="hsl(var(--agent-node-port))" fillOpacity="0.12" />
@@ -264,10 +264,13 @@ export default function AgentFoundryV2() {
                 </svg>
               </div>
               <div className="agent-node-copy">
-                <h3 className="agent-node-title">Price Tracker Agent</h3>
+                <h3 className="agent-node-title">Ad Optimizer Agent</h3>
                 <p className="agent-node-kicker">AGENT FOUNDRY</p>
                 <div className="agent-node-badges" aria-label="Connected products">
-                  <span className="agent-node-badge agent-node-badge-sight"><span>mark8</span>SIGHT</span>
+                  <span className="agent-node-badge agent-node-badge-ads"><span>mark8</span>ADS</span>
+                  <span className="agent-node-platform agent-node-platform-postgres" aria-label="Postgres" />
+                  <span className="agent-node-platform agent-node-platform-flipkart" aria-label="Flipkart">f</span>
+                  <span className="agent-node-platform agent-node-platform-amazon" aria-label="Amazon" />
                 </div>
               </div>
               <div className="agent-node-left-port" aria-hidden="true" />
