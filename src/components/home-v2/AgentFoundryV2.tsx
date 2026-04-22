@@ -5,45 +5,72 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 
 const TABS = [
   {
+    id: 'ads',
     role: 'Ads Manager',
-    oneliner: 'Stop burning budget on the wrong keywords.',
-    body: 'Your ROAS Optimiser Agent monitors every campaign across every marketplace, every hour. When a keyword drops below your target ACoS, it adjusts bids instantly. No manual review. No delay. No missed opportunity.',
-    agent: 'ROAS Optimiser Agent',
-    status: 'Active',
-    lastAction: '14 min ago',
-  },
-  {
-    role: 'Inventory Head',
-    oneliner: 'Get ahead of stockouts before they cost you sales.',
-    body: 'Your Stock Alert Agent tracks sell-through rates across every SKU on every marketplace. The moment inventory crosses a threshold you define, it flags the risk and pauses ads on affected listings automatically. No firefighting. No revenue lost to empty shelves.',
-    agent: 'Stock Alert Agent',
-    status: 'Active',
+    oneliner: 'Find the keywords your competitors are winning on. And act on them automatically.',
+    body: 'The Keyword Harvesting Agent scans competitor search visibility data from Mark8 Sight every hour. It identifies high-performing keywords you are not bidding on, maps them to your campaigns in Mark8 Ads, and queues them for deployment. No manual research. No missed opportunities. Your keyword strategy runs itself.',
+    agentName: 'Keyword Harvesting Agent',
+    connects: ['Mark8 Sight', 'Mark8 Ads'],
     lastAction: '1 hr ago',
+    type: 'standard' as const,
   },
   {
+    id: 'ecom',
+    role: 'E-Commerce Head',
+    oneliner: 'Protect your search rank before competitors take it.',
+    body: 'The Visibility Booster Agent monitors your search rank across every marketplace through Mark8 Sight. The moment your position drops below the threshold you set, it triggers a targeted bid adjustment in Mark8 Ads to recover visibility. You do not find out after the damage is done. The agent acts while it is happening.',
+    agentName: 'Visibility Booster Agent',
+    connects: ['Mark8 Sight', 'Mark8 Ads'],
+    lastAction: '22 min ago',
+    type: 'standard' as const,
+  },
+  {
+    id: 'finance',
     role: 'Finance Head',
     oneliner: 'Catch platform price violations before they cut your margin.',
-    body: 'Your Price Tracker Agent scans agreed selling prices against actual live prices across Amazon, Flipkart, Myntra, and quick commerce every hour. The moment a platform drops below your floor price, it is flagged with evidence of who violated first.',
-    agent: 'Price Tracker Agent',
-    status: 'Active',
+    body: 'The Price Tracker Agent scans your agreed vendor prices against live selling prices across Amazon, Flipkart, Myntra, and quick commerce every hour through Mark8 Sight. The moment a platform drops below your floor price, it flags the violation with a timestamp and cascade chain. You know who violated first. You have the evidence to act.',
+    agentName: 'Price Tracker Agent',
+    connects: ['Mark8 Sight'],
     lastAction: '2 min ago',
+    type: 'standard' as const,
   },
   {
-    role: 'Operations Head',
-    oneliner: 'Close reconciliation gaps without chasing platform reports.',
-    body: 'Your Return Reconciler Agent cross-references every return against platform settlements. Mismatches are flagged automatically. Leakages are surfaced before quarter end. No spreadsheets. No manual matching.',
-    agent: 'Return Reconciler Agent',
-    status: 'Active',
-    lastAction: '3 hrs ago',
+    id: 'inventory',
+    role: 'Inventory Head',
+    oneliner: 'Stop burning ad spend on products you cannot fulfill.',
+    body: 'The Low Stock AdFlow Agent monitors your inventory levels in Mark8 Shelf. The moment a SKU crosses your minimum stock threshold, it automatically pauses or reduces ad spend on that listing in Mark8 Ads. No wasted budget on products that cannot convert. No customer experience damaged by ads leading to out-of-stock pages.',
+    agentName: 'Low Stock AdFlow Agent',
+    connects: ['Mark8 Shelf', 'Mark8 Ads'],
+    lastAction: '45 min ago',
+    type: 'standard' as const,
   },
   {
+    id: 'cxo',
     role: 'CXO',
-    oneliner: 'Run a leaner operation without adding headcount.',
-    body: 'Deploy as many agents as your operation demands. Each one runs on your business data. Each one acts within rules you define. Your team focuses on decisions. Your agents handle execution. The operation scales. The team does not have to.',
-    agent: '4 agents running',
-    status: '100+ signals monitored',
-    lastAction: 'Zero manual intervention',
+    oneliner: 'Scale the operation without scaling the team.',
+    body: 'Four agents. Running simultaneously. Acting on your data. Every hour of every day. Your ads optimise themselves. Your prices are protected. Your keywords grow automatically. Your inventory never wastes budget. This is not automation for automation\'s sake. This is the execution layer your operation always needed but could never hire.',
+    agentName: 'All four agents active',
+    connects: ['Mark8 Sight', 'Mark8 Ads', 'Mark8 Shelf'],
+    lastAction: 'Continuous',
+    type: 'cxo' as const,
   },
+  {
+    id: 'custom',
+    role: 'Build Your Own',
+    oneliner: 'Not every operation fits a template. Build the agent your business actually needs.',
+    body: 'Agent Foundry includes a visual drag-and-drop builder. Connect to your data sources. Define your triggers. Set your rules. Deploy an agent that works exactly the way your operation demands. No engineering team required. No template constraints. If you can describe the workflow, you can build the agent.',
+    agentName: 'Custom Agent Builder',
+    connects: ['Any Mark8 IQ module'],
+    lastAction: 'Ready to build',
+    type: 'custom' as const,
+  },
+];
+
+const CXO_AGENTS = [
+  { name: 'Keyword Harvesting Agent', connects: ['Mark8 Sight', 'Mark8 Ads'], lastAction: '1 hr ago' },
+  { name: 'Visibility Booster Agent', connects: ['Mark8 Sight', 'Mark8 Ads'], lastAction: '22 min ago' },
+  { name: 'Price Tracker Agent', connects: ['Mark8 Sight'], lastAction: '2 min ago' },
+  { name: 'Low Stock AdFlow Agent', connects: ['Mark8 Shelf', 'Mark8 Ads'], lastAction: '45 min ago' },
 ];
 
 export default function AgentFoundryV2() {
@@ -180,7 +207,8 @@ export default function AgentFoundryV2() {
             }}>
               {TABS.map((tab, i) => (
                 <button
-                  key={tab.role}
+                  key={tab.id}
+                  onClick={() => setActiveTab(i)}
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -203,17 +231,21 @@ export default function AgentFoundryV2() {
                     transition: 'color 0.2s ease',
                     lineHeight: '24px',
                   }}>
-                    <span style={{ color: activeTab === i ? '#8e59ff' : 'rgba(142,89,255,0.4)' }}>
+                    <span style={{
+                      color: tab.id === 'custom'
+                        ? '#8e59ff'
+                        : activeTab === i ? '#8e59ff' : 'rgba(142,89,255,0.4)',
+                    }}>
                       {tab.role}
                     </span>
-                    {' '}can
+                    {tab.id !== 'custom' && ' can'}
                   </span>
                   <span style={{
                     fontFamily: "'Saira', sans-serif",
-                    fontSize: '14px',
+                    fontSize: '13px',
                     fontWeight: 400,
                     color: activeTab === i ? 'var(--v2-text-subtle)' : 'var(--v2-text-muted)',
-                    lineHeight: '20px',
+                    lineHeight: '18px',
                     transition: 'color 0.2s ease',
                   }}>
                     {tab.oneliner}
@@ -242,99 +274,186 @@ export default function AgentFoundryV2() {
                     gap: '32px',
                   }}
                 >
-                  {/* Role + one-liner */}
-                  <div>
+                  {/* Role label + workflow label */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
                     <p style={{
                       fontFamily: "'Saira', sans-serif",
-                      fontSize: '13px',
+                      fontSize: '11px',
                       fontWeight: 400,
-                      letterSpacing: '0.08em',
+                      letterSpacing: '0.1em',
                       textTransform: 'uppercase',
                       color: '#8e59ff',
-                      margin: '0 0 12px 0',
+                      margin: 0,
                     }}>
                       {TABS[activeTab].role}
                     </p>
-                    <h3 style={{
-                      fontFamily: "'Saira', sans-serif",
-                      fontSize: '22px',
-                      fontWeight: 500,
-                      color: 'var(--v2-text)',
-                      margin: '0 0 16px 0',
-                      lineHeight: '1.4',
-                    }}>
-                      {TABS[activeTab].oneliner}
-                    </h3>
-                    <p style={{
-                      fontFamily: "'Saira', sans-serif",
-                      fontSize: '15px',
-                      fontWeight: 400,
-                      color: 'var(--v2-text-subtle)',
-                      lineHeight: '1.7',
-                      margin: 0,
-                    }}>
-                      {TABS[activeTab].body}
-                    </p>
-                  </div>
-
-                  {/* Agent status card */}
-                  <div style={{
-                    background: 'rgba(142,89,255,0.05)',
-                    border: '1px solid rgba(142,89,255,0.15)',
-                    borderRadius: '10px',
-                    padding: '16px 20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    flexWrap: 'wrap',
-                    gap: '12px',
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <div style={{
-                        width: '8px',
-                        height: '8px',
-                        borderRadius: '50%',
-                        background: '#4ade80',
-                        boxShadow: '0 0 6px rgba(74,222,128,0.6)',
-                      }} />
-                      <span style={{
+                    {TABS[activeTab].type === 'standard' && (
+                      <p style={{
                         fontFamily: "'Saira', sans-serif",
-                        fontSize: '14px',
-                        fontWeight: 500,
-                        color: 'var(--v2-text)',
+                        fontSize: '11px',
+                        fontWeight: 400,
+                        letterSpacing: '0.08em',
+                        textTransform: 'uppercase',
+                        color: 'rgba(18,24,43,0.3)',
+                        margin: 0,
                       }}>
-                        {TABS[activeTab].agent}
-                      </span>
-                    </div>
-                    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
-                      <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '12px', color: 'var(--v2-text-muted)' }}>
-                        {TABS[activeTab].status}
-                      </span>
-                      <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '12px', color: 'var(--v2-text-muted)' }}>
-                        Last action: {TABS[activeTab].lastAction}
-                      </span>
-                    </div>
+                        AGENTIC WORKFLOW
+                      </p>
+                    )}
                   </div>
 
-                  {/* Workflow visual placeholder */}
-                  <div style={{
-                    background: 'rgba(255,255,255,0.02)',
-                    border: '1px dashed rgba(18,24,43,0.08)',
-                    borderRadius: '12px',
-                    height: '220px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                  {/* Headline */}
+                  <h3 style={{
+                    fontFamily: "'Saira', sans-serif",
+                    fontSize: '22px',
+                    fontWeight: 500,
+                    color: 'var(--v2-text)',
+                    margin: '0 0 16px 0',
+                    lineHeight: '1.4',
                   }}>
-                    <p style={{
-                      fontFamily: "'Saira', sans-serif",
-                      fontSize: '13px',
-                      color: 'var(--v2-text-muted)',
-                      margin: 0,
+                    {TABS[activeTab].oneliner}
+                  </h3>
+
+                  {/* Body */}
+                  <p style={{
+                    fontFamily: "'Saira', sans-serif",
+                    fontSize: '15px',
+                    fontWeight: 400,
+                    color: 'var(--v2-text-subtle)',
+                    lineHeight: '1.7',
+                    margin: '0 0 28px 0',
+                  }}>
+                    {TABS[activeTab].body}
+                  </p>
+
+                  {/* Standard tab: single agent card */}
+                  {TABS[activeTab].type === 'standard' && (
+                    <div style={{
+                      background: 'rgba(142,89,255,0.04)',
+                      border: '1px solid rgba(142,89,255,0.12)',
+                      borderRadius: '10px',
+                      padding: '16px 20px',
                     }}>
-                      Agent workflow visual — coming next
-                    </p>
-                  </div>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <div style={{
+                            width: '8px', height: '8px', borderRadius: '50%',
+                            background: '#4ade80',
+                            boxShadow: '0 0 6px rgba(74,222,128,0.6)',
+                            flexShrink: 0,
+                          }} />
+                          <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 500, color: 'var(--v2-text)' }}>
+                            {TABS[activeTab].agentName}
+                          </span>
+                        </div>
+                        <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '12px', color: 'var(--v2-text-muted)' }}>
+                          Last action: {TABS[activeTab].lastAction}
+                        </span>
+                      </div>
+                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                        {TABS[activeTab].connects.map((tag) => (
+                          <span key={tag} style={{
+                            fontFamily: "'Saira', sans-serif",
+                            fontSize: '11px',
+                            fontWeight: 400,
+                            letterSpacing: '0.05em',
+                            padding: '3px 10px',
+                            borderRadius: '4px',
+                            background: 'rgba(142,89,255,0.08)',
+                            color: '#8e59ff',
+                            border: '1px solid rgba(142,89,255,0.15)',
+                          }}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* CXO tab: 2x2 grid of all four agent cards */}
+                  {TABS[activeTab].type === 'cxo' && (
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                      {CXO_AGENTS.map((agent) => (
+                        <div key={agent.name} style={{
+                          background: 'rgba(142,89,255,0.04)',
+                          border: '1px solid rgba(142,89,255,0.12)',
+                          borderRadius: '10px',
+                          padding: '14px 16px',
+                        }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                            <div style={{
+                              width: '6px', height: '6px', borderRadius: '50%',
+                              background: '#4ade80',
+                              boxShadow: '0 0 4px rgba(74,222,128,0.6)',
+                              flexShrink: 0,
+                            }} />
+                            <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '13px', fontWeight: 500, color: 'var(--v2-text)' }}>
+                              {agent.name}
+                            </span>
+                          </div>
+                          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                            {agent.connects.map((tag) => (
+                              <span key={tag} style={{
+                                fontFamily: "'Saira', sans-serif",
+                                fontSize: '10px',
+                                padding: '2px 8px',
+                                borderRadius: '4px',
+                                background: 'rgba(142,89,255,0.08)',
+                                color: '#8e59ff',
+                                border: '1px solid rgba(142,89,255,0.12)',
+                              }}>
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                          <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '11px', color: 'var(--v2-text-muted)', margin: '8px 0 0 0' }}>
+                            Last: {agent.lastAction}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Custom tab: open CTA */}
+                  {TABS[activeTab].type === 'custom' && (
+                    <div style={{
+                      background: 'rgba(142,89,255,0.06)',
+                      border: '1px dashed rgba(142,89,255,0.25)',
+                      borderRadius: '10px',
+                      padding: '24px',
+                      textAlign: 'center',
+                    }}>
+                      <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '13px', color: '#8e59ff', margin: '0 0 8px 0', fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                        AGENT FOUNDRY — CUSTOM BUILDER
+                      </p>
+                      <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', color: 'var(--v2-text-subtle)', margin: 0, lineHeight: '1.6' }}>
+                        Drag. Connect. Deploy. Your workflow. Your rules.
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Workflow placeholder — only for standard tabs */}
+                  {TABS[activeTab].type === 'standard' && (
+                    <div style={{
+                      background: 'rgba(18,24,43,0.02)',
+                      border: '1px dashed rgba(18,24,43,0.08)',
+                      borderRadius: '12px',
+                      height: '160px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginTop: '16px',
+                    }}>
+                      <p style={{
+                        fontFamily: "'Saira', sans-serif",
+                        fontSize: '13px',
+                        color: 'var(--v2-text-muted)',
+                        margin: 0,
+                      }}>
+                        Agent workflow visual — coming next
+                      </p>
+                    </div>
+                  )}
 
                 </motion.div>
               </AnimatePresence>
