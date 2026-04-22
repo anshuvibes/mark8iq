@@ -129,236 +129,227 @@ export default function AgentFoundryV2() {
           </motion.h2>
         </div>
 
-      </div>
-    </section>
+        <div style={{ marginTop: '64px' }}>
+          {/* Section label */}
+          <motion.p
+            className="m8-eyebrow"
+            style={{ color: 'var(--v2-text-subtle)', marginBottom: '48px', textAlign: 'center' }}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+          >
+            WHAT YOUR AGENTS CAN DO FOR YOU
+          </motion.p>
 
-    {/* Persona tab section — dark */}
-    <section style={{
-      padding: '80px 0',
-      background: '#080d19',
-      position: 'relative',
-    }}>
-      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-
-        {/* Section label */}
-        <motion.p
-          className="m8-eyebrow"
-          style={{ color: 'rgba(255,255,255,0.4)', marginBottom: '48px', textAlign: 'center' }}
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-        >
-          WHAT YOUR AGENTS CAN DO FOR YOU
-        </motion.p>
-
-        {/* Two column layout */}
-        <div className="agent-foundry-tabs" style={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: '64px',
-          alignItems: 'flex-start',
-        }}>
-
-          {/* LEFT — Tab list */}
-          <div style={{
-            flex: '0 0 340px',
+          {/* Two column layout */}
+          <div className="agent-foundry-tabs" style={{
             display: 'flex',
-            flexDirection: 'column',
-            gap: '0',
+            flexDirection: 'row',
+            gap: '64px',
+            alignItems: 'flex-start',
           }}>
-            {TABS.map((tab, i) => (
-              <button
-                key={tab.role}
-                onClick={() => setActiveTab(i)}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  gap: '4px',
-                  padding: '20px 24px',
-                  background: 'none',
-                  border: 'none',
-                  borderLeft: `2px solid ${activeTab === i ? '#8e59ff' : 'rgba(255,255,255,0.06)'}`,
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  transition: 'border-color 0.2s ease',
-                }}
-              >
-                <span style={{
-                  fontFamily: "'Saira', sans-serif",
-                  fontSize: '16px',
-                  fontWeight: activeTab === i ? 500 : 400,
-                  color: activeTab === i ? '#ffffff' : 'rgba(255,255,255,0.35)',
-                  transition: 'color 0.2s ease',
-                  lineHeight: '24px',
-                }}>
-                  <span style={{ color: activeTab === i ? '#8e59ff' : 'rgba(255,255,255,0.25)' }}>
-                    {tab.role}
+
+            {/* LEFT — Tab list */}
+            <div style={{
+              flex: '0 0 340px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0',
+            }}>
+              {TABS.map((tab, i) => (
+                <button
+                  key={tab.role}
+                  onClick={() => setActiveTab(i)}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    gap: '4px',
+                    padding: '20px 24px',
+                    background: 'none',
+                    border: 'none',
+                    borderLeft: `2px solid ${activeTab === i ? '#8e59ff' : 'rgba(18,24,43,0.08)'}`,
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    transition: 'border-color 0.2s ease',
+                  }}
+                >
+                  <span style={{
+                    fontFamily: "'Saira', sans-serif",
+                    fontSize: '16px',
+                    fontWeight: activeTab === i ? 500 : 400,
+                    color: activeTab === i ? 'var(--v2-text)' : 'var(--v2-text-subtle)',
+                    transition: 'color 0.2s ease',
+                    lineHeight: '24px',
+                  }}>
+                    <span style={{ color: activeTab === i ? '#8e59ff' : 'rgba(142,89,255,0.4)' }}>
+                      {tab.role}
+                    </span>
+                    {' '}can
                   </span>
-                  {' '}can
-                </span>
-                <span style={{
-                  fontFamily: "'Saira', sans-serif",
-                  fontSize: '14px',
-                  fontWeight: 400,
-                  color: activeTab === i ? 'rgba(255,255,255,0.65)' : 'rgba(255,255,255,0.2)',
-                  lineHeight: '20px',
-                  transition: 'color 0.2s ease',
-                }}>
-                  {tab.oneliner}
-                </span>
-              </button>
-            ))}
-          </div>
-
-          {/* RIGHT — Active tab content */}
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.25, ease: 'easeOut' }}
-                style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.07)',
-                  borderRadius: '16px',
-                  padding: '40px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '32px',
-                }}
-              >
-                {/* Role + one-liner */}
-                <div>
-                  <p style={{
+                  <span style={{
                     fontFamily: "'Saira', sans-serif",
-                    fontSize: '13px',
+                    fontSize: '14px',
                     fontWeight: 400,
-                    letterSpacing: '0.08em',
-                    textTransform: 'uppercase',
-                    color: '#8e59ff',
-                    margin: '0 0 12px 0',
+                    color: activeTab === i ? 'var(--v2-text-subtle)' : 'var(--v2-text-muted)',
+                    lineHeight: '20px',
+                    transition: 'color 0.2s ease',
                   }}>
-                    {TABS[activeTab].role}
-                  </p>
-                  <h3 style={{
-                    fontFamily: "'Saira', sans-serif",
-                    fontSize: '22px',
-                    fontWeight: 500,
-                    color: '#ffffff',
-                    margin: '0 0 16px 0',
-                    lineHeight: '1.4',
-                  }}>
-                    {TABS[activeTab].oneliner}
-                  </h3>
-                  <p style={{
-                    fontFamily: "'Saira', sans-serif",
-                    fontSize: '15px',
-                    fontWeight: 400,
-                    color: 'rgba(255,255,255,0.55)',
-                    lineHeight: '1.7',
-                    margin: 0,
-                  }}>
-                    {TABS[activeTab].body}
-                  </p>
-                </div>
+                    {tab.oneliner}
+                  </span>
+                </button>
+              ))}
+            </div>
 
-                {/* Agent status card */}
-                <div style={{
-                  background: 'rgba(142,89,255,0.06)',
-                  border: '1px solid rgba(142,89,255,0.15)',
-                  borderRadius: '10px',
-                  padding: '16px 20px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  flexWrap: 'wrap',
-                  gap: '12px',
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{
-                      width: '8px',
-                      height: '8px',
-                      borderRadius: '50%',
-                      background: '#4ade80',
-                      boxShadow: '0 0 6px rgba(74,222,128,0.6)',
-                    }} />
-                    <span style={{
+            {/* RIGHT — Active tab content */}
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.25, ease: 'easeOut' }}
+                  style={{
+                    background: 'rgba(18,24,43,0.03)',
+                    border: '1px solid rgba(18,24,43,0.08)',
+                    borderRadius: '16px',
+                    padding: '40px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '32px',
+                  }}
+                >
+                  {/* Role + one-liner */}
+                  <div>
+                    <p style={{
                       fontFamily: "'Saira', sans-serif",
-                      fontSize: '14px',
-                      fontWeight: 500,
-                      color: 'rgba(255,255,255,0.85)',
+                      fontSize: '13px',
+                      fontWeight: 400,
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      color: '#8e59ff',
+                      margin: '0 0 12px 0',
                     }}>
-                      {TABS[activeTab].agent}
-                    </span>
+                      {TABS[activeTab].role}
+                    </p>
+                    <h3 style={{
+                      fontFamily: "'Saira', sans-serif",
+                      fontSize: '22px',
+                      fontWeight: 500,
+                      color: 'var(--v2-text)',
+                      margin: '0 0 16px 0',
+                      lineHeight: '1.4',
+                    }}>
+                      {TABS[activeTab].oneliner}
+                    </h3>
+                    <p style={{
+                      fontFamily: "'Saira', sans-serif",
+                      fontSize: '15px',
+                      fontWeight: 400,
+                      color: 'var(--v2-text-subtle)',
+                      lineHeight: '1.7',
+                      margin: 0,
+                    }}>
+                      {TABS[activeTab].body}
+                    </p>
                   </div>
-                  <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
-                    <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>
-                      {TABS[activeTab].status}
-                    </span>
-                    <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>
-                      Last action: {TABS[activeTab].lastAction}
-                    </span>
-                  </div>
-                </div>
 
-                {/* Workflow visual placeholder */}
-                <div style={{
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '1px dashed rgba(255,255,255,0.08)',
-                  borderRadius: '12px',
-                  height: '220px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                  <p style={{
-                    fontFamily: "'Saira', sans-serif",
-                    fontSize: '13px',
-                    color: 'rgba(255,255,255,0.2)',
-                    margin: 0,
+                  {/* Agent status card */}
+                  <div style={{
+                    background: 'rgba(142,89,255,0.05)',
+                    border: '1px solid rgba(142,89,255,0.15)',
+                    borderRadius: '10px',
+                    padding: '16px 20px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flexWrap: 'wrap',
+                    gap: '12px',
                   }}>
-                    Agent workflow visual — coming next
-                  </p>
-                </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <div style={{
+                        width: '8px',
+                        height: '8px',
+                        borderRadius: '50%',
+                        background: '#4ade80',
+                        boxShadow: '0 0 6px rgba(74,222,128,0.6)',
+                      }} />
+                      <span style={{
+                        fontFamily: "'Saira', sans-serif",
+                        fontSize: '14px',
+                        fontWeight: 500,
+                        color: 'var(--v2-text)',
+                      }}>
+                        {TABS[activeTab].agent}
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+                      <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '12px', color: 'var(--v2-text-muted)' }}>
+                        {TABS[activeTab].status}
+                      </span>
+                      <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '12px', color: 'var(--v2-text-muted)' }}>
+                        Last action: {TABS[activeTab].lastAction}
+                      </span>
+                    </div>
+                  </div>
 
-              </motion.div>
-            </AnimatePresence>
+                  {/* Workflow visual placeholder */}
+                  <div style={{
+                    background: 'rgba(255,255,255,0.02)',
+                    border: '1px dashed rgba(18,24,43,0.08)',
+                    borderRadius: '12px',
+                    height: '220px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                    <p style={{
+                      fontFamily: "'Saira', sans-serif",
+                      fontSize: '13px',
+                      color: 'var(--v2-text-muted)',
+                      margin: 0,
+                    }}>
+                      Agent workflow visual — coming next
+                    </p>
+                  </div>
+
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
           </div>
 
+          {/* Closing power line */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            style={{
+              fontFamily: "'Saira', sans-serif",
+              fontSize: '20px',
+              fontWeight: 400,
+              color: 'var(--v2-text-subtle)',
+              textAlign: 'center',
+              margin: '72px auto 0',
+              maxWidth: '600px',
+              fontStyle: 'italic',
+              lineHeight: '1.6',
+            }}
+          >
+            While you were in that meeting, your agents closed the gap.
+          </motion.p>
         </div>
 
-        {/* Closing power line */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          style={{
-            fontFamily: "'Saira', sans-serif",
-            fontSize: '20px',
-            fontWeight: 400,
-            color: 'rgba(255,255,255,0.45)',
-            textAlign: 'center',
-            margin: '72px auto 0',
-            maxWidth: '600px',
-            fontStyle: 'italic',
-            lineHeight: '1.6',
-          }}
-        >
-          While you were in that meeting, your agents closed the gap.
-        </motion.p>
+        <style>{`
+          @media (max-width: 991px) {
+            .agent-foundry-tabs { flex-direction: column !important; }
+            .agent-foundry-tabs > div { flex: 1 1 100% !important; }
+          }
+        `}</style>
 
       </div>
-
-      <style>{`
-        @media (max-width: 991px) {
-          .agent-foundry-tabs { flex-direction: column !important; }
-          .agent-foundry-tabs > div { flex: 1 1 100% !important; }
-        }
-      `}</style>
     </section>
     </>
   );
