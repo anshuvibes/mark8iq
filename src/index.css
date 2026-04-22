@@ -1176,9 +1176,10 @@ body {
   display: flex;
   align-items: center;
   gap: 23px;
-  width: min(100%, 356px);
+  width: max-content;
+  max-width: calc(100vw - 48px);
   height: 112px;
-  padding: 0 0 0 13px;
+  padding: 0 18px 0 13px;
   border: 1.6px solid hsl(var(--agent-node-violet) / 0.12);
   border-radius: 12.49px;
   background: hsl(var(--agent-node-surface));
@@ -1200,7 +1201,7 @@ body {
 }
 
 .agent-node-copy {
-  min-width: 0;
+  min-width: max-content;
   text-align: left;
 }
 
@@ -1213,6 +1214,7 @@ body {
   text-transform: uppercase;
   color: hsl(var(--agent-node-honest));
   margin: 0 0 14px 0;
+  white-space: nowrap;
 }
 
 .agent-node-kicker {
@@ -1227,7 +1229,7 @@ body {
 
 .agent-node-badges {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
 }
 
@@ -1293,7 +1295,8 @@ body {
 
 @media (max-width: 640px) {
   .agent-node-card {
-    width: 356px;
+    width: max-content;
+    max-width: calc(100vw - 32px);
     transform: scale(calc(var(--agent-node-scale) * 0.84));
     transform-origin: center top;
     margin-bottom: -18px;
