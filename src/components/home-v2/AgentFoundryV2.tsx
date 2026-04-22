@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
 
 const TABS = [
   {
@@ -75,35 +73,27 @@ const CXO_AGENTS = [
 
 export default function AgentFoundryV2() {
   const [activeTab, setActiveTab] = useState(0);
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const outerRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    const outer = outerRef.current;
+    if (!outer) return;
 
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const totalTabs = TABS.length;
-    const totalScrollDistance = window.innerHeight * totalTabs * 0.5;
-
-    const trigger = ScrollTrigger.create({
-      trigger: section,
-      start: 'top top',
-      end: `+=${totalScrollDistance}`,
-      pin: true,
-      pinSpacing: true,
-      onUpdate: (self) => {
-        const newIndex = Math.min(
-          Math.floor(self.progress * totalTabs),
-          totalTabs - 1
-        );
-        setActiveTab(newIndex);
-      },
-    });
-
-    return () => {
-      trigger.kill();
+    const onScroll = () => {
+      const rect = outer.getBoundingClientRect();
+      const totalHeight = outer.offsetHeight - window.innerHeight;
+      const scrolled = Math.max(0, -rect.top);
+      const progress = Math.min(scrolled / totalHeight, 1);
+      const newIndex = Math.min(
+        Math.floor(progress * TABS.length),
+        TABS.length - 1
+      );
+      setActiveTab(newIndex);
     };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
@@ -190,13 +180,32 @@ export default function AgentFoundryV2() {
         </div>
 
         <div style={{ marginTop: '40px' }}>
-          {/* Two column layout */}
-          <div ref={sectionRef} className="agent-foundry-tabs" style={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: '64px',
-            alignItems: 'flex-start',
-          }}>
+          {/* Outer — tall div that creates scroll distance */}
+          <div
+            ref={outerRef}
+            style={{
+              height: `${TABS.length * 50 + 100}vh`,
+              position: 'relative',
+            }}
+          >
+            {/* Sticky inner — stays centered in viewport */}
+            <div
+              ref={stickyRef}
+              style={{
+                position: 'sticky',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                paddingTop: '40px',
+                paddingBottom: '40px',
+              }}
+            >
+              {/* Two column layout */}
+              <div className="agent-foundry-tabs" style={{
+                display: 'flex',
+                flexDirection: 'row',
+                gap: '64px',
+                alignItems: 'flex-start',
+              }}>
 
             {/* LEFT — Tab list */}
             <div style={{
@@ -436,6 +445,8 @@ export default function AgentFoundryV2() {
               </AnimatePresence>
             </div>
 
+              </div>
+            </div>
           </div>
 
           {/* Closing power line */}
