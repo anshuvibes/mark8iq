@@ -156,9 +156,12 @@ export default function AgentFoundryV2() {
         </div>
       </section>
 
-      <section style={{ padding: '60px 0 0 0', position: 'relative' }}>
+      <section
+        data-section="agent-foundry"
+        style={{ padding: '60px 0 0 0', position: 'relative', background: '#080d19' }}
+      >
         {/* Headline block — normal scroll, no sticky involvement */}
-        <div className="container" style={{ textAlign: 'center', paddingBottom: '0px' }}>
+        <div className="container" style={{ textAlign: 'center', paddingBottom: '48px' }}>
           <motion.p
             className="m8-eyebrow"
             style={{ color: '#8e59ff', marginBottom: '12px' }}
@@ -171,7 +174,7 @@ export default function AgentFoundryV2() {
 
           <motion.h2
             className="m8-h2"
-            style={{ color: 'var(--v2-text)', marginBottom: 0 }}
+            style={{ color: '#ffffff', marginBottom: 0 }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
@@ -213,7 +216,7 @@ export default function AgentFoundryV2() {
                     padding: '16px 20px',
                     background: 'none',
                     border: 'none',
-                    borderLeft: `2px solid ${activeTab === i ? '#8e59ff' : 'rgba(18,24,43,0.08)'}`,
+                    borderLeft: `2px solid ${activeTab === i ? '#8e59ff' : 'rgba(255,255,255,0.08)'}`,
                     cursor: 'pointer',
                     textAlign: 'left',
                     transition: 'border-color 0.2s ease',
@@ -223,14 +226,14 @@ export default function AgentFoundryV2() {
                     fontFamily: "'Saira', sans-serif",
                     fontSize: '15px',
                     fontWeight: activeTab === i ? 500 : 400,
-                    color: activeTab === i ? 'var(--v2-text)' : 'var(--v2-text-subtle)',
+                    color: activeTab === i ? '#ffffff' : 'rgba(255,255,255,0.35)',
                     transition: 'color 0.2s ease',
                     lineHeight: '22px',
                   }}>
                     <span style={{
                       color: tab.id === 'custom'
                         ? '#8e59ff'
-                        : activeTab === i ? '#8e59ff' : 'rgba(142,89,255,0.35)',
+                        : activeTab === i ? '#8e59ff' : 'rgba(142,89,255,0.4)',
                     }}>
                       {tab.role}
                     </span>
@@ -240,7 +243,7 @@ export default function AgentFoundryV2() {
                     fontFamily: "'Saira', sans-serif",
                     fontSize: '12px',
                     fontWeight: 400,
-                    color: activeTab === i ? 'var(--v2-text-subtle)' : 'var(--v2-text-muted)',
+                    color: activeTab === i ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.2)',
                     lineHeight: '17px',
                     transition: 'color 0.2s ease',
                   }}>
