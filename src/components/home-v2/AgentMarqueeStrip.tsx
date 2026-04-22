@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import AgentNodeCard from './AgentNodeCard';
 
 const AGENTS = [
@@ -16,8 +17,26 @@ const AGENTS = [
 const LOOP = [...AGENTS, ...AGENTS];
 
 export default function AgentMarqueeStrip() {
+  const stackRef = useRef<HTMLDivElement | null>(null);
+
+  const setMarqueeSpeed = (playbackRate: number) => {
+    stackRef.current
+      ?.querySelectorAll<HTMLElement>('.agent-marquee-track')
+      .forEach((track) => {
+        track.getAnimations().forEach((animation) => {
+          animation.updatePlaybackRate(playbackRate);
+        });
+      });
+  };
+
   return (
-    <div className="agent-marquee-stack" aria-label="Agent Foundry examples">
+    <div
+      ref={stackRef}
+      className="agent-marquee-stack"
+      aria-label="Agent Foundry examples"
+      onMouseEnter={() => setMarqueeSpeed(0.2)}
+      onMouseLeave={() => setMarqueeSpeed(1)}
+    >
       <div className="agent-marquee-outer">
         <div className="agent-marquee-track">
           {LOOP.map((agent, i) => (
