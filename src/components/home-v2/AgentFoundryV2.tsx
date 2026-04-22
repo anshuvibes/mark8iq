@@ -190,9 +190,11 @@ export default function AgentFoundryV2() {
             ref={stickyRef}
             style={{
               position: 'sticky',
-              top: '50vh',
-              transform: 'translateY(-50%)',
-              padding: '0',
+              top: 0,
+              height: '100vh',
+              display: 'flex',
+              alignItems: 'center',
+              padding: '40px 0',
             }}
           >
             <div className="container">
