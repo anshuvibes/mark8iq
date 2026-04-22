@@ -88,10 +88,10 @@ export default function AgentFoundryV2() {
 
     const trigger = ScrollTrigger.create({
       trigger: section,
-      start: 'center center',
+      start: 'top top',
       end: `+=${totalScrollDistance}`,
       pin: true,
-      scrub: false,
+      pinSpacing: true,
       onUpdate: (self) => {
         const newIndex = Math.min(
           Math.floor(self.progress * totalTabs),
@@ -428,29 +428,6 @@ export default function AgentFoundryV2() {
                       </p>
                       <p style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', color: 'var(--v2-text-subtle)', margin: 0, lineHeight: '1.6' }}>
                         Drag. Connect. Deploy. Your workflow. Your rules.
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Workflow placeholder — only for standard tabs */}
-                  {TABS[activeTab].type === 'standard' && (
-                    <div style={{
-                      background: 'rgba(18,24,43,0.02)',
-                      border: '1px dashed rgba(18,24,43,0.08)',
-                      borderRadius: '12px',
-                      height: '160px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginTop: '16px',
-                    }}>
-                      <p style={{
-                        fontFamily: "'Saira', sans-serif",
-                        fontSize: '13px',
-                        color: 'var(--v2-text-muted)',
-                        margin: 0,
-                      }}>
-                        Agent workflow visual — coming next
                       </p>
                     </div>
                   )}
