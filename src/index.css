@@ -1254,21 +1254,21 @@ body {
 
 .agent-node-left-port {
   position: absolute;
-  left: -10px;
+  left: -8px;
   top: 50%;
-  width: 9px;
-  height: 30px;
+  width: 7px;
+  height: 24px;
   transform: translateY(-50%);
-  border-radius: 2.463px;
+  border-radius: 2px;
   background: hsl(var(--agent-node-port));
 }
 
 .agent-node-right-port {
   position: absolute;
-  right: -10px;
+  right: -8px;
   top: 50%;
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   transform: translateY(-50%);
   border-radius: 999px;
   background: hsl(var(--agent-node-port));
@@ -1276,25 +1276,25 @@ body {
 
 .agent-node-bottom-port {
   position: absolute;
-  bottom: -9px;
-  width: 12px;
-  height: 12px;
+  bottom: -7px;
+  width: 10px;
+  height: 10px;
   transform: translateX(-50%) rotate(45deg);
-  border-radius: 3px;
+  border-radius: 2px;
   background: hsl(var(--agent-node-port));
 }
 
-.agent-node-bottom-port-1 { left: calc(50% - 95.5px); }
-.agent-node-bottom-port-2 { left: calc(50% - 43.5px); }
-.agent-node-bottom-port-3 { left: calc(50% + 8.5px); }
-.agent-node-bottom-port-4 { left: calc(50% + 60.5px); }
+.agent-node-bottom-port-1 { left: calc(50% - 76px); }
+.agent-node-bottom-port-2 { left: calc(50% - 35px); }
+.agent-node-bottom-port-3 { left: calc(50% + 7px); }
+.agent-node-bottom-port-4 { left: calc(50% + 48px); }
 
 @media (max-width: 640px) {
   .agent-node-card {
-    width: min(100%, 445px);
-    transform: scale(0.72);
+    width: 356px;
+    transform: scale(0.84);
     transform-origin: center top;
-    margin-bottom: -36px;
+    margin-bottom: -18px;
   }
 }
 
