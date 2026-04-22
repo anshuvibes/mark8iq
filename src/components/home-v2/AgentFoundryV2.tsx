@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { useV2Theme } from './ThemeContext';
-import AgentNodeCard from './AgentNodeCard';
+import AgentMarqueeStrip from './AgentMarqueeStrip';
 
 const TABS = [
   {
@@ -243,16 +243,10 @@ export default function AgentFoundryV2() {
             Deploy a workforce<br />that never clocks out.
           </motion.h2>
 
-          <motion.div
-            className="agent-node-showcase"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.14 }}
-          >
-            <AgentNodeCard />
-          </motion.div>
         </div>
+
+        {/* Agent marquee strip */}
+        <AgentMarqueeStrip />
 
         <div className="container">
           <div className="agent-foundry-tabs" style={{
