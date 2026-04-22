@@ -1160,50 +1160,27 @@ body {
 .agent-node-showcase {
   display: flex;
   justify-content: center;
-  margin-top: 32px;
+  margin-top: 34px;
 }
 
 .agent-node-card {
-  --agent-node-surface: 229 41% 12%;
+  --agent-node-surface: 225 41% 12%;
   --agent-node-violet: 259 100% 67%;
-  --agent-node-white: 0 0% 100%;
-  --agent-node-muted: 230 24% 72%;
-  --agent-node-sight: 178 44% 54%;
-  --agent-node-returns: 10 97% 67%;
+  --agent-node-honest: 230 31% 95%;
+  --agent-node-muted: 0 0% 100%;
+  --agent-node-green: 177 52% 63%;
+  --agent-node-port: 250 35% 72%;
   position: relative;
-  display: grid;
-  grid-template-columns: 64px minmax(0, 1fr) 10px;
+  display: flex;
   align-items: center;
-  gap: 18px;
-  width: min(100%, 520px);
-  padding: 22px 24px;
-  border-radius: 18px;
+  gap: 29px;
+  width: min(100%, 445px);
+  height: 140px;
+  padding: 0 0 0 16px;
+  border: 2px solid hsl(var(--agent-node-violet) / 0.12);
+  border-radius: 15.612px;
   background: hsl(var(--agent-node-surface));
-  box-shadow: 0 24px 64px hsl(var(--agent-node-surface) / 0.24);
-}
-
-.agent-node-card::before {
-  content: '';
-  position: absolute;
-  inset: 14px auto 14px 0;
-  width: 4px;
-  border-radius: 0 999px 999px 0;
-  background: hsl(var(--agent-node-violet));
-}
-
-.agent-node-icon {
-  display: grid;
-  place-items: center;
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
-  background: hsl(var(--agent-node-violet));
-}
-
-.agent-node-icon img {
-  width: 38px;
-  height: 38px;
-  display: block;
+  box-shadow: none;
 }
 
 .agent-node-copy {

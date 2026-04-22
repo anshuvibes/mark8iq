@@ -250,18 +250,28 @@ export default function AgentFoundryV2() {
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.14 }}
           >
             <div className="agent-node-card" aria-label="Price Tracker Agent node">
-              <div className="agent-node-icon" aria-hidden="true">
-                <img src="/img/agent-foundry-logo.svg" alt="" />
+              <div className="agent-node-robot-tile" aria-hidden="true">
+                <div className="agent-node-antenna" />
+                <div className="agent-node-robot-face">
+                  <span />
+                  <span />
+                </div>
+                <div className="agent-node-ear agent-node-ear-left" />
+                <div className="agent-node-ear agent-node-ear-right" />
               </div>
               <div className="agent-node-copy">
-                <p className="agent-node-kicker">AGENT FOUNDRY</p>
                 <h3 className="agent-node-title">Price Tracker Agent</h3>
+                <p className="agent-node-kicker">AGENT FOUNDRY</p>
                 <div className="agent-node-badges" aria-label="Connected products">
-                  <span className="agent-node-badge agent-node-badge-sight">Mark8 Sight</span>
-                  <span className="agent-node-badge agent-node-badge-returns">Mark8 Returns</span>
+                  <span className="agent-node-badge agent-node-badge-sight"><span>mark8</span>SIGHT</span>
                 </div>
               </div>
-              <div className="agent-node-status" aria-label="Agent active" />
+              <div className="agent-node-left-port" aria-hidden="true" />
+              <div className="agent-node-right-port" aria-hidden="true" />
+              <div className="agent-node-bottom-port agent-node-bottom-port-1" aria-hidden="true" />
+              <div className="agent-node-bottom-port agent-node-bottom-port-2" aria-hidden="true" />
+              <div className="agent-node-bottom-port agent-node-bottom-port-3" aria-hidden="true" />
+              <div className="agent-node-bottom-port agent-node-bottom-port-4" aria-hidden="true" />
             </div>
           </motion.div>
         </div>
