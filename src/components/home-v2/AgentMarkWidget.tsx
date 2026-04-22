@@ -169,34 +169,54 @@ export default function AgentMarkWidget() {
     const t = setTimeout(() => setVisible(true), 120);
     return () => clearTimeout(t);
   }, []);
+  // Track fragmentation section separately — hides widget while in view
+  const [fragmentationHidden, setFragmentationHidden] = useState(false);
   useEffect(() => {
-    const sectionsToHide = [
-      document.querySelector('[data-section="fragmentation"]'),
-      document.querySelector('[data-section="agent-mark"]'),
-    ].filter(Boolean) as Element[];
+    const fragmentationSection = document.querySelector('[data-section="fragmentation"]');
+    if (!fragmentationSection) return;
 
-    if (sectionsToHide.length === 0) return;
-
-    let hiddenCount = 0;
-
-    const observers = sectionsToHide.map((section) => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            hiddenCount++;
-          } else {
-            hiddenCount = Math.max(0, hiddenCount - 1);
-          }
-          setVisible(hiddenCount === 0);
-        },
-        { threshold: 0.05 }
-      );
-      observer.observe(section);
-      return observer;
-    });
-
-    return () => observers.forEach((o) => o.disconnect());
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setFragmentationHidden(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(fragmentationSection);
+    return () => observer.disconnect();
   }, []);
+
+  // Agent Mark section — "hide below threshold" pattern.
+  // Once user scrolls past Agent Mark section, widget stays hidden.
+  // Only reappears if user scrolls back up above/into it.
+  useEffect(() => {
+    const agentMarkSection = document.querySelector('[data-section="agent-mark"]');
+    if (!agentMarkSection) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const rect = entry.boundingClientRect;
+
+        if (!entry.isIntersecting && rect.bottom < 0) {
+          // Section has scrolled above viewport — user is below Agent Mark
+          // Hide widget and keep it hidden
+          setVisible(false);
+        } else if (entry.isIntersecting || rect.top > 0) {
+          // Section is in view OR user has scrolled back above it
+          // Only show if fragmentation is not active
+          if (!fragmentationHidden) setVisible(true);
+        }
+      },
+      { threshold: [0, 1] }
+    );
+
+    observer.observe(agentMarkSection);
+    return () => observer.disconnect();
+  }, [fragmentationHidden]);
+
+  // Reflect fragmentation state into visibility
+  useEffect(() => {
+    if (fragmentationHidden) setVisible(false);
+  }, [fragmentationHidden]);
 
   // Auto-scroll
   useEffect(() => {
