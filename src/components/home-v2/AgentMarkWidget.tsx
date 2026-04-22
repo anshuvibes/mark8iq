@@ -170,32 +170,46 @@ export default function AgentMarkWidget() {
     return () => clearTimeout(t);
   }, []);
   useEffect(() => {
-    const sectionsToHide = [
-      document.querySelector('[data-section="fragmentation"]'),
-      document.querySelector('[data-section="agent-mark"]'),
-    ].filter(Boolean) as Element[];
+    const fragmentationSection = document.querySelector('[data-section="fragmentation"]');
+    const agentMarkSection = document.querySelector('[data-section="agent-mark"]');
 
-    if (sectionsToHide.length === 0) return;
+    let fragmentationActive = false;
+    let pastAgentMark = false;
 
-    let hiddenCount = 0;
+    const updateVisible = () => {
+      setVisible(!fragmentationActive && !pastAgentMark);
+    };
 
-    const observers = sectionsToHide.map((section) => {
-      const observer = new IntersectionObserver(
+    // Fragmentation: hide while in view (keep existing behavior)
+    let fragObserver: IntersectionObserver | null = null;
+    if (fragmentationSection) {
+      fragObserver = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) {
-            hiddenCount++;
-          } else {
-            hiddenCount = Math.max(0, hiddenCount - 1);
-          }
-          setVisible(hiddenCount === 0);
+          fragmentationActive = entry.isIntersecting;
+          updateVisible();
         },
         { threshold: 0.05 }
       );
-      observer.observe(section);
-      return observer;
-    });
+      fragObserver.observe(fragmentationSection);
+    }
 
-    return () => observers.forEach((o) => o.disconnect());
+    // Agent Mark: hide once user scrolls to/past it; reappear above
+    const checkScroll = () => {
+      if (!agentMarkSection) return;
+      const rect = agentMarkSection.getBoundingClientRect();
+      pastAgentMark = rect.top <= window.innerHeight * 0.8;
+      updateVisible();
+    };
+
+    if (agentMarkSection) {
+      checkScroll();
+      window.addEventListener('scroll', checkScroll, { passive: true });
+    }
+
+    return () => {
+      fragObserver?.disconnect();
+      window.removeEventListener('scroll', checkScroll);
+    };
   }, []);
 
   // Auto-scroll
