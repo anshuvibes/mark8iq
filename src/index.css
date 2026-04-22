@@ -1352,10 +1352,10 @@ body {
 
 @media (max-width: 640px) {
   .agent-node-card {
-    width: 356px;
-    transform: scale(0.84);
+    width: 640px;
+    transform: scale(0.5);
     transform-origin: center top;
-    margin-bottom: -18px;
+    margin-bottom: -108px;
   }
 }
 
