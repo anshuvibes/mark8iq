@@ -154,7 +154,7 @@ export default function AgentFoundryV2() {
 
     <section style={{ padding: '60px 0 0 0', position: 'relative' }}>
         {/* Headline block — normal scroll, no sticky involvement */}
-        <div className="container" style={{ textAlign: 'center', paddingBottom: '32px' }}>
+        <div className="container" style={{ textAlign: 'center', paddingBottom: '0px' }}>
           <motion.p
             className="m8-eyebrow"
             style={{ color: '#8e59ff', marginBottom: '12px' }}
@@ -183,6 +183,7 @@ export default function AgentFoundryV2() {
           style={{
             height: `${TABS.length * 50 + 100}vh`,
             position: 'relative',
+            marginTop: '-120px',
           }}
         >
           {/* Sticky panel — centers in viewport */}
