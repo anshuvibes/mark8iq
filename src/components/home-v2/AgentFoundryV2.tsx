@@ -57,7 +57,7 @@ export default function AgentFoundryV2() {
     if (!section) return;
 
     const totalTabs = TABS.length;
-    const totalScrollDistance = window.innerHeight * totalTabs;
+    const totalScrollDistance = window.innerHeight * totalTabs * 0.5;
 
     const trigger = ScrollTrigger.create({
       trigger: section,
