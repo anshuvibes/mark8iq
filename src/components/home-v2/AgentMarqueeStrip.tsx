@@ -17,13 +17,24 @@ const LOOP = [...AGENTS, ...AGENTS];
 
 export default function AgentMarqueeStrip() {
   return (
-    <div className="agent-marquee-outer" aria-label="Agent Foundry examples">
-      <div className="agent-marquee-track">
-        {LOOP.map((agent, i) => (
-          <div className="agent-marquee-item" key={`${agent.title}-${i}`}>
-            <AgentNodeCard title={agent.title} products={agent.products} ariaLabel={agent.ariaLabel} />
-          </div>
-        ))}
+    <div className="agent-marquee-stack" aria-label="Agent Foundry examples">
+      <div className="agent-marquee-outer">
+        <div className="agent-marquee-track">
+          {LOOP.map((agent, i) => (
+            <div className="agent-marquee-item" key={`${agent.title}-${i}`}>
+              <AgentNodeCard title={agent.title} products={agent.products} ariaLabel={agent.ariaLabel} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="agent-marquee-outer">
+        <div className="agent-marquee-track agent-marquee-track--reverse">
+          {LOOP.map((agent, i) => (
+            <div className="agent-marquee-item" key={`${agent.title}-reverse-${i}`}>
+              <AgentNodeCard title={agent.title} products={agent.products} ariaLabel={agent.ariaLabel} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
