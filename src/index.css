@@ -1164,6 +1164,7 @@ body {
 }
 
 .agent-node-card {
+  --agent-node-scale: 1;
   --agent-node-surface: 225 41% 12%;
   --agent-node-violet: 259 100% 67%;
   --agent-node-honest: 230 31% 95%;
@@ -1182,6 +1183,8 @@ body {
   border-radius: 12.49px;
   background: hsl(var(--agent-node-surface));
   box-shadow: none;
+  transform: scale(var(--agent-node-scale));
+  transform-origin: center center;
 }
 
 .agent-node-copy {
@@ -1292,7 +1295,7 @@ body {
 @media (max-width: 640px) {
   .agent-node-card {
     width: 356px;
-    transform: scale(0.84);
+    transform: scale(calc(var(--agent-node-scale) * 0.84));
     transform-origin: center top;
     margin-bottom: -18px;
   }
