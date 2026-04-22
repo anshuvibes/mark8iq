@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 
 const TABS = [
   {
@@ -73,27 +73,31 @@ const CXO_AGENTS = [
 
 export default function AgentFoundryV2() {
   const [activeTab, setActiveTab] = useState(0);
-  const outerRef = useRef<HTMLDivElement>(null);
-  const stickyRef = useRef<HTMLDivElement>(null);
+  const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const outer = outerRef.current;
-    if (!outer) return;
+    const observers: IntersectionObserver[] = [];
 
-    const onScroll = () => {
-      const rect = outer.getBoundingClientRect();
-      const totalHeight = outer.offsetHeight - window.innerHeight;
-      const scrolled = Math.max(0, -rect.top);
-      const progress = Math.min(scrolled / totalHeight, 1);
-      const newIndex = Math.min(
-        Math.floor(progress * TABS.length),
-        TABS.length - 1
+    panelRefs.current.forEach((panel, i) => {
+      if (!panel) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveTab(i);
+          }
+        },
+        {
+          threshold: 0.4,
+          rootMargin: '0px 0px -20% 0px',
+        }
       );
-      setActiveTab(newIndex);
-    };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+      observer.observe(panel);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   return (
@@ -152,7 +156,7 @@ export default function AgentFoundryV2() {
         </div>
       </section>
 
-    <section style={{ padding: '60px 0 0 0', position: 'relative' }}>
+      <section style={{ padding: '60px 0 0 0', position: 'relative' }}>
         {/* Headline block — normal scroll, no sticky involvement */}
         <div className="container" style={{ textAlign: 'center', paddingBottom: '0px' }}>
           <motion.p
@@ -177,53 +181,36 @@ export default function AgentFoundryV2() {
           </motion.h2>
         </div>
 
-        {/* Outer scroll container — starts AFTER headline */}
-        <div
-          ref={outerRef}
-          style={{
-            height: `${TABS.length * 50 + 100}vh`,
+        <div className="container">
+          <div className="agent-foundry-tabs" style={{
+            display: 'flex',
+            flexDirection: 'row',
+            gap: '64px',
+            alignItems: 'flex-start',
             position: 'relative',
-            marginTop: '-48px',
-          }}
-        >
-          {/* Sticky panel — centers in viewport */}
-          <div
-            ref={stickyRef}
-            style={{
-              position: 'sticky',
-              top: 0,
-              height: '100vh',
-              display: 'flex',
-              alignItems: 'center',
-              padding: '40px 0',
-            }}
-          >
-            <div className="container">
-              {/* Two-column tab layout — exactly as-is */}
-              <div className="agent-foundry-tabs" style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: '64px',
-                alignItems: 'flex-start',
-              }}>
-
-            {/* LEFT — Tab list */}
+          }}>
+            {/* LEFT — Sticky tab list */}
             <div style={{
-              flex: '0 0 340px',
+              flex: '0 0 300px',
+              position: 'sticky',
+              top: '100px',
               display: 'flex',
               flexDirection: 'column',
               gap: '0',
+              alignSelf: 'flex-start',
             }}>
               {TABS.map((tab, i) => (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(i)}
+                  onClick={() => {
+                    panelRefs.current[i]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }}
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'flex-start',
                     gap: '4px',
-                    padding: '20px 24px',
+                    padding: '16px 20px',
                     background: 'none',
                     border: 'none',
                     borderLeft: `2px solid ${activeTab === i ? '#8e59ff' : 'rgba(18,24,43,0.08)'}`,
@@ -234,16 +221,16 @@ export default function AgentFoundryV2() {
                 >
                   <span style={{
                     fontFamily: "'Saira', sans-serif",
-                    fontSize: '16px',
+                    fontSize: '15px',
                     fontWeight: activeTab === i ? 500 : 400,
                     color: activeTab === i ? 'var(--v2-text)' : 'var(--v2-text-subtle)',
                     transition: 'color 0.2s ease',
-                    lineHeight: '24px',
+                    lineHeight: '22px',
                   }}>
                     <span style={{
                       color: tab.id === 'custom'
                         ? '#8e59ff'
-                        : activeTab === i ? '#8e59ff' : 'rgba(142,89,255,0.4)',
+                        : activeTab === i ? '#8e59ff' : 'rgba(142,89,255,0.35)',
                     }}>
                       {tab.role}
                     </span>
@@ -251,10 +238,10 @@ export default function AgentFoundryV2() {
                   </span>
                   <span style={{
                     fontFamily: "'Saira', sans-serif",
-                    fontSize: '13px',
+                    fontSize: '12px',
                     fontWeight: 400,
                     color: activeTab === i ? 'var(--v2-text-subtle)' : 'var(--v2-text-muted)',
-                    lineHeight: '18px',
+                    lineHeight: '17px',
                     transition: 'color 0.2s ease',
                   }}>
                     {tab.oneliner}
@@ -263,15 +250,18 @@ export default function AgentFoundryV2() {
               ))}
             </div>
 
-            {/* RIGHT — Active tab content */}
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.25, ease: 'easeOut' }}
+            {/* RIGHT — All panels stacked vertically */}
+            <div style={{
+              flex: 1,
+              minWidth: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '24px',
+            }}>
+              {TABS.map((tab, i) => (
+                <div
+                  key={tab.id}
+                  ref={(el) => { panelRefs.current[i] = el; }}
                   style={{
                     background: '#ffffff',
                     border: '1px solid rgba(18,24,43,0.08)',
@@ -280,11 +270,16 @@ export default function AgentFoundryV2() {
                     padding: '40px',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '32px',
+                    gap: '24px',
+                    transition: 'box-shadow 0.3s ease',
+                    ...(activeTab === i ? {
+                      boxShadow: '0 8px 40px rgba(18,24,43,0.1)',
+                      border: '1px solid rgba(142,89,255,0.15)',
+                    } : {}),
                   }}
                 >
                   {/* Role label + workflow label */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <p style={{
                       fontFamily: "'Saira', sans-serif",
                       fontSize: '11px',
@@ -294,9 +289,9 @@ export default function AgentFoundryV2() {
                       color: '#8e59ff',
                       margin: 0,
                     }}>
-                      {TABS[activeTab].role}
+                      {tab.role}
                     </p>
-                    {TABS[activeTab].type === 'standard' && (
+                    {tab.type === 'standard' && (
                       <p style={{
                         fontFamily: "'Saira', sans-serif",
                         fontSize: '11px',
@@ -317,10 +312,10 @@ export default function AgentFoundryV2() {
                     fontSize: '22px',
                     fontWeight: 500,
                     color: 'var(--v2-text)',
-                    margin: '0 0 16px 0',
+                    margin: 0,
                     lineHeight: '1.4',
                   }}>
-                    {TABS[activeTab].oneliner}
+                    {tab.oneliner}
                   </h3>
 
                   {/* Body */}
@@ -330,13 +325,13 @@ export default function AgentFoundryV2() {
                     fontWeight: 400,
                     color: 'var(--v2-text-subtle)',
                     lineHeight: '1.7',
-                    margin: '0 0 28px 0',
+                    margin: 0,
                   }}>
-                    {TABS[activeTab].body}
+                    {tab.body}
                   </p>
 
-                  {/* Standard tab: single agent card */}
-                  {TABS[activeTab].type === 'standard' && (
+                  {/* Standard: agent card */}
+                  {tab.type === 'standard' && (
                     <div style={{
                       background: 'rgba(142,89,255,0.04)',
                       border: '1px solid rgba(142,89,255,0.12)',
@@ -352,20 +347,18 @@ export default function AgentFoundryV2() {
                             flexShrink: 0,
                           }} />
                           <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '14px', fontWeight: 500, color: 'var(--v2-text)' }}>
-                            {TABS[activeTab].agentName}
+                            {tab.agentName}
                           </span>
                         </div>
                         <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '12px', color: 'var(--v2-text-muted)' }}>
-                          Last action: {TABS[activeTab].lastAction}
+                          Last action: {tab.lastAction}
                         </span>
                       </div>
                       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                        {TABS[activeTab].connects.map((tag) => (
+                        {tab.connects.map((tag) => (
                           <span key={tag} style={{
                             fontFamily: "'Saira', sans-serif",
                             fontSize: '11px',
-                            fontWeight: 400,
-                            letterSpacing: '0.05em',
                             padding: '3px 10px',
                             borderRadius: '4px',
                             background: 'rgba(142,89,255,0.08)',
@@ -379,8 +372,8 @@ export default function AgentFoundryV2() {
                     </div>
                   )}
 
-                  {/* CXO tab: 2x2 grid of all four agent cards */}
-                  {TABS[activeTab].type === 'cxo' && (
+                  {/* CXO: 2x2 grid */}
+                  {tab.type === 'cxo' && (
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                       {CXO_AGENTS.map((agent) => (
                         <div key={agent.name} style={{
@@ -390,12 +383,7 @@ export default function AgentFoundryV2() {
                           padding: '14px 16px',
                         }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                            <div style={{
-                              width: '6px', height: '6px', borderRadius: '50%',
-                              background: '#4ade80',
-                              boxShadow: '0 0 4px rgba(74,222,128,0.6)',
-                              flexShrink: 0,
-                            }} />
+                            <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4ade80', boxShadow: '0 0 4px rgba(74,222,128,0.6)', flexShrink: 0 }} />
                             <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '13px', fontWeight: 500, color: 'var(--v2-text)' }}>
                               {agent.name}
                             </span>
@@ -403,12 +391,9 @@ export default function AgentFoundryV2() {
                           <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                             {agent.connects.map((tag) => (
                               <span key={tag} style={{
-                                fontFamily: "'Saira', sans-serif",
-                                fontSize: '10px',
-                                padding: '2px 8px',
-                                borderRadius: '4px',
-                                background: 'rgba(142,89,255,0.08)',
-                                color: '#8e59ff',
+                                fontFamily: "'Saira', sans-serif", fontSize: '10px',
+                                padding: '2px 8px', borderRadius: '4px',
+                                background: 'rgba(142,89,255,0.08)', color: '#8e59ff',
                                 border: '1px solid rgba(142,89,255,0.12)',
                               }}>
                                 {tag}
@@ -423,8 +408,8 @@ export default function AgentFoundryV2() {
                     </div>
                   )}
 
-                  {/* Custom tab: open CTA */}
-                  {TABS[activeTab].type === 'custom' && (
+                  {/* Custom: dashed CTA */}
+                  {tab.type === 'custom' && (
                     <div style={{
                       background: 'rgba(142,89,255,0.06)',
                       border: '1px dashed rgba(142,89,255,0.25)',
@@ -440,34 +425,30 @@ export default function AgentFoundryV2() {
                       </p>
                     </div>
                   )}
-
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-          {/* Closing power line */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            style={{
-              fontFamily: "'Saira', sans-serif",
-              fontSize: '20px',
-              fontWeight: 400,
-              color: 'var(--v2-text-subtle)',
-              textAlign: 'center',
-              padding: '80px 40px',
-              fontStyle: 'italic',
-            }}
-          >
-            While you were in that meeting, your agents closed the gap.
-          </motion.p>
+        {/* Closing power line */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          style={{
+            fontFamily: "'Saira', sans-serif",
+            fontSize: '20px',
+            fontWeight: 400,
+            color: 'var(--v2-text-subtle)',
+            textAlign: 'center',
+            padding: '80px 40px',
+            fontStyle: 'italic',
+          }}
+        >
+          While you were in that meeting, your agents closed the gap.
+        </motion.p>
 
         <style>{`
           @media (max-width: 991px) {
@@ -475,8 +456,7 @@ export default function AgentFoundryV2() {
             .agent-foundry-tabs > div { flex: 1 1 100% !important; }
           }
         `}</style>
-
-    </section>
+      </section>
     </>
   );
 }
