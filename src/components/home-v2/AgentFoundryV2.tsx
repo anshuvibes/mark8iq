@@ -241,6 +241,29 @@ export default function AgentFoundryV2() {
           >
             Deploy a workforce<br />that never clocks out.
           </motion.h2>
+
+          <motion.div
+            className="agent-node-showcase"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.14 }}
+          >
+            <div className="agent-node-card" aria-label="Price Tracker Agent node">
+              <div className="agent-node-icon" aria-hidden="true">
+                <img src="/img/agent-foundry-logo.svg" alt="" />
+              </div>
+              <div className="agent-node-copy">
+                <p className="agent-node-kicker">AGENT FOUNDRY</p>
+                <h3 className="agent-node-title">Price Tracker Agent</h3>
+                <div className="agent-node-badges" aria-label="Connected products">
+                  <span className="agent-node-badge agent-node-badge-sight">Mark8 Sight</span>
+                  <span className="agent-node-badge agent-node-badge-returns">Mark8 Returns</span>
+                </div>
+              </div>
+              <div className="agent-node-status" aria-label="Agent active" />
+            </div>
+          </motion.div>
         </div>
 
         <div className="container">
