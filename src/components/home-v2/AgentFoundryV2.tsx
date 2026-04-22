@@ -1,16 +1,47 @@
-import { motion } from 'motion/react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 
-const beats = [
-  { num: '01', label: 'Build', desc: 'Configure agents for any task. Bid adjustments, inventory alerts, return flags, reconciliation triggers.', color: '#FCB24F' },
-  { num: '02', label: 'Deploy', desc: 'Push agents live across every marketplace simultaneously. One action. Complete coverage.', color: '#FCB24F' },
-  { num: '03', label: 'Run', desc: 'Agents execute in real time. Every signal, every trigger, every action. Without waiting for a human.', color: '#FCB24F' },
-];
-
-const agents = [
-  { name: 'Price Tracker Agent', status: 'Active', last: '2 min ago', next: '58 min', highlight: false },
-  { name: 'ROAS Optimiser Agent', status: 'Active', last: '14 min ago', next: '46 min', highlight: true },
-  { name: 'Stock Alert Agent', status: 'Active', last: '1 hr ago', next: '59 min', highlight: false },
-  { name: 'Return Reconciler Agent', status: 'Active', last: '3 hrs ago', next: '21 min', highlight: false },
+const TABS = [
+  {
+    role: 'Ads Manager',
+    oneliner: 'Stop burning budget on the wrong keywords.',
+    body: 'Your ROAS Optimiser Agent monitors every campaign across every marketplace, every hour. When a keyword drops below your target ACoS, it adjusts bids instantly. No manual review. No delay. No missed opportunity.',
+    agent: 'ROAS Optimiser Agent',
+    status: 'Active',
+    lastAction: '14 min ago',
+  },
+  {
+    role: 'Inventory Head',
+    oneliner: 'Get ahead of stockouts before they cost you sales.',
+    body: 'Your Stock Alert Agent tracks sell-through rates across every SKU on every marketplace. The moment inventory crosses a threshold you define, it flags the risk and pauses ads on affected listings automatically. No firefighting. No revenue lost to empty shelves.',
+    agent: 'Stock Alert Agent',
+    status: 'Active',
+    lastAction: '1 hr ago',
+  },
+  {
+    role: 'Finance Head',
+    oneliner: 'Catch platform price violations before they cut your margin.',
+    body: 'Your Price Tracker Agent scans agreed selling prices against actual live prices across Amazon, Flipkart, Myntra, and quick commerce every hour. The moment a platform drops below your floor price, it is flagged with evidence of who violated first.',
+    agent: 'Price Tracker Agent',
+    status: 'Active',
+    lastAction: '2 min ago',
+  },
+  {
+    role: 'Operations Head',
+    oneliner: 'Close reconciliation gaps without chasing platform reports.',
+    body: 'Your Return Reconciler Agent cross-references every return against platform settlements. Mismatches are flagged automatically. Leakages are surfaced before quarter end. No spreadsheets. No manual matching.',
+    agent: 'Return Reconciler Agent',
+    status: 'Active',
+    lastAction: '3 hrs ago',
+  },
+  {
+    role: 'CXO',
+    oneliner: 'Run a leaner operation without adding headcount.',
+    body: 'Deploy as many agents as your operation demands. Each one runs on your business data. Each one acts within rules you define. Your team focuses on decisions. Your agents handle execution. The operation scales. The team does not have to.',
+    agent: '4 agents running',
+    status: '100+ signals monitored',
+    lastAction: 'Zero manual intervention',
+  },
 ];
 
 export default function AgentFoundryV2() {
