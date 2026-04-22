@@ -1218,13 +1218,13 @@ body {
 
 .agent-node-badge {
   font-family: 'Soehne Mono', 'Saira', monospace;
-  font-size: 10.23px;
+  font-size: 8.18px;
   font-weight: 400;
-  line-height: 16px;
+  line-height: 13px;
   letter-spacing: 0;
   text-transform: uppercase;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 3px 6px;
+  border-radius: 3px;
   color: hsl(var(--agent-node-green));
 }
 
@@ -1241,79 +1241,16 @@ body {
 
 .agent-node-robot-tile {
   position: relative;
-  width: 106px;
-  height: 106px;
-  flex: 0 0 106px;
-  border-radius: 13.398px;
-  background: hsl(var(--agent-node-violet) / 0.12);
+  width: 85px;
+  height: 85px;
+  flex: 0 0 85px;
 }
 
-.agent-node-robot-face {
-  position: absolute;
-  left: 31px;
-  top: 47px;
-  width: 66px;
-  height: 31px;
-  border-radius: 9.804px;
-  background: hsl(var(--agent-node-surface));
-  z-index: 2;
+.agent-node-robot-svg {
+  width: 85px;
+  height: 85px;
+  display: block;
 }
-
-.agent-node-robot-face::before {
-  content: '';
-  position: absolute;
-  inset: -21px -18px -29px -19px;
-  border-radius: 9.804px;
-  background: hsl(var(--agent-node-violet));
-  z-index: -1;
-}
-
-.agent-node-robot-face span {
-  position: absolute;
-  top: 11px;
-  width: 5px;
-  height: 10px;
-  border-radius: 999px;
-  background: hsl(var(--agent-node-honest));
-}
-
-.agent-node-robot-face span:first-child { left: 16px; }
-.agent-node-robot-face span:last-child { right: 16px; }
-
-.agent-node-antenna {
-  position: absolute;
-  left: 50%;
-  top: 33px;
-  width: 4px;
-  height: 12px;
-  transform: translateX(-50%);
-  background: hsl(var(--agent-node-violet));
-  border-radius: 999px;
-}
-
-.agent-node-antenna::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: -13px;
-  width: 10px;
-  height: 10px;
-  transform: translateX(-50%);
-  border-radius: 999px;
-  background: hsl(var(--agent-node-violet));
-}
-
-.agent-node-ear {
-  position: absolute;
-  top: 58px;
-  width: 5px;
-  height: 18px;
-  border-radius: 999px;
-  background: hsl(var(--agent-node-honest));
-}
-
-.agent-node-ear-left { left: 21px; }
-.agent-node-ear-right { right: 21px; }
 
 .agent-node-left-port {
   position: absolute;
