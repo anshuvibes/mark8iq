@@ -45,6 +45,7 @@ const TABS = [
 ];
 
 export default function AgentFoundryV2() {
+  const [activeTab, setActiveTab] = useState(0);
   return (
     <>
       {/* Contained dark card callout */}
