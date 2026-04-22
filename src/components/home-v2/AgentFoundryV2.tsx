@@ -73,10 +73,80 @@ export default function AgentFoundryV2() {
     <section style={{ padding: '100px 0', position: 'relative' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
 
-        <div style={{ display: 'flex', gap: '64px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '64px', alignItems: 'center' }}>
+          <div style={{ flex: '0 0 44%', maxWidth: '44%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+            <motion.p
+              className="m8-eyebrow"
+              style={{ color: '#FCB24F', marginBottom: '12px' }}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+            >
+              INTRODUCING AGENT FOUNDRY
+            </motion.p>
+
+            <motion.h2
+              className="m8-h1-large"
+              style={{ color: 'var(--v2-text)', marginBottom: '40px' }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ delay: 0.1 }}
+            >
+              Deploy a workforce that never clocks out.
+            </motion.h2>
+
+            <motion.p
+              className="m8-p3"
+              style={{ color: 'var(--v2-text-subtle)', marginBottom: '40px', marginTop: '-24px' }}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ delay: 0.15 }}
+            >
+              Configure agents on your business data. Deploy across every marketplace. Run automated logic 24/7. Add as many agents as your operation demands. From anywhere.
+            </motion.p>
+
+            {beats.map((beat, i) => (
+              <motion.div
+                key={beat.num}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ delay: 0.2 + i * 0.1 }}
+                style={{ marginBottom: '28px', width: '100%', maxWidth: '360px', textAlign: 'left' }}
+              >
+                <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '8px',
+                  background: 'rgba(252,180,79,0.12)',
+                  marginBottom: '10px',
+                }}>
+                  <span className="m8-p6" style={{ color: '#FCB24F', fontWeight: 500 }}>{beat.num}</span>
+                </div>
+                <h4 className="m8-p3-medium" style={{ color: 'var(--v2-text)', marginBottom: '6px' }}>{beat.label}</h4>
+                <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)' }}>{beat.desc}</p>
+              </motion.div>
+            ))}
+
+            <motion.p
+              className="m8-p4"
+              style={{ color: 'var(--v2-text-muted)', marginTop: '28px', width: '100%', maxWidth: '360px', textAlign: 'left' }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, margin: '-80px' }}
+            >
+              100+ signals. 24 by 7. Zero delays.
+            </motion.p>
+          </div>
+
           <motion.div
             style={{ flex: '0 0 56%', maxWidth: '56%' }}
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ delay: 0.2, duration: 0.6 }}
