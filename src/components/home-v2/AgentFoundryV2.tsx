@@ -203,6 +203,24 @@ export default function AgentFoundryV2() {
       >
         {/* Headline block — normal scroll, no sticky involvement */}
         <div className="container" style={{ textAlign: 'center', paddingBottom: '48px' }}>
+          <motion.div
+            style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.5 }}
+          >
+            <img
+              src="/img/agent-foundry-logo.svg"
+              alt="Agent Foundry"
+              style={{
+                width: '56px',
+                height: '56px',
+                display: 'block',
+              }}
+            />
+          </motion.div>
+
           <motion.p
             className="m8-eyebrow"
             style={{ color: '#8e59ff', marginBottom: '12px' }}
