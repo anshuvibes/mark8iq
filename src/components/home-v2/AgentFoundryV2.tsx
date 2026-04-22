@@ -1,51 +1,19 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 
-const TABS = [
-  {
-    role: 'Ads Manager',
-    oneliner: 'Stop burning budget on the wrong keywords.',
-    body: 'Your ROAS Optimiser Agent monitors every campaign across every marketplace, every hour. When a keyword drops below your target ACoS, it adjusts bids instantly. No manual review. No delay. No missed opportunity.',
-    agent: 'ROAS Optimiser Agent',
-    status: 'Active',
-    lastAction: '14 min ago',
-  },
-  {
-    role: 'Inventory Head',
-    oneliner: 'Get ahead of stockouts before they cost you sales.',
-    body: 'Your Stock Alert Agent tracks sell-through rates across every SKU on every marketplace. The moment inventory crosses a threshold you define, it flags the risk and pauses ads on affected listings automatically. No firefighting. No revenue lost to empty shelves.',
-    agent: 'Stock Alert Agent',
-    status: 'Active',
-    lastAction: '1 hr ago',
-  },
-  {
-    role: 'Finance Head',
-    oneliner: 'Catch platform price violations before they cut your margin.',
-    body: 'Your Price Tracker Agent scans agreed selling prices against actual live prices across Amazon, Flipkart, Myntra, and quick commerce every hour. The moment a platform drops below your floor price, it is flagged with evidence of who violated first.',
-    agent: 'Price Tracker Agent',
-    status: 'Active',
-    lastAction: '2 min ago',
-  },
-  {
-    role: 'Operations Head',
-    oneliner: 'Close reconciliation gaps without chasing platform reports.',
-    body: 'Your Return Reconciler Agent cross-references every return against platform settlements. Mismatches are flagged automatically. Leakages are surfaced before quarter end. No spreadsheets. No manual matching.',
-    agent: 'Return Reconciler Agent',
-    status: 'Active',
-    lastAction: '3 hrs ago',
-  },
-  {
-    role: 'CXO',
-    oneliner: 'Run a leaner operation without adding headcount.',
-    body: 'Deploy as many agents as your operation demands. Each one runs on your business data. Each one acts within rules you define. Your team focuses on decisions. Your agents handle execution. The operation scales. The team does not have to.',
-    agent: '4 agents running',
-    status: '100+ signals monitored',
-    lastAction: 'Zero manual intervention',
-  },
+const beats = [
+  { num: '01', label: 'Build', desc: 'Configure agents for any task. Bid adjustments, inventory alerts, return flags, reconciliation triggers.', color: '#FCB24F' },
+  { num: '02', label: 'Deploy', desc: 'Push agents live across every marketplace simultaneously. One action. Complete coverage.', color: '#FCB24F' },
+  { num: '03', label: 'Run', desc: 'Agents execute in real time. Every signal, every trigger, every action. Without waiting for a human.', color: '#FCB24F' },
+];
+
+const agents = [
+  { name: 'Price Tracker Agent', status: 'Active', last: '2 min ago', next: '58 min', highlight: false },
+  { name: 'ROAS Optimiser Agent', status: 'Active', last: '14 min ago', next: '46 min', highlight: true },
+  { name: 'Stock Alert Agent', status: 'Active', last: '1 hr ago', next: '59 min', highlight: false },
+  { name: 'Return Reconciler Agent', status: 'Active', last: '3 hrs ago', next: '21 min', highlight: false },
 ];
 
 export default function AgentFoundryV2() {
-  const [activeTab, setActiveTab] = useState(0);
   return (
     <>
       {/* Contained dark card callout */}
@@ -129,234 +97,111 @@ export default function AgentFoundryV2() {
           </motion.h2>
         </div>
 
-      </div>
-    </section>
-
-    {/* Persona tab section — dark */}
-    <section style={{
-      padding: '80px 0',
-      background: '#080d19',
-      position: 'relative',
-    }}>
-      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-
-        {/* Section label */}
-        <motion.p
-          className="m8-eyebrow"
-          style={{ color: 'rgba(255,255,255,0.4)', marginBottom: '48px', textAlign: 'center' }}
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-        >
-          WHAT YOUR AGENTS CAN DO FOR YOU
-        </motion.p>
-
-        {/* Two column layout */}
-        <div className="agent-foundry-tabs" style={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: '64px',
-          alignItems: 'flex-start',
-        }}>
-
-          {/* LEFT — Tab list */}
-          <div style={{
-            flex: '0 0 340px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0',
-          }}>
-            {TABS.map((tab, i) => (
-              <button
-                key={tab.role}
-                onClick={() => setActiveTab(i)}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  gap: '4px',
-                  padding: '20px 24px',
-                  background: 'none',
-                  border: 'none',
-                  borderLeft: `2px solid ${activeTab === i ? '#8e59ff' : 'rgba(255,255,255,0.06)'}`,
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  transition: 'border-color 0.2s ease',
-                }}
-              >
-                <span style={{
-                  fontFamily: "'Saira', sans-serif",
-                  fontSize: '16px',
-                  fontWeight: activeTab === i ? 500 : 400,
-                  color: activeTab === i ? '#ffffff' : 'rgba(255,255,255,0.35)',
-                  transition: 'color 0.2s ease',
-                  lineHeight: '24px',
-                }}>
-                  <span style={{ color: activeTab === i ? '#8e59ff' : 'rgba(255,255,255,0.25)' }}>
-                    {tab.role}
-                  </span>
-                  {' '}can
-                </span>
-                <span style={{
-                  fontFamily: "'Saira', sans-serif",
-                  fontSize: '14px',
-                  fontWeight: 400,
-                  color: activeTab === i ? 'rgba(255,255,255,0.65)' : 'rgba(255,255,255,0.2)',
-                  lineHeight: '20px',
-                  transition: 'color 0.2s ease',
-                }}>
-                  {tab.oneliner}
-                </span>
-              </button>
-            ))}
-          </div>
-
-          {/* RIGHT — Active tab content */}
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <AnimatePresence mode="wait">
+        {/* BLOCK 2 — Two columns: beats left, dashboard right */}
+        <div className="agent-foundry-cols" style={{ display: 'flex', flexDirection: 'row', gap: '64px', alignItems: 'flex-start' }}>
+          {/* LEFT — Beats */}
+          <div style={{ flex: '0 0 44%', maxWidth: '44%' }}>
+            {beats.map((beat, i) => (
               <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.25, ease: 'easeOut' }}
-                style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.07)',
-                  borderRadius: '16px',
-                  padding: '40px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '32px',
-                }}
+                key={beat.num}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ delay: 0.2 + i * 0.1 }}
+                style={{ marginBottom: '28px' }}
               >
-                {/* Role + one-liner */}
-                <div>
-                  <p style={{
-                    fontFamily: "'Saira', sans-serif",
-                    fontSize: '13px',
-                    fontWeight: 400,
-                    letterSpacing: '0.08em',
-                    textTransform: 'uppercase',
-                    color: '#8e59ff',
-                    margin: '0 0 12px 0',
-                  }}>
-                    {TABS[activeTab].role}
-                  </p>
-                  <h3 style={{
-                    fontFamily: "'Saira', sans-serif",
-                    fontSize: '22px',
-                    fontWeight: 500,
-                    color: '#ffffff',
-                    margin: '0 0 16px 0',
-                    lineHeight: '1.4',
-                  }}>
-                    {TABS[activeTab].oneliner}
-                  </h3>
-                  <p style={{
-                    fontFamily: "'Saira', sans-serif",
-                    fontSize: '15px',
-                    fontWeight: 400,
-                    color: 'rgba(255,255,255,0.55)',
-                    lineHeight: '1.7',
-                    margin: 0,
-                  }}>
-                    {TABS[activeTab].body}
-                  </p>
-                </div>
-
-                {/* Agent status card */}
                 <div style={{
-                  background: 'rgba(142,89,255,0.06)',
-                  border: '1px solid rgba(142,89,255,0.15)',
-                  borderRadius: '10px',
-                  padding: '16px 20px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  flexWrap: 'wrap',
-                  gap: '12px',
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{
-                      width: '8px',
-                      height: '8px',
-                      borderRadius: '50%',
-                      background: '#4ade80',
-                      boxShadow: '0 0 6px rgba(74,222,128,0.6)',
-                    }} />
-                    <span style={{
-                      fontFamily: "'Saira', sans-serif",
-                      fontSize: '14px',
-                      fontWeight: 500,
-                      color: 'rgba(255,255,255,0.85)',
-                    }}>
-                      {TABS[activeTab].agent}
-                    </span>
-                  </div>
-                  <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
-                    <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>
-                      {TABS[activeTab].status}
-                    </span>
-                    <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>
-                      Last action: {TABS[activeTab].lastAction}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Workflow visual placeholder */}
-                <div style={{
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '1px dashed rgba(255,255,255,0.08)',
-                  borderRadius: '12px',
-                  height: '220px',
-                  display: 'flex',
+                  display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '8px',
+                  background: 'rgba(142,89,255,0.08)',
+                  marginBottom: '10px',
                 }}>
-                  <p style={{
-                    fontFamily: "'Saira', sans-serif",
-                    fontSize: '13px',
-                    color: 'rgba(255,255,255,0.2)',
-                    margin: 0,
-                  }}>
-                    Agent workflow visual — coming next
-                  </p>
+                  <span className="m8-p6" style={{ color: '#8e59ff', fontWeight: 500 }}>{beat.num}</span>
                 </div>
-
+                <h4 className="m8-p3-medium" style={{ color: 'var(--v2-text)', marginBottom: '6px' }}>{beat.label}</h4>
+                <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)' }}>{beat.desc}</p>
               </motion.div>
-            </AnimatePresence>
+            ))}
+
+            <motion.p
+              className="m8-p4"
+              style={{ color: 'var(--v2-text-muted)', marginTop: '28px' }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, margin: '-80px' }}
+            >
+              100+ signals. 24 by 7. Zero delays.
+            </motion.p>
           </div>
 
+          {/* RIGHT — Dashboard mockup */}
+          <motion.div
+            style={{ flex: '0 0 56%', maxWidth: '56%' }}
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            <div style={{
+              background: '#0D1117',
+              borderRadius: '16px',
+              overflow: 'hidden',
+              border: '1px solid rgba(255,255,255,0.06)',
+              boxShadow: `0 20px 60px var(--v2-shadow-strong)`,
+            }}>
+              <div style={{ padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span className="m8-p5" style={{ color: '#fff', fontWeight: 500 }}>Agent Foundry</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4ade80' }} />
+                  <span className="m8-p6" style={{ color: 'rgba(255,255,255,0.5)' }}>4 agents running</span>
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', padding: '10px 20px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                {['Agent', 'Status', 'Last action', 'Next run'].map((h) => (
+                  <span key={h} className="m8-p6" style={{ color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</span>
+                ))}
+              </div>
+
+              {agents.map((agent) => (
+                <div
+                  key={agent.name}
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '2fr 1fr 1fr 1fr',
+                    padding: '14px 20px',
+                    borderBottom: '1px solid rgba(255,255,255,0.03)',
+                    background: agent.highlight ? 'rgba(142,89,255,0.06)' : 'transparent',
+                  }}
+                >
+                  <span className="m8-p5" style={{ color: 'rgba(255,255,255,0.85)' }}>{agent.name}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4ade80' }} />
+                    <span className="m8-p6" style={{ color: '#4ade80' }}>{agent.status}</span>
+                  </div>
+                  <span className="m8-p6" style={{ color: 'rgba(255,255,255,0.45)' }}>{agent.last}</span>
+                  <span className="m8-p6" style={{ color: 'rgba(255,255,255,0.45)' }}>{agent.next}</span>
+                </div>
+              ))}
+
+              <div style={{ padding: '14px 20px', display: 'flex', gap: '24px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                {['100+ signals monitored', '24/7 autonomous execution', 'Zero manual intervention'].map((stat) => (
+                  <span key={stat} className="m8-p6" style={{ color: 'rgba(255,255,255,0.3)' }}>{stat}</span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
         </div>
-
-        {/* Closing power line */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          style={{
-            fontFamily: "'Saira', sans-serif",
-            fontSize: '20px',
-            fontWeight: 400,
-            color: 'rgba(255,255,255,0.45)',
-            textAlign: 'center',
-            margin: '72px auto 0',
-            maxWidth: '600px',
-            fontStyle: 'italic',
-            lineHeight: '1.6',
-          }}
-        >
-          While you were in that meeting, your agents closed the gap.
-        </motion.p>
-
       </div>
 
       <style>{`
         @media (max-width: 991px) {
-          .agent-foundry-tabs { flex-direction: column !important; }
-          .agent-foundry-tabs > div { flex: 1 1 100% !important; }
+          .agent-foundry-cols { flex-direction: column !important; }
+          .agent-foundry-cols > div { flex: 0 0 100% !important; max-width: 100% !important; }
         }
       `}</style>
     </section>
