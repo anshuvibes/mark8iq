@@ -210,7 +210,7 @@ export default function AgentMarkV2() {
     <section
       data-section="agent-mark"
       style={{
-        padding: '100px 0',
+        padding: '100px 0 40px 0',
         position: 'relative',
         background: 'transparent',
         overflow: 'hidden',
