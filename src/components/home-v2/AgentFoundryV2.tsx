@@ -183,7 +183,7 @@ export default function AgentFoundryV2() {
           style={{
             height: `${TABS.length * 50 + 100}vh`,
             position: 'relative',
-            marginTop: '-120px',
+            marginTop: '-48px',
           }}
         >
           {/* Sticky panel — centers in viewport */}
