@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 
 const TABS = [
   {
@@ -46,6 +48,37 @@ const TABS = [
 
 export default function AgentFoundryV2() {
   const [activeTab, setActiveTab] = useState(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const totalTabs = TABS.length;
+    const totalScrollDistance = window.innerHeight * totalTabs;
+
+    const trigger = ScrollTrigger.create({
+      trigger: section,
+      start: 'center center',
+      end: `+=${totalScrollDistance}`,
+      pin: true,
+      scrub: false,
+      onUpdate: (self) => {
+        const newIndex = Math.min(
+          Math.floor(self.progress * totalTabs),
+          totalTabs - 1
+        );
+        setActiveTab(newIndex);
+      },
+    });
+
+    return () => {
+      trigger.kill();
+    };
+  }, []);
+
   return (
     <>
       {/* Contained dark card callout */}
@@ -129,20 +162,9 @@ export default function AgentFoundryV2() {
           </motion.h2>
         </div>
 
-        <div style={{ marginTop: '64px' }}>
-          {/* Section label */}
-          <motion.p
-            className="m8-eyebrow"
-            style={{ color: 'var(--v2-text-subtle)', marginBottom: '48px', textAlign: 'center' }}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-          >
-            WHAT YOUR AGENTS CAN DO FOR YOU
-          </motion.p>
-
+        <div style={{ marginTop: '40px' }}>
           {/* Two column layout */}
-          <div className="agent-foundry-tabs" style={{
+          <div ref={sectionRef} className="agent-foundry-tabs" style={{
             display: 'flex',
             flexDirection: 'row',
             gap: '64px',
@@ -159,7 +181,6 @@ export default function AgentFoundryV2() {
               {TABS.map((tab, i) => (
                 <button
                   key={tab.role}
-                  onClick={() => setActiveTab(i)}
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -211,8 +232,9 @@ export default function AgentFoundryV2() {
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.25, ease: 'easeOut' }}
                   style={{
-                    background: 'rgba(18,24,43,0.03)',
+                    background: '#ffffff',
                     border: '1px solid rgba(18,24,43,0.08)',
+                    boxShadow: '0 4px 24px rgba(18,24,43,0.06)',
                     borderRadius: '16px',
                     padding: '40px',
                     display: 'flex',
