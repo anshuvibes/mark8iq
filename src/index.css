@@ -1343,10 +1343,6 @@ body {
   animation-name: agentMarqueeScrollReverse;
 }
 
-.agent-marquee-stack:hover .agent-marquee-track {
-  animation-duration: 200s;
-}
-
 .agent-marquee-item {
   flex-shrink: 0;
 }
