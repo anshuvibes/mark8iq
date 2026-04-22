@@ -94,26 +94,21 @@ export default function AgentFoundryV2() {
       end: 'bottom 20%',
       onEnter: () => {
         setThemeRef.current('dark');
-        document.dispatchEvent(new CustomEvent('cursor-hide'));
       },
       onLeave: () => {
         setThemeRef.current('light');
-        document.dispatchEvent(new CustomEvent('cursor-show'));
       },
       onEnterBack: () => {
         setThemeRef.current('dark');
-        document.dispatchEvent(new CustomEvent('cursor-hide'));
       },
       onLeaveBack: () => {
         setThemeRef.current('light');
-        document.dispatchEvent(new CustomEvent('cursor-show'));
       },
     });
 
     return () => {
       trigger.kill();
       setThemeRef.current('light');
-      document.dispatchEvent(new CustomEvent('cursor-show'));
     };
   }, []);
 
