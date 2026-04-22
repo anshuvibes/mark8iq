@@ -1259,21 +1259,21 @@ body {
 
 .agent-node-left-port {
   position: absolute;
-  left: -8px;
+  left: -18px;
   top: 50%;
-  width: 7px;
-  height: 24px;
+  width: 17px;
+  height: 46px;
   transform: translateY(-50%);
-  border-radius: 2px;
+  border-radius: 5px;
   background: hsl(var(--agent-node-port));
 }
 
 .agent-node-right-port {
   position: absolute;
-  right: -8px;
+  right: -17px;
   top: 50%;
-  width: 14px;
-  height: 14px;
+  width: 52px;
+  height: 52px;
   transform: translateY(-50%);
   border-radius: 999px;
   background: hsl(var(--agent-node-port));
@@ -1281,18 +1281,74 @@ body {
 
 .agent-node-bottom-port {
   position: absolute;
-  bottom: -7px;
-  width: 10px;
-  height: 10px;
+  bottom: -18px;
+  width: 32px;
+  height: 32px;
   transform: translateX(-50%) rotate(45deg);
-  border-radius: 2px;
+  border-radius: 6px;
   background: hsl(var(--agent-node-port));
 }
 
-.agent-node-bottom-port-1 { left: calc(50% - 76px); }
-.agent-node-bottom-port-2 { left: calc(50% - 35px); }
-.agent-node-bottom-port-3 { left: calc(50% + 7px); }
-.agent-node-bottom-port-4 { left: calc(50% + 48px); }
+.agent-node-bottom-port-1 { left: calc(50% - 120px); }
+.agent-node-bottom-port-2 { left: calc(50% - 40px); }
+.agent-node-bottom-port-3 { left: calc(50% + 40px); }
+.agent-node-bottom-port-4 { left: calc(50% + 120px); }
+
+.agent-node-platform {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: hsl(var(--agent-node-platform-bg));
+  color: hsl(var(--agent-node-surface));
+}
+
+.agent-node-platform-postgres::before {
+  content: '♘';
+  color: hsl(var(--agent-node-green));
+  font-size: 31px;
+  line-height: 1;
+  transform: rotate(180deg);
+}
+
+.agent-node-platform-flipkart {
+  font-family: var(--font_primary);
+  font-size: 34px;
+  font-weight: 500;
+  color: hsl(229 100% 46%);
+}
+
+.agent-node-platform-flipkart::before {
+  content: '';
+  position: absolute;
+  inset: 13px 10px 11px 9px;
+  border-radius: 4px;
+  background: hsl(var(--agent-node-flipkart));
+  z-index: 0;
+}
+
+.agent-node-platform-flipkart { z-index: 1; }
+.agent-node-platform-flipkart::after { content: ''; z-index: -1; }
+
+.agent-node-platform-amazon::before {
+  content: '';
+  width: 28px;
+  height: 24px;
+  border-radius: 4px;
+  background: hsl(var(--agent-node-amazon));
+}
+
+.agent-node-platform-amazon::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 8px;
+  border-bottom: 2px solid hsl(var(--agent-node-surface));
+  border-radius: 0 0 50% 50%;
+  transform: translateY(7px);
+}
 
 @media (max-width: 640px) {
   .agent-node-card {
