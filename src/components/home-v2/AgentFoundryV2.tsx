@@ -214,8 +214,8 @@ export default function AgentFoundryV2() {
               src="/img/agent-foundry-logo.svg"
               alt="Agent Foundry"
               style={{
-                width: '56px',
-                height: '56px',
+                width: '72px',
+                height: '72px',
                 display: 'block',
               }}
             />
