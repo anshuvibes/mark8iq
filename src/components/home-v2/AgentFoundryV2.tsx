@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { Background, Handle, Position, ReactFlow, type Edge, type Node, type NodeProps, type NodeTypes } from '@xyflow/react';
+import '@xyflow/react/dist/style.css';
 import { useV2Theme } from './ThemeContext';
 import AgentMarqueeStrip from './AgentMarqueeStrip';
 
@@ -73,6 +75,38 @@ const CXO_AGENTS = [
   { name: 'Visibility Booster Agent', connects: ['Mark8 Sight', 'Mark8 Ads'], lastAction: '22 min ago' },
   { name: 'Price Tracker Agent', connects: ['Mark8 Sight'], lastAction: '2 min ago' },
   { name: 'Low Stock AdFlow Agent', connects: ['Mark8 Shelf', 'Mark8 Ads'], lastAction: '45 min ago' },
+];
+
+type WorkflowNodeData = {
+  label: string;
+  meta: string;
+  tone: 'source' | 'agent' | 'action';
+};
+
+type WorkflowNode = Node<WorkflowNodeData, 'agentWorkflow'>;
+
+function AgentWorkflowNode({ data }: NodeProps<WorkflowNode>) {
+  return (
+    <div className={`agent-flow-node agent-flow-node--${data.tone}`}>
+      <Handle type="target" position={Position.Left} className="agent-flow-handle" />
+      <p className="agent-flow-node__label">{data.label}</p>
+      <p className="agent-flow-node__meta">{data.meta}</p>
+      <Handle type="source" position={Position.Right} className="agent-flow-handle" />
+    </div>
+  );
+}
+
+const agentFlowNodeTypes: NodeTypes = { agentWorkflow: AgentWorkflowNode };
+
+const adsWorkflowNodes: WorkflowNode[] = [
+  { id: 'sight', type: 'agentWorkflow', position: { x: 18, y: 78 }, data: { label: 'Mark8 Sight', meta: 'Competitor search scan', tone: 'source' } },
+  { id: 'agent', type: 'agentWorkflow', position: { x: 220, y: 38 }, data: { label: 'Keyword Harvesting Agent', meta: 'Ranks, clusters, validates', tone: 'agent' } },
+  { id: 'ads', type: 'agentWorkflow', position: { x: 474, y: 78 }, data: { label: 'Mark8 Ads', meta: 'Queues bid deployment', tone: 'action' } },
+];
+
+const adsWorkflowEdges: Edge[] = [
+  { id: 'sight-agent', source: 'sight', target: 'agent', animated: true, style: { stroke: 'var(--v2-accent)', strokeWidth: 1.4 } },
+  { id: 'agent-ads', source: 'agent', target: 'ads', animated: true, style: { stroke: 'var(--v2-accent)', strokeWidth: 1.4 } },
 ];
 
 export default function AgentFoundryV2() {
@@ -400,7 +434,7 @@ export default function AgentFoundryV2() {
                       borderRadius: '5px',
                       padding: '16px 20px',
                     }}>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: tab.id === 'ads' ? '16px' : '10px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                           <div style={{
                             width: '8px', height: '8px', borderRadius: '50%',
@@ -416,7 +450,29 @@ export default function AgentFoundryV2() {
                           Last action: {tab.lastAction}
                         </span>
                       </div>
-                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      {tab.id === 'ads' && (
+                        <div className="agent-flow-canvas" aria-label="Keyword harvesting workflow canvas">
+                          <ReactFlow
+                            nodes={adsWorkflowNodes}
+                            edges={adsWorkflowEdges}
+                            nodeTypes={agentFlowNodeTypes}
+                            fitView
+                            fitViewOptions={{ padding: 0.18 }}
+                            nodesDraggable={false}
+                            nodesConnectable={false}
+                            elementsSelectable={false}
+                            panOnDrag={false}
+                            zoomOnScroll={false}
+                            zoomOnPinch={false}
+                            zoomOnDoubleClick={false}
+                            preventScrolling={false}
+                            proOptions={{ hideAttribution: true }}
+                          >
+                            <Background color="var(--v2-border)" gap={18} size={1} />
+                          </ReactFlow>
+                        </div>
+                      )}
+                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: tab.id === 'ads' ? '14px' : 0 }}>
                         {tab.connects.map((tag) => (
                           <span key={tag} style={{
                             fontFamily: "'Saira', sans-serif",
@@ -513,6 +569,65 @@ export default function AgentFoundryV2() {
         </motion.p>
 
         <style>{`
+          .agent-flow-canvas {
+            width: 100%;
+            height: 220px;
+            border: 1px solid rgba(142, 89, 255, 0.16);
+            border-radius: 5px;
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(142, 89, 255, 0.08), rgba(8, 13, 25, 0.44));
+          }
+
+          .agent-flow-canvas .react-flow__pane,
+          .agent-flow-canvas .react-flow__renderer,
+          .agent-flow-canvas .react-flow__viewport {
+            cursor: default;
+          }
+
+          .agent-flow-node {
+            min-width: 154px;
+            border: 1px solid rgba(142, 89, 255, 0.2);
+            border-radius: 5px;
+            padding: 12px 14px;
+            background: rgba(8, 13, 25, 0.88);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.26);
+          }
+
+          .agent-flow-node--agent {
+            min-width: 192px;
+            border-color: rgba(142, 89, 255, 0.46);
+            background: rgba(142, 89, 255, 0.14);
+          }
+
+          .agent-flow-node__label,
+          .agent-flow-node__meta {
+            font-family: 'Saira', sans-serif;
+            margin: 0;
+          }
+
+          .agent-flow-node__label {
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 17px;
+            color: var(--v2-text);
+            white-space: nowrap;
+          }
+
+          .agent-flow-node__meta {
+            margin-top: 4px;
+            font-size: 10px;
+            font-weight: 400;
+            line-height: 15px;
+            color: var(--v2-text-muted);
+          }
+
+          .agent-flow-handle {
+            width: 7px;
+            height: 7px;
+            border: 1px solid rgba(142, 89, 255, 0.64);
+            background: var(--v2-accent);
+          }
+
           @media (max-width: 991px) {
             .agent-foundry-tabs { flex-direction: column !important; }
             .agent-foundry-tabs > div { flex: 1 1 100% !important; }
