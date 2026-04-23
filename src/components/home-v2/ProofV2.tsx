@@ -175,7 +175,6 @@ export default function ProofV2() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) setTheme('light');
-        else if (entry.boundingClientRect.top > 0) setTheme('dark');
       },
       { threshold: 0, rootMargin: '0px 0px -20% 0px' }
     );
