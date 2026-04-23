@@ -273,7 +273,7 @@ export default function ProofV2() {
               <div
                 key={brand.name}
                 style={{
-                  flex: `0 0 calc((100% - ${(cardsVisible - 1) * 20}px) / ${cardsVisible})`,
+                  flex: '0 0 390px',
                   minWidth: 0,
                 }}
               >
