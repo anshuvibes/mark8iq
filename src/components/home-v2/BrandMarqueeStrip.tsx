@@ -2,11 +2,12 @@ import BrandCard from './BrandCard';
 
 type BrandData = {
   name: string;
-  category: string;
   body: string;
   stat: string;
   statLabel: string;
-  accent: string;
+  primaryColor: string;
+  secondaryColor: string;
+  logo?: string;
 };
 
 type Props = { brands: BrandData[] };
