@@ -184,8 +184,48 @@ export default function ProofV2() {
     return () => observer.disconnect();
   }, [setTheme]);
 
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    const wrapper = carouselWrapperRef.current;
+    if (!section || !track || !wrapper) return;
+
+    const getTravel = () => Math.max(0, track.scrollWidth - wrapper.clientWidth);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: () => `+=${Math.max(window.innerHeight * 1.8, getTravel() * 1.1)}`,
+        scrub: 1.2,
+        pin: stickyRef.current,
+        pinSpacing: true,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          setCurrentIndex(Math.round(self.progress * maxIndex));
+        },
+      },
+    });
+
+    tl.to(track, {
+      x: () => -getTravel(),
+      ease: 'none',
+    });
+
+    scrollTriggerRef.current = tl.scrollTrigger ?? null;
+
+    return () => {
+      scrollTriggerRef.current = null;
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
+  }, [maxIndex]);
+
   return (
-    <section ref={sectionRef} style={{ padding: '100px 0 0', position: 'relative' }}>
+    <section ref={sectionRef} style={{ position: 'relative' }}>
+      <div ref={stickyRef} style={{ minHeight: '100vh', padding: '100px 0 0', overflow: 'hidden' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.p
           className="m8-eyebrow"
@@ -223,12 +263,11 @@ export default function ProofV2() {
       </div>
 
       <div style={{ marginTop: '48px' }}>
-        <div style={{ overflow: 'hidden', width: '100%' }} className="container">
-          <div style={{
+        <div ref={carouselWrapperRef} style={{ overflow: 'hidden', width: '100%' }} className="container">
+          <div ref={trackRef} style={{
             display: 'flex',
             gap: '20px',
-            transform: `translateX(calc(-${currentIndex} * (100% / ${cardsVisible} + ${20 / cardsVisible}px)))`,
-            transition: 'transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)',
+            willChange: 'transform',
           }}>
             {BRANDS.map((brand) => (
               <div
@@ -297,6 +336,7 @@ export default function ProofV2() {
             </svg>
           </button>
         </div>
+      </div>
       </div>
 
       <style>{`
