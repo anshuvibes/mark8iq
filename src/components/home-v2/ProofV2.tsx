@@ -14,74 +14,62 @@ const metrics = [
 const BRANDS = [
   {
     name: 'Asian Shoes',
-    logo: '/img/logos/logo_1.png',
-    body: 'Massive spend leakage across 400+ campaigns with no daily root cause visibility.',
     stat: '68%',
     statLabel: 'reduction in ad spend, same revenue',
+    category: 'Footwear',
     primaryColor: '#52bfbc',
-    secondaryColor: '#52bfbc',
   },
   {
     name: 'Zeel Rainwear',
-    logo: '/img/logos/logo_4.png',
-    body: 'Only 3–4 active months per year. One wrong week means the season is lost.',
     stat: '50x',
     statLabel: 'revenue growth in 5 seasons',
+    category: 'D2C Rainwear',
     primaryColor: '#0202e5',
-    secondaryColor: '#0202e5',
   },
   {
     name: 'MARS Cosmetics',
-    logo: '/img/logos/19eba7c1-31f9-4c46-8391-1b5a2852c4c7.png',
-    body: 'Started Amazon from ₹0 in 2021. No brand presence. Needed competitor data from scratch.',
     stat: '₹4.8 Cr',
     statLabel: 'monthly revenue from zero in 4 years',
-    primaryColor: '#cd0053',
-    secondaryColor: '#cd0053',
+    category: 'Beauty',
+    primaryColor: '#fc7459',
   },
   {
     name: 'Nat Habit',
-    body: '60+ sub-categories made daily analysis, insight extraction, and action near-impossible.',
+    logo: 'https://cdn.brandfetch.io/id0TGXnz-M/w/48/h/48/theme/dark/logo.png?c=1bxjibca5cadngmz811n4l5ew0mP2vz2H5p',
     stat: '−8%',
     statLabel: 'TACOS reduction, gross sales +39%',
+    category: 'Personal Care',
     primaryColor: '#c3502b',
-    secondaryColor: '#c3502b',
   },
   {
     name: 'XYXX',
-    logo: '/img/logos/logo_11.png',
-    body: '10,000+ SKUs and too many campaigns — no structured grouping, insights were slow and inaccurate.',
+    logo: 'https://cdn.brandfetch.io/id3OhjEzZP/w/200/h/58/theme/light/logo.png?c=1bxjibca5cadngmz811n4l5ew0mP2vz2H5p',
     stat: '+45%',
     statLabel: 'ad sales growth, ROAS 3.34 → 4.16',
+    category: 'Apparel',
     primaryColor: '#004c9d',
-    secondaryColor: '#004c9d',
   },
   {
     name: 'Fast & Up',
-    logo: '/img/logos/logo_5.png',
-    body: 'Amazon Pi, SQPA, SFR data never leveraged. No competitive benchmarking.',
     stat: '₹2.54 Cr',
     statLabel: 'monthly revenue, up from ₹1.5 Cr',
+    category: 'Sports Nutrition',
     primaryColor: '#015cbb',
-    secondaryColor: '#015cbb',
   },
   {
     name: 'ARTMENT',
-    logo: '/img/logos/logo_8.png',
-    body: 'Ads running on products about to go out of stock — driving TACOS up and wasting budget.',
     stat: '#1',
     statLabel: 'GV rank, revenue nearly doubled',
+    category: 'Home & Decor',
     primaryColor: '#662d26',
-    secondaryColor: '#662d26',
   },
   {
     name: 'neude Skin',
-    logo: '/img/logos/logo_9.png',
-    body: 'Delivery delays killing scale. No keyword rank visibility on peak hours.',
+    logo: 'https://cdn.brandfetch.io/idkBp9UXib/theme/light/logo.svg?c=1bxjibca5cadngmz811n4l5ew0mP2vz2H5p',
     stat: '3x',
     statLabel: 'sales growth, BSR #170 → #53',
+    category: 'Skincare',
     primaryColor: '#d9ae9d',
-    secondaryColor: '#d9ae9d',
   },
 ];
 
@@ -154,6 +142,12 @@ function MetricItem({ metric, index }: {
 export default function ProofV2() {
   const { setTheme } = useV2Theme();
   const sectionRef = useRef<HTMLElement | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const cardsVisible = 3;
+  const maxIndex = BRANDS.length - cardsVisible;
+
+  const prev = () => setCurrentIndex((i) => Math.max(0, i - 1));
+  const next = () => setCurrentIndex((i) => Math.min(maxIndex, i + 1));
 
   useEffect(() => {
     const section = sectionRef.current;
