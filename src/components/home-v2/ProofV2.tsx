@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import BrandCard from './BrandCard';
 import { useV2Theme } from './ThemeContext';
 
@@ -139,12 +141,32 @@ function MetricItem({ metric, index }: {
 export default function ProofV2() {
   const { setTheme } = useV2Theme();
   const sectionRef = useRef<HTMLElement | null>(null);
+  const stickyRef = useRef<HTMLDivElement | null>(null);
+  const carouselWrapperRef = useRef<HTMLDivElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const cardsVisible = 3;
   const maxIndex = BRANDS.length - cardsVisible;
 
-  const prev = () => setCurrentIndex((i) => Math.max(0, i - 1));
-  const next = () => setCurrentIndex((i) => Math.min(maxIndex, i + 1));
+  const goToIndex = (index: number) => {
+    const trigger = scrollTriggerRef.current;
+    const targetIndex = Math.max(0, Math.min(maxIndex, index));
+
+    if (!trigger || maxIndex === 0) {
+      setCurrentIndex(targetIndex);
+      return;
+    }
+
+    const progress = targetIndex / maxIndex;
+    window.scrollTo({
+      top: trigger.start + (trigger.end - trigger.start) * progress,
+      behavior: 'smooth',
+    });
+  };
+
+  const prev = () => goToIndex(currentIndex - 1);
+  const next = () => goToIndex(currentIndex + 1);
 
   useEffect(() => {
     const section = sectionRef.current;
