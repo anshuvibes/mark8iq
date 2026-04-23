@@ -225,7 +225,7 @@ export default function ProofV2() {
 
   return (
     <section ref={sectionRef} style={{ position: 'relative' }}>
-      <div ref={stickyRef} style={{ minHeight: '100vh', padding: '100px 0 0', overflow: 'hidden' }}>
+      <div ref={stickyRef} style={{ minHeight: '100vh', padding: '72px 0 0', overflow: 'hidden' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.p
           className="m8-eyebrow"
@@ -238,7 +238,7 @@ export default function ProofV2() {
         </motion.p>
         <motion.h2
           className="m8-h1-large"
-          style={{ color: 'var(--v2-text)', textAlign: 'center', marginBottom: '64px' }}
+          style={{ color: 'var(--v2-text)', textAlign: 'center', marginBottom: '42px' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
@@ -251,7 +251,7 @@ export default function ProofV2() {
           display: 'flex',
           justifyContent: 'space-evenly',
           alignItems: 'center',
-          marginBottom: '72px',
+          marginBottom: '36px',
           flexWrap: 'wrap',
           gap: '0',
         }}>
@@ -262,7 +262,7 @@ export default function ProofV2() {
 
       </div>
 
-      <div style={{ marginTop: '48px' }}>
+      <div style={{ marginTop: '20px' }}>
         <div
           ref={carouselWrapperRef}
           style={{
