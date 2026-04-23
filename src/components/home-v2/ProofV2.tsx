@@ -205,25 +205,24 @@ export default function ProofV2() {
   }, []);
 
   useEffect(() => {
-    const wrapper = carouselWrapperRef.current;
-    if (!wrapper) return;
-
     const handleHorizontalWheel = (event: WheelEvent) => {
-      if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+      if (Math.abs(event.deltaX) < 2 || Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
 
       const trigger = scrollTriggerRef.current;
-      if (!trigger) return;
+      const section = sectionRef.current;
+      if (!trigger || !section) return;
 
       const currentScroll = window.scrollY;
-      if (currentScroll < trigger.start || currentScroll > trigger.end) return;
+      const isWithinPinnedRange = currentScroll >= trigger.start - 2 && currentScroll <= trigger.end + 2;
+      if (!trigger.isActive && !isWithinPinnedRange) return;
 
       event.preventDefault();
       const nextScroll = Math.max(trigger.start, Math.min(trigger.end, currentScroll + event.deltaX));
       window.scrollTo({ top: nextScroll, behavior: 'auto' });
     };
 
-    wrapper.addEventListener('wheel', handleHorizontalWheel, { passive: false });
-    return () => wrapper.removeEventListener('wheel', handleHorizontalWheel);
+    document.addEventListener('wheel', handleHorizontalWheel, { passive: false, capture: true });
+    return () => document.removeEventListener('wheel', handleHorizontalWheel, { capture: true });
   }, []);
 
   return (
