@@ -145,28 +145,6 @@ export default function ProofV2() {
   const carouselWrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const cardsVisible = 3;
-  const maxIndex = BRANDS.length - cardsVisible;
-
-  const goToIndex = (index: number) => {
-    const trigger = scrollTriggerRef.current;
-    const targetIndex = Math.max(0, Math.min(maxIndex, index));
-
-    if (!trigger || maxIndex === 0) {
-      setCurrentIndex(targetIndex);
-      return;
-    }
-
-    const progress = targetIndex / maxIndex;
-    window.scrollTo({
-      top: trigger.start + (trigger.end - trigger.start) * progress,
-      behavior: 'smooth',
-    });
-  };
-
-  const prev = () => goToIndex(currentIndex - 1);
-  const next = () => goToIndex(currentIndex + 1);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -209,9 +187,6 @@ export default function ProofV2() {
         pin: stickyRef.current,
         pinSpacing: true,
         invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          setCurrentIndex(Math.round(self.progress * maxIndex));
-        },
       },
     });
 
@@ -227,7 +202,29 @@ export default function ProofV2() {
       tl.scrollTrigger?.kill();
       tl.kill();
     };
-  }, [maxIndex]);
+  }, []);
+
+  useEffect(() => {
+    const wrapper = carouselWrapperRef.current;
+    if (!wrapper) return;
+
+    const handleHorizontalWheel = (event: WheelEvent) => {
+      if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+
+      const trigger = scrollTriggerRef.current;
+      if (!trigger) return;
+
+      const currentScroll = window.scrollY;
+      if (currentScroll < trigger.start || currentScroll > trigger.end) return;
+
+      event.preventDefault();
+      const nextScroll = Math.max(trigger.start, Math.min(trigger.end, currentScroll + event.deltaX));
+      window.scrollTo({ top: nextScroll, behavior: 'auto' });
+    };
+
+    wrapper.addEventListener('wheel', handleHorizontalWheel, { passive: false });
+    return () => wrapper.removeEventListener('wheel', handleHorizontalWheel);
+  }, []);
 
   return (
     <section ref={sectionRef} style={{ position: 'relative' }}>
@@ -299,59 +296,6 @@ export default function ProofV2() {
           </div>
         </div>
 
-        <div style={{
-          display: 'flex',
-          gap: '12px',
-          marginTop: '32px',
-          paddingLeft: 'calc((100vw - 1200px) / 2)',
-        }} className="container">
-          <button
-            onClick={prev}
-            disabled={currentIndex === 0}
-            style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '50%',
-              border: '1px solid rgba(8,13,25,0.15)',
-              background: '#ffffff',
-              cursor: currentIndex === 0 ? 'not-allowed' : 'pointer',
-              opacity: currentIndex === 0 ? 0.4 : 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'opacity 0.15s ease',
-              flexShrink: 0,
-            }}
-            aria-label="Previous"
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M10 12L6 8L10 4" stroke="#080D19" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-          <button
-            onClick={next}
-            disabled={currentIndex === maxIndex}
-            style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '50%',
-              border: '1px solid rgba(8,13,25,0.15)',
-              background: '#ffffff',
-              cursor: currentIndex === maxIndex ? 'not-allowed' : 'pointer',
-              opacity: currentIndex === maxIndex ? 0.4 : 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'opacity 0.15s ease',
-              flexShrink: 0,
-            }}
-            aria-label="Next"
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M6 4L10 8L6 12" stroke="#080D19" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-        </div>
       </div>
       </div>
 
