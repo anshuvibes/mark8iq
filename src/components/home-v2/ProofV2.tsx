@@ -191,7 +191,14 @@ export default function ProofV2() {
     const wrapper = carouselWrapperRef.current;
     if (!section || !track || !wrapper) return;
 
-    const getTravel = () => Math.max(0, track.scrollWidth - wrapper.clientWidth);
+    const getSiteInset = () => Math.max(24, (window.innerWidth - 1200) / 2);
+    const getTravel = () => {
+      const lastCard = track.lastElementChild as HTMLElement | null;
+      if (!lastCard) return Math.max(0, track.scrollWidth - wrapper.clientWidth);
+
+      const lastCardRight = lastCard.offsetLeft + lastCard.offsetWidth;
+      return Math.max(0, lastCardRight - (wrapper.clientWidth - getSiteInset()));
+    };
 
     const tl = gsap.timeline({
       scrollTrigger: {
