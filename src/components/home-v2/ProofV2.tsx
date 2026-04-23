@@ -19,6 +19,7 @@ const BRANDS = [
     statLabel: 'reduction in ad spend, same revenue',
     primaryColor: '#52bfbc',
     secondaryColor: '#52bfbc',
+    logo: '/img/logos/logo_1.png',
   },
   {
     name: 'Zeel Rainwear',
@@ -27,6 +28,7 @@ const BRANDS = [
     statLabel: 'revenue growth in 5 seasons',
     primaryColor: '#8e59ff',
     secondaryColor: '#8e59ff',
+    logo: '/img/logos/logo_4.png',
   },
   {
     name: 'MARS Cosmetics',
@@ -35,6 +37,7 @@ const BRANDS = [
     statLabel: 'monthly revenue from zero in 4 years',
     primaryColor: '#fc7459',
     secondaryColor: '#fc7459',
+    logo: '/img/logos/19eba7c1-31f9-4c46-8391-1b5a2852c4c7.png',
   },
   {
     name: 'Nat Habit',
@@ -51,6 +54,7 @@ const BRANDS = [
     statLabel: 'ad sales growth, ROAS 3.34 → 4.16',
     primaryColor: '#8e59ff',
     secondaryColor: '#8e59ff',
+    logo: '/img/logos/logo_11.png',
   },
   {
     name: 'Fast & Up',
@@ -59,6 +63,7 @@ const BRANDS = [
     statLabel: 'monthly revenue, up from ₹1.5 Cr',
     primaryColor: '#52bfbc',
     secondaryColor: '#52bfbc',
+    logo: '/img/logos/logo_5.png',
   },
   {
     name: 'ARTMENT',
@@ -67,6 +72,7 @@ const BRANDS = [
     statLabel: 'GV rank, revenue nearly doubled',
     primaryColor: '#fc7459',
     secondaryColor: '#fc7459',
+    logo: '/img/logos/logo_8.png',
   },
   {
     name: 'neude Skin',
@@ -75,6 +81,7 @@ const BRANDS = [
     statLabel: 'sales growth, BSR #170 → #53',
     primaryColor: '#7cbc71',
     secondaryColor: '#7cbc71',
+    logo: '/img/logos/logo_9.png',
   },
 ];
 
