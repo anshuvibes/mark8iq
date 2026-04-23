@@ -143,34 +143,18 @@ export default function ProofV2() {
 
         <div style={{
           display: 'flex',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
+          justifyContent: 'center',
+          alignItems: 'stretch',
           marginBottom: '72px',
-          flexWrap: 'wrap',
-          gap: '24px',
+          flexWrap: 'nowrap',
+          gap: '0',
+          border: '1px solid var(--v2-border-strong)',
+          borderRadius: '16px',
+          overflow: 'hidden',
+          background: 'var(--v2-bg-card)',
         }}>
           {metrics.map((m, i) => (
-            <motion.div
-              key={m.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ delay: i * 0.1 }}
-              style={{
-                textAlign: 'center',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '24px',
-              }}
-            >
-              <div>
-                <div className="m8-h2" style={{ color: 'var(--v2-text)' }}>{m.value}</div>
-                <div className="m8-p6" style={{ color: 'var(--v2-text-muted)' }}>{m.label}</div>
-              </div>
-              {i < metrics.length - 1 && (
-                <div style={{ width: '1px', height: '60px', background: 'var(--v2-border-strong)' }} />
-              )}
-            </motion.div>
+            <MetricItem key={m.label} metric={m} index={i} isLast={i === metrics.length - 1} />
           ))}
         </div>
 
