@@ -145,28 +145,6 @@ export default function ProofV2() {
   const carouselWrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const cardsVisible = 3;
-  const maxIndex = BRANDS.length - cardsVisible;
-
-  const goToIndex = (index: number) => {
-    const trigger = scrollTriggerRef.current;
-    const targetIndex = Math.max(0, Math.min(maxIndex, index));
-
-    if (!trigger || maxIndex === 0) {
-      setCurrentIndex(targetIndex);
-      return;
-    }
-
-    const progress = targetIndex / maxIndex;
-    window.scrollTo({
-      top: trigger.start + (trigger.end - trigger.start) * progress,
-      behavior: 'smooth',
-    });
-  };
-
-  const prev = () => goToIndex(currentIndex - 1);
-  const next = () => goToIndex(currentIndex + 1);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -209,9 +187,6 @@ export default function ProofV2() {
         pin: stickyRef.current,
         pinSpacing: true,
         invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          setCurrentIndex(Math.round(self.progress * maxIndex));
-        },
       },
     });
 
@@ -227,7 +202,29 @@ export default function ProofV2() {
       tl.scrollTrigger?.kill();
       tl.kill();
     };
-  }, [maxIndex]);
+  }, []);
+
+  useEffect(() => {
+    const wrapper = carouselWrapperRef.current;
+    if (!wrapper) return;
+
+    const handleHorizontalWheel = (event: WheelEvent) => {
+      if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+
+      const trigger = scrollTriggerRef.current;
+      if (!trigger) return;
+
+      const currentScroll = window.scrollY;
+      if (currentScroll < trigger.start || currentScroll > trigger.end) return;
+
+      event.preventDefault();
+      const nextScroll = Math.max(trigger.start, Math.min(trigger.end, currentScroll + event.deltaX));
+      window.scrollTo({ top: nextScroll, behavior: 'auto' });
+    };
+
+    wrapper.addEventListener('wheel', handleHorizontalWheel, { passive: false });
+    return () => wrapper.removeEventListener('wheel', handleHorizontalWheel);
+  }, []);
 
   return (
     <section ref={sectionRef} style={{ position: 'relative' }}>
