@@ -50,7 +50,7 @@ export default function BrandCard({
             <img
               src={logo}
               alt={name}
-              style={{ height: '28px', width: 'auto', display: 'block', objectFit: 'contain' }}
+              style={{ height: '32px', width: 'auto', maxWidth: '140px', display: 'block', objectFit: 'contain' }}
             />
           ) : (
             <div style={{ fontFamily: "'Saira', sans-serif", fontSize: '17px', fontWeight: 500, color: '#080D19', letterSpacing: '-0.02em', lineHeight: '1.3' }}>
