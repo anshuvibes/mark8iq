@@ -28,7 +28,7 @@ export default function BrandCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        width: '300px',
+        width: '360px',
         flexShrink: 0,
         display: 'flex',
         flexDirection: 'column',
@@ -74,7 +74,7 @@ export default function BrandCard({
         </p>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'stretch', marginTop: '20px' }}>
+      <div style={{ display: 'flex', alignItems: 'stretch', marginTop: '20px', minHeight: '72px' }}>
         <div style={{ background: primaryColor, padding: '14px 16px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, minWidth: '90px' }}>
           <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '22px', fontWeight: 500, color: '#FFFFFF', letterSpacing: '-0.03em', lineHeight: 1, whiteSpace: 'nowrap' }}>
             {stat}
