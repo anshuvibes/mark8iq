@@ -306,7 +306,7 @@ export default function AgentFoundryV2() {
                     flexDirection: 'column',
                     alignItems: 'flex-start',
                     gap: '4px',
-                    padding: '16px 20px',
+                    padding: '20px 20px',
                     background: 'none',
                     border: 'none',
                     borderLeft: `2px solid ${activeTab === i ? '#8e59ff' : 'var(--v2-border)'}`,
@@ -317,11 +317,11 @@ export default function AgentFoundryV2() {
                 >
                   <span style={{
                     fontFamily: "'Saira', sans-serif",
-                    fontSize: '15px',
+                    fontSize: '16px',
                     fontWeight: activeTab === i ? 500 : 400,
                     color: activeTab === i ? 'var(--v2-text)' : 'var(--v2-text-subtle)',
                     transition: 'color 0.2s ease',
-                    lineHeight: '22px',
+                    lineHeight: '1.4',
                   }}>
                     <span style={{
                       color: tab.id === 'custom'
@@ -334,10 +334,10 @@ export default function AgentFoundryV2() {
                   </span>
                   <span style={{
                     fontFamily: "'Saira', sans-serif",
-                    fontSize: '12px',
+                    fontSize: '14px',
                     fontWeight: 400,
                     color: activeTab === i ? 'var(--v2-text-subtle)' : 'var(--v2-text-muted)',
-                    lineHeight: '17px',
+                    lineHeight: '1.6',
                     transition: 'color 0.2s ease',
                   }}>
                     {tab.oneliner}
