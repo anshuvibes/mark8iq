@@ -203,24 +203,80 @@ export default function ProofV2() {
 
       </div>
 
-      <div className="container">
+      <div style={{ marginTop: '48px' }}>
+        <div style={{ overflow: 'hidden', width: '100%' }} className="container">
+          <div style={{
+            display: 'flex',
+            gap: '20px',
+            transform: `translateX(calc(-${currentIndex} * (100% / ${cardsVisible} + ${20 / cardsVisible}px)))`,
+            transition: 'transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)',
+          }}>
+            {BRANDS.map((brand) => (
+              <div
+                key={brand.name}
+                style={{
+                  flex: `0 0 calc((100% - ${(cardsVisible - 1) * 20}px) / ${cardsVisible})`,
+                  minWidth: 0,
+                }}
+              >
+                <BrandCard {...brand} />
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '24px',
-          marginTop: '48px',
-        }}>
-          {BRANDS.map((brand, i) => (
-            <motion.div
-              key={brand.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ delay: i * 0.06 }}
-            >
-              <BrandCard {...brand} />
-            </motion.div>
-          ))}
+          display: 'flex',
+          gap: '12px',
+          marginTop: '32px',
+          paddingLeft: 'calc((100vw - 1200px) / 2)',
+        }} className="container">
+          <button
+            onClick={prev}
+            disabled={currentIndex === 0}
+            style={{
+              width: '44px',
+              height: '44px',
+              borderRadius: '50%',
+              border: '1px solid rgba(8,13,25,0.15)',
+              background: '#ffffff',
+              cursor: currentIndex === 0 ? 'not-allowed' : 'pointer',
+              opacity: currentIndex === 0 ? 0.4 : 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'opacity 0.15s ease',
+              flexShrink: 0,
+            }}
+            aria-label="Previous"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M10 12L6 8L10 4" stroke="#080D19" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          <button
+            onClick={next}
+            disabled={currentIndex === maxIndex}
+            style={{
+              width: '44px',
+              height: '44px',
+              borderRadius: '50%',
+              border: '1px solid rgba(8,13,25,0.15)',
+              background: '#ffffff',
+              cursor: currentIndex === maxIndex ? 'not-allowed' : 'pointer',
+              opacity: currentIndex === maxIndex ? 0.4 : 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'opacity 0.15s ease',
+              flexShrink: 0,
+            }}
+            aria-label="Next"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6 4L10 8L6 12" stroke="#080D19" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
         </div>
       </div>
 
