@@ -14,6 +14,7 @@ const metrics = [
 const BRANDS = [
   {
     name: 'Asian Shoes',
+    logo: '/img/logos/logo_1.png',
     stat: '68%',
     statLabel: 'reduction in ad spend, same revenue',
     category: 'Footwear',
@@ -21,6 +22,7 @@ const BRANDS = [
   },
   {
     name: 'Zeel Rainwear',
+    logo: '/img/logos/logo_4.png',
     stat: '50x',
     statLabel: 'revenue growth in 5 seasons',
     category: 'D2C Rainwear',
@@ -28,6 +30,7 @@ const BRANDS = [
   },
   {
     name: 'MARS Cosmetics',
+    logo: '/img/logos/19eba7c1-31f9-4c46-8391-1b5a2852c4c7.png',
     stat: '₹4.8 Cr',
     statLabel: 'monthly revenue from zero in 4 years',
     category: 'Beauty',
@@ -35,7 +38,6 @@ const BRANDS = [
   },
   {
     name: 'Nat Habit',
-    logo: 'https://cdn.brandfetch.io/id0TGXnz-M/w/48/h/48/theme/dark/logo.png?c=1bxjibca5cadngmz811n4l5ew0mP2vz2H5p',
     stat: '−8%',
     statLabel: 'TACOS reduction, gross sales +39%',
     category: 'Personal Care',
@@ -43,7 +45,7 @@ const BRANDS = [
   },
   {
     name: 'XYXX',
-    logo: 'https://cdn.brandfetch.io/id3OhjEzZP/w/200/h/58/theme/light/logo.png?c=1bxjibca5cadngmz811n4l5ew0mP2vz2H5p',
+    logo: '/img/logos/logo_11.png',
     stat: '+45%',
     statLabel: 'ad sales growth, ROAS 3.34 → 4.16',
     category: 'Apparel',
@@ -51,6 +53,7 @@ const BRANDS = [
   },
   {
     name: 'Fast & Up',
+    logo: '/img/logos/logo_5.png',
     stat: '₹2.54 Cr',
     statLabel: 'monthly revenue, up from ₹1.5 Cr',
     category: 'Sports Nutrition',
@@ -58,6 +61,7 @@ const BRANDS = [
   },
   {
     name: 'ARTMENT',
+    logo: '/img/logos/logo_8.png',
     stat: '#1',
     statLabel: 'GV rank, revenue nearly doubled',
     category: 'Home & Decor',
@@ -65,7 +69,7 @@ const BRANDS = [
   },
   {
     name: 'neude Skin',
-    logo: 'https://cdn.brandfetch.io/idkBp9UXib/theme/light/logo.svg?c=1bxjibca5cadngmz811n4l5ew0mP2vz2H5p',
+    logo: '/img/logos/logo_9.png',
     stat: '3x',
     statLabel: 'sales growth, BSR #170 → #53',
     category: 'Skincare',
