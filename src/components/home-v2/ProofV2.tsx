@@ -42,8 +42,8 @@ const BRANDS = [
     body: '60+ sub-categories made daily analysis, insight extraction, and action near-impossible.',
     stat: '−8%',
     statLabel: 'TACOS reduction, gross sales +39%',
-    primaryColor: '#7cbc71',
-    secondaryColor: '#7cbc71',
+    primaryColor: '#c3502b',
+    secondaryColor: '#c3502b',
   },
   {
     name: 'XYXX',
