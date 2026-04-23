@@ -124,9 +124,12 @@ export default function AgentFoundryV2() {
     const section = document.querySelector('[data-section="agent-foundry"]');
     if (!section) return;
 
+    const finalPanel = panelRefs.current[TABS.length - 1];
+
     const trigger = ScrollTrigger.create({
       trigger: section,
       start: 'top 80%',
+      endTrigger: finalPanel || section,
       end: 'bottom 20%',
       onEnter: () => {
         setThemeRef.current('dark');
@@ -181,6 +184,7 @@ export default function AgentFoundryV2() {
       requestAnimationFrame(() => {
         if (navRef.current) {
           setNavHeight(navRef.current.offsetHeight);
+          ScrollTrigger.refresh();
         }
       });
     }
