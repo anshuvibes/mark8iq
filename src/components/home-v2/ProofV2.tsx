@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import BrandCard from './BrandCard';
 import BrandMarqueeStrip from './BrandMarqueeStrip';
 import { useV2Theme } from './ThemeContext';
 
@@ -16,57 +15,65 @@ const BRANDS = [
   {
     name: 'Asian Shoes',
     category: 'Footwear · 12K SKUs · 400+ Campaigns',
-    challenge: 'Massive spend leakage across 400+ campaigns with no daily root cause visibility.',
-    result: '₹90L spend → ₹28L spend, same ₹6.5Cr sales. Scaled to ₹50L spend, sales ₹9.5Cr. BSR: 10 → 180+ products.',
+    body: 'Massive spend leakage across 400+ campaigns with no daily root cause visibility.',
+    stat: '₹90L → ₹28L',
+    statLabel: 'ad spend, same ₹6.5Cr sales',
     accent: '#52bfbc',
   },
   {
     name: 'Zeel Rainwear',
     category: 'D2C Rainwear · Seasonal',
-    challenge: 'Only 3–4 active months/yr. Must enter Amazon\'s ad algo in days — one wrong week means the season is lost.',
-    result: '₹30L (2021) → ₹15Cr (2025). 50x in 5 seasons.',
+    body: 'Only 3–4 active months per year. One wrong week means the season is lost.',
+    stat: '50x',
+    statLabel: 'revenue growth in 5 seasons',
     accent: '#8e59ff',
   },
   {
     name: 'MARS Cosmetics',
     category: 'Beauty · Launched from Zero',
-    challenge: 'Started Amazon from ₹0 in 2021. No brand presence. Needed competitor data to build strategy from scratch.',
-    result: '₹0 → ₹4.8 Cr/month in 4 years.',
+    body: 'Started Amazon from ₹0 in 2021. No brand presence. Needed competitor data to build strategy from scratch.',
+    stat: '₹4.8 Cr',
+    statLabel: 'monthly revenue from zero in 4 years',
     accent: '#fc7459',
   },
   {
     name: 'Nat Habit',
     category: 'Personal Care · 60+ Sub-categories',
-    challenge: '60+ sub-categories made daily analysis, insight extraction, and action near-impossible.',
-    result: 'TACOS 29.7% → 21.7%. Gross Sales +39%.',
+    body: '60+ sub-categories made daily analysis, insight extraction, and action near-impossible.',
+    stat: 'TACOS −8%',
+    statLabel: 'gross sales up 39%',
     accent: '#7cbc71',
   },
   {
     name: 'XYXX',
     category: 'Apparel · 10,000+ SKUs',
-    challenge: '10,000+ SKUs and too many campaigns — no structured grouping, insights were slow and inaccurate.',
-    result: 'Ad Sales +45%, ROAS 3.34 → 4.16.',
+    body: '10,000+ SKUs and too many campaigns — no structured grouping, insights were slow and inaccurate.',
+    stat: '+45%',
+    statLabel: 'ad sales, ROAS 3.34 → 4.16',
     accent: '#8e59ff',
   },
   {
     name: 'Fast & Up',
     category: 'Sports Nutrition',
-    challenge: 'Amazon Pi, SQPA, SFR data never leveraged. No competitive benchmarking.',
-    result: '₹1.5 Cr/mo → ₹2.54 Cr/mo.',
+    body: 'Amazon Pi, SQPA, SFR data never leveraged. No competitive benchmarking.',
+    stat: '₹2.54 Cr',
+    statLabel: 'monthly revenue, up from ₹1.5 Cr',
     accent: '#52bfbc',
   },
   {
     name: 'ARTMENT',
     category: 'Home & Decor · Importer',
-    challenge: 'Ads running on products about to go out of stock — driving TACOS up and wasting budget.',
-    result: '₹1.1 Cr → ₹2.07 Cr/mo. GV Rank: Top 5 → #1.',
+    body: 'Ads running on products about to go out of stock — driving TACOS up and wasting budget.',
+    stat: 'Rank #1',
+    statLabel: 'GV rank, revenue ₹1.1 Cr → ₹2.07 Cr',
     accent: '#fc7459',
   },
   {
     name: 'neude Skin',
     category: 'Skincare · Fast-Growing',
-    challenge: 'Delivery delays killing scale. No keyword rank visibility on peak hours.',
-    result: 'Sales ₹8.2L → ₹25L. BSR #170 → #53.',
+    body: 'Delivery delays killing scale. No keyword rank visibility on peak hours.',
+    stat: '3x',
+    statLabel: 'sales growth, BSR #170 → #53',
     accent: '#7cbc71',
   },
 ];
@@ -193,18 +200,9 @@ export default function ProofV2() {
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          style={{ marginBottom: '72px' }}
-        >
-          <BrandCard {...BRANDS[0]} size="hero" />
-        </motion.div>
       </div>
 
-      <BrandMarqueeStrip brands={BRANDS.slice(1)} />
+      <BrandMarqueeStrip brands={BRANDS} />
 
       <style>{`
         @media (max-width: 768px) {

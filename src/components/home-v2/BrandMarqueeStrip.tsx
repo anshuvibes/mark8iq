@@ -3,8 +3,9 @@ import BrandCard from './BrandCard';
 type BrandData = {
   name: string;
   category: string;
-  challenge: string;
-  result: string;
+  body: string;
+  stat: string;
+  statLabel: string;
   accent: string;
 };
 
@@ -26,7 +27,7 @@ export default function BrandMarqueeStrip({ brands }: Props) {
       <div style={{ display: 'flex', marginBottom: '24px' }}>
         <div className="brand-marquee-row--r1" style={{ display: 'flex', gap: '24px', animation: 'brandScrollR1 50s linear infinite' }}>
           {row1.map((brand, index) => (
-            <BrandCard key={`r1-${brand.name}-${index}`} {...brand} size="card" />
+            <BrandCard key={`r1-${brand.name}-${index}`} {...brand} />
           ))}
         </div>
       </div>
@@ -34,7 +35,7 @@ export default function BrandMarqueeStrip({ brands }: Props) {
       <div style={{ display: 'flex', transform: 'translateX(-180px)' }}>
         <div className="brand-marquee-row--r2" style={{ display: 'flex', gap: '24px', animation: 'brandScrollR2 65s linear infinite' }}>
           {row2.map((brand, index) => (
-            <BrandCard key={`r2-${brand.name}-${index}`} {...brand} size="card" />
+            <BrandCard key={`r2-${brand.name}-${index}`} {...brand} />
           ))}
         </div>
       </div>
