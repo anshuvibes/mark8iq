@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import BrandCard from './BrandCard';
 import BrandMarqueeStrip from './BrandMarqueeStrip';
+import { useV2Theme } from './ThemeContext';
 
 const metrics = [
   { numeric: 1000, suffix: ' Cr+', label: 'GMV Managed', format: (n: number) => `${Math.round(n).toLocaleString('en-IN')}` },
@@ -137,8 +138,27 @@ function MetricItem({ metric, index }: {
 }
 
 export default function ProofV2() {
+  const { setTheme } = useV2Theme();
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setTheme('light');
+        else if (entry.boundingClientRect.top > 0) setTheme('dark');
+      },
+      { threshold: 0, rootMargin: '0px 0px -20% 0px' }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [setTheme]);
+
   return (
-    <section style={{ padding: '100px 0 0', position: 'relative' }}>
+    <section ref={sectionRef} style={{ padding: '100px 0 0', position: 'relative' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.p
           className="m8-eyebrow"

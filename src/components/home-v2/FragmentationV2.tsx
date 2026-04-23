@@ -100,11 +100,7 @@ export default function FragmentationV2() {
         setLogoMarkColor('#FFFFFF');
         document.dispatchEvent(new CustomEvent('cursor-hide'));
       },
-      onLeave: () => {
-        setThemeRef.current('light');
-        setLogoMarkColor('#12182B');
-        document.dispatchEvent(new CustomEvent('cursor-show'));
-      },
+      onLeave: () => undefined,
       onLeaveBack: () => {
         setThemeRef.current('light');
         setLogoMarkColor('#12182B');
