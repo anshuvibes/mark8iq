@@ -263,7 +263,15 @@ export default function ProofV2() {
       </div>
 
       <div style={{ marginTop: '48px' }}>
-        <div ref={carouselWrapperRef} style={{ overflow: 'hidden', width: '100%' }} className="container">
+        <div
+          ref={carouselWrapperRef}
+          style={{
+            overflow: 'hidden',
+            width: '100vw',
+            marginLeft: 'calc(50% - 50vw)',
+            marginRight: 'calc(50% - 50vw)',
+          }}
+        >
           <div ref={trackRef} style={{
             display: 'flex',
             gap: '20px',
