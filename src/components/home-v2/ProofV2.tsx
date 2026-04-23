@@ -275,6 +275,8 @@ export default function ProofV2() {
           <div ref={trackRef} style={{
             display: 'flex',
             gap: '20px',
+            paddingLeft: 'max(24px, calc((100vw - 1200px) / 2))',
+            paddingRight: 'max(24px, calc((100vw - 1200px) / 2))',
             willChange: 'transform',
           }}>
             {BRANDS.map((brand) => (
