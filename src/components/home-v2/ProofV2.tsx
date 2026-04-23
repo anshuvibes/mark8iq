@@ -296,59 +296,6 @@ export default function ProofV2() {
           </div>
         </div>
 
-        <div style={{
-          display: 'flex',
-          gap: '12px',
-          marginTop: '32px',
-          paddingLeft: 'calc((100vw - 1200px) / 2)',
-        }} className="container">
-          <button
-            onClick={prev}
-            disabled={currentIndex === 0}
-            style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '50%',
-              border: '1px solid rgba(8,13,25,0.15)',
-              background: '#ffffff',
-              cursor: currentIndex === 0 ? 'not-allowed' : 'pointer',
-              opacity: currentIndex === 0 ? 0.4 : 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'opacity 0.15s ease',
-              flexShrink: 0,
-            }}
-            aria-label="Previous"
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M10 12L6 8L10 4" stroke="#080D19" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-          <button
-            onClick={next}
-            disabled={currentIndex === maxIndex}
-            style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '50%',
-              border: '1px solid rgba(8,13,25,0.15)',
-              background: '#ffffff',
-              cursor: currentIndex === maxIndex ? 'not-allowed' : 'pointer',
-              opacity: currentIndex === maxIndex ? 0.4 : 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'opacity 0.15s ease',
-              flexShrink: 0,
-            }}
-            aria-label="Next"
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M6 4L10 8L6 12" stroke="#080D19" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-        </div>
       </div>
       </div>
 
