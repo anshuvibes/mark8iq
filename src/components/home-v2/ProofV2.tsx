@@ -85,6 +85,9 @@ const BRANDS = [
   },
 ];
 
+const BRANDS_ROW1 = BRANDS.slice(0, 4);
+const BRANDS_ROW2 = BRANDS.slice(4);
+
 function useCountUp(target: number, duration: number = 1200, decimals: number = 0) {
   const [count, setCount] = useState(0);
   const hasAnimated = useRef(false);
@@ -209,7 +212,7 @@ export default function ProofV2() {
 
       </div>
 
-      <BrandMarqueeStrip brands={BRANDS} />
+      <BrandMarqueeStrip brandsRow1={BRANDS_ROW1} brandsRow2={BRANDS_ROW2} />
 
       <style>{`
         @media (max-width: 768px) {
