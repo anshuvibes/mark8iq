@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import BrandCard from './BrandCard';
 import { useV2Theme } from './ThemeContext';
@@ -76,50 +76,43 @@ const BRANDS = [
 function useCountUp(target: number, duration: number = 1200, decimals: number = 0) {
   const [count, setCount] = useState(0);
   const hasAnimated = useRef(false);
-  const ref = useRef<HTMLDivElement | null>(null);
+  const frameRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+  const start = useCallback(() => {
+    if (hasAnimated.current) return;
+    hasAnimated.current = true;
+    const startTime = performance.now();
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated.current) {
-          hasAnimated.current = true;
-          const startTime = performance.now();
+    const tick = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(parseFloat((eased * target).toFixed(decimals)));
 
-          const tick = (now: number) => {
-            const elapsed = now - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            setCount(parseFloat((eased * target).toFixed(decimals)));
-            if (progress < 1) requestAnimationFrame(tick);
-          };
+      if (progress < 1) frameRef.current = requestAnimationFrame(tick);
+    };
 
-          requestAnimationFrame(tick);
-        }
-      },
-      { threshold: 0.4 }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
+    frameRef.current = requestAnimationFrame(tick);
   }, [target, duration, decimals]);
 
-  return { count, ref };
+  useEffect(() => () => {
+    if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+  }, []);
+
+  return { count, start };
 }
 
 function MetricItem({ metric, index }: {
   metric: typeof metrics[0];
   index: number;
 }) {
-  const { count, ref } = useCountUp(metric.numeric, 1400);
+  const { count, start } = useCountUp(metric.numeric, 1400);
 
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
+      onViewportEnter={start}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ delay: index * 0.1 }}
       style={{
