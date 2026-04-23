@@ -247,22 +247,9 @@ export default function ProofV2() {
           Real brands. Real numbers. Real outcomes.
         </motion.h2>
 
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
-          marginBottom: '72px',
-          flexWrap: 'wrap',
-          gap: '0',
-        }}>
-          {metrics.map((m, i) => (
-            <MetricItem key={m.label} metric={m} index={i} />
-          ))}
-        </div>
-
       </div>
 
-      <div style={{ marginTop: '48px' }}>
+      <div style={{ marginTop: 0 }}>
         <div ref={carouselWrapperRef} style={{ overflow: 'hidden', width: '100%' }} className="container">
           <div ref={trackRef} style={{
             display: 'flex',
@@ -335,6 +322,19 @@ export default function ProofV2() {
               <path d="M6 4L10 8L6 12" stroke="#080D19" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
+        </div>
+
+        <div className="container" style={{
+          display: 'flex',
+          justifyContent: 'space-evenly',
+          alignItems: 'center',
+          marginTop: '44px',
+          flexWrap: 'wrap',
+          gap: '0',
+        }}>
+          {metrics.map((m, i) => (
+            <MetricItem key={m.label} metric={m} index={i} />
+          ))}
         </div>
       </div>
       </div>
