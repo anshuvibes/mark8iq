@@ -1,11 +1,12 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 
 const metrics = [
-  { value: '1,000 Cr+', label: 'GMV Managed' },
-  { value: '105 Cr+', label: 'Ad Spend Optimized' },
-  { value: '35%', label: 'Avg ROAS Gain' },
-  { value: '90%', label: 'Client Retention' },
-  { value: '15+', label: 'Marketplaces' },
+  { numeric: 1000, suffix: ' Cr+', label: 'GMV Managed', format: (n: number) => `${Math.round(n).toLocaleString('en-IN')}` },
+  { numeric: 105, suffix: ' Cr+', label: 'Ad Spend Optimized', format: (n: number) => `${Math.round(n)}` },
+  { numeric: 35, suffix: '%', label: 'Avg ROAS Gain', format: (n: number) => `${Math.round(n)}` },
+  { numeric: 90, suffix: '%', label: 'Client Retention', format: (n: number) => `${Math.round(n)}` },
+  { numeric: 15, suffix: '+', label: 'Marketplaces', format: (n: number) => `${Math.round(n)}` },
 ];
 
 const journeys = [
@@ -45,6 +46,77 @@ const testimonials = [
   },
 ];
 
+function useCountUp(target: number, duration: number = 1200, decimals: number = 0) {
+  const [count, setCount] = useState(0);
+  const hasAnimated = useRef(false);
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          const startTime = performance.now();
+
+          const tick = (now: number) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(parseFloat((eased * target).toFixed(decimals)));
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.4 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [target, duration, decimals]);
+
+  return { count, ref };
+}
+
+function MetricItem({ metric, index, isLast }: {
+  metric: typeof metrics[0];
+  index: number;
+  isLast: boolean;
+}) {
+  const { count, ref } = useCountUp(metric.numeric, 1400);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ delay: index * 0.1 }}
+      style={{
+        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '24px',
+        flex: 1,
+        justifyContent: 'center',
+        flexDirection: 'column',
+      }}
+    >
+      <div>
+        <div className="m8-h2" style={{ color: 'var(--v2-text)' }}>{metric.format(count)}{metric.suffix}</div>
+        <div className="m8-p6" style={{ color: 'var(--v2-text-muted)' }}>{metric.label}</div>
+      </div>
+      {!isLast && (
+        <div style={{ width: '100%', height: '1px', background: 'var(--v2-border-strong)' }} />
+      )}
+    </motion.div>
+  );
+}
+
 export default function ProofV2() {
   return (
     <section style={{ padding: '100px 0', position: 'relative' }}>
@@ -71,34 +143,18 @@ export default function ProofV2() {
 
         <div style={{
           display: 'flex',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
+          justifyContent: 'center',
+          alignItems: 'stretch',
           marginBottom: '72px',
-          flexWrap: 'wrap',
-          gap: '24px',
+          flexWrap: 'nowrap',
+          gap: '0',
+          border: '1px solid var(--v2-border-strong)',
+          borderRadius: '16px',
+          overflow: 'hidden',
+          background: 'var(--v2-bg-card)',
         }}>
           {metrics.map((m, i) => (
-            <motion.div
-              key={m.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ delay: i * 0.1 }}
-              style={{
-                textAlign: 'center',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '24px',
-              }}
-            >
-              <div>
-                <div className="m8-h2" style={{ color: 'var(--v2-text)' }}>{m.value}</div>
-                <div className="m8-p6" style={{ color: 'var(--v2-text-muted)' }}>{m.label}</div>
-              </div>
-              {i < metrics.length - 1 && (
-                <div style={{ width: '1px', height: '60px', background: 'var(--v2-border-strong)' }} />
-              )}
-            </motion.div>
+            <MetricItem key={m.label} metric={m} index={i} isLast={i === metrics.length - 1} />
           ))}
         </div>
 
