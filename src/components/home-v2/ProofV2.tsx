@@ -97,18 +97,17 @@ function MetricItem({ metric, index, isLast }: {
       viewport={{ once: true, margin: '-80px' }}
       transition={{ delay: index * 0.1 }}
       style={{
-        textAlign: 'center',
         display: 'flex',
         alignItems: 'center',
         gap: '24px',
-        flex: 1,
+        flex: '1 1 0',
         justifyContent: 'center',
-        flexDirection: 'column',
+        minWidth: '0',
       }}
     >
-      <div>
-        <div className="m8-h2" style={{ color: 'var(--v2-text)' }}>{metric.format(count)}{metric.suffix}</div>
-        <div className="m8-p6" style={{ color: 'var(--v2-text-muted)' }}>{metric.label}</div>
+      <div style={{ textAlign: 'center', width: '100%' }}>
+        <div className="m8-h2" style={{ color: 'var(--v2-text)', textAlign: 'center' }}>{metric.format(count)}{metric.suffix}</div>
+        <div className="m8-p6" style={{ color: 'var(--v2-text-muted)', textAlign: 'center' }}>{metric.label}</div>
       </div>
       {!isLast && (
         <div style={{ width: '100%', height: '1px', background: 'var(--v2-border-strong)' }} />
@@ -143,15 +142,11 @@ export default function ProofV2() {
 
         <div style={{
           display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'stretch',
+          justifyContent: 'space-evenly',
+          alignItems: 'center',
           marginBottom: '72px',
-          flexWrap: 'nowrap',
+          flexWrap: 'wrap',
           gap: '0',
-          border: '1px solid var(--v2-border-strong)',
-          borderRadius: '16px',
-          overflow: 'hidden',
-          background: 'var(--v2-bg-card)',
         }}>
           {metrics.map((m, i) => (
             <MetricItem key={m.label} metric={m} index={i} isLast={i === metrics.length - 1} />
