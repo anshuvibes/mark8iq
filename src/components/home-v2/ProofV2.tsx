@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import BrandMarqueeStrip from './BrandMarqueeStrip';
+import BrandCard from './BrandCard';
 import { useV2Theme } from './ThemeContext';
 
 const metrics = [
@@ -84,9 +84,6 @@ const BRANDS = [
     secondaryColor: '#d9ae9d',
   },
 ];
-
-const BRANDS_ROW1 = BRANDS.slice(0, 4);
-const BRANDS_ROW2 = BRANDS.slice(4);
 
 function useCountUp(target: number, duration: number = 1200, decimals: number = 0) {
   const [count, setCount] = useState(0);
@@ -212,7 +209,26 @@ export default function ProofV2() {
 
       </div>
 
-      <BrandMarqueeStrip brandsRow1={BRANDS_ROW1} brandsRow2={BRANDS_ROW2} />
+      <div className="container">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '24px',
+          marginTop: '48px',
+        }}>
+          {BRANDS.map((brand, i) => (
+            <motion.div
+              key={brand.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ delay: i * 0.06 }}
+            >
+              <BrandCard {...brand} />
+            </motion.div>
+          ))}
+        </div>
+      </div>
 
       <style>{`
         @media (max-width: 768px) {
