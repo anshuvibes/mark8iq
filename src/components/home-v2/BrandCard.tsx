@@ -7,7 +7,6 @@ type BrandCardProps = {
   statLabel: string;
   category: string;
   primaryColor: string;
-  href?: string;
 };
 
 export default function BrandCard({
@@ -17,7 +16,6 @@ export default function BrandCard({
   statLabel,
   category,
   primaryColor,
-  href = '/success-stories',
 }: BrandCardProps) {
   const [hovered, setHovered] = useState(false);
 
@@ -73,22 +71,6 @@ export default function BrandCard({
           </span>
         )}
 
-        <a
-          href={href}
-          style={{
-            fontFamily: "'Saira', sans-serif",
-            fontSize: '12px',
-            fontWeight: 400,
-            color: primaryColor,
-            textDecoration: 'none',
-            whiteSpace: 'nowrap',
-            flexShrink: 0,
-            opacity: hovered ? 1 : 0.75,
-            transition: 'opacity 0.15s ease',
-          }}
-        >
-          Read story →
-        </a>
       </div>
 
       <div style={{
