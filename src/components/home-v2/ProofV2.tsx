@@ -82,10 +82,9 @@ function useCountUp(target: number, duration: number = 1200, decimals: number = 
   return { count, ref };
 }
 
-function MetricItem({ metric, index, isLast }: {
+function MetricItem({ metric, index }: {
   metric: typeof metrics[0];
   index: number;
-  isLast: boolean;
 }) {
   const { count, ref } = useCountUp(metric.numeric, 1400);
 
@@ -106,12 +105,9 @@ function MetricItem({ metric, index, isLast }: {
       }}
     >
       <div style={{ textAlign: 'center', width: '100%' }}>
-        <div className="m8-h2" style={{ color: 'var(--v2-text)', textAlign: 'center' }}>{metric.format(count)}{metric.suffix}</div>
+        <div style={{ fontFamily: "'Saira', sans-serif", fontSize: '36px', fontWeight: 400, lineHeight: 1.1, letterSpacing: '-0.03em', color: 'var(--v2-text)', textAlign: 'center' }}>{metric.format(count)}{metric.suffix}</div>
         <div className="m8-p6" style={{ color: 'var(--v2-text-muted)', textAlign: 'center' }}>{metric.label}</div>
       </div>
-      {!isLast && (
-        <div style={{ width: '100%', height: '1px', background: 'var(--v2-border-strong)' }} />
-      )}
     </motion.div>
   );
 }
@@ -149,7 +145,7 @@ export default function ProofV2() {
           gap: '0',
         }}>
           {metrics.map((m, i) => (
-            <MetricItem key={m.label} metric={m} index={i} isLast={i === metrics.length - 1} />
+            <MetricItem key={m.label} metric={m} index={i} />
           ))}
         </div>
 
