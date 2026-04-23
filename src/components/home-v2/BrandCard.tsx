@@ -25,6 +25,9 @@ export default function BrandCard({
       onMouseLeave={() => setHovered(false)}
       style={{
         width: '100%',
+        height: '430px',
+        minHeight: '430px',
+        maxHeight: '430px',
         borderRadius: '12px',
         background: '#FFFFFF',
         border: '1px solid rgba(8,13,25,0.08)',
@@ -44,8 +47,10 @@ export default function BrandCard({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '20px 20px 16px 20px',
+        height: '72px',
+        padding: '0 20px',
         gap: '12px',
+        flexShrink: 0,
       }}>
         {logo ? (
           <img
@@ -84,7 +89,9 @@ export default function BrandCard({
         display: 'flex',
         alignItems: 'center',
         gap: '16px',
-        padding: '20px 20px 16px 20px',
+        height: '92px',
+        padding: '0 20px',
+        flexShrink: 0,
       }}>
         <span style={{
           fontFamily: "'Saira', sans-serif",
@@ -109,6 +116,10 @@ export default function BrandCard({
           fontWeight: 400,
           color: 'rgba(8,13,25,0.55)',
           lineHeight: '1.5',
+          display: '-webkit-box',
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden',
         }}>
           {statLabel}
         </span>
@@ -120,7 +131,13 @@ export default function BrandCard({
         margin: '0 20px',
       }} />
 
-      <div style={{ padding: '14px 20px' }}>
+      <div style={{
+        height: '65px',
+        padding: '0 20px',
+        display: 'flex',
+        alignItems: 'center',
+        flexShrink: 0,
+      }}>
         <span style={{
           fontFamily: "'Saira', sans-serif",
           fontSize: '12px',
