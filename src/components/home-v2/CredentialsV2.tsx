@@ -31,12 +31,12 @@ const excellenceItems = [
     description: 'Selected for AI/ML innovation in e-commerce intelligence. $1M grant.',
   },
   {
-    logo: null as string | null,
+    logo: '/img/compliance/nixi.png' as string | null,
     name: 'NIXI Partner',
     description: 'Official partner for compliant data collection infrastructure. 1.5 Crore IPs.',
   },
   {
-    logo: null as string | null,
+    logo: '/img/compliance/startup-india.png' as string | null,
     name: 'Startup India Recognised',
     description: "Officially recognised under India's national startup programme.",
   },
