@@ -460,44 +460,136 @@ function PeopleTab() {
         ))}
       </div>
 
-      {/* Hiring callout — exact copy of footer Footer_contact_btn_wrap CTA */}
-      <div style={{ marginTop: '40px' }}>
-        <div className="Footer_contact_btn_wrap__5hG97 contact_btn_wrap br_30">
-          <div className="Footer_gradient_wrap__epkzQ Footer_gradient_wrap_small__pPza3">
-            <div
-              className="GradientCircle_GradientCircle__mH3g6 bg_primary gradient_circle"
-              style={{ opacity: 1 }}
-            />
-          </div>
-          <div className="Footer_gradient_wrap__epkzQ Footer_gradient_wrap_large__5xIOl">
-            <div
-              className="GradientCircle_GradientCircle__mH3g6 bg_primary gradient_circle"
-              style={{ opacity: 1 }}
-            />
-          </div>
-          <div className="Footer_text_btn_wrap___0Pzz">
-            <div className="Footer_contact_text__EXzSa">
-              <h2 className="fs_50 text_center">
-                <span>Great operations are built by great people.</span>
-              </h2>
-              <p className="text_center">
-                We are always hiring sharp, driven people. If that sounds like
-                you, let's talk.
-              </p>
-            </div>
-            <div className="undefined text_center color_text">
-              <a href="/career">
-                <span className="Button_btn_wrap__DW66V Button_gradientBordered__mLA7E">
-                  <button className="fs_18 font_primary fw_400 Button_btn_common_styles__ddJx7">
-                    <span>See Open Roles.</span>
-                  </button>
-                  <span className="Button_gradientBorderedBg__t_hMi" />
-                </span>
-              </a>
-            </div>
-          </div>
+      {/* Hiring callout — dark gradient card matching footer CTA style */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.6 }}
+        style={{
+          marginTop: '40px',
+          background:
+            'linear-gradient(135deg, #12182B 0%, #1A1F3A 50%, #2A1F5A 100%)',
+          borderRadius: '8px',
+          padding: '64px 48px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Subtle violet glow accent */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '-30%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '60%',
+            height: '120%',
+            background:
+              'radial-gradient(ellipse at center, rgba(142,89,255,0.18) 0%, rgba(142,89,255,0) 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        <p
+          className="m8-eyebrow"
+          style={{
+            color: '#8E59FF',
+            marginBottom: '16px',
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
+          WE ARE HIRING
+        </p>
+
+        <h3
+          style={{
+            fontFamily: "'Saira', sans-serif",
+            fontSize: '36px',
+            fontWeight: 500,
+            color: '#FFFFFF',
+            margin: 0,
+            marginBottom: '16px',
+            lineHeight: 1.2,
+            maxWidth: '720px',
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
+          Great operations are built by great people.
+        </h3>
+
+        <p
+          style={{
+            fontFamily: "'Saira', sans-serif",
+            fontSize: '16px',
+            fontWeight: 400,
+            color: 'rgba(255,255,255,0.65)',
+            margin: 0,
+            marginBottom: '32px',
+            lineHeight: 1.6,
+            maxWidth: '640px',
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
+          We are always looking for sharp, driven people who want to build the
+          future of e-commerce intelligence. If that sounds like you, let's
+          talk.
+        </p>
+
+        <div
+          style={{
+            display: 'flex',
+            gap: '12px',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
+          <a
+            href="/career"
+            style={{
+              fontFamily: "'Saira', sans-serif",
+              fontSize: '14px',
+              fontWeight: 400,
+              color: '#12182B',
+              background: '#FFFFFF',
+              padding: '12px 28px',
+              borderRadius: '5px',
+              textDecoration: 'none',
+              display: 'inline-block',
+              transition: 'opacity 0.15s ease',
+            }}
+          >
+            See Open Roles
+          </a>
+          <a
+            href="mailto:careers@infytrix.com"
+            style={{
+              fontFamily: "'Saira', sans-serif",
+              fontSize: '14px',
+              fontWeight: 400,
+              color: 'rgba(255,255,255,0.75)',
+              background: 'rgba(255,255,255,0.08)',
+              padding: '12px 28px',
+              borderRadius: '5px',
+              textDecoration: 'none',
+              display: 'inline-block',
+              border: '1px solid rgba(255,255,255,0.15)',
+              transition: 'opacity 0.15s ease',
+            }}
+          >
+            Write to Us
+          </a>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }
