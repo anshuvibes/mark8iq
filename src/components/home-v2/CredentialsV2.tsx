@@ -460,78 +460,153 @@ function PeopleTab() {
         ))}
       </div>
 
-      {/* Hiring callout — compact dark gradient banner (Figma 2245-13826) */}
+      {/* Hiring callout — Figma 2245-13826: dark card, two violet ellipse glows, left-aligned copy */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
         style={{
           marginTop: '40px',
-          background:
-            'linear-gradient(90deg, #1A1442 0%, #0F1126 55%, #14122E 100%)',
-          borderRadius: '12px',
+          background: '#0D1425',
+          border: '1px solid #40445A',
+          borderRadius: '30px',
           padding: '48px 64px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
           position: 'relative',
           overflow: 'hidden',
+          minHeight: '240px',
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
-        {/* Violet glow on the left, matching Figma */}
+        {/* Violet glow ellipse — small, lower-left, rotated */}
         <div
+          aria-hidden
           style={{
             position: 'absolute',
-            top: '50%',
-            left: '0%',
-            transform: 'translate(-30%, -50%)',
-            width: '55%',
-            height: '220%',
+            left: '-85px',
+            top: '66px',
+            width: '665px',
+            height: '665px',
+            transform: 'rotate(-15deg)',
             background:
-              'radial-gradient(ellipse at center, rgba(142,89,255,0.32) 0%, rgba(142,89,255,0.10) 45%, rgba(142,89,255,0) 75%)',
+              'radial-gradient(closest-side, rgba(142,89,255,0.55) 0%, rgba(142,89,255,0.18) 45%, rgba(142,89,255,0) 75%)',
             pointerEvents: 'none',
+            filter: 'blur(8px)',
+          }}
+        />
+        {/* Violet glow ellipse — large, right, rotated */}
+        <div
+          aria-hidden
+          style={{
+            position: 'absolute',
+            left: '244px',
+            top: '-52px',
+            width: '1174px',
+            height: '1174px',
+            transform: 'rotate(-15deg)',
+            background:
+              'radial-gradient(closest-side, rgba(142,89,255,0.35) 0%, rgba(142,89,255,0.10) 50%, rgba(142,89,255,0) 75%)',
+            pointerEvents: 'none',
+            filter: 'blur(10px)',
           }}
         />
 
-        <h3
-          style={{
-            fontFamily: "'Saira', sans-serif",
-            fontSize: '32px',
-            fontWeight: 400,
-            color: '#FFFFFF',
-            margin: 0,
-            marginBottom: '20px',
-            lineHeight: 1.2,
-            letterSpacing: '-0.01em',
-            position: 'relative',
-            zIndex: 1,
-          }}
-        >
-          Want to build the future of e-commerce with us?
-        </h3>
+        {/* Left content block */}
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: '610px', flex: '1 1 auto' }}>
+          <p
+            className="m8-eyebrow"
+            style={{ color: 'rgba(237,239,247,0.6)', marginBottom: '14px' }}
+          >
+            WE ARE HIRING
+          </p>
+          <h3
+            style={{
+              fontFamily: "'Saira', sans-serif",
+              fontSize: '32px',
+              fontWeight: 400,
+              color: '#EDEFF7',
+              margin: 0,
+              marginBottom: '14px',
+              lineHeight: 1.15,
+              letterSpacing: '-0.02em',
+            }}
+          >
+            Build the future of e-commerce. With us.
+          </h3>
+          <p
+            style={{
+              fontFamily: "'Saira', sans-serif",
+              fontSize: '16px',
+              fontWeight: 400,
+              color: 'rgba(237,239,247,0.75)',
+              margin: 0,
+              marginBottom: '24px',
+              lineHeight: 1.5,
+              letterSpacing: '-0.01em',
+              maxWidth: '420px',
+            }}
+          >
+            We are always looking for sharp, driven people. If that is you, let's talk.
+          </p>
 
-        <a
-          href="/career"
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            <a
+              href="/career"
+              style={{
+                fontFamily: "'Saira', sans-serif",
+                fontSize: '16px',
+                fontWeight: 400,
+                color: '#12182B',
+                background: '#EDEFF7',
+                padding: '12px 22px',
+                borderRadius: '5px',
+                textDecoration: 'none',
+                display: 'inline-block',
+                transition: 'opacity 0.15s ease',
+                backdropFilter: 'blur(17px)',
+              }}
+            >
+              See Open Roles
+            </a>
+            <a
+              href="mailto:careers@infytrix.com"
+              style={{
+                fontFamily: "'Saira', sans-serif",
+                fontSize: '16px',
+                fontWeight: 400,
+                color: '#EDEFF7',
+                background: 'rgba(237,239,247,0.08)',
+                padding: '12px 22px',
+                borderRadius: '5px',
+                textDecoration: 'none',
+                display: 'inline-block',
+                border: '1px solid rgba(237,239,247,0.15)',
+                transition: 'opacity 0.15s ease',
+                backdropFilter: 'blur(17px)',
+              }}
+            >
+              Write to us
+            </a>
+          </div>
+        </div>
+
+        {/* Right decorative panel — translucent rounded rectangle from Figma */}
+        <div
+          aria-hidden
+          className="cred-hire-panel"
           style={{
-            fontFamily: "'Saira', sans-serif",
-            fontSize: '14px',
-            fontWeight: 400,
-            color: '#12182B',
-            background: '#EDEFF7',
-            padding: '10px 22px',
-            borderRadius: '6px',
-            textDecoration: 'none',
-            display: 'inline-block',
-            transition: 'opacity 0.15s ease',
             position: 'relative',
             zIndex: 1,
+            width: '483px',
+            height: '200px',
+            borderRadius: '15px',
+            background: 'rgba(217,217,217,0.08)',
+            border: '1px solid rgba(237,239,247,0.06)',
+            flexShrink: 0,
+            marginLeft: '40px',
           }}
-        >
-          See Open Roles
-        </a>
+        />
       </motion.div>
     </>
   );
@@ -567,12 +642,14 @@ export default function CredentialsV2() {
           .cred-grid-row2 { grid-template-columns: repeat(2, 1fr) !important; }
           .cred-row2-card { height: calc((100cqw - 16px) / 2) !important; }
           .cred-excellence-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+          .cred-hire-panel { display: none !important; }
         }
         @media (min-width: 768px) and (max-width: 1023px) {
           .cred-grid { grid-template-columns: repeat(3, 1fr) !important; }
           .cred-grid-row2 { grid-template-columns: repeat(3, 1fr) !important; }
           .cred-row2-card { height: calc((100cqw - 32px) / 3) !important; }
           .cred-excellence-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .cred-hire-panel { width: 280px !important; height: 160px !important; }
         }
       `}</style>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
