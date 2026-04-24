@@ -172,15 +172,16 @@ export default function AgentMarkWidget() {
   useEffect(() => {
     const fragmentationSection = document.querySelector('[data-section="fragmentation"]');
     const agentMarkSection = document.querySelector('[data-section="agent-mark"]');
+    const agentFoundrySection = document.querySelector('[data-section="agent-foundry"]');
 
     let fragmentationActive = false;
-    let pastAgentMark = false;
+    let insideAgentZone = false;
 
     const updateVisible = () => {
-      setVisible(!fragmentationActive && !pastAgentMark);
+      setVisible(!fragmentationActive && !insideAgentZone);
     };
 
-    // Fragmentation: hide while in view (keep existing behavior)
+    // Fragmentation: hide while in view
     let fragObserver: IntersectionObserver | null = null;
     if (fragmentationSection) {
       fragObserver = new IntersectionObserver(
@@ -193,18 +194,34 @@ export default function AgentMarkWidget() {
       fragObserver.observe(fragmentationSection);
     }
 
-    // Agent Mark: hide once user scrolls to/past it; reappear above
+    // Hide only while scrolling through Agent Mark + Agent Foundry sections.
+    // Reappear above (before Agent Mark) and below (after Foundry — Proof, Credentials, etc.)
     const checkScroll = () => {
-      if (!agentMarkSection) return;
-      const rect = agentMarkSection.getBoundingClientRect();
-      pastAgentMark = rect.top <= window.innerHeight * 0.8;
+      if (!agentMarkSection) {
+        insideAgentZone = false;
+        updateVisible();
+        return;
+      }
+      const markRect = agentMarkSection.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const enteredZone = markRect.top <= vh * 0.8;
+
+      let exitedZone = false;
+      if (agentFoundrySection) {
+        const foundryRect = agentFoundrySection.getBoundingClientRect();
+        // Once foundry's bottom passes the top of the viewport, we're past it
+        exitedZone = foundryRect.bottom <= vh * 0.2;
+      } else {
+        // Fallback: treat agent mark's bottom as exit point
+        exitedZone = markRect.bottom <= vh * 0.2;
+      }
+
+      insideAgentZone = enteredZone && !exitedZone;
       updateVisible();
     };
 
-    if (agentMarkSection) {
-      checkScroll();
-      window.addEventListener('scroll', checkScroll, { passive: true });
-    }
+    checkScroll();
+    window.addEventListener('scroll', checkScroll, { passive: true });
 
     return () => {
       fragObserver?.disconnect();
