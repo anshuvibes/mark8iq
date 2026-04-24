@@ -12,6 +12,7 @@ import {
   Layers,
   Check,
   ArrowLeft,
+  ArrowRight,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { z } from 'zod';
@@ -217,6 +218,11 @@ export default function HeroDemoCard() {
               })}
             </div>
 
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Button variant="m8-dark" size="lg" onClick={() => setStep('form')}>
+                Get Started <ArrowRight size={16} />
+              </Button>
+            </div>
 
             <style>{`
               .hero-tile:hover:not([data-selected="true"]) {
