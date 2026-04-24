@@ -287,7 +287,7 @@ function ExcellenceTab({ isActive }: { isActive: boolean }) {
   );
 }
 
-function SecurityTab() {
+function SecurityTab({ isActive }: { isActive: boolean }) {
   const firstRow = securityItems.slice(0, 5);
   const secondRow = securityItems.slice(5);
 
@@ -302,7 +302,15 @@ function SecurityTab() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+    <motion.div
+      style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
+      initial="hidden"
+      animate={isActive ? 'show' : 'hidden'}
+      variants={{
+        hidden: {},
+        show: { transition: { staggerChildren: 0.05 } },
+      }}
+    >
       {/* Row 1: 5 square cards — locks card height via aspect-ratio */}
       <div
         style={{
@@ -312,12 +320,10 @@ function SecurityTab() {
         }}
         className="cred-grid"
       >
-        {firstRow.map((item, i) => (
+        {firstRow.map((item) => (
           <motion.div
             key={item.name}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: i * 0.05 }}
+            variants={cardItemVariants}
             style={{ ...cardBaseStyle, aspectRatio: '1 / 1' }}
           >
             <img
@@ -344,16 +350,12 @@ function SecurityTab() {
         }}
         className="cred-grid-row2"
       >
-        {secondRow.map((item, i) => (
+        {secondRow.map((item) => (
           <motion.div
             key={item.name}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: (i + firstRow.length) * 0.05 }}
+            variants={cardItemVariants}
             style={{
               ...cardBaseStyle,
-              // Height matches a row-1 square: (100vw_of_row - 4*16gap) / 5
-              // Using cqw (container query width) of row container
               height: 'calc((100cqw - 64px) / 5)',
             }}
             className="cred-row2-card"
@@ -371,7 +373,7 @@ function SecurityTab() {
           </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
