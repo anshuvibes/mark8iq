@@ -294,6 +294,7 @@ function SecurityTab() {
     justifyContent: 'center',
     padding: '20px',
     background: '#FFFFFF',
+    transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
   };
 
   return (
