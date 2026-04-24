@@ -97,7 +97,7 @@ export default function HeroDemoCard() {
         position: 'absolute',
         top: '24px',
         right: '-24px',
-        width: '340px',
+        width: '300px',
         background: 'var(--v2-bg-card)',
         borderRadius: '18px',
         padding: '26px 22px',
@@ -150,8 +150,8 @@ export default function HeroDemoCard() {
                     className="hero-tile"
                     style={{
                       position: 'relative',
-                      aspectRatio: '5 / 4',
-                      padding: '14px 8px 12px',
+                      minHeight: '88px',
+                      padding: '18px 6px 14px',
                       borderRadius: '10px',
                       background: isSelected ? `${tile.accent}10` : 'var(--v2-bg-card)',
                       border: `1.5px solid ${isSelected ? tile.accent : 'var(--v2-border)'}`,
@@ -216,8 +216,7 @@ export default function HeroDemoCard() {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Button
                 variant="m8-violet"
-                onClick={() => selected.size > 0 && setStep('form')}
-                disabled={selected.size === 0}
+                onClick={() => setStep('form')}
               >
                 Get Started <ArrowRight size={16} />
               </Button>
@@ -253,6 +252,12 @@ export default function HeroDemoCard() {
               @keyframes heroHeadlineShine {
                 0%   { background-position: 100% 0; }
                 100% { background-position: -100% 0; }
+              }
+              @media (max-width: 1280px) {
+                .hero-module-card { width: 280px !important; }
+              }
+              @media (max-width: 991px) {
+                .hero-module-card { width: 100% !important; max-width: 420px; margin: 16px auto 0; }
               }
             `}</style>
           </motion.div>
