@@ -613,8 +613,8 @@ function PeopleTab() {
             src="/img/product-logos/white/mark8-iq.svg"
             alt="Mark8 IQ"
             style={{
-              width: '55%',
-              maxWidth: '240px',
+              width: '38%',
+              maxWidth: '160px',
               height: 'auto',
               objectFit: 'contain',
               opacity: 0.85,
