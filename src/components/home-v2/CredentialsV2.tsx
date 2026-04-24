@@ -642,12 +642,14 @@ export default function CredentialsV2() {
           .cred-grid-row2 { grid-template-columns: repeat(2, 1fr) !important; }
           .cred-row2-card { height: calc((100cqw - 16px) / 2) !important; }
           .cred-excellence-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+          .cred-hire-panel { display: none !important; }
         }
         @media (min-width: 768px) and (max-width: 1023px) {
           .cred-grid { grid-template-columns: repeat(3, 1fr) !important; }
           .cred-grid-row2 { grid-template-columns: repeat(3, 1fr) !important; }
           .cred-row2-card { height: calc((100cqw - 32px) / 3) !important; }
           .cred-excellence-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .cred-hire-panel { width: 280px !important; height: 160px !important; }
         }
       `}</style>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
