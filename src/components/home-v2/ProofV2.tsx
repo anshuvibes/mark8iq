@@ -259,7 +259,7 @@ export default function ProofV2() {
 
   return (
     <section ref={sectionRef} style={{ position: 'relative' }}>
-      <div ref={stickyRef} style={{ minHeight: '100vh', padding: '72px 0 0', overflow: 'hidden' }}>
+      <div ref={stickyRef} style={{ minHeight: '100vh', padding: '120px 0 0', overflow: 'hidden' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.p
           className="m8-eyebrow"
