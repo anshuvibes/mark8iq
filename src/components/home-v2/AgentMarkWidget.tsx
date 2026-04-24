@@ -376,7 +376,8 @@ export default function AgentMarkWidget() {
   const handleStarterClick = (starter: typeof starters[0]) => {
     setState('chat');
     setMessages([{ from: 'user', text: starter.text }]);
-    addAgentResponse(conversationFlows[starter.key]);
+    const flow = conversationFlows[starter.key] ?? conversationFlows.what;
+    addAgentResponse(flow);
   };
 
   const handlePillSend = () => {
