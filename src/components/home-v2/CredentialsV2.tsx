@@ -765,7 +765,7 @@ export default function CredentialsV2() {
                 transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
                 background: '#8e59ff',
                 borderRadius: '3px',
-                zIndex: 0,
+                zIndex: 2,
                 pointerEvents: 'none',
                 border: '1px solid #8e59ff',
               }}
