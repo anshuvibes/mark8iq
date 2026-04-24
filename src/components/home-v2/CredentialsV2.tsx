@@ -214,6 +214,7 @@ function ExcellenceTab() {
         >
           {item.logo ? (
             <div
+              className="cred-logo-card"
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -224,6 +225,8 @@ function ExcellenceTab() {
                 width: '100%',
                 height: '120px',
                 maxHeight: '120px',
+                background: '#FFFFFF',
+                transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
               }}
             >
               <img
