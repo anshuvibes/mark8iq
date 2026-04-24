@@ -9,11 +9,69 @@ type Message = {
   type?: 'text' | 'loading' | 'response';
 };
 
-const starters = [
-  { text: 'What does Mark8 IQ actually do for a D2C brand?', key: 'what' },
-  { text: 'How did Asian Shoes save ₹60 lakh a month?', key: 'casestudy' },
-  { text: 'How is this different from what I already use?', key: 'differentiation' },
-];
+type SectionKey = 'hero' | 'product-suite' | 'role-based' | 'agent-foundry' | 'proof' | 'credentials' | 'default';
+
+const SECTION_CONTEXT: Record<SectionKey, {
+  placeholder: string;
+  starters: { key: string; text: string }[];
+}> = {
+  'hero': {
+    placeholder: 'What makes Mark8 IQ different?',
+    starters: [
+      { key: 'h1', text: 'How does Mark8 IQ work?' },
+      { key: 'h2', text: 'Which product is right for my business?' },
+      { key: 'h3', text: 'What marketplaces do you support?' },
+    ],
+  },
+  'product-suite': {
+    placeholder: 'Which Mark8 product solves your problem?',
+    starters: [
+      { key: 'ps1', text: 'What does Mark8 Ads do?' },
+      { key: 'ps2', text: 'How does Mark8 Sight track rankings?' },
+      { key: 'ps3', text: 'What is Market One?' },
+    ],
+  },
+  'role-based': {
+    placeholder: 'What does Mark8 IQ do for your role?',
+    starters: [
+      { key: 'rb1', text: 'What does Mark8 IQ do for a CEO?' },
+      { key: 'rb2', text: 'How does it help an Ads Manager?' },
+      { key: 'rb3', text: 'What does an analyst get from Mark8 IQ?' },
+    ],
+  },
+  'agent-foundry': {
+    placeholder: 'What can your agents automate today?',
+    starters: [
+      { key: 'af1', text: 'What is Agent Foundry?' },
+      { key: 'af2', text: 'Which agents are ready to deploy?' },
+      { key: 'af3', text: 'How does the Visibility Booster Agent work?' },
+    ],
+  },
+  'proof': {
+    placeholder: 'How did these brands grow with Mark8 IQ?',
+    starters: [
+      { key: 'pr1', text: 'How did Asian Shoes reduce ad spend by 68%?' },
+      { key: 'pr2', text: 'What did Zeel Rainwear achieve in 5 seasons?' },
+      { key: 'pr3', text: 'What is the average ROAS gain for clients?' },
+    ],
+  },
+  'credentials': {
+    placeholder: 'What makes Mark8 IQ a trusted platform?',
+    starters: [
+      { key: 'cr1', text: 'What certifications does Mark8 IQ hold?' },
+      { key: 'cr2', text: 'What is the NVIDIA Inception Program?' },
+      { key: 'cr3', text: 'What is the NIXI partnership?' },
+    ],
+  },
+  'default': {
+    placeholder: 'Ask Agent Mark anything about Mark8 IQ…',
+    starters: [
+      { key: 'd1', text: 'What is Mark8 IQ?' },
+      { key: 'd2', text: 'How is Mark8 IQ different from other tools?' },
+      { key: 'd3', text: 'How do I get started?' },
+    ],
+  },
+};
 
 const conversationFlows: Record<string, Message[]> = {
   what: [
