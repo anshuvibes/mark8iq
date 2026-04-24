@@ -460,7 +460,7 @@ function PeopleTab() {
         ))}
       </div>
 
-      {/* Hiring callout — dark gradient card matching footer CTA style */}
+      {/* Hiring callout — compact dark gradient banner (Figma 2245-13826) */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -469,126 +469,69 @@ function PeopleTab() {
         style={{
           marginTop: '40px',
           background:
-            'linear-gradient(135deg, #12182B 0%, #1A1F3A 50%, #2A1F5A 100%)',
-          borderRadius: '8px',
-          padding: '64px 48px',
+            'linear-gradient(90deg, #1A1442 0%, #0F1126 55%, #14122E 100%)',
+          borderRadius: '12px',
+          padding: '48px 64px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          justifyContent: 'center',
           textAlign: 'center',
           position: 'relative',
           overflow: 'hidden',
         }}
       >
-        {/* Subtle violet glow accent */}
+        {/* Violet glow on the left, matching Figma */}
         <div
           style={{
             position: 'absolute',
-            top: '-30%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '60%',
-            height: '120%',
+            top: '50%',
+            left: '0%',
+            transform: 'translate(-30%, -50%)',
+            width: '55%',
+            height: '220%',
             background:
-              'radial-gradient(ellipse at center, rgba(142,89,255,0.18) 0%, rgba(142,89,255,0) 70%)',
+              'radial-gradient(ellipse at center, rgba(142,89,255,0.32) 0%, rgba(142,89,255,0.10) 45%, rgba(142,89,255,0) 75%)',
             pointerEvents: 'none',
           }}
         />
 
-        <p
-          className="m8-eyebrow"
-          style={{
-            color: '#8E59FF',
-            marginBottom: '16px',
-            position: 'relative',
-            zIndex: 1,
-          }}
-        >
-          WE ARE HIRING
-        </p>
-
         <h3
           style={{
             fontFamily: "'Saira', sans-serif",
-            fontSize: '36px',
-            fontWeight: 500,
+            fontSize: '32px',
+            fontWeight: 400,
             color: '#FFFFFF',
             margin: 0,
-            marginBottom: '16px',
+            marginBottom: '20px',
             lineHeight: 1.2,
-            maxWidth: '720px',
+            letterSpacing: '-0.01em',
             position: 'relative',
             zIndex: 1,
           }}
         >
-          Great operations are built by great people.
+          Want to build the future of e-commerce with us?
         </h3>
 
-        <p
+        <a
+          href="/career"
           style={{
             fontFamily: "'Saira', sans-serif",
-            fontSize: '16px',
+            fontSize: '14px',
             fontWeight: 400,
-            color: 'rgba(255,255,255,0.65)',
-            margin: 0,
-            marginBottom: '32px',
-            lineHeight: 1.6,
-            maxWidth: '640px',
+            color: '#12182B',
+            background: '#EDEFF7',
+            padding: '10px 22px',
+            borderRadius: '6px',
+            textDecoration: 'none',
+            display: 'inline-block',
+            transition: 'opacity 0.15s ease',
             position: 'relative',
             zIndex: 1,
           }}
         >
-          We are always looking for sharp, driven people who want to build the
-          future of e-commerce intelligence. If that sounds like you, let's
-          talk.
-        </p>
-
-        <div
-          style={{
-            display: 'flex',
-            gap: '12px',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            position: 'relative',
-            zIndex: 1,
-          }}
-        >
-          <a
-            href="/career"
-            style={{
-              fontFamily: "'Saira', sans-serif",
-              fontSize: '14px',
-              fontWeight: 400,
-              color: '#12182B',
-              background: '#FFFFFF',
-              padding: '12px 28px',
-              borderRadius: '5px',
-              textDecoration: 'none',
-              display: 'inline-block',
-              transition: 'opacity 0.15s ease',
-            }}
-          >
-            See Open Roles
-          </a>
-          <a
-            href="mailto:careers@infytrix.com"
-            style={{
-              fontFamily: "'Saira', sans-serif",
-              fontSize: '14px',
-              fontWeight: 400,
-              color: 'rgba(255,255,255,0.75)',
-              background: 'rgba(255,255,255,0.08)',
-              padding: '12px 28px',
-              borderRadius: '5px',
-              textDecoration: 'none',
-              display: 'inline-block',
-              border: '1px solid rgba(255,255,255,0.15)',
-              transition: 'opacity 0.15s ease',
-            }}
-          >
-            Write to Us
-          </a>
-        </div>
+          See Open Roles
+        </a>
       </motion.div>
     </>
   );
