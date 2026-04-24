@@ -675,6 +675,9 @@ export default function ProductSuiteV2() {
                 <img
                   src="/img/product-logos/black/market-one.svg"
                   alt="Market One"
+                  loading="eager"
+                  decoding="sync"
+                  fetchPriority="high"
                   style={{ height: '20px', width: 'auto', marginBottom: '4px' }}
                 />
                 <p className="m8-p2" style={{ color: 'var(--v2-text)', margin: 0, maxWidth: 'none', whiteSpace: 'nowrap' }}>
