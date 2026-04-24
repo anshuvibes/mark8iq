@@ -126,22 +126,23 @@ export default function AgentFoundryV2() {
 
     const finalPanel = panelRefs.current[TABS.length - 1];
 
+    // Scrubbed theme trigger: theme toggles based on scroll progress through the section,
+    // making the dark <-> light transition feel coupled to scroll instead of a hard snap.
     const trigger = ScrollTrigger.create({
       trigger: section,
       start: 'top 80%',
       endTrigger: finalPanel || section,
       end: 'bottom 20%',
-      onEnter: () => {
-        setThemeRef.current('dark');
-      },
-      onLeave: () => {
-        setThemeRef.current('light');
-      },
-      onEnterBack: () => {
-        setThemeRef.current('dark');
-      },
-      onLeaveBack: () => {
-        setThemeRef.current('light');
+      scrub: 1,
+      onUpdate: (self) => {
+        // Active range: keep dark while scrolling through the section
+        if (self.progress > 0.02 && self.progress < 0.98) {
+          setThemeRef.current('dark');
+        } else if (self.progress >= 0.98) {
+          setThemeRef.current('light');
+        } else if (self.progress <= 0.02) {
+          setThemeRef.current('light');
+        }
       },
     });
 

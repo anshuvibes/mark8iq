@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import { useV2Theme } from './ThemeContext';
 
 const modules: Record<string, { name: string; abbr: string; accent: string; pain: string; metric: string; logo: string }> = {
@@ -216,9 +217,10 @@ ModuleCard.displayName = 'ModuleCard';
 export default function ProductSuiteV2() {
   const [activeModule, setActiveModule] = useState('marketone');
   const active = modules[activeModule];
-  const { theme } = useV2Theme();
+  const { theme, setTheme } = useV2Theme();
   const activeLogo = active.logo.replace('/black/', `/${theme === 'dark' ? 'white' : 'black'}/`);
 
+  const sectionRef = useRef<HTMLElement | null>(null);
   const hubRef = useRef<HTMLDivElement | null>(null);
   const centerRef = useRef<HTMLDivElement | null>(null);
   const dashRefs = useRef<Record<string, SVGPathElement | null>>({});
@@ -227,6 +229,30 @@ export default function ProductSuiteV2() {
   const isPausedRef = useRef(false);
   const [paths, setPaths] = useState<Array<{ id: string; d: string; accent: string }>>([]);
   const [hubSize, setHubSize] = useState({ w: 0, h: 0 });
+
+  // Enforce light theme whenever Product Suite is in view (overrides any leak from neighbours)
+  const setThemeRef = useRef(setTheme);
+  setThemeRef.current = setTheme;
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const trigger = ScrollTrigger.create({
+      trigger: section,
+      start: 'top bottom',
+      end: 'bottom top',
+      onEnter: () => setThemeRef.current('light'),
+      onEnterBack: () => setThemeRef.current('light'),
+      onUpdate: (self) => {
+        if (self.isActive) setThemeRef.current('light');
+      },
+    });
+
+    return () => {
+      trigger.kill();
+    };
+  }, []);
 
   useEffect(() => {
     timerRef.current = setInterval(() => {
@@ -369,7 +395,7 @@ export default function ProductSuiteV2() {
   }, [paths]);
 
   return (
-    <section style={{ padding: '100px 0', position: 'relative', zIndex: 1 }}>
+    <section ref={sectionRef} style={{ padding: '100px 0', position: 'relative', zIndex: 1 }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.p
           className="m8-eyebrow"
