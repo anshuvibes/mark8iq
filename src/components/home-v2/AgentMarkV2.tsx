@@ -100,13 +100,12 @@ export default function AgentMarkV2() {
   const { setTheme } = useV2Theme();
   const setThemeRef = useRef(setTheme);
   setThemeRef.current = setTheme;
-  const sectionAnchorRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    const anchor = sectionAnchorRef.current;
+    const anchor = document.querySelector('[data-section="agent-mark"]');
     if (!anchor) return;
     const trigger = ScrollTrigger.create({
-      trigger: anchor,
+      trigger: anchor as Element,
       start: 'top 80%',
       end: 'bottom 20%',
       onEnter: () => setThemeRef.current('light'),
