@@ -684,13 +684,13 @@ export default function CredentialsV2() {
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <p
           className="m8-eyebrow"
-          style={{ color: '#8E59FF', marginBottom: '12px' }}
+          style={{ color: '#8E59FF', marginBottom: '12px', textAlign: 'center' }}
         >
           CREDIBILITY & ACHIEVEMENTS
         </p>
         <h2
           className="m8-h2"
-          style={{ color: '#080D19', marginBottom: '48px', maxWidth: '900px' }}
+          style={{ color: '#080D19', marginBottom: '48px', maxWidth: '900px', textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}
         >
           Recognised by the best in the business.
         </h2>
