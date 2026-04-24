@@ -300,7 +300,7 @@ export default function HeroDemoCard() {
               }}
               className="m8-p6"
             >
-              <ArrowLeft size={12} /> Change selection
+              <ArrowLeft size={12} /> Back
             </button>
 
             <p className="m8-p4" style={{ color: 'var(--v2-text)', marginBottom: '6px' }}>
