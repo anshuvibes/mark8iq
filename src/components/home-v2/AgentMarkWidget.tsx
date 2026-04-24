@@ -296,10 +296,36 @@ export default function AgentMarkWidget() {
     checkScroll();
     window.addEventListener('scroll', checkScroll, { passive: true });
 
+    // Track which section is centered in the viewport to drive contextual copy
+    const SECTION_KEYS: SectionKey[] = ['hero', 'product-suite', 'role-based', 'agent-foundry', 'proof', 'credentials'];
+    const checkCurrentSection = () => {
+      const viewportMid = window.innerHeight / 2;
+      let closest: SectionKey = 'default';
+      let closestDist = Infinity;
+
+      SECTION_KEYS.forEach((key) => {
+        const el = document.querySelector(`[data-section="${key}"]`);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const sectionMid = rect.top + rect.height / 2;
+        const dist = Math.abs(sectionMid - viewportMid);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = key;
+        }
+      });
+
+      setCurrentSection((prev) => (prev === closest ? prev : closest));
+    };
+
+    checkCurrentSection();
+    window.addEventListener('scroll', checkCurrentSection, { passive: true });
+
     return () => {
       fragObserver?.disconnect();
       footerObserver?.disconnect();
       window.removeEventListener('scroll', checkScroll);
+      window.removeEventListener('scroll', checkCurrentSection);
     };
   }, []);
 
