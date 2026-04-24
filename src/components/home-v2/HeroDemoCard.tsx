@@ -42,6 +42,7 @@ const formSchema = z.object({
   name: z.string().trim().min(2, 'Please enter your name').max(80),
   email: z.string().trim().email('Enter a valid work email').max(120),
   phone: z.string().trim().max(20).optional().or(z.literal('')),
+  notes: z.string().trim().max(500).optional().or(z.literal('')),
 });
 
 const stepVariants = {
@@ -58,7 +59,8 @@ export default function HeroDemoCard() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [errors, setErrors] = useState<{ name?: string; email?: string; phone?: string }>({});
+  const [notes, setNotes] = useState('');
+  const [errors, setErrors] = useState<{ name?: string; email?: string; phone?: string; notes?: string }>({});
 
   const toggle = (id: string) => {
     setSelected((prev) => {
@@ -71,7 +73,7 @@ export default function HeroDemoCard() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const result = formSchema.safeParse({ name, email, phone });
+    const result = formSchema.safeParse({ name, email, phone, notes });
     if (!result.success) {
       const fieldErrors: typeof errors = {};
       result.error.issues.forEach((iss) => {
@@ -377,6 +379,29 @@ export default function HeroDemoCard() {
                     fontSize: '13px',
                     fontWeight: 400,
                     outline: 'none',
+                  }}
+                />
+              </div>
+              <div>
+                <textarea
+                  placeholder="Notes (optional)"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  rows={3}
+                  className="hero-card-input"
+                  style={{
+                    width: '100%',
+                    padding: '10px 12px',
+                    borderRadius: '8px',
+                    border: `1px solid ${errors.notes ? '#dd4062' : 'var(--v2-border)'}`,
+                    background: 'var(--v2-bg-subtle)',
+                    color: 'var(--v2-text)',
+                    fontFamily: 'Saira, sans-serif',
+                    fontSize: '13px',
+                    fontWeight: 400,
+                    outline: 'none',
+                    resize: 'vertical',
+                    minHeight: '72px',
                   }}
                 />
               </div>
