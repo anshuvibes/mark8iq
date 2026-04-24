@@ -591,17 +591,16 @@ function PeopleTab() {
           style={{
             position: 'relative',
             zIndex: 1,
-            width: '240px',
-            height: '64px',
-            borderRadius: '15px',
-            background: 'rgba(142,89,255,0.06)',
-            border: '1px solid rgba(142,89,255,0.15)',
-            flexShrink: 0,
-            marginLeft: '24px',
+            flex: '0 0 240px',
+            height: '80px',
+            borderRadius: '5px',
+            background: 'rgba(142,89,255,0.08)',
+            border: '1px solid rgba(142,89,255,0.2)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             overflow: 'hidden',
+            marginLeft: '24px',
           }}
         >
           <img
@@ -611,7 +610,7 @@ function PeopleTab() {
               width: '60%',
               height: 'auto',
               objectFit: 'contain',
-              opacity: 0.15,
+              opacity: 0.55,
             }}
           />
         </div>
