@@ -157,7 +157,7 @@ function LogoCard({
         }}
       >
         <img
-          src={encodeURI(logo)}
+          src={logo}
           alt={name}
           style={{ maxHeight: '56px', maxWidth: '120px', objectFit: 'contain' }}
         />
@@ -215,7 +215,7 @@ function ExcellenceTab() {
           {item.logo ? (
             <div style={{ height: '72px', display: 'flex', alignItems: 'center' }}>
               <img
-                src={encodeURI(item.logo)}
+                src={item.logo}
                 alt={item.name}
                 style={{
                   height: '72px',
@@ -303,7 +303,7 @@ function SecurityTab() {
             style={{ ...cardBaseStyle, aspectRatio: '1 / 1' }}
           >
             <img
-              src={encodeURI(item.logo)}
+              src={item.logo}
               alt={item.name}
               style={{
                 width: '100%',
@@ -342,7 +342,7 @@ function SecurityTab() {
             className="cred-row2-card"
           >
             <img
-              src={encodeURI(item.logo)}
+              src={item.logo}
               alt={item.name}
               style={{
                 width: '100%',
@@ -399,7 +399,7 @@ function PeopleTab() {
               }}
             >
               <img
-                src={encodeURI(item.logo)}
+                src={item.logo}
                 alt={item.name}
                 style={{
                   width: '100%',
