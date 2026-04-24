@@ -762,7 +762,7 @@ export default function CredentialsV2() {
                 top: 0,
                 bottom: 0,
                 left: 0,
-                width: pillWidth > 0 ? `${pillWidth}px` : '33%',
+                width: `${pillWidth}px`,
                 transform: `translateX(${pillOffset}px)`,
                 transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
                 background: '#8e59ff',
@@ -770,6 +770,7 @@ export default function CredentialsV2() {
                 zIndex: 2,
                 pointerEvents: 'none',
                 border: '1px solid #8e59ff',
+                opacity: pillWidth > 0 ? 1 : 0,
               }}
             />
 
