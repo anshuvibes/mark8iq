@@ -1,5 +1,6 @@
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, useRef, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import confetti from 'canvas-confetti';
 import {
   TrendingUp,
   Eye,
@@ -61,6 +62,40 @@ export default function HeroDemoCard() {
   const [phone, setPhone] = useState('');
   const [notes, setNotes] = useState('');
   const [errors, setErrors] = useState<{ name?: string; email?: string; phone?: string; notes?: string }>({});
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // Auto-revert to step 1 after success, and fire confetti
+  useEffect(() => {
+    if (step !== 'success') return;
+
+    // Fire confetti scoped to the card
+    const node = cardRef.current;
+    if (node) {
+      const rect = node.getBoundingClientRect();
+      const x = (rect.left + rect.width / 2) / window.innerWidth;
+      const y = (rect.top + rect.height / 2) / window.innerHeight;
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        startVelocity: 35,
+        origin: { x, y },
+        colors: ['#8E59FF', '#52bfbc', '#fc7459', '#7cbc71', '#fcb24f', '#dd4062'],
+        zIndex: 9999,
+        scalar: 0.8,
+      });
+    }
+
+    const t = setTimeout(() => {
+      setStep('select');
+      setSelected(new Set());
+      setName('');
+      setEmail('');
+      setPhone('');
+      setNotes('');
+      setErrors({});
+    }, 5000);
+    return () => clearTimeout(t);
+  }, [step]);
 
   const toggle = (id: string) => {
     setSelected((prev) => {
@@ -94,6 +129,7 @@ export default function HeroDemoCard() {
 
   return (
     <div
+      ref={cardRef}
       className="hero-module-card"
       style={{
         position: 'absolute',
@@ -434,7 +470,15 @@ export default function HeroDemoCard() {
             animate="animate"
             exit="exit"
             transition={stepTransition}
-            style={{ textAlign: 'center', padding: '12px 4px' }}
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+              padding: '12px 4px',
+            }}
           >
             <img
               src="/img/product-logos/black/mark8-iq.svg"
@@ -442,10 +486,10 @@ export default function HeroDemoCard() {
               style={{ height: '24px', width: 'auto', margin: '0 auto 18px', display: 'block' }}
             />
             <p className="m8-p3" style={{ color: 'var(--v2-text)', marginBottom: '10px' }}>
-              You're on the list
+              Thank you
             </p>
-            <p className="m8-p6" style={{ color: 'var(--v2-text-secondary)', lineHeight: 1.5 }}>
-              Someone from our team will reach out within a few hours. Meanwhile, keep exploring.
+            <p className="m8-p6" style={{ color: 'var(--v2-text-secondary)', lineHeight: 1.5, maxWidth: '260px' }}>
+              Your form has been submitted. Our team will reach out within a few hours. Meanwhile, keep exploring.
             </p>
           </motion.div>
         )}
