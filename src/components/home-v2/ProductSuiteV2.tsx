@@ -195,6 +195,9 @@ const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.a
       <img
         src={mod.logo}
         alt={mod.name}
+        loading="eager"
+        decoding="sync"
+        fetchPriority="high"
         style={{
           height: '20px',
           width: 'auto',
