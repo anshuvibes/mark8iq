@@ -92,8 +92,7 @@ const securityItems = [
 ];
 
 type PeopleItem = {
-  logo: string | null;
-  icon?: string;
+  logo: string;
   name: string;
   description: string;
 };
@@ -105,26 +104,22 @@ const peopleItems: PeopleItem[] = [
     description: 'Certified Feb 2026 — Feb 2027, India.',
   },
   {
-    logo: null,
-    icon: '⚖️',
+    logo: '/img/compliance/posh.png',
     name: 'POSH Law',
     description: 'Zero-tolerance workplace policy with certified compliance officer.',
   },
   {
-    logo: null,
-    icon: '📈',
+    logo: '/img/compliance/esop.png',
     name: 'ESOP',
     description: "Every team member is a stakeholder in the company's long-term growth.",
   },
   {
-    logo: null,
-    icon: '🤝',
+    logo: '/img/compliance/gratuity.png',
     name: 'Gratuity',
     description: 'Statutory gratuity recognizing loyalty and long-term contribution.',
   },
   {
-    logo: null,
-    icon: '🏥',
+    logo: '/img/compliance/medical-insurance.png',
     name: 'Medical Insurance',
     description: 'Comprehensive health coverage for every employee and their family.',
   },
@@ -192,54 +187,6 @@ function LogoCard({
   );
 }
 
-function IconCard({
-  icon,
-  name,
-  description,
-}: {
-  icon: string;
-  name: string;
-  description: string;
-}) {
-  return (
-    <div style={cardStyle}>
-      <div
-        style={{
-          height: '64px',
-          width: '64px',
-          borderRadius: '50%',
-          background: 'rgba(142,89,255,0.08)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '28px',
-        }}
-      >
-        {icon}
-      </div>
-      <div
-        style={{
-          fontFamily: "'Saira', sans-serif",
-          fontSize: '13px',
-          fontWeight: 500,
-          color: '#080D19',
-        }}
-      >
-        {name}
-      </div>
-      <div
-        style={{
-          fontFamily: "'Saira', sans-serif",
-          fontSize: '11px',
-          fontWeight: 400,
-          color: 'rgba(8,13,25,0.45)',
-        }}
-      >
-        {description}
-      </div>
-    </div>
-  );
-}
 
 function ExcellenceTab() {
   return (
@@ -389,19 +336,11 @@ function PeopleTab() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.5, delay: i * 0.05 }}
           >
-            {item.logo ? (
-              <LogoCard
-                logo={item.logo}
-                name={item.name}
-                description={item.description}
-              />
-            ) : (
-              <IconCard
-                icon={item.icon || '•'}
-                name={item.name}
-                description={item.description}
-              />
-            )}
+            <LogoCard
+              logo={item.logo}
+              name={item.name}
+              description={item.description}
+            />
           </motion.div>
         ))}
       </div>
