@@ -791,10 +791,8 @@ export default function CredentialsV2() {
                   key={tab.key}
                   ref={(el) => { tabRefs.current[i] = el; }}
                   onClick={() => setActiveTab(tab.key)}
-                  onMouseEnter={() => setHoveredTab(tab.key)}
-                  onMouseLeave={() => setHoveredTab(null)}
-                  onFocus={() => setHoveredTab(tab.key)}
-                  onBlur={() => setHoveredTab(null)}
+                  onMouseEnter={() => setActiveTab(tab.key)}
+                  onFocus={() => setActiveTab(tab.key)}
                   style={{
                     flex: 1,
                     padding: '12px 0',
