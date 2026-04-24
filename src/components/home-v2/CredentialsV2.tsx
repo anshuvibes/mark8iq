@@ -359,7 +359,7 @@ function SecurityTab({ isActive }: { isActive: boolean }) {
               ...cardBaseStyle,
               height: 'calc((100cqw - 64px) / 5)',
             }}
-            className="cred-row2-card"
+            className="cred-row2-card cred-card-hover"
           >
             <img
               src={item.logo}
