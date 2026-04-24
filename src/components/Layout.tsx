@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Navbar from './Navbar';
 import GradualBlur from '@/components/GradualBlur.jsx';
 
