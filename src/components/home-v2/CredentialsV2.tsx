@@ -271,32 +271,45 @@ function ExcellenceTab() {
 
 function SecurityTab() {
   return (
-    <>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(5, 1fr)',
-          gap: '16px',
-        }}
-        className="cred-grid"
-      >
-        {securityItems.map((item, i) => (
-          <motion.div
-            key={item.name}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.5, delay: i * 0.05 }}
-          >
-            <LogoCard
-              logo={item.logo}
-              name={item.name}
-              description={item.description}
-            />
-          </motion.div>
-        ))}
-      </div>
-    </>
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(5, 1fr)',
+        gap: '16px',
+      }}
+      className="cred-grid"
+    >
+      {securityItems.map((item, i) => (
+        <motion.div
+          key={item.name}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.5, delay: i * 0.05 }}
+          style={{
+            aspectRatio: '1 / 1',
+            border: '1px solid rgba(8,13,25,0.08)',
+            borderRadius: '5px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+            background: '#FFFFFF',
+          }}
+        >
+          <img
+            src={encodeURI(item.logo)}
+            alt={item.name}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              display: 'block',
+            }}
+          />
+        </motion.div>
+      ))}
+    </div>
   );
 }
 
