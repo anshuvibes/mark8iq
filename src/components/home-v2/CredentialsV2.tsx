@@ -222,7 +222,8 @@ function ExcellenceTab() {
                 border: '1px solid rgba(8,13,25,0.08)',
                 borderRadius: '5px',
                 width: '100%',
-                aspectRatio: '16 / 7',
+                height: '120px',
+                maxHeight: '120px',
               }}
             >
               <img
