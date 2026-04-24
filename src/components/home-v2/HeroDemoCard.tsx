@@ -263,12 +263,6 @@ export default function HeroDemoCard() {
                 0%   { background-position: 100% 0; }
                 100% { background-position: -100% 0; }
               }
-              @media (max-width: 1280px) {
-                .hero-module-card { width: 320px !important; }
-              }
-              @media (max-width: 991px) {
-                .hero-module-card { width: 100% !important; max-width: 420px; margin: 16px auto 0; }
-              }
             `}</style>
           </motion.div>
         )}
