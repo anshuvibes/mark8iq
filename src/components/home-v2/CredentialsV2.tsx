@@ -706,13 +706,13 @@ export default function CredentialsV2() {
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <p
           className="m8-eyebrow"
-          style={{ color: '#8E59FF', marginBottom: '12px' }}
+          style={{ color: '#8E59FF', marginBottom: '12px', textAlign: 'center' }}
         >
           CREDIBILITY & ACHIEVEMENTS
         </p>
         <h2
           className="m8-h2"
-          style={{ color: '#080D19', marginBottom: '48px', maxWidth: '900px' }}
+          style={{ color: '#080D19', marginBottom: '48px', maxWidth: '900px', textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}
         >
           Recognised by the best in the business.
         </h2>
@@ -726,43 +726,67 @@ export default function CredentialsV2() {
             overflow: 'hidden',
           }}
         >
-          {/* Tab switcher — flush top, border-bottom separates from content */}
-          <div
-            style={{
-              display: 'flex',
-              borderBottom: '1px solid rgba(8,13,25,0.1)',
-            }}
-          >
-            {tabs.map((tab, i, arr) => {
-              const isActive = activeTab === tab.key;
-              return (
-                <button
-                  key={tab.key}
-                  onClick={() => setActiveTab(tab.key)}
+          {/* Tab switcher — animated sliding pill */}
+          {(() => {
+            const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
+            const activeIndex = tabKeys.indexOf(activeTab);
+            return (
+              <div
+                style={{
+                  display: 'flex',
+                  borderBottom: '1px solid rgba(8,13,25,0.1)',
+                  position: 'relative',
+                }}
+              >
+                {/* Sliding background pill */}
+                <div
+                  aria-hidden
                   style={{
-                    flex: 1,
-                    padding: '18px 24px',
-                    border: 'none',
-                    borderRight:
-                      i < arr.length - 1
-                        ? '1px solid rgba(8,13,25,0.1)'
-                        : 'none',
-                    background: isActive ? '#8E59FF' : 'transparent',
-                    color: isActive ? '#FFFFFF' : 'rgba(8,13,25,0.45)',
-                    fontFamily: "'Saira', sans-serif",
-                    fontSize: '11px',
-                    fontWeight: 400,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    cursor: 'pointer',
-                    transition: 'background 0.2s ease, color 0.2s ease',
+                    position: 'absolute',
+                    top: 0,
+                    bottom: 0,
+                    left: `${(activeIndex / 3) * 100}%`,
+                    width: '33.333%',
+                    background: '#8E59FF',
+                    transition: 'left 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    zIndex: 0,
+                    pointerEvents: 'none',
                   }}
-                >
-                  {tab.label}
-                </button>
-              );
-            })}
-          </div>
+                />
+                {tabs.map((tab, i, arr) => {
+                  const isActive = activeTab === tab.key;
+                  return (
+                    <button
+                      key={tab.key}
+                      onClick={() => setActiveTab(tab.key)}
+                      style={{
+                        flex: 1,
+                        padding: '18px 24px',
+                        border: 'none',
+                        borderRight:
+                          i < arr.length - 1
+                            ? '1px solid rgba(8,13,25,0.1)'
+                            : 'none',
+                        background: 'transparent',
+                        color: isActive ? '#FFFFFF' : 'rgba(8,13,25,0.45)',
+                        fontFamily: "'Saira', sans-serif",
+                        fontSize: '11px',
+                        fontWeight: 400,
+                        letterSpacing: '0.1em',
+                        textTransform: 'uppercase',
+                        cursor: 'pointer',
+                        position: 'relative',
+                        zIndex: 1,
+                        transition: 'color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      }}
+                    >
+                      {tab.label}
+                    </button>
+                  );
+                })}
+              </div>
+            );
+          })()}
 
           {/* Content area — locked to SecurityTab's natural height */}
           <div style={{ padding: '48px', minHeight: lockedHeight ? `${lockedHeight + 96}px` : undefined }}>
