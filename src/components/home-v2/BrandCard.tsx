@@ -139,13 +139,16 @@ export default function BrandCard({
         flexShrink: 0,
       }}>
         <span style={{
-          fontFamily: "'Saira', sans-serif",
-          fontSize: '12px',
+          fontFamily: "'Söhne Mono', 'JetBrains Mono', monospace",
+          fontSize: '11px',
           fontWeight: 400,
-          color: 'rgba(8,13,25,0.6)',
-          background: 'rgba(8,13,25,0.05)',
-          borderRadius: '999px',
-          padding: '4px 12px',
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+          color: primaryColor,
+          background: `${primaryColor}14`,
+          border: `1px solid ${primaryColor}33`,
+          borderRadius: '5px',
+          padding: '5px 10px',
           display: 'inline-block',
         }}>
           {category}
