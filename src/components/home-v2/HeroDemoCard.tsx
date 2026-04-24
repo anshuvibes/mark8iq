@@ -223,7 +223,7 @@ export default function HeroDemoCard() {
                 variant="m8-dark"
                 size="lg"
                 onClick={() => setStep('form')}
-                style={{ boxShadow: 'none', border: 'none', fontFamily: 'Saira, sans-serif' }}
+                style={{ width: '100%', boxShadow: 'none', border: 'none', fontFamily: 'Saira, sans-serif' }}
               >
                 Get Started <ArrowRight size={16} />
               </Button>
