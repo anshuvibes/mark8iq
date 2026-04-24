@@ -18,7 +18,7 @@ const BRANDS = [
     name: 'Asian Shoes',
     logo: '/img/logos/asian-shoes.png',
     stat: '68%',
-    statLabel: 'reduction in ad spend, same revenue',
+    statLabel: 'less ad spend. Same sales.',
     category: 'Footwear',
     primaryColor: '#52bfbc',
   },
@@ -26,7 +26,7 @@ const BRANDS = [
     name: 'Zeel Rainwear',
     logo: '/img/logos/zeel-rainwear.png',
     stat: '50x',
-    statLabel: 'revenue growth in 5 seasons',
+    statLabel: 'revenue growth in 5 years',
     category: 'D2C Rainwear',
     primaryColor: '#0202e5',
   },
@@ -34,14 +34,14 @@ const BRANDS = [
     name: 'MARS Cosmetics',
     logo: '/img/logos/mars-cosmetics.png',
     stat: '₹4.8 Cr',
-    statLabel: 'monthly revenue from zero in 4 years',
+    statLabel: 'monthly sales, built from scratch',
     category: 'Beauty',
     primaryColor: '#fc7459',
   },
   {
     name: 'Nat Habit',
-    stat: '−8%',
-    statLabel: 'TACOS reduction, gross sales +39%',
+    stat: '+39%',
+    statLabel: 'more sales, with lower ad costs',
     category: 'Personal Care',
     primaryColor: '#c3502b',
   },
@@ -49,7 +49,7 @@ const BRANDS = [
     name: 'XYXX',
     logo: '/img/logos/xyxx.png',
     stat: '+45%',
-    statLabel: 'ad sales growth, ROAS 3.34 → 4.16',
+    statLabel: 'more revenue from the same ad budget',
     category: 'Apparel',
     primaryColor: '#004c9d',
   },
@@ -57,15 +57,15 @@ const BRANDS = [
     name: 'Fast & Up',
     logo: '/img/logos/fast-and-up.png',
     stat: '₹2.54 Cr',
-    statLabel: 'monthly revenue, up from ₹1.5 Cr',
+    statLabel: 'monthly sales, up from ₹1.5 Cr',
     category: 'Sports Nutrition',
     primaryColor: '#015cbb',
   },
   {
     name: 'ARTMENT',
     logo: '/img/logos/artment.png',
-    stat: '#1',
-    statLabel: 'GV rank, revenue nearly doubled',
+    stat: '2x',
+    statLabel: 'revenue, and ranked #1 in the category',
     category: 'Home & Decor',
     primaryColor: '#662d26',
   },
@@ -73,7 +73,7 @@ const BRANDS = [
     name: 'neude Skin',
     logo: '/img/logos/neude-skin.png',
     stat: '3x',
-    statLabel: 'sales growth, BSR #170 → #53',
+    statLabel: 'sales growth, now in top 60 on Amazon',
     category: 'Skincare',
     primaryColor: '#d9ae9d',
   },
@@ -81,7 +81,7 @@ const BRANDS = [
     name: 'Beast Life',
     logo: '/img/logos/beast-life.png',
     stat: '+60%',
-    statLabel: 'increase in repeat purchase rate',
+    statLabel: 'more customers coming back to buy again',
     category: 'Fitness & Nutrition',
     primaryColor: '#f7941d',
   },
@@ -89,7 +89,7 @@ const BRANDS = [
     name: 'Urban Gabru',
     logo: '/img/logos/urban-gabru.png',
     stat: '3.2x',
-    statLabel: 'ROAS improvement across marketplaces',
+    statLabel: 'return on every rupee spent on ads',
     category: "Men's Grooming",
     primaryColor: '#f4b800',
   },
@@ -97,7 +97,7 @@ const BRANDS = [
     name: 'Rovers',
     logo: '/img/logos/rovers.png',
     stat: '+38%',
-    statLabel: 'growth in organic search rank',
+    statLabel: 'more visibility without spending more on ads',
     category: 'Footwear',
     primaryColor: '#2d4a3e',
   },
@@ -105,7 +105,7 @@ const BRANDS = [
     name: 'Quench',
     logo: '/img/logos/quench.png',
     stat: '2.1x',
-    statLabel: 'revenue growth in 6 months',
+    statLabel: 'revenue in 6 months',
     category: 'Beverages',
     primaryColor: '#00a4a6',
   },
@@ -268,7 +268,7 @@ export default function ProofV2() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
         >
-          PROOF
+          CLIENT RESULTS
         </motion.p>
         <motion.h2
           className="m8-h1-large"
@@ -278,7 +278,7 @@ export default function ProofV2() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ delay: 0.05 }}
         >
-          Real brands. Real numbers. Real outcomes.
+          India's fastest-growing brands run on Mark8 IQ.
         </motion.h2>
 
         <div style={{
