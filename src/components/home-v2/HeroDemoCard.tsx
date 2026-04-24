@@ -307,7 +307,7 @@ export default function HeroDemoCard() {
                   placeholder="Full name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="m8-p6"
+                  className="hero-card-input"
                   style={{
                     width: '100%',
                     padding: '10px 12px',
@@ -315,6 +315,9 @@ export default function HeroDemoCard() {
                     border: `1px solid ${errors.name ? '#dd4062' : 'var(--v2-border)'}`,
                     background: 'var(--v2-bg-subtle)',
                     color: 'var(--v2-text)',
+                    fontFamily: 'Saira, sans-serif',
+                    fontSize: '13px',
+                    fontWeight: 400,
                     outline: 'none',
                   }}
                 />
@@ -328,7 +331,7 @@ export default function HeroDemoCard() {
                   placeholder="Work email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="m8-p6"
+                  className="hero-card-input"
                   style={{
                     width: '100%',
                     padding: '10px 12px',
@@ -336,6 +339,9 @@ export default function HeroDemoCard() {
                     border: `1px solid ${errors.email ? '#dd4062' : 'var(--v2-border)'}`,
                     background: 'var(--v2-bg-subtle)',
                     color: 'var(--v2-text)',
+                    fontFamily: 'Saira, sans-serif',
+                    fontSize: '13px',
+                    fontWeight: 400,
                     outline: 'none',
                   }}
                 />
@@ -349,7 +355,7 @@ export default function HeroDemoCard() {
                   placeholder="Phone (optional)"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="m8-p6"
+                  className="hero-card-input"
                   style={{
                     width: '100%',
                     padding: '10px 12px',
@@ -357,14 +363,30 @@ export default function HeroDemoCard() {
                     border: `1px solid ${errors.phone ? '#dd4062' : 'var(--v2-border)'}`,
                     background: 'var(--v2-bg-subtle)',
                     color: 'var(--v2-text)',
+                    fontFamily: 'Saira, sans-serif',
+                    fontSize: '13px',
+                    fontWeight: 400,
                     outline: 'none',
                   }}
                 />
               </div>
 
-              <Button type="submit" variant="m8-violet" style={{ width: '100%', marginTop: '4px' }}>
+              <Button
+                type="submit"
+                variant="m8-violet"
+                style={{ width: '100%', marginTop: '4px', boxShadow: 'none', border: 'none' }}
+              >
                 Get in Touch
               </Button>
+
+              <style>{`
+                .hero-card-input::placeholder {
+                  color: var(--v2-text-secondary);
+                  opacity: 0.7;
+                  font-family: 'Saira', sans-serif;
+                  font-weight: 400;
+                }
+              `}</style>
             </form>
           </motion.div>
         )}
