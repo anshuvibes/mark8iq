@@ -382,8 +382,7 @@ function PeopleTab() {
           <motion.div
             key={item.name}
             initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: i * 0.05 }}
             style={{ height: '100%' }}
           >
