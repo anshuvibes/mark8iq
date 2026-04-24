@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import { useV2Theme } from './ThemeContext';
 
 const modules: Record<string, { name: string; abbr: string; accent: string; pain: string; metric: string; logo: string }> = {
