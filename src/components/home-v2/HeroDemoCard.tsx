@@ -97,10 +97,10 @@ export default function HeroDemoCard() {
         position: 'absolute',
         top: '24px',
         right: '-24px',
-        width: '300px',
+        width: '320px',
         background: 'var(--v2-bg-card)',
         borderRadius: '18px',
-        padding: '20px 18px',
+        padding: '26px 22px',
         boxShadow: '0 12px 40px var(--v2-shadow)',
         border: '1px solid var(--v2-border)',
         zIndex: 2,
@@ -118,17 +118,16 @@ export default function HeroDemoCard() {
             transition={stepTransition}
           >
             <p
+              className="hero-card-headline"
               style={{
-                fontSize: '15px',
+                fontSize: '17px',
                 fontWeight: 400,
-                color: 'var(--v2-text)',
-                marginBottom: '16px',
+                marginBottom: '20px',
                 textAlign: 'center',
                 lineHeight: 1.3,
               }}
             >
-              What do you want to{' '}
-              <span style={{ color: '#8E59FF' }}>explore</span>?
+              What do you want to explore?
             </p>
 
             <div
@@ -217,14 +216,8 @@ export default function HeroDemoCard() {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Button
                 variant="m8-violet"
-                size="sm"
                 onClick={() => selected.size > 0 && setStep('form')}
                 disabled={selected.size === 0}
-                style={{
-                  borderRadius: '999px',
-                  paddingLeft: '28px',
-                  paddingRight: '28px',
-                }}
               >
                 Get Started <ArrowRight size={16} />
               </Button>
@@ -240,6 +233,26 @@ export default function HeroDemoCard() {
               }
               .hero-tile:hover .hero-tile-checkbox {
                 border-color: var(--tile-accent) !important;
+              }
+              .hero-card-headline {
+                color: var(--v2-text);
+                background: linear-gradient(
+                  90deg,
+                  var(--v2-text) 0%,
+                  var(--v2-text) 35%,
+                  #8E59FF 50%,
+                  var(--v2-text) 65%,
+                  var(--v2-text) 100%
+                );
+                background-size: 200% 100%;
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: heroHeadlineShine 3.5s linear infinite;
+              }
+              @keyframes heroHeadlineShine {
+                0%   { background-position: 100% 0; }
+                100% { background-position: -100% 0; }
               }
             `}</style>
           </motion.div>
