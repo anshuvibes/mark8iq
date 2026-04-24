@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import { useV2Theme } from './ThemeContext';
 import AgentMarkInput from './AgentMarkInput';
 import AgentMarkOrb from './AgentMarkOrb';
 
