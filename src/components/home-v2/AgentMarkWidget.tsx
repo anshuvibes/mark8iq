@@ -574,7 +574,7 @@ export default function AgentMarkWidget() {
             onChange={(e) => setPillInputText(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handlePillSend()}
             onFocus={() => setState('expanded')}
-            placeholder="Ask Agent Mark anything about Mark8 IQ…"
+            placeholder={context.placeholder}
             className="agent-mark-pill-input m8-p6"
             style={{
               width: '100%',
