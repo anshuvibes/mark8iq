@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useLayoutEffect } from 'react';
 import { motion } from 'motion/react';
 
 type TabKey = 'excellence' | 'security' | 'people';
