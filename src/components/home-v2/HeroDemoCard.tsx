@@ -110,6 +110,14 @@ export default function HeroDemoCard() {
         flexDirection: 'column',
       }}
     >
+      <style>{`
+        @media (max-width: 1280px) {
+          .hero-module-card { width: 320px !important; }
+        }
+        @media (max-width: 991px) {
+          .hero-module-card { width: 100% !important; max-width: 420px; margin: 16px auto 0; }
+        }
+      `}</style>
       <AnimatePresence mode="wait">
         {step === 'select' && (
           <motion.div
