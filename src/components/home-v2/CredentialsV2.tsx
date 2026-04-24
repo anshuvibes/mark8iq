@@ -793,7 +793,7 @@ export default function CredentialsV2() {
                     textTransform: 'uppercase',
                     cursor: 'pointer',
                     position: 'relative',
-                    zIndex: 1,
+                    zIndex: isActive ? 3 : 1,
                     transition: 'color 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
                     whiteSpace: 'nowrap',
                   }}
