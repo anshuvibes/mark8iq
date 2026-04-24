@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect, Fragment } from 'react';
+import { useState, useRef, useLayoutEffect } from 'react';
 import { motion } from 'motion/react';
 
 type TabKey = 'excellence' | 'security' | 'people';
@@ -717,124 +717,104 @@ export default function CredentialsV2() {
           Recognised by the best in the business.
         </h2>
 
-        {/* Tab switcher — standalone boxes on a full-width track with dashed connectors */}
-        {(() => {
-          const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
-          // activeIndex retained for potential future use; current design swaps per-button styles.
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const activeIndex = tabKeys.indexOf(activeTab);
-          return (
-            <div
-              style={{
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'center',
-                marginBottom: '40px',
-                padding: '0 4px',
-              }}
-            >
-              {/* Full-width track line behind everything */}
-              <div
-                aria-hidden
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  top: '50%',
-                  height: '1px',
-                  background: 'rgba(8,13,25,0.12)',
-                  transform: 'translateY(-50%)',
-                  zIndex: 0,
-                }}
-              />
+        {/* Wrapper so the SVG curve can pass behind both the tab row and the content card */}
+        <div style={{ position: 'relative' }}>
+          {/* Tab switcher — standalone boxes; SVG curve below provides the track */}
+          <div
+            style={{
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '24px',
+              marginBottom: '40px',
+              padding: '0 4px',
+              zIndex: 2,
+            }}
+          >
+            {tabs.map((tab) => {
+              const isActive = activeTab === tab.key;
+              return (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key)}
+                  style={{
+                    padding: '10px 28px',
+                    border: `1px solid ${isActive ? '#8E59FF' : 'rgba(8,13,25,0.15)'}`,
+                    borderRadius: '5px',
+                    background: isActive ? '#8E59FF' : '#FFFFFF',
+                    color: isActive ? '#FFFFFF' : 'rgba(8,13,25,0.45)',
+                    fontFamily: "'Saira', sans-serif",
+                    fontSize: '11px',
+                    fontWeight: 400,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    transition:
+                      'background 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    position: 'relative',
+                    zIndex: 2,
+                    flexShrink: 0,
+                  }}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
 
-              {/* Tab boxes with dashed connectors between them */}
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 0,
-                  position: 'relative',
-                  zIndex: 1,
-                  width: '100%',
-                }}
-              >
-                {tabs.map((tab, i) => {
-                  const isActive = activeTab === tab.key;
-                  return (
-                    <Fragment key={tab.key}>
-                      {i === 0 && (
-                        <div
-                          aria-hidden
-                          style={{
-                            flex: 1,
-                            height: '1px',
-                            borderTop: '1px dashed rgba(8,13,25,0.2)',
-                          }}
-                        />
-                      )}
+          {/* Curved SVG track — runs through the tab row, dips down behind the content card on both sides */}
+          <svg
+            aria-hidden
+            style={{
+              position: 'absolute',
+              left: '-48px',
+              right: '-48px',
+              width: 'calc(100% + 96px)',
+              top: '20px',
+              height: '60px',
+              overflow: 'visible',
+              pointerEvents: 'none',
+              zIndex: 1,
+            }}
+            viewBox="0 0 1400 80"
+            preserveAspectRatio="none"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0,70 C60,70 90,10 150,10 L1250,10 C1310,10 1340,70 1400,70"
+              stroke="rgba(8,13,25,0.25)"
+              strokeWidth="1"
+              fill="none"
+              strokeDasharray="6 4"
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
 
-                      <button
-                        onClick={() => setActiveTab(tab.key)}
-                        style={{
-                          padding: '10px 28px',
-                          border: `1px solid ${isActive ? '#8E59FF' : 'rgba(8,13,25,0.15)'}`,
-                          borderRadius: '5px',
-                          background: isActive ? '#8E59FF' : '#FFFFFF',
-                          color: isActive ? '#FFFFFF' : 'rgba(8,13,25,0.45)',
-                          fontFamily: "'Saira', sans-serif",
-                          fontSize: '11px',
-                          fontWeight: 400,
-                          letterSpacing: '0.1em',
-                          textTransform: 'uppercase',
-                          cursor: 'pointer',
-                          whiteSpace: 'nowrap',
-                          transition:
-                            'background 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                          position: 'relative',
-                          zIndex: 1,
-                          flexShrink: 0,
-                        }}
-                      >
-                        {tab.label}
-                      </button>
-
-                      <div
-                        aria-hidden
-                        style={{
-                          flex: 1,
-                          height: '1px',
-                          borderTop: '1px dashed rgba(8,13,25,0.2)',
-                        }}
-                      />
-                    </Fragment>
-                  );
-                })}
+          {/* Content card — sits above the SVG so the descending ends visually disappear behind it */}
+          <div
+            style={{
+              position: 'relative',
+              zIndex: 2,
+              background: '#FFFFFF',
+              border: '1px solid rgba(8,13,25,0.08)',
+              borderRadius: '5px',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Content area — locked to tallest tab's natural height */}
+            <div style={{ padding: '48px', minHeight: lockedHeight ? `${lockedHeight + 96}px` : undefined }}>
+              <div ref={excellenceRef} style={{ display: activeTab === 'excellence' ? 'block' : 'none' }}>
+                <ExcellenceTab />
               </div>
-            </div>
-          );
-        })()}
-
-        {/* Content card — separate from the tab switcher */}
-        <div
-          style={{
-            background: '#FFFFFF',
-            border: '1px solid rgba(8,13,25,0.08)',
-            borderRadius: '5px',
-            overflow: 'hidden',
-          }}
-        >
-
-          {/* Content area — locked to SecurityTab's natural height */}
-          <div style={{ padding: '48px', minHeight: lockedHeight ? `${lockedHeight + 96}px` : undefined }}>
-            <div ref={excellenceRef} style={{ display: activeTab === 'excellence' ? 'block' : 'none' }}>
-              <ExcellenceTab />
-            </div>
-            <div ref={securityRef} style={{ display: activeTab === 'security' ? 'block' : 'none' }}>
-              <SecurityTab />
-            </div>
-            <div ref={peopleRef} style={{ display: activeTab === 'people' ? 'block' : 'none' }}>
-              <PeopleTab />
+              <div ref={securityRef} style={{ display: activeTab === 'security' ? 'block' : 'none' }}>
+                <SecurityTab />
+              </div>
+              <div ref={peopleRef} style={{ display: activeTab === 'people' ? 'block' : 'none' }}>
+                <PeopleTab />
+              </div>
             </div>
           </div>
         </div>
