@@ -215,7 +215,7 @@ export default function ProofV2() {
       scrollTrigger: {
         trigger: section,
         start: 'top top',
-        end: () => `+=${Math.max(window.innerHeight * 1.8, getTravel() * 1.1)}`,
+        end: () => `+=${Math.max(window.innerHeight * 0.9, getTravel() * 0.55)}`,
         scrub: 1.2,
         pin: stickyRef.current,
         pinSpacing: true,
