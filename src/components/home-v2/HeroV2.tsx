@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import heroDashboardSvg from '@/assets/hero-dashboard.svg?raw';
-import ThemeToggle from './ThemeToggle';
+
 
 const fadeIn = (delay: number) => ({
   initial: { opacity: 0, y: 20 },
