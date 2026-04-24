@@ -354,7 +354,7 @@ function SecurityTab() {
               // Using cqw (container query width) of row container
               height: 'calc((100cqw - 64px) / 5)',
             }}
-            className="cred-row2-card"
+            className="cred-row2-card cred-logo-card"
           >
             <img
               src={item.logo}
@@ -395,6 +395,7 @@ function PeopleTab() {
             style={{ height: '100%' }}
           >
             <div
+              className="cred-logo-card"
               style={{
                 border: '1px solid rgba(8,13,25,0.08)',
                 borderRadius: '5px',
@@ -403,6 +404,7 @@ function PeopleTab() {
                 overflow: 'hidden',
                 background: '#FFFFFF',
                 height: '100%',
+                transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
               }}
             >
               {/* Logo area — full width, 1:1 square */}
