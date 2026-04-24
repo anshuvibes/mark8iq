@@ -272,26 +272,6 @@ function ExcellenceTab() {
 function SecurityTab() {
   return (
     <>
-      <div style={{ marginBottom: '32px', textAlign: 'center' }}>
-        <h3
-          className="m8-h3-m"
-          style={{ color: '#080D19', marginBottom: '12px', textAlign: 'center' }}
-        >
-          Data security built into every layer
-        </h3>
-        <p
-          className="m8-p4"
-          style={{
-            color: 'rgba(8,13,25,0.6)',
-            maxWidth: '640px',
-            margin: '0 auto',
-            textAlign: 'center',
-          }}
-        >
-          Compliance and infrastructure certifications that protect every brand on
-          our platform.
-        </p>
-      </div>
       <div
         style={{
           display: 'grid',
@@ -323,25 +303,6 @@ function SecurityTab() {
 function PeopleTab() {
   return (
     <>
-      <div style={{ marginBottom: '32px', textAlign: 'center' }}>
-        <h3
-          className="m8-h3-m"
-          style={{ color: '#080D19', marginBottom: '12px', textAlign: 'center' }}
-        >
-          A great place to work. Certified
-        </h3>
-        <p
-          className="m8-p4"
-          style={{
-            color: 'rgba(8,13,25,0.6)',
-            maxWidth: '640px',
-            margin: '0 auto',
-            textAlign: 'center',
-          }}
-        >
-          We invest in our people the same way we invest in our product.
-        </p>
-      </div>
       <div
         style={{
           display: 'grid',
@@ -399,64 +360,64 @@ export default function CredentialsV2() {
           Recognised by the best in the business.
         </h2>
 
-        {/* Tab switcher — full-width segmented control */}
-        <div
-          style={{
-            display: 'flex',
-            border: '1px solid rgba(8,13,25,0.1)',
-            borderRadius: '5px',
-            overflow: 'hidden',
-            marginBottom: '40px',
-          }}
-        >
-          {tabs.map((tab, i, arr) => {
-            const isActive = activeTab === tab.key;
-            return (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                style={{
-                  flex: 1,
-                  padding: '16px 24px',
-                  border: 'none',
-                  borderRight:
-                    i < arr.length - 1
-                      ? '1px solid rgba(8,13,25,0.1)'
-                      : 'none',
-                  background: isActive ? '#8E59FF' : 'transparent',
-                  color: isActive ? '#FFFFFF' : 'rgba(8,13,25,0.45)',
-                  fontFamily: "'Saira', sans-serif",
-                  fontSize: '11px',
-                  fontWeight: 400,
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  cursor: 'pointer',
-                  transition: 'background 0.2s ease, color 0.2s ease',
-                }}
-              >
-                {tab.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Shared container card for all tab content */}
+        {/* Unified container card: tab switcher + content in one card */}
         <div
           style={{
             background: '#FFFFFF',
             border: '1px solid rgba(8,13,25,0.08)',
             borderRadius: '5px',
-            padding: '48px',
+            overflow: 'hidden',
           }}
         >
-          <div style={{ display: activeTab === 'excellence' ? 'block' : 'none' }}>
-            <ExcellenceTab />
+          {/* Tab switcher — flush top, border-bottom separates from content */}
+          <div
+            style={{
+              display: 'flex',
+              borderBottom: '1px solid rgba(8,13,25,0.1)',
+            }}
+          >
+            {tabs.map((tab, i, arr) => {
+              const isActive = activeTab === tab.key;
+              return (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key)}
+                  style={{
+                    flex: 1,
+                    padding: '18px 24px',
+                    border: 'none',
+                    borderRight:
+                      i < arr.length - 1
+                        ? '1px solid rgba(8,13,25,0.1)'
+                        : 'none',
+                    background: isActive ? '#8E59FF' : 'transparent',
+                    color: isActive ? '#FFFFFF' : 'rgba(8,13,25,0.45)',
+                    fontFamily: "'Saira', sans-serif",
+                    fontSize: '11px',
+                    fontWeight: 400,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    cursor: 'pointer',
+                    transition: 'background 0.2s ease, color 0.2s ease',
+                  }}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
           </div>
-          <div style={{ display: activeTab === 'security' ? 'block' : 'none' }}>
-            <SecurityTab />
-          </div>
-          <div style={{ display: activeTab === 'people' ? 'block' : 'none' }}>
-            <PeopleTab />
+
+          {/* Content area */}
+          <div style={{ padding: '48px' }}>
+            <div style={{ display: activeTab === 'excellence' ? 'block' : 'none' }}>
+              <ExcellenceTab />
+            </div>
+            <div style={{ display: activeTab === 'security' ? 'block' : 'none' }}>
+              <SecurityTab />
+            </div>
+            <div style={{ display: activeTab === 'people' ? 'block' : 'none' }}>
+              <PeopleTab />
+            </div>
           </div>
         </div>
       </div>
