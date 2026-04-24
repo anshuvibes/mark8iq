@@ -222,6 +222,7 @@ function ExcellenceTab({ isActive }: { isActive: boolean }) {
         >
           {item.logo ? (
             <div
+              className="cred-card-hover"
               style={{
                 display: 'flex',
                 alignItems: 'center',
