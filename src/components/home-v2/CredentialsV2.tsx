@@ -392,6 +392,25 @@ function PeopleTab() {
 
 export default function CredentialsV2() {
   const [activeTab, setActiveTab] = useState<TabKey>('excellence');
+  const securityRef = useRef<HTMLDivElement>(null);
+  const [lockedHeight, setLockedHeight] = useState<number | undefined>(undefined);
+
+  // SecurityTab is the tallest (2 rows). Measure its natural height and lock
+  // the content area to it so switching tabs never changes container height.
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = securityRef.current;
+      if (!el) return;
+      const prevDisplay = el.style.display;
+      el.style.display = 'block';
+      const h = el.offsetHeight;
+      el.style.display = prevDisplay;
+      if (h > 0) setLockedHeight(h);
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
 
   return (
     <section style={{ padding: '100px 0', position: 'relative', background: 'transparent' }}>
