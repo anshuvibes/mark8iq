@@ -216,8 +216,7 @@ export default function HeroDemoCard() {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Button
                 variant="m8-violet"
-                onClick={() => selected.size > 0 && setStep('form')}
-                disabled={selected.size === 0}
+                onClick={() => setStep('form')}
               >
                 Get Started <ArrowRight size={16} />
               </Button>
