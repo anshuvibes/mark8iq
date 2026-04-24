@@ -700,6 +700,13 @@ export default function CredentialsV2() {
   return (
     <section style={{ padding: '100px 0', position: 'relative', background: 'transparent' }}>
       <style>{`
+        .cred-card-hover {
+          transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+        }
+        .cred-card-hover:hover {
+          border-color: rgba(142, 89, 255, 0.6) !important;
+          box-shadow: 0 0 0 1px rgba(142, 89, 255, 0.35), 0 8px 24px -8px rgba(142, 89, 255, 0.45);
+        }
         @media (max-width: 767px) {
           .cred-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .cred-grid-row2 { grid-template-columns: repeat(2, 1fr) !important; }
