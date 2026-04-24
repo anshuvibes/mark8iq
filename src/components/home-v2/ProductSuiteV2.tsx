@@ -195,6 +195,9 @@ const ModuleCard = forwardRef<HTMLDivElement, { k: string; mod: typeof modules.a
       <img
         src={mod.logo}
         alt={mod.name}
+        loading="eager"
+        decoding="sync"
+        fetchPriority="high"
         style={{
           height: '20px',
           width: 'auto',
@@ -219,6 +222,21 @@ export default function ProductSuiteV2() {
   const active = modules[activeModule];
   const { theme, setTheme } = useV2Theme();
   const activeLogo = active.logo.replace('/black/', `/${theme === 'dark' ? 'white' : 'black'}/`);
+
+  // Preload every product logo (both themes) once on mount so that switching
+  // the contextual card never triggers a fresh network/decoded paint.
+  useEffect(() => {
+    const urls: string[] = [];
+    Object.values(modules).forEach((m) => {
+      urls.push(m.logo);
+      urls.push(m.logo.replace('/black/', '/white/'));
+    });
+    urls.forEach((src) => {
+      const img = new Image();
+      img.decoding = 'sync';
+      img.src = src;
+    });
+  }, []);
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const hubRef = useRef<HTMLDivElement | null>(null);
@@ -660,6 +678,9 @@ export default function ProductSuiteV2() {
                 <img
                   src="/img/product-logos/black/market-one.svg"
                   alt="Market One"
+                  loading="eager"
+                  decoding="sync"
+                  fetchPriority="high"
                   style={{ height: '20px', width: 'auto', marginBottom: '4px' }}
                 />
                 <p className="m8-p2" style={{ color: 'var(--v2-text)', margin: 0, maxWidth: 'none', whiteSpace: 'nowrap' }}>
@@ -675,6 +696,9 @@ export default function ProductSuiteV2() {
                   <img
                     src={activeLogo}
                     alt={active.name}
+                    loading="eager"
+                    decoding="sync"
+                    fetchPriority="high"
                     style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85, alignSelf: 'flex-start' }}
                   />
                   <p className="m8-p2" style={{
