@@ -470,7 +470,15 @@ export default function HeroDemoCard() {
             animate="animate"
             exit="exit"
             transition={stepTransition}
-            style={{ textAlign: 'center', padding: '12px 4px' }}
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+              padding: '12px 4px',
+            }}
           >
             <img
               src="/img/product-logos/black/mark8-iq.svg"
@@ -478,10 +486,10 @@ export default function HeroDemoCard() {
               style={{ height: '24px', width: 'auto', margin: '0 auto 18px', display: 'block' }}
             />
             <p className="m8-p3" style={{ color: 'var(--v2-text)', marginBottom: '10px' }}>
-              You're on the list
+              Thank you
             </p>
-            <p className="m8-p6" style={{ color: 'var(--v2-text-secondary)', lineHeight: 1.5 }}>
-              Someone from our team will reach out within a few hours. Meanwhile, keep exploring.
+            <p className="m8-p6" style={{ color: 'var(--v2-text-secondary)', lineHeight: 1.5, maxWidth: '260px' }}>
+              Your form has been submitted. Our team will reach out within a few hours. Meanwhile, keep exploring.
             </p>
           </motion.div>
         )}
