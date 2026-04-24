@@ -270,45 +270,88 @@ function ExcellenceTab() {
 }
 
 function SecurityTab() {
+  const firstRow = securityItems.slice(0, 5);
+  const secondRow = securityItems.slice(5);
+
+  const cardBaseStyle: React.CSSProperties = {
+    border: '1px solid rgba(8,13,25,0.08)',
+    borderRadius: '5px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '20px',
+    background: '#FFFFFF',
+  };
+
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(5, 1fr)',
-        gap: '16px',
-      }}
-      className="cred-grid"
-    >
-      {securityItems.map((item, i) => (
-        <motion.div
-          key={item.name}
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.5, delay: i * 0.05 }}
-          style={{
-            aspectRatio: '1 / 1',
-            border: '1px solid rgba(8,13,25,0.08)',
-            borderRadius: '5px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '20px',
-            background: '#FFFFFF',
-          }}
-        >
-          <img
-            src={encodeURI(item.logo)}
-            alt={item.name}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {/* Row 1: 5 square cards — locks card height via aspect-ratio */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(5, 1fr)',
+          gap: '16px',
+        }}
+        className="cred-grid"
+      >
+        {firstRow.map((item, i) => (
+          <motion.div
+            key={item.name}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.5, delay: i * 0.05 }}
+            style={{ ...cardBaseStyle, aspectRatio: '1 / 1' }}
+          >
+            <img
+              src={encodeURI(item.logo)}
+              alt={item.name}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                display: 'block',
+              }}
+            />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Row 2: remaining cards — width auto-fills, height matches row 1 squares */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${secondRow.length}, 1fr)`,
+          gap: '16px',
+        }}
+        className="cred-grid-row2"
+      >
+        {secondRow.map((item, i) => (
+          <motion.div
+            key={item.name}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.5, delay: (i + firstRow.length) * 0.05 }}
             style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain',
-              display: 'block',
+              ...cardBaseStyle,
+              // Height matches a row-1 square: (containerWidth - 4*16gap) / 5
+              height: 'calc((100% / 1) * 0)',
             }}
-          />
-        </motion.div>
-      ))}
+          >
+            <img
+              src={encodeURI(item.logo)}
+              alt={item.name}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                display: 'block',
+              }}
+            />
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 }
