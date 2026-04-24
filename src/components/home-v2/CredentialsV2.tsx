@@ -716,13 +716,13 @@ export default function CredentialsV2() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 padding: '24px 32px',
-                borderBottom: '1px solid rgba(8,13,25,0.08)',
+                paddingBottom: '28px',
               }}>
                 {/* Full-width dotted line behind everything */}
                 <div aria-hidden style={{
                   position: 'absolute',
-                  left: '32px',
-                  right: '32px',
+                  left: '0',
+                  right: '0',
                   top: '50%',
                   height: '1px',
                   backgroundImage: 'repeating-linear-gradient(to right, rgba(8,13,25,0.2) 0px, rgba(8,13,25,0.2) 6px, transparent 6px, transparent 14px)',
@@ -734,9 +734,10 @@ export default function CredentialsV2() {
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0',
+                  gap: '32px',
                   position: 'relative',
                   zIndex: 1,
+                  width: '100%',
                 }}>
                   {tabs.map((tab, i) => {
                     const isActive = activeTab === tab.key;
@@ -745,7 +746,8 @@ export default function CredentialsV2() {
                         key={tab.key}
                         onClick={() => setActiveTab(tab.key)}
                         style={{
-                          padding: '10px 40px',
+                          flex: 1,
+                          padding: '12px 0',
                           border: '1px solid rgba(8,13,25,0.15)',
                           borderRadius: '3px',
                           background: isActive ? '#8e59ff' : '#ffffff',
@@ -760,7 +762,6 @@ export default function CredentialsV2() {
                           transition: 'background 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                           borderColor: isActive ? '#8e59ff' : 'rgba(8,13,25,0.15)',
                           whiteSpace: 'nowrap',
-                          marginLeft: i > 0 ? '32px' : '0',
                         }}
                       >
                         {tab.label}
