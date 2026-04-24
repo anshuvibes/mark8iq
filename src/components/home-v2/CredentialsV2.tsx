@@ -215,22 +215,22 @@ function ExcellenceTab() {
           {item.logo ? (
             <div
               style={{
-                display: 'inline-flex',
+                display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                padding: '12px 16px',
+                padding: '20px',
                 border: '1px solid rgba(8,13,25,0.08)',
                 borderRadius: '5px',
-                width: 'fit-content',
+                width: '100%',
+                aspectRatio: '16 / 7',
               }}
             >
               <img
                 src={item.logo}
                 alt={item.name}
                 style={{
-                  height: '48px',
-                  width: 'auto',
-                  maxWidth: '180px',
+                  width: '100%',
+                  height: '100%',
                   objectFit: 'contain',
                   display: 'block',
                 }}
