@@ -222,6 +222,7 @@ function ExcellenceTab({ isActive }: { isActive: boolean }) {
         >
           {item.logo ? (
             <div
+              className="cred-card-hover"
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -324,6 +325,7 @@ function SecurityTab({ isActive }: { isActive: boolean }) {
           <motion.div
             key={item.name}
             variants={cardItemVariants}
+            className="cred-card-hover"
             style={{ ...cardBaseStyle, aspectRatio: '1 / 1' }}
           >
             <img
@@ -358,7 +360,7 @@ function SecurityTab({ isActive }: { isActive: boolean }) {
               ...cardBaseStyle,
               height: 'calc((100cqw - 64px) / 5)',
             }}
-            className="cred-row2-card"
+            className="cred-row2-card cred-card-hover"
           >
             <img
               src={item.logo}
@@ -402,6 +404,7 @@ function PeopleTab({ isActive }: { isActive: boolean }) {
             style={{ height: '100%' }}
           >
             <div
+              className="cred-card-hover"
               style={{
                 border: '1px solid rgba(8,13,25,0.08)',
                 borderRadius: '5px',
@@ -700,6 +703,13 @@ export default function CredentialsV2() {
   return (
     <section style={{ padding: '100px 0', position: 'relative', background: 'transparent' }}>
       <style>{`
+        .cred-card-hover {
+          transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+        }
+        .cred-card-hover:hover {
+          border-color: rgba(142, 89, 255, 0.6) !important;
+          box-shadow: 0 0 0 1px rgba(142, 89, 255, 0.35), 0 8px 24px -8px rgba(142, 89, 255, 0.45);
+        }
         @media (max-width: 767px) {
           .cred-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .cred-grid-row2 { grid-template-columns: repeat(2, 1fr) !important; }
