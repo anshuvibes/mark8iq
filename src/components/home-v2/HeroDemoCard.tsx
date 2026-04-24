@@ -62,6 +62,40 @@ export default function HeroDemoCard() {
   const [phone, setPhone] = useState('');
   const [notes, setNotes] = useState('');
   const [errors, setErrors] = useState<{ name?: string; email?: string; phone?: string; notes?: string }>({});
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // Auto-revert to step 1 after success, and fire confetti
+  useEffect(() => {
+    if (step !== 'success') return;
+
+    // Fire confetti scoped to the card
+    const node = cardRef.current;
+    if (node) {
+      const rect = node.getBoundingClientRect();
+      const x = (rect.left + rect.width / 2) / window.innerWidth;
+      const y = (rect.top + rect.height / 2) / window.innerHeight;
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        startVelocity: 35,
+        origin: { x, y },
+        colors: ['#8E59FF', '#52bfbc', '#fc7459', '#7cbc71', '#fcb24f', '#dd4062'],
+        zIndex: 9999,
+        scalar: 0.8,
+      });
+    }
+
+    const t = setTimeout(() => {
+      setStep('select');
+      setSelected(new Set());
+      setName('');
+      setEmail('');
+      setPhone('');
+      setNotes('');
+      setErrors({});
+    }, 5000);
+    return () => clearTimeout(t);
+  }, [step]);
 
   const toggle = (id: string) => {
     setSelected((prev) => {
