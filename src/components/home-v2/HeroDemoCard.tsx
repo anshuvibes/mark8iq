@@ -216,14 +216,8 @@ export default function HeroDemoCard() {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Button
                 variant="m8-violet"
-                size="sm"
                 onClick={() => selected.size > 0 && setStep('form')}
                 disabled={selected.size === 0}
-                style={{
-                  borderRadius: '999px',
-                  paddingLeft: '28px',
-                  paddingRight: '28px',
-                }}
               >
                 Get Started <ArrowRight size={16} />
               </Button>
@@ -239,6 +233,26 @@ export default function HeroDemoCard() {
               }
               .hero-tile:hover .hero-tile-checkbox {
                 border-color: var(--tile-accent) !important;
+              }
+              .hero-card-headline {
+                color: var(--v2-text);
+                background: linear-gradient(
+                  90deg,
+                  var(--v2-text) 0%,
+                  var(--v2-text) 35%,
+                  #8E59FF 50%,
+                  var(--v2-text) 65%,
+                  var(--v2-text) 100%
+                );
+                background-size: 200% 100%;
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: heroHeadlineShine 3.5s linear infinite;
+              }
+              @keyframes heroHeadlineShine {
+                0%   { background-position: 100% 0; }
+                100% { background-position: -100% 0; }
               }
             `}</style>
           </motion.div>
