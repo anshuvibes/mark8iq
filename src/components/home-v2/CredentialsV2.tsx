@@ -207,20 +207,30 @@ function ExcellenceTab() {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '12px',
-            paddingBottom: '48px',
+            gap: '8px',
+            paddingBottom: '32px',
             borderBottom: '1px solid rgba(8,13,25,0.06)',
           }}
         >
           {item.logo ? (
-            <div style={{ height: '72px', display: 'flex', alignItems: 'center' }}>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '12px 16px',
+                border: '1px solid rgba(8,13,25,0.08)',
+                borderRadius: '5px',
+                width: 'fit-content',
+              }}
+            >
               <img
                 src={item.logo}
                 alt={item.name}
                 style={{
-                  height: '72px',
+                  height: '48px',
                   width: 'auto',
-                  maxWidth: '240px',
+                  maxWidth: '180px',
                   objectFit: 'contain',
                   display: 'block',
                 }}
