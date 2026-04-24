@@ -73,7 +73,7 @@ export default function HeroDemoCard() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const result = formSchema.safeParse({ name, email, phone });
+    const result = formSchema.safeParse({ name, email, phone, notes });
     if (!result.success) {
       const fieldErrors: typeof errors = {};
       result.error.issues.forEach((iss) => {
