@@ -475,8 +475,8 @@ function PeopleTab({ isActive }: { isActive: boolean }) {
       <motion.div
         className="cred-hire-card"
         initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
+        animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+        transition={{ duration: 0.6, ease: 'easeOut', delay: isActive ? 0.3 : 0 }}
         style={{
           marginTop: '16px',
           background: '#0D1425',
