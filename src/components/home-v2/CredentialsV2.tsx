@@ -187,22 +187,31 @@ function LogoCard({
 }
 
 
-function ExcellenceTab() {
+const cardItemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
+
+function ExcellenceTab({ isActive }: { isActive: boolean }) {
   return (
-    <div
+    <motion.div
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(3, 1fr)',
         gap: '32px',
       }}
       className="cred-excellence-grid"
+      initial="hidden"
+      animate={isActive ? 'show' : 'hidden'}
+      variants={{
+        hidden: {},
+        show: { transition: { staggerChildren: 0.06 } },
+      }}
     >
-      {excellenceItems.map((item, i) => (
+      {excellenceItems.map((item) => (
         <motion.div
           key={item.name}
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: i * 0.06 }}
+          variants={cardItemVariants}
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -274,11 +283,11 @@ function ExcellenceTab() {
           </p>
         </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
 
-function SecurityTab() {
+function SecurityTab({ isActive }: { isActive: boolean }) {
   const firstRow = securityItems.slice(0, 5);
   const secondRow = securityItems.slice(5);
 
@@ -293,7 +302,15 @@ function SecurityTab() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+    <motion.div
+      style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
+      initial="hidden"
+      animate={isActive ? 'show' : 'hidden'}
+      variants={{
+        hidden: {},
+        show: { transition: { staggerChildren: 0.05 } },
+      }}
+    >
       {/* Row 1: 5 square cards — locks card height via aspect-ratio */}
       <div
         style={{
@@ -303,12 +320,10 @@ function SecurityTab() {
         }}
         className="cred-grid"
       >
-        {firstRow.map((item, i) => (
+        {firstRow.map((item) => (
           <motion.div
             key={item.name}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: i * 0.05 }}
+            variants={cardItemVariants}
             style={{ ...cardBaseStyle, aspectRatio: '1 / 1' }}
           >
             <img
@@ -335,16 +350,12 @@ function SecurityTab() {
         }}
         className="cred-grid-row2"
       >
-        {secondRow.map((item, i) => (
+        {secondRow.map((item) => (
           <motion.div
             key={item.name}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: (i + firstRow.length) * 0.05 }}
+            variants={cardItemVariants}
             style={{
               ...cardBaseStyle,
-              // Height matches a row-1 square: (100vw_of_row - 4*16gap) / 5
-              // Using cqw (container query width) of row container
               height: 'calc((100cqw - 64px) / 5)',
             }}
             className="cred-row2-card"
@@ -362,14 +373,14 @@ function SecurityTab() {
           </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
-function PeopleTab() {
+function PeopleTab({ isActive }: { isActive: boolean }) {
   return (
     <>
-      <div
+      <motion.div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(5, 1fr)',
@@ -377,13 +388,17 @@ function PeopleTab() {
           alignItems: 'stretch',
         }}
         className="cred-grid"
+        initial="hidden"
+        animate={isActive ? 'show' : 'hidden'}
+        variants={{
+          hidden: {},
+          show: { transition: { staggerChildren: 0.05 } },
+        }}
       >
-        {peopleItems.map((item, i) => (
+        {peopleItems.map((item) => (
           <motion.div
             key={item.name}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: i * 0.05 }}
+            variants={cardItemVariants}
             style={{ height: '100%' }}
           >
             <div
@@ -454,14 +469,14 @@ function PeopleTab() {
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Hiring callout — Figma 2245-13826: thin dark bar, violet glow under text, right wordmark panel */}
       <motion.div
         className="cred-hire-card"
         initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
+        animate={isActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+        transition={{ duration: 0.6, ease: 'easeOut', delay: isActive ? 0.3 : 0 }}
         style={{
           marginTop: '16px',
           background: '#0D1425',
@@ -826,22 +841,15 @@ export default function CredentialsV2() {
         >
           {/* Content area — locked to SecurityTab's natural height */}
           <div style={{ padding: '48px', minHeight: lockedHeight ? `${lockedHeight + 96}px` : undefined }}>
-            {/* Active tab — remounts on switch so animations replay */}
-            <div key={displayedTab}>
-              {displayedTab === 'excellence' && <ExcellenceTab />}
-              {displayedTab === 'security' && <SecurityTab />}
-              {displayedTab === 'people' && <PeopleTab />}
+            <div style={{ display: displayedTab === 'excellence' ? 'block' : 'none' }}>
+              <ExcellenceTab isActive={displayedTab === 'excellence'} />
             </div>
-            {/* Hidden Security mount — used only for measuring locked height */}
-            {displayedTab !== 'security' && (
-              <div
-                ref={securityRef}
-                aria-hidden
-                style={{ position: 'absolute', visibility: 'hidden', pointerEvents: 'none', left: '-9999px', top: 0, width: '100%' }}
-              >
-                <SecurityTab />
-              </div>
-            )}
+            <div ref={securityRef} style={{ display: displayedTab === 'security' ? 'block' : 'none' }}>
+              <SecurityTab isActive={displayedTab === 'security'} />
+            </div>
+            <div style={{ display: displayedTab === 'people' ? 'block' : 'none' }}>
+              <PeopleTab isActive={displayedTab === 'people'} />
+            </div>
           </div>
         </div>
       </div>
