@@ -718,16 +718,15 @@ export default function CredentialsV2() {
           Recognised by the best in the business.
         </h2>
 
-        {/* Tab switcher — sliding violet pill, container width */}
+        {/* Tab switcher — full-bleed dotted line, container-width tab boxes */}
         <div style={{
+          width: '100vw',
+          marginLeft: 'calc(50% - 50vw)',
+          marginRight: 'calc(50% - 50vw)',
           position: 'relative',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
           padding: '24px 0',
-          width: '100%',
         }}>
-          {/* Dotted line — full width behind everything */}
+          {/* Dotted line — truly edge to edge */}
           <div aria-hidden style={{
             position: 'absolute',
             left: 0,
@@ -740,68 +739,74 @@ export default function CredentialsV2() {
             pointerEvents: 'none',
           }} />
 
-          {/* Tab box group */}
-          <div
-            ref={tabGroupRef}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              width: '100%',
-              position: 'relative',
-              zIndex: 1,
-              gap: '24px',
-            }}
-          >
-            {/* Sliding violet pill */}
+          {/* Tab boxes — constrained to container width, centered */}
+          <div style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            padding: '0 24px',
+            position: 'relative',
+            zIndex: 1,
+          }}>
             <div
-              aria-hidden
+              ref={tabGroupRef}
               style={{
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: 0,
-                width: pillWidth > 0 ? `${pillWidth}px` : '33%',
-                transform: `translateX(${pillOffset}px)`,
-                transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
-                background: '#8e59ff',
-                borderRadius: '3px',
-                zIndex: 0,
-                pointerEvents: 'none',
-                border: '1px solid #8e59ff',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '24px',
+                position: 'relative',
               }}
-            />
+            >
+              {/* Sliding violet pill */}
+              <div
+                aria-hidden
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  width: pillWidth > 0 ? `${pillWidth}px` : '33%',
+                  transform: `translateX(${pillOffset}px)`,
+                  transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+                  background: '#8e59ff',
+                  borderRadius: '3px',
+                  zIndex: 0,
+                  pointerEvents: 'none',
+                  border: '1px solid #8e59ff',
+                }}
+              />
 
-            {/* Tab buttons */}
-            {tabs.map((tab, i) => {
-              const isActive = activeTab === tab.key;
-              return (
-                <button
-                  key={tab.key}
-                  ref={(el) => { tabRefs.current[i] = el; }}
-                  onClick={() => setActiveTab(tab.key)}
-                  style={{
-                    flex: 1,
-                    padding: '12px 0',
-                    border: '1px solid rgba(8,13,25,0.15)',
-                    borderRadius: '3px',
-                    background: 'transparent',
-                    color: isActive ? '#ffffff' : 'rgba(8,13,25,0.45)',
-                    fontFamily: "'Saira', sans-serif",
-                    fontSize: '11px',
-                    fontWeight: 400,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    cursor: 'pointer',
-                    position: 'relative',
-                    zIndex: 1,
-                    transition: 'color 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  {tab.label}
-                </button>
-              );
-            })}
+              {/* Tab buttons */}
+              {tabs.map((tab, i) => {
+                const isActive = activeTab === tab.key;
+                return (
+                  <button
+                    key={tab.key}
+                    ref={(el) => { tabRefs.current[i] = el; }}
+                    onClick={() => setActiveTab(tab.key)}
+                    style={{
+                      flex: 1,
+                      padding: '12px 0',
+                      border: '1px solid rgba(8,13,25,0.15)',
+                      borderRadius: '3px',
+                      background: isActive ? 'transparent' : '#ffffff',
+                      color: isActive ? '#ffffff' : 'rgba(8,13,25,0.45)',
+                      fontFamily: "'Saira', sans-serif",
+                      fontSize: '11px',
+                      fontWeight: 400,
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      zIndex: 1,
+                      transition: 'color 0.35s cubic-bezier(0.4, 0, 0.2, 1), background 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
