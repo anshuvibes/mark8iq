@@ -208,7 +208,7 @@ function ExcellenceTab() {
             display: 'flex',
             flexDirection: 'column',
             gap: '8px',
-            paddingBottom: '32px',
+            paddingBottom: '12px',
             borderBottom: '1px solid rgba(8,13,25,0.06)',
           }}
         >
