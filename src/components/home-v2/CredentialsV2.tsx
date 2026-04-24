@@ -201,8 +201,7 @@ function ExcellenceTab() {
         <motion.div
           key={item.name}
           initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: i * 0.06 }}
           style={{
             display: 'flex',
@@ -308,8 +307,7 @@ function SecurityTab() {
           <motion.div
             key={item.name}
             initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: i * 0.05 }}
             style={{ ...cardBaseStyle, aspectRatio: '1 / 1' }}
           >
@@ -341,8 +339,7 @@ function SecurityTab() {
           <motion.div
             key={item.name}
             initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: (i + firstRow.length) * 0.05 }}
             style={{
               ...cardBaseStyle,
@@ -385,8 +382,7 @@ function PeopleTab() {
           <motion.div
             key={item.name}
             initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: i * 0.05 }}
             style={{ height: '100%' }}
           >
@@ -464,8 +460,7 @@ function PeopleTab() {
       <motion.div
         className="cred-hire-card"
         initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
         style={{
           marginTop: '16px',
@@ -831,15 +826,22 @@ export default function CredentialsV2() {
         >
           {/* Content area — locked to SecurityTab's natural height */}
           <div style={{ padding: '48px', minHeight: lockedHeight ? `${lockedHeight + 96}px` : undefined }}>
-            <div style={{ display: displayedTab === 'excellence' ? 'block' : 'none' }}>
-              <ExcellenceTab />
+            {/* Active tab — remounts on switch so animations replay */}
+            <div key={displayedTab}>
+              {displayedTab === 'excellence' && <ExcellenceTab />}
+              {displayedTab === 'security' && <SecurityTab />}
+              {displayedTab === 'people' && <PeopleTab />}
             </div>
-            <div ref={securityRef} style={{ display: displayedTab === 'security' ? 'block' : 'none' }}>
-              <SecurityTab />
-            </div>
-            <div style={{ display: displayedTab === 'people' ? 'block' : 'none' }}>
-              <PeopleTab />
-            </div>
+            {/* Hidden Security mount — used only for measuring locked height */}
+            {displayedTab !== 'security' && (
+              <div
+                ref={securityRef}
+                aria-hidden
+                style={{ position: 'absolute', visibility: 'hidden', pointerEvents: 'none', left: '-9999px', top: 0, width: '100%' }}
+              >
+                <SecurityTab />
+              </div>
+            )}
           </div>
         </div>
       </div>
