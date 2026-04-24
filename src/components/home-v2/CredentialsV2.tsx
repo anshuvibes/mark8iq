@@ -513,7 +513,42 @@ function PeopleTab() {
           }}
         />
 
-        {/* Left content block */}
+        {/* Left decorative panel — Mark8 IQ wordmark */}
+        <div
+          aria-hidden
+          className="cred-hire-panel"
+          style={{
+            position: 'relative',
+            zIndex: 1,
+            flex: '1 1 40%',
+            maxWidth: '520px',
+            minWidth: '220px',
+            alignSelf: 'stretch',
+            borderRadius: '5px',
+            background:
+              'linear-gradient(135deg, rgba(142,89,255,0.18) 0%, rgba(142,89,255,0.06) 100%)',
+            border: '1px solid rgba(142,89,255,0.22)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+            backdropFilter: 'blur(8px)',
+          }}
+        >
+          <img
+            src="/img/product-logos/white/mark8-iq.svg"
+            alt="Mark8 IQ"
+            style={{
+              width: '38%',
+              maxWidth: '160px',
+              height: 'auto',
+              objectFit: 'contain',
+              opacity: 0.85,
+            }}
+          />
+        </div>
+
+        {/* Right content block */}
         <div
           className="cred-hire-content"
           style={{ position: 'relative', zIndex: 2, flex: '1 1 auto', minWidth: 0, padding: '4px 8px' }}
@@ -585,41 +620,6 @@ function PeopleTab() {
               Write to us
             </a>
           </div>
-        </div>
-
-        {/* Right decorative panel — Mark8 IQ wordmark */}
-        <div
-          aria-hidden
-          className="cred-hire-panel"
-          style={{
-            position: 'relative',
-            zIndex: 1,
-            flex: '1 1 40%',
-            maxWidth: '520px',
-            minWidth: '220px',
-            alignSelf: 'stretch',
-            borderRadius: '5px',
-            background:
-              'linear-gradient(135deg, rgba(142,89,255,0.18) 0%, rgba(142,89,255,0.06) 100%)',
-            border: '1px solid rgba(142,89,255,0.22)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden',
-            backdropFilter: 'blur(8px)',
-          }}
-        >
-          <img
-            src="/img/product-logos/white/mark8-iq.svg"
-            alt="Mark8 IQ"
-            style={{
-              width: '38%',
-              maxWidth: '160px',
-              height: 'auto',
-              objectFit: 'contain',
-              opacity: 0.85,
-            }}
-          />
         </div>
 
         <style>{`
