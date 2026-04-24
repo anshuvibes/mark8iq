@@ -377,10 +377,10 @@ function SecurityTab({ isActive }: { isActive: boolean }) {
   );
 }
 
-function PeopleTab() {
+function PeopleTab({ isActive }: { isActive: boolean }) {
   return (
     <>
-      <div
+      <motion.div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(5, 1fr)',
@@ -388,13 +388,17 @@ function PeopleTab() {
           alignItems: 'stretch',
         }}
         className="cred-grid"
+        initial="hidden"
+        animate={isActive ? 'show' : 'hidden'}
+        variants={{
+          hidden: {},
+          show: { transition: { staggerChildren: 0.05 } },
+        }}
       >
-        {peopleItems.map((item, i) => (
+        {peopleItems.map((item) => (
           <motion.div
             key={item.name}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: i * 0.05 }}
+            variants={cardItemVariants}
             style={{ height: '100%' }}
           >
             <div
