@@ -1,12 +1,18 @@
 import { motion } from 'motion/react';
 
-const logos = Array.from({ length: 11 }, (_, i) => {
-  const num = i + 1;
-  return {
-    name: `Partner ${num}`,
-    src: num === 10 ? '/img/logos/19eba7c1-31f9-4c46-8391-1b5a2852c4c7.png' : `/img/logos/logo_${num}.png`,
-  };
-});
+const logos = [
+  { name: 'Asian Shoes', src: '/img/logos/asian-shoes.png' },
+  { name: 'Beast Life', src: '/img/logos/beast-life.png' },
+  { name: 'Urban Gabru', src: '/img/logos/urban-gabru.png' },
+  { name: 'Zeel Rainwear', src: '/img/logos/zeel-rainwear.png' },
+  { name: 'Fast & Up', src: '/img/logos/fast-and-up.png' },
+  { name: 'Rovers', src: '/img/logos/rovers.png' },
+  { name: 'Quench', src: '/img/logos/quench.png' },
+  { name: 'ARTMENT', src: '/img/logos/artment.png' },
+  { name: 'neude Skin', src: '/img/logos/neude-skin.png' },
+  { name: 'MARS Cosmetics', src: '/img/logos/mars-cosmetics.png' },
+  { name: 'XYXX', src: '/img/logos/xyxx.png' },
+];
 
 export default function TrustStripV2() {
   return (
