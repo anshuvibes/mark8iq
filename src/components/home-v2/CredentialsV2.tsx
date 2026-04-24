@@ -467,14 +467,14 @@ function PeopleTab() {
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
         style={{
-          marginTop: '40px',
+          marginTop: '16px',
           background: '#0D1425',
           border: '1px solid #40445A',
-          borderRadius: '30px',
-          padding: '20px 28px',
+          borderRadius: '5px',
+          padding: '16px 24px',
           position: 'relative',
           overflow: 'hidden',
-          minHeight: '240px',
+          minHeight: 'unset',
           display: 'flex',
           alignItems: 'center',
         }}
@@ -543,7 +543,7 @@ function PeopleTab() {
             We are always looking for sharp, driven people. If that is you, let's talk.
           </p>
 
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: 0 }}>
             <a
               href="/career"
               style={{
@@ -591,8 +591,8 @@ function PeopleTab() {
           style={{
             position: 'relative',
             zIndex: 1,
-            width: '320px',
-            height: '100px',
+            width: '240px',
+            height: '64px',
             borderRadius: '15px',
             background: 'rgba(142,89,255,0.06)',
             border: '1px solid rgba(142,89,255,0.15)',
