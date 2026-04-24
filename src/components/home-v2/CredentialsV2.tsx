@@ -339,8 +339,7 @@ function SecurityTab() {
           <motion.div
             key={item.name}
             initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: (i + firstRow.length) * 0.05 }}
             style={{
               ...cardBaseStyle,
