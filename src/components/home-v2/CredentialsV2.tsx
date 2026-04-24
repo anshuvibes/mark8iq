@@ -4,8 +4,8 @@ import { motion } from 'motion/react';
 type TabKey = 'excellence' | 'security' | 'people';
 
 const tabs: { key: TabKey; label: string }[] = [
-  { key: 'excellence', label: 'Recognised Excellence' },
   { key: 'security', label: 'Data Security' },
+  { key: 'excellence', label: 'Recognised Excellence' },
   { key: 'people', label: 'People and Culture' },
 ];
 
@@ -672,7 +672,7 @@ export default function CredentialsV2() {
 
   // Measure displayed tab position to slide the violet pill (active or hovered)
   useLayoutEffect(() => {
-    const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
+    const tabKeys: TabKey[] = ['security', 'excellence', 'people'];
     const measurePill = () => {
       const activeIndex = tabKeys.indexOf(displayedTab);
       const activeEl = tabRefs.current[activeIndex];
