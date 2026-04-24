@@ -1,7 +1,5 @@
-import { useState, useRef, useLayoutEffect, useEffect, Fragment } from 'react';
+import { useState, useRef, useLayoutEffect } from 'react';
 import { motion } from 'motion/react';
-
-const TOTAL_DURATION = 15000; // 15s per full loop (5s per tab)
 
 type TabKey = 'excellence' | 'security' | 'people';
 
@@ -210,13 +208,12 @@ function ExcellenceTab() {
             display: 'flex',
             flexDirection: 'column',
             gap: '8px',
-            paddingBottom: '12px',
+            paddingBottom: '32px',
             borderBottom: '1px solid rgba(8,13,25,0.06)',
           }}
         >
           {item.logo ? (
             <div
-              className="cred-logo-card"
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -227,8 +224,6 @@ function ExcellenceTab() {
                 width: '100%',
                 height: '120px',
                 maxHeight: '120px',
-                background: '#FFFFFF',
-                transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
               }}
             >
               <img
@@ -296,7 +291,6 @@ function SecurityTab() {
     justifyContent: 'center',
     padding: '20px',
     background: '#FFFFFF',
-    transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
   };
 
   return (
@@ -318,7 +312,6 @@ function SecurityTab() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.5, delay: i * 0.05 }}
             style={{ ...cardBaseStyle, aspectRatio: '1 / 1' }}
-            className="cred-logo-card"
           >
             <img
               src={item.logo}
@@ -357,7 +350,7 @@ function SecurityTab() {
               // Using cqw (container query width) of row container
               height: 'calc((100cqw - 64px) / 5)',
             }}
-            className="cred-row2-card cred-logo-card"
+            className="cred-row2-card"
           >
             <img
               src={item.logo}
@@ -398,7 +391,6 @@ function PeopleTab() {
             style={{ height: '100%' }}
           >
             <div
-              className="cred-logo-card"
               style={{
                 border: '1px solid rgba(8,13,25,0.08)',
                 borderRadius: '5px',
@@ -407,7 +399,6 @@ function PeopleTab() {
                 overflow: 'hidden',
                 background: '#FFFFFF',
                 height: '100%',
-                transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
               }}
             >
               {/* Logo area — full width, 1:1 square */}
@@ -652,100 +643,28 @@ function PeopleTab() {
 
 export default function CredentialsV2() {
   const [activeTab, setActiveTab] = useState<TabKey>('excellence');
-  const excellenceRef = useRef<HTMLDivElement>(null);
   const securityRef = useRef<HTMLDivElement>(null);
-  const peopleRef = useRef<HTMLDivElement>(null);
   const [lockedHeight, setLockedHeight] = useState<number | undefined>(undefined);
 
-  // Auto-advance loader state
-  const [progress, setProgress] = useState(0); // 0..1 across the 15s loop
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const animFrameRef = useRef<number | null>(null);
-  const startTimeRef = useRef<number | null>(null);
-  const pausedProgressRef = useRef(0);
-
-  // Observe section visibility — only animate when in viewport
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
-      { threshold: 0.3 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  // Animation loop — advances progress and triggers tab changes
-  useEffect(() => {
-    if (!isVisible) {
-      // Pause: remember where we were so we resume from the same spot
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-      pausedProgressRef.current = progress;
-      startTimeRef.current = null;
-      return;
-    }
-
-    const tick = (now: number) => {
-      if (startTimeRef.current === null) {
-        startTimeRef.current = now - pausedProgressRef.current * TOTAL_DURATION;
-      }
-      const elapsed = (now - startTimeRef.current) % TOTAL_DURATION;
-      const p = elapsed / TOTAL_DURATION;
-      setProgress(p);
-
-      const next: TabKey = p < 1 / 3 ? 'excellence' : p < 2 / 3 ? 'security' : 'people';
-      setActiveTab((cur) => (cur === next ? cur : next));
-
-      animFrameRef.current = requestAnimationFrame(tick);
-    };
-
-    animFrameRef.current = requestAnimationFrame(tick);
-    return () => {
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isVisible]);
-
-  // Manual tab click — reset timer to that tab's start
-  const handleTabClick = (key: TabKey) => {
-    const tabIndex = (['excellence', 'security', 'people'] as TabKey[]).indexOf(key);
-    const targetProgress = tabIndex / 3;
-    pausedProgressRef.current = targetProgress;
-    startTimeRef.current = null;
-    setProgress(targetProgress);
-    setActiveTab(key);
-  };
-
-  // Measure all tabs and lock the content area to the tallest one so switching
-  // tabs never changes container height.
+  // SecurityTab is the tallest (2 rows). Measure its natural height and lock
+  // the content area to it so switching tabs never changes container height.
   useLayoutEffect(() => {
     const measure = () => {
-      const refs = [excellenceRef.current, securityRef.current, peopleRef.current];
-      let max = 0;
-      refs.forEach((el) => {
-        if (!el) return;
-        const prevDisplay = el.style.display;
-        el.style.display = 'block';
-        const h = el.offsetHeight;
-        el.style.display = prevDisplay;
-        if (h > max) max = h;
-      });
-      if (max > 0) setLockedHeight(max);
+      const el = securityRef.current;
+      if (!el) return;
+      const prevDisplay = el.style.display;
+      el.style.display = 'block';
+      const h = el.offsetHeight;
+      el.style.display = prevDisplay;
+      if (h > 0) setLockedHeight(h);
     };
     measure();
-    // Re-measure after fonts/images settle
-    const t = window.setTimeout(measure, 300);
     window.addEventListener('resize', measure);
-    return () => {
-      window.clearTimeout(t);
-      window.removeEventListener('resize', measure);
-    };
+    return () => window.removeEventListener('resize', measure);
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ padding: '100px 0', position: 'relative', background: 'transparent' }}>
+    <section style={{ padding: '100px 0', position: 'relative', background: 'transparent' }}>
       <style>{`
         @media (max-width: 767px) {
           .cred-grid { grid-template-columns: repeat(2, 1fr) !important; }
@@ -761,195 +680,22 @@ export default function CredentialsV2() {
           .cred-excellence-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .cred-hire-panel { width: 280px !important; height: 160px !important; }
         }
-        .cred-logo-card:hover {
-          border-color: rgba(142,89,255,0.6) !important;
-          box-shadow: 0 0 0 1px rgba(142,89,255,0.4), 0 0 24px rgba(142,89,255,0.35), 0 0 48px rgba(142,89,255,0.18);
-        }
       `}</style>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <p
           className="m8-eyebrow"
-          style={{ color: '#8E59FF', marginBottom: '12px', textAlign: 'center' }}
+          style={{ color: '#8E59FF', marginBottom: '12px' }}
         >
           CREDIBILITY & ACHIEVEMENTS
         </p>
         <h2
           className="m8-h2"
-          style={{ color: '#080D19', marginBottom: '48px', maxWidth: '900px', textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}
+          style={{ color: '#080D19', marginBottom: '48px', maxWidth: '900px' }}
         >
           Recognised by the best in the business.
         </h2>
 
-        {/* Tab switcher — standalone boxes; full-width animated track sits below */}
-        {(() => {
-          const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
-          return (
-            <div
-              style={{
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'center',
-                marginBottom: 0,
-                padding: '0 4px',
-              }}
-            >
-              {/* Tab boxes with dashed connectors between them */}
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 0,
-                  position: 'relative',
-                  zIndex: 1,
-                  width: '100%',
-                }}
-              >
-                {tabs.map((tab, i) => {
-                  const isActive = activeTab === tab.key;
-                  const tabIndex = tabKeys.indexOf(tab.key);
-                  // Per-tab fill: 0..1 over its 5s window
-                  const localProgress = isActive
-                    ? Math.min(Math.max((progress - tabIndex / 3) * 3, 0), 1)
-                    : 0;
-                  return (
-                    <Fragment key={tab.key}>
-                      {i === 0 && (
-                        <div
-                          aria-hidden
-                          style={{
-                            flex: 1,
-                            height: '1px',
-                            borderTop: '1px dashed rgba(8,13,25,0.2)',
-                          }}
-                        />
-                      )}
-
-                      <button
-                        onClick={() => handleTabClick(tab.key)}
-                        style={{
-                          padding: '10px 28px',
-                          border: `1px solid ${isActive ? '#8E59FF' : 'rgba(8,13,25,0.15)'}`,
-                          borderRadius: '5px',
-                          background: isActive ? '#8E59FF' : '#FFFFFF',
-                          color: isActive ? '#FFFFFF' : 'rgba(8,13,25,0.45)',
-                          fontFamily: "'Saira', sans-serif",
-                          fontSize: '11px',
-                          fontWeight: 400,
-                          letterSpacing: '0.1em',
-                          textTransform: 'uppercase',
-                          cursor: 'pointer',
-                          whiteSpace: 'nowrap',
-                          transition:
-                            'background 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                          position: 'relative',
-                          zIndex: 1,
-                          flexShrink: 0,
-                          overflow: 'hidden',
-                        }}
-                      >
-                        {tab.label}
-                        {/* Per-tab bottom progress bar */}
-                        <div
-                          aria-hidden
-                          style={{
-                            position: 'absolute',
-                            bottom: 0,
-                            left: 0,
-                            height: '2px',
-                            width: `${localProgress * 100}%`,
-                            background: 'rgba(255,255,255,0.85)',
-                            transition: 'width 0.05s linear',
-                          }}
-                        />
-                      </button>
-
-                      <div
-                        aria-hidden
-                        style={{
-                          flex: 1,
-                          height: '1px',
-                          borderTop: '1px dashed rgba(8,13,25,0.2)',
-                        }}
-                      />
-                    </Fragment>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })()}
-
-        {/* Full-viewport-width line with travelling glowing dot */}
-        <div
-          aria-hidden
-          style={{
-            position: 'relative',
-            width: '100vw',
-            marginLeft: 'calc(-50vw + 50%)',
-            height: '2px',
-            marginTop: '-1px',
-            marginBottom: '40px',
-            zIndex: 2,
-          }}
-        >
-          {/* Base line */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'rgba(8,13,25,0.08)',
-            }}
-          />
-
-          {/* Filled progress track */}
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: `${progress * 100}%`,
-              height: '100%',
-              background:
-                'linear-gradient(90deg, rgba(142,89,255,0.3) 0%, rgba(142,89,255,0.8) 100%)',
-              transition: 'width 0.05s linear',
-            }}
-          />
-
-          {/* Glowing shooting-star dot */}
-          <div
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: `${progress * 100}%`,
-              transform: 'translate(-50%, -50%)',
-              width: '10px',
-              height: '10px',
-              borderRadius: '50%',
-              background: '#8E59FF',
-              boxShadow:
-                '0 0 8px 3px rgba(142,89,255,0.8), 0 0 20px 8px rgba(142,89,255,0.4), 0 0 40px 16px rgba(142,89,255,0.15)',
-              zIndex: 3,
-              transition: 'left 0.05s linear',
-            }}
-          >
-            {/* Trailing tail — points left, behind the dot */}
-            <div
-              style={{
-                position: 'absolute',
-                right: '50%',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                width: '60px',
-                height: '2px',
-                background:
-                  'linear-gradient(90deg, rgba(142,89,255,0) 0%, rgba(142,89,255,0.6) 100%)',
-                borderRadius: '1px',
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Content card — separate from the tab switcher */}
+        {/* Unified container card: tab switcher + content in one card */}
         <div
           style={{
             background: '#FFFFFF',
@@ -958,16 +704,53 @@ export default function CredentialsV2() {
             overflow: 'hidden',
           }}
         >
+          {/* Tab switcher — flush top, border-bottom separates from content */}
+          <div
+            style={{
+              display: 'flex',
+              borderBottom: '1px solid rgba(8,13,25,0.1)',
+            }}
+          >
+            {tabs.map((tab, i, arr) => {
+              const isActive = activeTab === tab.key;
+              return (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key)}
+                  style={{
+                    flex: 1,
+                    padding: '18px 24px',
+                    border: 'none',
+                    borderRight:
+                      i < arr.length - 1
+                        ? '1px solid rgba(8,13,25,0.1)'
+                        : 'none',
+                    background: isActive ? '#8E59FF' : 'transparent',
+                    color: isActive ? '#FFFFFF' : 'rgba(8,13,25,0.45)',
+                    fontFamily: "'Saira', sans-serif",
+                    fontSize: '11px',
+                    fontWeight: 400,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    cursor: 'pointer',
+                    transition: 'background 0.2s ease, color 0.2s ease',
+                  }}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
 
           {/* Content area — locked to SecurityTab's natural height */}
           <div style={{ padding: '48px', minHeight: lockedHeight ? `${lockedHeight + 96}px` : undefined }}>
-            <div ref={excellenceRef} style={{ display: activeTab === 'excellence' ? 'block' : 'none' }}>
+            <div style={{ display: activeTab === 'excellence' ? 'block' : 'none' }}>
               <ExcellenceTab />
             </div>
             <div ref={securityRef} style={{ display: activeTab === 'security' ? 'block' : 'none' }}>
               <SecurityTab />
             </div>
-            <div ref={peopleRef} style={{ display: activeTab === 'people' ? 'block' : 'none' }}>
+            <div style={{ display: activeTab === 'people' ? 'block' : 'none' }}>
               <PeopleTab />
             </div>
           </div>
