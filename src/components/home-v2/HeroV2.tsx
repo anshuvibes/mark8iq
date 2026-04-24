@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import heroDashboardSvg from '@/assets/hero-dashboard.svg?raw';
-import ThemeToggle from './ThemeToggle';
+
 
 const fadeIn = (delay: number) => ({
   initial: { opacity: 0, y: 20 },
@@ -25,11 +25,6 @@ export default function HeroV2() {
 
   return (
     <section data-section="hero" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column' }}>
-      {/* Theme toggle — top right */}
-      <div style={{ position: 'absolute', top: '80px', right: '40px', zIndex: 60 }}>
-        <ThemeToggle />
-      </div>
-
       {/* ZONE 1: Headline block */}
       <div style={{ paddingTop: '80px', paddingBottom: '32px', textAlign: 'center' }}>
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
