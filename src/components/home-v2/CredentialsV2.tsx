@@ -643,8 +643,21 @@ function PeopleTab() {
 
 export default function CredentialsV2() {
   const [activeTab, setActiveTab] = useState<TabKey>('excellence');
+  const [prevTab, setPrevTab] = useState<TabKey>('excellence');
+  const [direction, setDirection] = useState<'left' | 'right'>('right');
   const securityRef = useRef<HTMLDivElement>(null);
   const [lockedHeight, setLockedHeight] = useState<number | undefined>(undefined);
+
+  const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
+
+  const handleTabClick = (key: TabKey) => {
+    if (key === activeTab) return;
+    const newIndex = tabKeys.indexOf(key);
+    const oldIndex = tabKeys.indexOf(activeTab);
+    setDirection(newIndex > oldIndex ? 'right' : 'left');
+    setPrevTab(activeTab);
+    setActiveTab(key);
+  };
 
   // SecurityTab is the tallest (2 rows). Measure its natural height and lock
   // the content area to it so switching tabs never changes container height.
@@ -732,19 +745,32 @@ export default function CredentialsV2() {
                 position: 'relative',
               }}
             >
-              {/* Tab buttons — per-button background animation */}
-              {tabs.map((tab, i) => {
+              {/* Tab buttons — directional sliding pill, clipped per button */}
+              {tabs.map((tab) => {
                 const isActive = activeTab === tab.key;
+                const isExiting = prevTab === tab.key && prevTab !== activeTab;
+
+                let fillX = '100%';
+                if (isActive) {
+                  fillX = '0%';
+                } else if (isExiting) {
+                  fillX = direction === 'right' ? '-100%' : '100%';
+                } else {
+                  const thisIndex = tabKeys.indexOf(tab.key);
+                  const activeIndex = tabKeys.indexOf(activeTab);
+                  fillX = thisIndex < activeIndex ? '-100%' : '100%';
+                }
+
                 return (
                   <button
                     key={tab.key}
-                    onClick={() => setActiveTab(tab.key)}
+                    onClick={() => handleTabClick(tab.key)}
                     style={{
                       flex: 1,
                       padding: '12px 0',
                       border: `1px solid ${isActive ? '#8e59ff' : 'rgba(8,13,25,0.15)'}`,
                       borderRadius: '3px',
-                      background: isActive ? '#8e59ff' : '#ffffff',
+                      background: '#ffffff',
                       color: isActive ? '#ffffff' : 'rgba(8,13,25,0.45)',
                       fontFamily: "'Saira', sans-serif",
                       fontSize: '11px',
@@ -753,12 +779,28 @@ export default function CredentialsV2() {
                       textTransform: 'uppercase',
                       cursor: 'pointer',
                       position: 'relative',
+                      overflow: 'hidden',
                       zIndex: 1,
-                      transition: 'background 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                      transition: 'color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {tab.label}
+                    {/* Violet fill — clipped to this button's bounds */}
+                    <div
+                      aria-hidden
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: '#8e59ff',
+                        transform: `translateX(${fillX})`,
+                        transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+                        zIndex: 0,
+                        pointerEvents: 'none',
+                      }}
+                    />
+                    <span style={{ position: 'relative', zIndex: 1 }}>
+                      {tab.label}
+                    </span>
                   </button>
                 );
               })}
