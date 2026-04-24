@@ -96,11 +96,11 @@ export default function HeroDemoCard() {
       style={{
         position: 'absolute',
         top: '24px',
-        right: '-40px',
-        width: '380px',
+        right: '-24px',
+        width: '300px',
         background: 'var(--v2-bg-card)',
-        borderRadius: '20px',
-        padding: '28px 24px',
+        borderRadius: '18px',
+        padding: '20px 18px',
         boxShadow: '0 12px 40px var(--v2-shadow)',
         border: '1px solid var(--v2-border)',
         zIndex: 2,
@@ -118,10 +118,11 @@ export default function HeroDemoCard() {
             transition={stepTransition}
           >
             <p
-              className="m8-p3"
               style={{
+                fontSize: '15px',
+                fontWeight: 400,
                 color: 'var(--v2-text)',
-                marginBottom: '20px',
+                marginBottom: '16px',
                 textAlign: 'center',
                 lineHeight: 1.3,
               }}
@@ -134,8 +135,8 @@ export default function HeroDemoCard() {
               style={{
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr 1fr',
-                gap: '10px',
-                marginBottom: '24px',
+                gap: '8px',
+                marginBottom: '18px',
               }}
             >
               {TILES.map((tile) => {
@@ -150,9 +151,9 @@ export default function HeroDemoCard() {
                     className="hero-tile"
                     style={{
                       position: 'relative',
-                      aspectRatio: '1 / 1',
-                      padding: '10px 6px',
-                      borderRadius: '12px',
+                      aspectRatio: '4 / 5',
+                      padding: '14px 6px 12px',
+                      borderRadius: '10px',
                       background: isSelected ? `${tile.accent}10` : 'var(--v2-bg-card)',
                       border: `1.5px solid ${isSelected ? tile.accent : 'var(--v2-border)'}`,
                       cursor: 'pointer',
@@ -161,7 +162,7 @@ export default function HeroDemoCard() {
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: '8px',
+                      gap: '6px',
                       textAlign: 'center',
                       // expose accent for hover via CSS var
                       ['--tile-accent' as string]: tile.accent,
@@ -173,10 +174,10 @@ export default function HeroDemoCard() {
                       className="hero-tile-checkbox"
                       style={{
                         position: 'absolute',
-                        top: '8px',
-                        left: '8px',
-                        width: '14px',
-                        height: '14px',
+                        top: '6px',
+                        left: '6px',
+                        width: '12px',
+                        height: '12px',
                         borderRadius: '3px',
                         border: `1.5px solid ${isSelected ? tile.accent : 'var(--v2-border)'}`,
                         background: isSelected ? tile.accent : 'transparent',
@@ -186,11 +187,11 @@ export default function HeroDemoCard() {
                         transition: 'all 0.18s ease',
                       }}
                     >
-                      {isSelected && <Check size={9} color="#fff" strokeWidth={3.5} />}
+                      {isSelected && <Check size={8} color="#fff" strokeWidth={3.5} />}
                     </span>
 
                     <Icon
-                      size={22}
+                      size={18}
                       className="hero-tile-icon"
                       style={{
                         color: isSelected ? tile.accent : 'var(--v2-text-secondary)',
@@ -199,10 +200,11 @@ export default function HeroDemoCard() {
                       }}
                     />
                     <span
-                      className="m8-p6"
                       style={{
+                        fontSize: '11px',
+                        fontWeight: 400,
                         color: 'var(--v2-text)',
-                        lineHeight: 1.15,
+                        lineHeight: 1.2,
                       }}
                     >
                       {tile.label}
@@ -215,6 +217,7 @@ export default function HeroDemoCard() {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Button
                 variant="m8-violet"
+                size="sm"
                 onClick={() => selected.size > 0 && setStep('form')}
                 disabled={selected.size === 0}
                 style={{
