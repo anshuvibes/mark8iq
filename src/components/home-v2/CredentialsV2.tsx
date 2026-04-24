@@ -1,5 +1,7 @@
-import { useState, useRef, useLayoutEffect, Fragment } from 'react';
+import { useState, useRef, useLayoutEffect, useEffect, Fragment } from 'react';
 import { motion } from 'motion/react';
+
+const TOTAL_DURATION = 15000; // 15s per full loop (5s per tab)
 
 type TabKey = 'excellence' | 'security' | 'people';
 
@@ -654,6 +656,67 @@ export default function CredentialsV2() {
   const securityRef = useRef<HTMLDivElement>(null);
   const peopleRef = useRef<HTMLDivElement>(null);
   const [lockedHeight, setLockedHeight] = useState<number | undefined>(undefined);
+
+  // Auto-advance loader state
+  const [progress, setProgress] = useState(0); // 0..1 across the 15s loop
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const animFrameRef = useRef<number | null>(null);
+  const startTimeRef = useRef<number | null>(null);
+  const pausedProgressRef = useRef(0);
+
+  // Observe section visibility — only animate when in viewport
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Animation loop — advances progress and triggers tab changes
+  useEffect(() => {
+    if (!isVisible) {
+      // Pause: remember where we were so we resume from the same spot
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+      pausedProgressRef.current = progress;
+      startTimeRef.current = null;
+      return;
+    }
+
+    const tick = (now: number) => {
+      if (startTimeRef.current === null) {
+        startTimeRef.current = now - pausedProgressRef.current * TOTAL_DURATION;
+      }
+      const elapsed = (now - startTimeRef.current) % TOTAL_DURATION;
+      const p = elapsed / TOTAL_DURATION;
+      setProgress(p);
+
+      const next: TabKey = p < 1 / 3 ? 'excellence' : p < 2 / 3 ? 'security' : 'people';
+      setActiveTab((cur) => (cur === next ? cur : next));
+
+      animFrameRef.current = requestAnimationFrame(tick);
+    };
+
+    animFrameRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isVisible]);
+
+  // Manual tab click — reset timer to that tab's start
+  const handleTabClick = (key: TabKey) => {
+    const tabIndex = (['excellence', 'security', 'people'] as TabKey[]).indexOf(key);
+    const targetProgress = tabIndex / 3;
+    pausedProgressRef.current = targetProgress;
+    startTimeRef.current = null;
+    setProgress(targetProgress);
+    setActiveTab(key);
+  };
 
   // Measure all tabs and lock the content area to the tallest one so switching
   // tabs never changes container height.
