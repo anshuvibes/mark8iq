@@ -487,9 +487,15 @@ export default function CredentialsV2() {
             padding: '48px',
           }}
         >
-          {activeTab === 'excellence' && <ExcellenceTab />}
-          {activeTab === 'security' && <SecurityTab />}
-          {activeTab === 'people' && <PeopleTab />}
+          <div style={{ display: activeTab === 'excellence' ? 'block' : 'none' }}>
+            <ExcellenceTab />
+          </div>
+          <div style={{ display: activeTab === 'security' ? 'block' : 'none' }}>
+            <SecurityTab />
+          </div>
+          <div style={{ display: activeTab === 'people' ? 'block' : 'none' }}>
+            <PeopleTab />
+          </div>
         </div>
       </div>
     </section>
