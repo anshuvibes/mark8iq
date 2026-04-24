@@ -725,7 +725,6 @@ export default function CredentialsV2() {
             zIndex: 1,
           }}>
             <div
-              ref={tabGroupRef}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -733,39 +732,19 @@ export default function CredentialsV2() {
                 position: 'relative',
               }}
             >
-              {/* Sliding violet pill */}
-              <div
-                aria-hidden
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  bottom: 0,
-                  left: 0,
-                  width: pillWidth > 0 ? `${pillWidth}px` : '33%',
-                  transform: `translateX(${pillOffset}px)`,
-                  transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
-                  background: '#8e59ff',
-                  borderRadius: '3px',
-                  zIndex: 0,
-                  pointerEvents: 'none',
-                  border: '1px solid #8e59ff',
-                }}
-              />
-
-              {/* Tab buttons */}
+              {/* Tab buttons — per-button background animation */}
               {tabs.map((tab, i) => {
                 const isActive = activeTab === tab.key;
                 return (
                   <button
                     key={tab.key}
-                    ref={(el) => { tabRefs.current[i] = el; }}
                     onClick={() => setActiveTab(tab.key)}
                     style={{
                       flex: 1,
                       padding: '12px 0',
-                      border: '1px solid rgba(8,13,25,0.15)',
+                      border: `1px solid ${isActive ? '#8e59ff' : 'rgba(8,13,25,0.15)'}`,
                       borderRadius: '3px',
-                      background: isActive ? 'transparent' : '#ffffff',
+                      background: isActive ? '#8e59ff' : '#ffffff',
                       color: isActive ? '#ffffff' : 'rgba(8,13,25,0.45)',
                       fontFamily: "'Saira', sans-serif",
                       fontSize: '11px',
@@ -775,7 +754,7 @@ export default function CredentialsV2() {
                       cursor: 'pointer',
                       position: 'relative',
                       zIndex: 1,
-                      transition: 'color 0.35s cubic-bezier(0.4, 0, 0.2, 1), background 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+                      transition: 'background 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
                       whiteSpace: 'nowrap',
                     }}
                   >
