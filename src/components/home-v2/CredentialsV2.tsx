@@ -705,42 +705,66 @@ export default function CredentialsV2() {
           }}
         >
           {/* Tab switcher — flush top, border-bottom separates from content */}
-          <div
-            style={{
-              display: 'flex',
-              borderBottom: '1px solid rgba(8,13,25,0.1)',
-            }}
-          >
-            {tabs.map((tab, i, arr) => {
-              const isActive = activeTab === tab.key;
-              return (
-                <button
-                  key={tab.key}
-                  onClick={() => setActiveTab(tab.key)}
+          {(() => {
+            const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
+            const activeIndex = tabKeys.indexOf(activeTab);
+            return (
+              <div
+                style={{
+                  display: 'flex',
+                  borderBottom: '1px solid rgba(8,13,25,0.1)',
+                  position: 'relative',
+                }}
+              >
+                {/* Sliding background pill */}
+                <div
+                  aria-hidden
                   style={{
-                    flex: 1,
-                    padding: '18px 24px',
-                    border: 'none',
-                    borderRight:
-                      i < arr.length - 1
-                        ? '1px solid rgba(8,13,25,0.1)'
-                        : 'none',
-                    background: isActive ? '#8E59FF' : 'transparent',
-                    color: isActive ? '#FFFFFF' : 'rgba(8,13,25,0.45)',
-                    fontFamily: "'Saira', sans-serif",
-                    fontSize: '11px',
-                    fontWeight: 400,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    cursor: 'pointer',
-                    transition: 'background 0.2s ease, color 0.2s ease',
+                    position: 'absolute',
+                    top: 0,
+                    bottom: 0,
+                    left: `${(activeIndex / 3) * 100}%`,
+                    width: '33.333%',
+                    background: '#8e59ff',
+                    transition: 'left 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    zIndex: 0,
+                    pointerEvents: 'none',
                   }}
-                >
-                  {tab.label}
-                </button>
-              );
-            })}
-          </div>
+                />
+                {tabs.map((tab, i, arr) => {
+                  const isActive = activeTab === tab.key;
+                  return (
+                    <button
+                      key={tab.key}
+                      onClick={() => setActiveTab(tab.key)}
+                      style={{
+                        flex: 1,
+                        padding: '18px 24px',
+                        border: 'none',
+                        borderRight:
+                          i < arr.length - 1
+                            ? '1px solid rgba(8,13,25,0.1)'
+                            : 'none',
+                        background: 'transparent',
+                        color: isActive ? '#ffffff' : 'rgba(8,13,25,0.45)',
+                        fontFamily: "'Saira', sans-serif",
+                        fontSize: '11px',
+                        fontWeight: 400,
+                        letterSpacing: '0.1em',
+                        textTransform: 'uppercase',
+                        cursor: 'pointer',
+                        position: 'relative',
+                        zIndex: 1,
+                        transition: 'color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      }}
+                    >
+                      {tab.label}
+                    </button>
+                  );
+                })}
+              </div>
+            );
+          })()}
 
           {/* Content area — locked to SecurityTab's natural height */}
           <div style={{ padding: '48px', minHeight: lockedHeight ? `${lockedHeight + 96}px` : undefined }}>
