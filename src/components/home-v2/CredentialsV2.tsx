@@ -471,7 +471,7 @@ function PeopleTab() {
           background: '#0D1425',
           border: '1px solid #40445A',
           borderRadius: '30px',
-          padding: '48px 64px',
+          padding: '20px 28px',
           position: 'relative',
           overflow: 'hidden',
           minHeight: '240px',
@@ -514,20 +514,14 @@ function PeopleTab() {
 
         {/* Left content block */}
         <div style={{ position: 'relative', zIndex: 2, maxWidth: '610px', flex: '1 1 auto' }}>
-          <p
-            className="m8-eyebrow"
-            style={{ color: 'rgba(237,239,247,0.6)', marginBottom: '14px' }}
-          >
-            WE ARE HIRING
-          </p>
           <h3
             style={{
               fontFamily: "'Saira', sans-serif",
-              fontSize: '32px',
+              fontSize: '18px',
               fontWeight: 400,
               color: '#EDEFF7',
               margin: 0,
-              marginBottom: '14px',
+              marginBottom: '8px',
               lineHeight: 1.15,
               letterSpacing: '-0.02em',
             }}
@@ -537,14 +531,13 @@ function PeopleTab() {
           <p
             style={{
               fontFamily: "'Saira', sans-serif",
-              fontSize: '16px',
+              fontSize: '13px',
               fontWeight: 400,
               color: 'rgba(237,239,247,0.75)',
               margin: 0,
-              marginBottom: '24px',
+              marginBottom: '12px',
               lineHeight: 1.5,
               letterSpacing: '-0.01em',
-              maxWidth: '420px',
             }}
           >
             We are always looking for sharp, driven people. If that is you, let's talk.
@@ -555,11 +548,11 @@ function PeopleTab() {
               href="/career"
               style={{
                 fontFamily: "'Saira', sans-serif",
-                fontSize: '16px',
+                fontSize: '13px',
                 fontWeight: 400,
                 color: '#12182B',
                 background: '#EDEFF7',
-                padding: '12px 22px',
+                padding: '8px 16px',
                 borderRadius: '5px',
                 textDecoration: 'none',
                 display: 'inline-block',
@@ -573,11 +566,11 @@ function PeopleTab() {
               href="mailto:careers@infytrix.com"
               style={{
                 fontFamily: "'Saira', sans-serif",
-                fontSize: '16px',
+                fontSize: '13px',
                 fontWeight: 400,
                 color: '#EDEFF7',
                 background: 'rgba(237,239,247,0.08)',
-                padding: '12px 22px',
+                padding: '8px 16px',
                 borderRadius: '5px',
                 textDecoration: 'none',
                 display: 'inline-block',
@@ -598,13 +591,13 @@ function PeopleTab() {
           style={{
             position: 'relative',
             zIndex: 1,
-            width: '483px',
-            height: '200px',
+            width: '320px',
+            height: '100px',
             borderRadius: '15px',
             background: 'rgba(142,89,255,0.06)',
             border: '1px solid rgba(142,89,255,0.15)',
             flexShrink: 0,
-            marginLeft: '40px',
+            marginLeft: '24px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
