@@ -690,6 +690,9 @@ export default function ProductSuiteV2() {
                   <img
                     src={activeLogo}
                     alt={active.name}
+                    loading="eager"
+                    decoding="sync"
+                    fetchPriority="high"
                     style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85, alignSelf: 'flex-start' }}
                   />
                   <p className="m8-p2" style={{
