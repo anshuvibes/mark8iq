@@ -287,7 +287,8 @@ function SecurityTab() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.5, delay: i * 0.05 }}
           style={{
-            aspectRatio: '1 / 1',
+            height: '160px',
+            width: '100%',
             border: '1px solid rgba(8,13,25,0.08)',
             borderRadius: '5px',
             display: 'flex',
