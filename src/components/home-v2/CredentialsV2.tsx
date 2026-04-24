@@ -214,21 +214,21 @@ function ExcellenceTab() {
           }}
         >
           {item.logo ? (
-            <div style={{ height: '56px', display: 'flex', alignItems: 'center' }}>
+            <div style={{ height: '72px', display: 'flex', alignItems: 'center' }}>
               <img
                 src={encodeURI(item.logo)}
                 alt={item.name}
                 style={{
-                  height: '56px',
+                  height: '72px',
                   width: 'auto',
-                  maxWidth: '200px',
+                  maxWidth: '240px',
                   objectFit: 'contain',
                   display: 'block',
                 }}
               />
             </div>
           ) : (
-            <div style={{ height: '56px', display: 'flex', alignItems: 'center' }}>
+            <div style={{ height: '72px', display: 'flex', alignItems: 'center' }}>
               <div
                 style={{
                   width: '8px',
