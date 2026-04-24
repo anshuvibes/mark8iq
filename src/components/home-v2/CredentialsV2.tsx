@@ -670,11 +670,11 @@ export default function CredentialsV2() {
     return () => window.removeEventListener('resize', measure);
   }, []);
 
-  // Measure active tab position to slide the violet pill
+  // Measure displayed tab position to slide the violet pill (active or hovered)
   useLayoutEffect(() => {
     const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
     const measurePill = () => {
-      const activeIndex = tabKeys.indexOf(activeTab);
+      const activeIndex = tabKeys.indexOf(displayedTab);
       const activeEl = tabRefs.current[activeIndex];
       const groupEl = tabGroupRef.current;
       if (!activeEl || !groupEl) return;
@@ -686,7 +686,7 @@ export default function CredentialsV2() {
     measurePill();
     window.addEventListener('resize', measurePill);
     return () => window.removeEventListener('resize', measurePill);
-  }, [activeTab]);
+  }, [displayedTab]);
 
   return (
     <section style={{ padding: '100px 0', position: 'relative', background: 'transparent' }}>
