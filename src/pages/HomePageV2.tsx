@@ -11,7 +11,6 @@ import AgentMarkV2 from '../components/home-v2/AgentMarkV2';
 import AgentFoundryV2 from '../components/home-v2/AgentFoundryV2';
 import ProofV2 from '../components/home-v2/ProofV2';
 import CredentialsV2 from '../components/home-v2/CredentialsV2';
-import CtaBlockV2 from '../components/home-v2/CtaBlockV2';
 import AgentMarkWidget from '../components/home-v2/AgentMarkWidget';
 
 export default function HomePageV2() {
@@ -29,7 +28,6 @@ export default function HomePageV2() {
           <AgentFoundryV2 />
           <ProofV2 />
           <CredentialsV2 />
-          <CtaBlockV2 />
         </main>
         <Footer />
         <AgentMarkWidget />
