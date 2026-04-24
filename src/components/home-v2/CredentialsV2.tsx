@@ -324,6 +324,7 @@ function SecurityTab({ isActive }: { isActive: boolean }) {
           <motion.div
             key={item.name}
             variants={cardItemVariants}
+            className="cred-card-hover"
             style={{ ...cardBaseStyle, aspectRatio: '1 / 1' }}
           >
             <img
