@@ -220,6 +220,21 @@ export default function ProductSuiteV2() {
   const { theme, setTheme } = useV2Theme();
   const activeLogo = active.logo.replace('/black/', `/${theme === 'dark' ? 'white' : 'black'}/`);
 
+  // Preload every product logo (both themes) once on mount so that switching
+  // the contextual card never triggers a fresh network/decoded paint.
+  useEffect(() => {
+    const urls: string[] = [];
+    Object.values(modules).forEach((m) => {
+      urls.push(m.logo);
+      urls.push(m.logo.replace('/black/', '/white/'));
+    });
+    urls.forEach((src) => {
+      const img = new Image();
+      img.decoding = 'sync';
+      img.src = src;
+    });
+  }, []);
+
   const sectionRef = useRef<HTMLElement | null>(null);
   const hubRef = useRef<HTMLDivElement | null>(null);
   const centerRef = useRef<HTMLDivElement | null>(null);
