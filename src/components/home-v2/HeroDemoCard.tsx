@@ -97,10 +97,10 @@ export default function HeroDemoCard() {
         position: 'absolute',
         top: '24px',
         right: '-40px',
-        width: '340px',
+        width: '380px',
         background: 'var(--v2-bg-card)',
-        borderRadius: '16px',
-        padding: '24px',
+        borderRadius: '20px',
+        padding: '28px 24px',
         boxShadow: '0 12px 40px var(--v2-shadow)',
         border: '1px solid var(--v2-border)',
         zIndex: 2,
@@ -117,16 +117,25 @@ export default function HeroDemoCard() {
             exit="exit"
             transition={stepTransition}
           >
-            <p className="m8-p4" style={{ color: 'var(--v2-text)', marginBottom: '16px' }}>
-              What do you want to explore?
+            <p
+              className="m8-p3"
+              style={{
+                color: 'var(--v2-text)',
+                marginBottom: '20px',
+                textAlign: 'center',
+                lineHeight: 1.3,
+              }}
+            >
+              What do you want to{' '}
+              <span style={{ color: '#8E59FF' }}>explore</span>?
             </p>
 
             <div
               style={{
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr 1fr',
-                gap: '8px',
-                marginBottom: '20px',
+                gap: '10px',
+                marginBottom: '24px',
               }}
             >
               {TILES.map((tile) => {
@@ -139,52 +148,58 @@ export default function HeroDemoCard() {
                     onClick={() => toggle(tile.id)}
                     style={{
                       position: 'relative',
-                      padding: '12px 8px',
-                      borderRadius: '10px',
-                      background: isSelected ? `${tile.accent}14` : 'var(--v2-bg-subtle)',
+                      aspectRatio: '1 / 1',
+                      padding: '10px 6px',
+                      borderRadius: '12px',
+                      background: isSelected ? `${tile.accent}10` : 'var(--v2-bg-card)',
                       border: `1.5px solid ${isSelected ? tile.accent : 'var(--v2-border)'}`,
                       cursor: 'pointer',
                       transition: 'all 0.18s ease',
                       display: 'flex',
                       flexDirection: 'column',
-                      alignItems: 'flex-start',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                       gap: '8px',
-                      textAlign: 'left',
-                      minHeight: '76px',
+                      textAlign: 'center',
                     }}
                   >
+                    {/* Checkbox top-left */}
+                    <span
+                      aria-hidden
+                      style={{
+                        position: 'absolute',
+                        top: '8px',
+                        left: '8px',
+                        width: '14px',
+                        height: '14px',
+                        borderRadius: '3px',
+                        border: `1.5px solid ${isSelected ? tile.accent : 'var(--v2-border)'}`,
+                        background: isSelected ? tile.accent : 'transparent',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.18s ease',
+                      }}
+                    >
+                      {isSelected && <Check size={9} color="#fff" strokeWidth={3.5} />}
+                    </span>
+
                     <Icon
-                      size={18}
-                      color={isSelected ? tile.accent : 'var(--v2-text-muted)' as unknown as string}
-                      style={{ color: isSelected ? tile.accent : 'var(--v2-text-muted)' }}
+                      size={22}
+                      style={{
+                        color: isSelected ? tile.accent : 'var(--v2-text-secondary)',
+                        strokeWidth: 1.5,
+                      }}
                     />
                     <span
                       className="m8-p6"
                       style={{
-                        color: isSelected ? 'var(--v2-text)' : 'var(--v2-text-secondary)',
-                        lineHeight: 1.2,
+                        color: 'var(--v2-text)',
+                        lineHeight: 1.15,
                       }}
                     >
                       {tile.label}
                     </span>
-                    {isSelected && (
-                      <span
-                        style={{
-                          position: 'absolute',
-                          top: '6px',
-                          right: '6px',
-                          width: '14px',
-                          height: '14px',
-                          borderRadius: '50%',
-                          background: tile.accent,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        <Check size={9} color="#fff" strokeWidth={3} />
-                      </span>
-                    )}
                   </button>
                 );
               })}
@@ -197,13 +212,14 @@ export default function HeroDemoCard() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 6 }}
                   transition={{ duration: 0.25 }}
+                  style={{ display: 'flex', justifyContent: 'center' }}
                 >
                   <Button
                     variant="m8-violet"
                     onClick={() => setStep('form')}
-                    style={{ width: '100%' }}
+                    style={{ borderRadius: '999px', paddingLeft: '28px', paddingRight: '28px' }}
                   >
-                    Next <ArrowRight size={16} />
+                    Get Started <ArrowRight size={16} />
                   </Button>
                 </motion.div>
               )}
