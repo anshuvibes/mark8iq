@@ -382,6 +382,29 @@ export default function HeroDemoCard() {
                   }}
                 />
               </div>
+              <div>
+                <textarea
+                  placeholder="Notes (optional)"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  rows={3}
+                  className="hero-card-input"
+                  style={{
+                    width: '100%',
+                    padding: '10px 12px',
+                    borderRadius: '8px',
+                    border: `1px solid ${errors.notes ? '#dd4062' : 'var(--v2-border)'}`,
+                    background: 'var(--v2-bg-subtle)',
+                    color: 'var(--v2-text)',
+                    fontFamily: 'Saira, sans-serif',
+                    fontSize: '13px',
+                    fontWeight: 400,
+                    outline: 'none',
+                    resize: 'vertical',
+                    minHeight: '72px',
+                  }}
+                />
+              </div>
 
               <Button
                 type="submit"
