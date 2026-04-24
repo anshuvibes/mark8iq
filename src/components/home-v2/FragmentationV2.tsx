@@ -100,7 +100,12 @@ export default function FragmentationV2() {
         setLogoMarkColor('#FFFFFF');
         document.dispatchEvent(new CustomEvent('cursor-hide'));
       },
-      onLeave: () => undefined,
+      onLeave: () => {
+        // When scrolling past Fragmentation into ProductSuite, return to light theme
+        setThemeRef.current('light');
+        setLogoMarkColor('#12182B');
+        document.dispatchEvent(new CustomEvent('cursor-show'));
+      },
       onLeaveBack: () => {
         setThemeRef.current('light');
         setLogoMarkColor('#12182B');
