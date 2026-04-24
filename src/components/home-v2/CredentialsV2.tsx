@@ -460,8 +460,7 @@ function PeopleTab() {
       <motion.div
         className="cred-hire-card"
         initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
         style={{
           marginTop: '16px',
