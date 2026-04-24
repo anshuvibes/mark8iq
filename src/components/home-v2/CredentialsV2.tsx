@@ -469,7 +469,7 @@ function PeopleTab({ isActive }: { isActive: boolean }) {
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Hiring callout — Figma 2245-13826: thin dark bar, violet glow under text, right wordmark panel */}
       <motion.div
