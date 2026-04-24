@@ -11,6 +11,9 @@ export default defineConfig(({ mode }) => ({
     hmr: {
       overlay: false,
     },
+    headers: {
+      'Cache-Control': 'public, max-age=31536000, immutable',
+    },
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
@@ -18,5 +21,14 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
     dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime", "@tanstack/react-query", "@tanstack/query-core"],
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        assetFileNames: 'assets/[name].[hash][extname]',
+        chunkFileNames: 'assets/[name].[hash].js',
+        entryFileNames: 'assets/[name].[hash].js',
+      },
+    },
   },
 }));
