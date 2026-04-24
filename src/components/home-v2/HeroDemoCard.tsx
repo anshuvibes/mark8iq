@@ -97,7 +97,7 @@ export default function HeroDemoCard() {
         position: 'absolute',
         top: '24px',
         right: '-24px',
-        width: '300px',
+        width: '340px',
         background: 'var(--v2-bg-card)',
         borderRadius: '18px',
         padding: '26px 22px',
@@ -259,7 +259,7 @@ export default function HeroDemoCard() {
                 100% { background-position: -100% 0; }
               }
               @media (max-width: 1280px) {
-                .hero-module-card { width: 280px !important; }
+                .hero-module-card { width: 320px !important; }
               }
               @media (max-width: 991px) {
                 .hero-module-card { width: 100% !important; max-width: 420px; margin: 16px auto 0; }
