@@ -133,7 +133,7 @@ export default function HeroDemoCard() {
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: '1fr 1fr 1fr',
+                gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
                 gap: '8px',
                 marginBottom: '18px',
               }}
@@ -150,8 +150,10 @@ export default function HeroDemoCard() {
                     className="hero-tile"
                     style={{
                       position: 'relative',
-                      minHeight: '88px',
-                      padding: '18px 6px 14px',
+                      width: '100%',
+                      minWidth: 0,
+                      minHeight: '104px',
+                      padding: '20px 4px 14px',
                       borderRadius: '10px',
                       background: isSelected ? `${tile.accent}10` : 'var(--v2-bg-card)',
                       border: `1.5px solid ${isSelected ? tile.accent : 'var(--v2-border)'}`,
@@ -200,10 +202,13 @@ export default function HeroDemoCard() {
                       }}
                     />
                     <span
-                      className="m8-p6"
                       style={{
+                        fontFamily: 'Saira, sans-serif',
+                        fontSize: '11px',
+                        fontWeight: 400,
                         color: 'var(--v2-text)',
                         lineHeight: 1.2,
+                        wordBreak: 'break-word',
                       }}
                     >
                       {tile.label}
