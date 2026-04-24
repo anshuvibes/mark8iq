@@ -701,7 +701,7 @@ export default function CredentialsV2() {
   }, [displayedTab]);
 
   return (
-    <section style={{ padding: '100px 0', position: 'relative', background: 'transparent' }}>
+    <section data-section="credentials" style={{ padding: '100px 0', position: 'relative', background: 'transparent' }}>
       <style>{`
         .cred-card-hover {
           transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
