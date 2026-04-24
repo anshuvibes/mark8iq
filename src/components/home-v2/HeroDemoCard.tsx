@@ -218,7 +218,7 @@ export default function HeroDemoCard() {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Button variant="m8-violet" size="lg" onClick={() => setStep('form')}>
+              <Button variant="m8-dark" size="lg" onClick={() => setStep('form')}>
                 Book a Demo
               </Button>
             </div>
