@@ -361,32 +361,93 @@ function SecurityTab() {
 
 function PeopleTab() {
   return (
-    <>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(5, 1fr)',
-          gap: '16px',
-        }}
-        className="cred-grid"
-      >
-        {peopleItems.map((item, i) => (
-          <motion.div
-            key={item.name}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.5, delay: i * 0.05 }}
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(5, 1fr)',
+        gap: '16px',
+        alignItems: 'stretch',
+      }}
+      className="cred-grid"
+    >
+      {peopleItems.map((item, i) => (
+        <motion.div
+          key={item.name}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.5, delay: i * 0.05 }}
+          style={{ height: '100%' }}
+        >
+          <div
+            style={{
+              border: '1px solid rgba(8,13,25,0.08)',
+              borderRadius: '5px',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              background: '#FFFFFF',
+              height: '100%',
+            }}
           >
-            <LogoCard
-              logo={item.logo}
-              name={item.name}
-              description={item.description}
-            />
-          </motion.div>
-        ))}
-      </div>
-    </>
+            {/* Logo area — full width, 1:1 square */}
+            <div
+              style={{
+                width: '100%',
+                aspectRatio: '1 / 1',
+                overflow: 'hidden',
+                flexShrink: 0,
+              }}
+            >
+              <img
+                src={encodeURI(item.logo)}
+                alt={item.name}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block',
+                }}
+              />
+            </div>
+
+            {/* Text below the image */}
+            <div
+              style={{
+                padding: '16px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '6px',
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "'Saira', sans-serif",
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  color: '#080D19',
+                  margin: 0,
+                }}
+              >
+                {item.name}
+              </p>
+              <p
+                style={{
+                  fontFamily: "'Saira', sans-serif",
+                  fontSize: '12px',
+                  fontWeight: 400,
+                  color: 'rgba(8,13,25,0.5)',
+                  margin: 0,
+                  lineHeight: 1.5,
+                }}
+              >
+                {item.description}
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      ))}
+    </div>
   );
 }
 
