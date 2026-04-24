@@ -187,22 +187,31 @@ function LogoCard({
 }
 
 
-function ExcellenceTab() {
+const cardItemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
+
+function ExcellenceTab({ isActive }: { isActive: boolean }) {
   return (
-    <div
+    <motion.div
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(3, 1fr)',
         gap: '32px',
       }}
       className="cred-excellence-grid"
+      initial="hidden"
+      animate={isActive ? 'show' : 'hidden'}
+      variants={{
+        hidden: {},
+        show: { transition: { staggerChildren: 0.06 } },
+      }}
     >
-      {excellenceItems.map((item, i) => (
+      {excellenceItems.map((item) => (
         <motion.div
           key={item.name}
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: i * 0.06 }}
+          variants={cardItemVariants}
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -274,7 +283,7 @@ function ExcellenceTab() {
           </p>
         </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
 
