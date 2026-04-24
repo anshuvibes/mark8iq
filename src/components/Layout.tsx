@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Navbar from './Navbar';
 import GradualBlur from '@/components/GradualBlur.jsx';
 
@@ -9,6 +9,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const gradientRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [atBottom, setAtBottom] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -24,6 +25,23 @@ export default function Layout({ children }: LayoutProps) {
 
     container.addEventListener('mousemove', handleMouseMove);
     return () => container.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const viewport = window.innerHeight;
+      const fullHeight = document.documentElement.scrollHeight;
+      // Hide blur once we're within 120px of the absolute bottom
+      setAtBottom(scrollY + viewport >= fullHeight - 120);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   return (
@@ -43,17 +61,25 @@ export default function Layout({ children }: LayoutProps) {
           {children}
         </div>
       </div>
-      <GradualBlur
-        target="page"
-        position="bottom"
-        height="80px"
-        strength={0.8}
-        divCount={6}
-        curve="bezier"
-        exponential={false}
-        opacity={0.9}
-        zIndex={9990}
-      />
+      <div
+        style={{
+          opacity: atBottom ? 0 : 1,
+          transition: 'opacity 0.3s ease',
+          pointerEvents: atBottom ? 'none' : 'auto',
+        }}
+      >
+        <GradualBlur
+          target="page"
+          position="bottom"
+          height="80px"
+          strength={0.8}
+          divCount={6}
+          curve="bezier"
+          exponential={false}
+          opacity={0.9}
+          zIndex={9990}
+        />
+      </div>
     </div>
   );
 }
