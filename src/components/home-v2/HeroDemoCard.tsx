@@ -96,11 +96,11 @@ export default function HeroDemoCard() {
       style={{
         position: 'absolute',
         top: '24px',
-        right: '-40px',
-        width: '380px',
+        right: '-24px',
+        width: '300px',
         background: 'var(--v2-bg-card)',
-        borderRadius: '20px',
-        padding: '28px 24px',
+        borderRadius: '18px',
+        padding: '20px 18px',
         boxShadow: '0 12px 40px var(--v2-shadow)',
         border: '1px solid var(--v2-border)',
         zIndex: 2,
@@ -118,10 +118,11 @@ export default function HeroDemoCard() {
             transition={stepTransition}
           >
             <p
-              className="m8-p3"
               style={{
+                fontSize: '15px',
+                fontWeight: 400,
                 color: 'var(--v2-text)',
-                marginBottom: '20px',
+                marginBottom: '16px',
                 textAlign: 'center',
                 lineHeight: 1.3,
               }}
@@ -134,8 +135,8 @@ export default function HeroDemoCard() {
               style={{
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr 1fr',
-                gap: '10px',
-                marginBottom: '24px',
+                gap: '8px',
+                marginBottom: '18px',
               }}
             >
               {TILES.map((tile) => {
