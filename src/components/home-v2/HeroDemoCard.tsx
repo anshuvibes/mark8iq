@@ -146,6 +146,8 @@ export default function HeroDemoCard() {
                     key={tile.id}
                     type="button"
                     onClick={() => toggle(tile.id)}
+                    data-accent={tile.accent}
+                    className="hero-tile"
                     style={{
                       position: 'relative',
                       aspectRatio: '1 / 1',
@@ -154,18 +156,21 @@ export default function HeroDemoCard() {
                       background: isSelected ? `${tile.accent}10` : 'var(--v2-bg-card)',
                       border: `1.5px solid ${isSelected ? tile.accent : 'var(--v2-border)'}`,
                       cursor: 'pointer',
-                      transition: 'all 0.18s ease',
+                      transition: 'background 0.18s ease, border-color 0.18s ease',
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: '8px',
                       textAlign: 'center',
+                      // expose accent for hover via CSS var
+                      ['--tile-accent' as string]: tile.accent,
                     }}
                   >
                     {/* Checkbox top-left */}
                     <span
                       aria-hidden
+                      className="hero-tile-checkbox"
                       style={{
                         position: 'absolute',
                         top: '8px',
@@ -186,9 +191,11 @@ export default function HeroDemoCard() {
 
                     <Icon
                       size={22}
+                      className="hero-tile-icon"
                       style={{
                         color: isSelected ? tile.accent : 'var(--v2-text-secondary)',
                         strokeWidth: 1.5,
+                        transition: 'color 0.18s ease',
                       }}
                     />
                     <span
@@ -205,25 +212,33 @@ export default function HeroDemoCard() {
               })}
             </div>
 
-            <AnimatePresence>
-              {selected.size > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 6 }}
-                  transition={{ duration: 0.25 }}
-                  style={{ display: 'flex', justifyContent: 'center' }}
-                >
-                  <Button
-                    variant="m8-violet"
-                    onClick={() => setStep('form')}
-                    style={{ borderRadius: '999px', paddingLeft: '28px', paddingRight: '28px' }}
-                  >
-                    Get Started <ArrowRight size={16} />
-                  </Button>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Button
+                variant="m8-violet"
+                onClick={() => selected.size > 0 && setStep('form')}
+                disabled={selected.size === 0}
+                style={{
+                  borderRadius: '999px',
+                  paddingLeft: '28px',
+                  paddingRight: '28px',
+                }}
+              >
+                Get Started <ArrowRight size={16} />
+              </Button>
+            </div>
+
+            <style>{`
+              .hero-tile:hover:not([data-selected="true"]) {
+                background: color-mix(in srgb, var(--tile-accent) 8%, transparent) !important;
+                border-color: color-mix(in srgb, var(--tile-accent) 55%, transparent) !important;
+              }
+              .hero-tile:hover .hero-tile-icon {
+                color: var(--tile-accent) !important;
+              }
+              .hero-tile:hover .hero-tile-checkbox {
+                border-color: var(--tile-accent) !important;
+              }
+            `}</style>
           </motion.div>
         )}
 
