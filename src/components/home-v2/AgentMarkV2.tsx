@@ -96,6 +96,26 @@ export default function AgentMarkV2() {
   const [opacity, setOpacity] = useState(1);
   const [slideY, setSlideY] = useState(0);
 
+  // Force light theme while Agent Mark is in view
+  const { setTheme } = useV2Theme();
+  const setThemeRef = useRef(setTheme);
+  setThemeRef.current = setTheme;
+  const sectionAnchorRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const anchor = sectionAnchorRef.current;
+    if (!anchor) return;
+    const trigger = ScrollTrigger.create({
+      trigger: anchor,
+      start: 'top 80%',
+      end: 'bottom 20%',
+      onEnter: () => setThemeRef.current('light'),
+      onEnterBack: () => setThemeRef.current('light'),
+      onUpdate: (self) => { if (self.isActive) setThemeRef.current('light'); },
+    });
+    return () => { trigger.kill(); };
+  }, []);
+
   useEffect(() => {
     const ts: ReturnType<typeof setTimeout>[] = [];
     const idx = findingIndex % FINDINGS.length;

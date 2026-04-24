@@ -240,8 +240,8 @@ export default function ProductSuiteV2() {
 
     const trigger = ScrollTrigger.create({
       trigger: section,
-      start: 'top bottom',
-      end: 'bottom top',
+      start: 'top 60%',
+      end: 'bottom 20%',
       onEnter: () => setThemeRef.current('light'),
       onEnterBack: () => setThemeRef.current('light'),
       onUpdate: (self) => {
