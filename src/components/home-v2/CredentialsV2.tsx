@@ -323,6 +323,7 @@ function SecurityTab() {
           display: 'grid',
           gridTemplateColumns: `repeat(${secondRow.length}, 1fr)`,
           gap: '16px',
+          containerType: 'inline-size',
         }}
         className="cred-grid-row2"
       >
