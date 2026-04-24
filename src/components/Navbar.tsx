@@ -198,7 +198,12 @@ export default function Navbar() {
       const bgBox = bgBoxRef.current;
       const linksWrap = linksWrapRef.current;
       const header = headerRef.current;
-      if (!bgBox || !linksWrap || !header || isMobile) return;
+      if (!bgBox || !linksWrap || !header) return;
+      if (isMobile) {
+        bgBox.style.width = '0px';
+        bgBox.style.height = '0px';
+        return;
+      }
 
       const headerRect = header.getBoundingClientRect();
       const linksRect = linksWrap.getBoundingClientRect();
@@ -210,10 +215,33 @@ export default function Navbar() {
       bgBox.style.borderRadius = '5px';
     };
 
+    // Initial + after fonts load (prevents stretched pill on first paint)
     updateBgBox();
+    const raf1 = requestAnimationFrame(updateBgBox);
+    const raf2 = requestAnimationFrame(() => requestAnimationFrame(updateBgBox));
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(updateBgBox).catch(() => {});
+    }
+
     window.addEventListener('resize', updateBgBox);
-    return () => window.removeEventListener('resize', updateBgBox);
-  }, [isMobile]);
+    window.addEventListener('scroll', updateBgBox, { passive: true });
+
+    // Watch the links wrapper for any layout changes (font swap, dropdown toggle, etc.)
+    let ro: ResizeObserver | null = null;
+    if (linksWrapRef.current && 'ResizeObserver' in window) {
+      ro = new ResizeObserver(updateBgBox);
+      ro.observe(linksWrapRef.current);
+      if (headerRef.current) ro.observe(headerRef.current);
+    }
+
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+      window.removeEventListener('resize', updateBgBox);
+      window.removeEventListener('scroll', updateBgBox);
+      ro?.disconnect();
+    };
+  }, [isMobile, scrolled, sidebarOpen]);
 
   const handleNavigate = useCallback((href: string) => {
     navigate(href);
