@@ -704,64 +704,70 @@ export default function CredentialsV2() {
             overflow: 'hidden',
           }}
         >
-          {/* Tab switcher — flush top, border-bottom separates from content */}
+          {/* Tab switcher — bordered boxes connected by dotted line */}
           {(() => {
             const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
             const activeIndex = tabKeys.indexOf(activeTab);
+
             return (
-              <div
-                style={{
+              <div style={{
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '24px 32px',
+                borderBottom: '1px solid rgba(8,13,25,0.08)',
+              }}>
+                {/* Full-width dotted line behind everything */}
+                <div aria-hidden style={{
+                  position: 'absolute',
+                  left: '32px',
+                  right: '32px',
+                  top: '50%',
+                  height: '1px',
+                  backgroundImage: 'repeating-linear-gradient(to right, rgba(8,13,25,0.2) 0px, rgba(8,13,25,0.2) 6px, transparent 6px, transparent 14px)',
+                  transform: 'translateY(-50%)',
+                  zIndex: 0,
+                }} />
+
+                {/* Tab boxes */}
+                <div style={{
                   display: 'flex',
-                  borderBottom: '1px solid rgba(8,13,25,0.1)',
+                  alignItems: 'center',
+                  gap: '0',
                   position: 'relative',
-                }}
-              >
-                {/* Sliding background pill */}
-                <div
-                  aria-hidden
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    bottom: 0,
-                    left: `${(activeIndex / 3) * 100}%`,
-                    width: '33.333%',
-                    background: '#8e59ff',
-                    transition: 'left 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    zIndex: 0,
-                    pointerEvents: 'none',
-                  }}
-                />
-                {tabs.map((tab, i, arr) => {
-                  const isActive = activeTab === tab.key;
-                  return (
-                    <button
-                      key={tab.key}
-                      onClick={() => setActiveTab(tab.key)}
-                      style={{
-                        flex: 1,
-                        padding: '18px 24px',
-                        border: 'none',
-                        borderRight:
-                          i < arr.length - 1
-                            ? '1px solid rgba(8,13,25,0.1)'
-                            : 'none',
-                        background: 'transparent',
-                        color: isActive ? '#ffffff' : 'rgba(8,13,25,0.45)',
-                        fontFamily: "'Saira', sans-serif",
-                        fontSize: '11px',
-                        fontWeight: 400,
-                        letterSpacing: '0.1em',
-                        textTransform: 'uppercase',
-                        cursor: 'pointer',
-                        position: 'relative',
-                        zIndex: 1,
-                        transition: 'color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                      }}
-                    >
-                      {tab.label}
-                    </button>
-                  );
-                })}
+                  zIndex: 1,
+                }}>
+                  {tabs.map((tab, i) => {
+                    const isActive = activeTab === tab.key;
+                    return (
+                      <button
+                        key={tab.key}
+                        onClick={() => setActiveTab(tab.key)}
+                        style={{
+                          padding: '10px 40px',
+                          border: '1px solid rgba(8,13,25,0.15)',
+                          borderRadius: '3px',
+                          background: isActive ? '#8e59ff' : '#ffffff',
+                          color: isActive ? '#ffffff' : 'rgba(8,13,25,0.45)',
+                          fontFamily: "'Saira', sans-serif",
+                          fontSize: '11px',
+                          fontWeight: 400,
+                          letterSpacing: '0.1em',
+                          textTransform: 'uppercase',
+                          cursor: 'pointer',
+                          position: 'relative',
+                          transition: 'background 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          borderColor: isActive ? '#8e59ff' : 'rgba(8,13,25,0.15)',
+                          whiteSpace: 'nowrap',
+                          marginLeft: i > 0 ? '32px' : '0',
+                        }}
+                      >
+                        {tab.label}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             );
           })()}
