@@ -4,8 +4,8 @@ import { motion } from 'motion/react';
 type TabKey = 'excellence' | 'security' | 'people';
 
 const tabs: { key: TabKey; label: string }[] = [
-  { key: 'excellence', label: 'Recognised Excellence' },
   { key: 'security', label: 'Data Security' },
+  { key: 'excellence', label: 'Recognised Excellence' },
   { key: 'people', label: 'People and Culture' },
 ];
 
