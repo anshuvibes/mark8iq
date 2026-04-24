@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect } from 'react';
+import { useState, useRef, useLayoutEffect, Fragment } from 'react';
 import { motion } from 'motion/react';
 
 type TabKey = 'excellence' | 'security' | 'people';
@@ -717,7 +717,105 @@ export default function CredentialsV2() {
           Recognised by the best in the business.
         </h2>
 
-        {/* Unified container card: tab switcher + content in one card */}
+        {/* Tab switcher — standalone boxes on a full-width track with dashed connectors */}
+        {(() => {
+          const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
+          // activeIndex retained for potential future use; current design swaps per-button styles.
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const activeIndex = tabKeys.indexOf(activeTab);
+          return (
+            <div
+              style={{
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: '40px',
+                padding: '0 4px',
+              }}
+            >
+              {/* Full-width track line behind everything */}
+              <div
+                aria-hidden
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  top: '50%',
+                  height: '1px',
+                  background: 'rgba(8,13,25,0.12)',
+                  transform: 'translateY(-50%)',
+                  zIndex: 0,
+                }}
+              />
+
+              {/* Tab boxes with dashed connectors between them */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 0,
+                  position: 'relative',
+                  zIndex: 1,
+                  width: '100%',
+                }}
+              >
+                {tabs.map((tab, i) => {
+                  const isActive = activeTab === tab.key;
+                  return (
+                    <Fragment key={tab.key}>
+                      {i === 0 && (
+                        <div
+                          aria-hidden
+                          style={{
+                            flex: 1,
+                            height: '1px',
+                            borderTop: '1px dashed rgba(8,13,25,0.2)',
+                          }}
+                        />
+                      )}
+
+                      <button
+                        onClick={() => setActiveTab(tab.key)}
+                        style={{
+                          padding: '10px 28px',
+                          border: `1px solid ${isActive ? '#8E59FF' : 'rgba(8,13,25,0.15)'}`,
+                          borderRadius: '5px',
+                          background: isActive ? '#8E59FF' : '#FFFFFF',
+                          color: isActive ? '#FFFFFF' : 'rgba(8,13,25,0.45)',
+                          fontFamily: "'Saira', sans-serif",
+                          fontSize: '11px',
+                          fontWeight: 400,
+                          letterSpacing: '0.1em',
+                          textTransform: 'uppercase',
+                          cursor: 'pointer',
+                          whiteSpace: 'nowrap',
+                          transition:
+                            'background 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          position: 'relative',
+                          zIndex: 1,
+                          flexShrink: 0,
+                        }}
+                      >
+                        {tab.label}
+                      </button>
+
+                      <div
+                        aria-hidden
+                        style={{
+                          flex: 1,
+                          height: '1px',
+                          borderTop: '1px dashed rgba(8,13,25,0.2)',
+                        }}
+                      />
+                    </Fragment>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* Content card — separate from the tab switcher */}
         <div
           style={{
             background: '#FFFFFF',
@@ -726,67 +824,6 @@ export default function CredentialsV2() {
             overflow: 'hidden',
           }}
         >
-          {/* Tab switcher — animated sliding pill */}
-          {(() => {
-            const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
-            const activeIndex = tabKeys.indexOf(activeTab);
-            return (
-              <div
-                style={{
-                  display: 'flex',
-                  borderBottom: '1px solid rgba(8,13,25,0.1)',
-                  position: 'relative',
-                }}
-              >
-                {/* Sliding background pill */}
-                <div
-                  aria-hidden
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    bottom: 0,
-                    left: `${(activeIndex / 3) * 100}%`,
-                    width: '33.333%',
-                    background: '#8E59FF',
-                    transition: 'left 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    zIndex: 0,
-                    pointerEvents: 'none',
-                  }}
-                />
-                {tabs.map((tab, i, arr) => {
-                  const isActive = activeTab === tab.key;
-                  return (
-                    <button
-                      key={tab.key}
-                      onClick={() => setActiveTab(tab.key)}
-                      style={{
-                        flex: 1,
-                        padding: '18px 24px',
-                        border: 'none',
-                        borderRight:
-                          i < arr.length - 1
-                            ? '1px solid rgba(8,13,25,0.1)'
-                            : 'none',
-                        background: 'transparent',
-                        color: isActive ? '#FFFFFF' : 'rgba(8,13,25,0.45)',
-                        fontFamily: "'Saira', sans-serif",
-                        fontSize: '11px',
-                        fontWeight: 400,
-                        letterSpacing: '0.1em',
-                        textTransform: 'uppercase',
-                        cursor: 'pointer',
-                        position: 'relative',
-                        zIndex: 1,
-                        transition: 'color 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                      }}
-                    >
-                      {tab.label}
-                    </button>
-                  );
-                })}
-              </div>
-            );
-          })()}
 
           {/* Content area — locked to SecurityTab's natural height */}
           <div style={{ padding: '48px', minHeight: lockedHeight ? `${lockedHeight + 96}px` : undefined }}>
