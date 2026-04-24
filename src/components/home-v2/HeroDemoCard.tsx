@@ -42,6 +42,7 @@ const formSchema = z.object({
   name: z.string().trim().min(2, 'Please enter your name').max(80),
   email: z.string().trim().email('Enter a valid work email').max(120),
   phone: z.string().trim().max(20).optional().or(z.literal('')),
+  notes: z.string().trim().max(500).optional().or(z.literal('')),
 });
 
 const stepVariants = {
