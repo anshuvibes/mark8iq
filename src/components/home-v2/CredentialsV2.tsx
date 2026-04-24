@@ -643,6 +643,8 @@ function PeopleTab() {
 
 export default function CredentialsV2() {
   const [activeTab, setActiveTab] = useState<TabKey>('excellence');
+  const [hoveredTab, setHoveredTab] = useState<TabKey | null>(null);
+  const displayedTab = hoveredTab ?? activeTab;
   const securityRef = useRef<HTMLDivElement>(null);
   const [lockedHeight, setLockedHeight] = useState<number | undefined>(undefined);
 
