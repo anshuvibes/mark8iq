@@ -315,6 +315,7 @@ function SecurityTab() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.5, delay: i * 0.05 }}
             style={{ ...cardBaseStyle, aspectRatio: '1 / 1' }}
+            className="cred-logo-card"
           >
             <img
               src={item.logo}
