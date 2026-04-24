@@ -785,7 +785,6 @@ export default function CredentialsV2() {
                     border: '1px solid rgba(8,13,25,0.15)',
                     borderRadius: '3px',
                     background: '#ffffff',
-                    color: isActive ? '#ffffff' : 'rgba(8,13,25,0.45)',
                     fontFamily: "'Saira', sans-serif",
                     fontSize: '11px',
                     fontWeight: 400,
@@ -793,12 +792,20 @@ export default function CredentialsV2() {
                     textTransform: 'uppercase',
                     cursor: 'pointer',
                     position: 'relative',
-                    zIndex: isActive ? 3 : 1,
-                    transition: 'color 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
                     whiteSpace: 'nowrap',
                   }}
                 >
-                  {tab.label}
+                  <span
+                    style={{
+                      position: 'relative',
+                      zIndex: 3,
+                      display: 'inline-block',
+                      color: isActive ? '#ffffff' : 'rgba(8,13,25,0.45)',
+                      transition: 'color 0.18s cubic-bezier(0.4, 0, 0.2, 1) 0.14s',
+                    }}
+                  >
+                    {tab.label}
+                  </span>
                 </button>
               );
             })}
