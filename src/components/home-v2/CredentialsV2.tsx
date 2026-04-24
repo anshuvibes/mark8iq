@@ -727,15 +727,15 @@ export default function CredentialsV2() {
           padding: '24px 0',
           width: '100%',
         }}>
-          {/* Dotted line — full width behind everything */}
+          {/* Dotted line — full viewport width behind everything */}
           <div aria-hidden style={{
             position: 'absolute',
-            left: 0,
-            right: 0,
+            left: '50%',
             top: '50%',
+            width: '100vw',
             height: '1px',
             backgroundImage: 'repeating-linear-gradient(to right, rgba(8,13,25,0.2) 0px, rgba(8,13,25,0.2) 6px, transparent 6px, transparent 14px)',
-            transform: 'translateY(-50%)',
+            transform: 'translate(-50%, -50%)',
             zIndex: 0,
             pointerEvents: 'none',
           }} />
