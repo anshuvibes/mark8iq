@@ -733,7 +733,6 @@ export default function CredentialsV2() {
 
           {/* Tab box group */}
           <div
-            ref={tabGroupRef}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -743,32 +742,33 @@ export default function CredentialsV2() {
               gap: '24px',
             }}
           >
-            {/* Sliding violet pill */}
-            <div
-              aria-hidden
-              style={{
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: 0,
-                width: pillWidth > 0 ? `${pillWidth}px` : '33%',
-                transform: `translateX(${pillOffset}px)`,
-                transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
-                background: '#8e59ff',
-                borderRadius: '3px',
-                zIndex: 2,
-                pointerEvents: 'none',
-                border: '1px solid #8e59ff',
-              }}
-            />
-
-            {/* Tab buttons */}
+            {/* Tab buttons — each contains its own pill, clipped to the button bounds */}
             {tabs.map((tab, i) => {
               const isActive = activeTab === tab.key;
+              // Slide direction: if previous active was to the left of this
+              // button, the pill arrives from the left (-100%); if from the
+              // right, arrives from the right (100%). When this button is
+              // active, the pill rests at 0%. When leaving, it exits toward
+              // the new active tab.
+              const newActive = activeIndex;
+              let pillTranslate = '0%';
+              if (!isActive) {
+                // Park inactive pills offscreen on the side closest to the active tab,
+                // so when this tab becomes active next, it slides in from that side.
+                pillTranslate = newActive > i ? '-100%' : '100%';
+              } else {
+                // Active: pill is at rest (0%). It animated in from the side
+                // of the previous active tab.
+                pillTranslate = '0%';
+              }
+              // For the active tab, set the starting position based on prevIndex
+              // by using a key that forces re-mount only when needed — but CSS
+              // transition handles it: the pill was previously parked at
+              // ±100% (because this tab was inactive), so transitioning to 0%
+              // automatically slides from the correct side.
               return (
                 <button
                   key={tab.key}
-                  ref={(el) => { tabRefs.current[i] = el; }}
                   onClick={() => setActiveTab(tab.key)}
                   style={{
                     flex: 1,
@@ -784,12 +784,26 @@ export default function CredentialsV2() {
                     cursor: 'pointer',
                     position: 'relative',
                     whiteSpace: 'nowrap',
+                    overflow: 'hidden',
                   }}
                 >
+                  {/* Per-button pill — clipped by button's overflow:hidden */}
+                  <span
+                    aria-hidden
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: '#8e59ff',
+                      transform: `translateX(${pillTranslate})`,
+                      transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+                      zIndex: 1,
+                      pointerEvents: 'none',
+                    }}
+                  />
                   <span
                     style={{
                       position: 'relative',
-                      zIndex: 3,
+                      zIndex: 2,
                       display: 'inline-block',
                       color: isActive ? '#ffffff' : 'rgba(8,13,25,0.45)',
                       transition: 'color 0.18s cubic-bezier(0.4, 0, 0.2, 1) 0.14s',
