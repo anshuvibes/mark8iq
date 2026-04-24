@@ -461,136 +461,54 @@ function PeopleTab() {
         ))}
       </div>
 
-      {/* Hiring callout — dark gradient card matching footer CTA style */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.6 }}
+      {/* Hiring callout — exact copy of footer CtaBlockV2 styling */}
+      <div
         style={{
+          background: '#8E59FF',
+          padding: '100px 48px',
           marginTop: '40px',
-          background:
-            'linear-gradient(135deg, #12182B 0%, #1A1F3A 50%, #2A1F5A 100%)',
           borderRadius: '8px',
-          padding: '64px 48px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
           textAlign: 'center',
           position: 'relative',
-          overflow: 'hidden',
         }}
       >
-        {/* Subtle violet glow accent */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '-30%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '60%',
-            height: '120%',
-            background:
-              'radial-gradient(ellipse at center, rgba(142,89,255,0.18) 0%, rgba(142,89,255,0) 70%)',
-            pointerEvents: 'none',
-          }}
-        />
-
-        <p
+        <motion.p
           className="m8-eyebrow"
-          style={{
-            color: '#8E59FF',
-            marginBottom: '16px',
-            position: 'relative',
-            zIndex: 1,
-          }}
+          style={{ color: 'rgba(255,255,255,0.65)', marginBottom: '12px' }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
         >
           WE ARE HIRING
-        </p>
-
-        <h3
-          style={{
-            fontFamily: "'Saira', sans-serif",
-            fontSize: '36px',
-            fontWeight: 500,
-            color: '#FFFFFF',
-            margin: 0,
-            marginBottom: '16px',
-            lineHeight: 1.2,
-            maxWidth: '720px',
-            position: 'relative',
-            zIndex: 1,
-          }}
+        </motion.p>
+        <motion.h2
+          className="m8-h1-large"
+          style={{ color: '#fff', marginBottom: '40px' }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ delay: 0.05 }}
         >
           Great operations are built by great people.
-        </h3>
-
-        <p
-          style={{
-            fontFamily: "'Saira', sans-serif",
-            fontSize: '16px',
-            fontWeight: 400,
-            color: 'rgba(255,255,255,0.65)',
-            margin: 0,
-            marginBottom: '32px',
-            lineHeight: 1.6,
-            maxWidth: '640px',
-            position: 'relative',
-            zIndex: 1,
-          }}
+        </motion.h2>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ delay: 0.2 }}
         >
-          We are always looking for sharp, driven people who want to build the
-          future of e-commerce intelligence. If that sounds like you, let's
-          talk.
-        </p>
-
-        <div
-          style={{
-            display: 'flex',
-            gap: '12px',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            position: 'relative',
-            zIndex: 1,
-          }}
-        >
-          <a
-            href="/career"
-            style={{
-              fontFamily: "'Saira', sans-serif",
-              fontSize: '14px',
-              fontWeight: 400,
-              color: '#12182B',
-              background: '#FFFFFF',
-              padding: '12px 28px',
-              borderRadius: '5px',
-              textDecoration: 'none',
-              display: 'inline-block',
-              transition: 'opacity 0.15s ease',
-            }}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+            style={{ display: 'inline-block' }}
           >
-            See Open Roles
-          </a>
-          <a
-            href="mailto:careers@infytrix.com"
-            style={{
-              fontFamily: "'Saira', sans-serif",
-              fontSize: '14px',
-              fontWeight: 400,
-              color: 'rgba(255,255,255,0.75)',
-              background: 'rgba(255,255,255,0.08)',
-              padding: '12px 28px',
-              borderRadius: '5px',
-              textDecoration: 'none',
-              display: 'inline-block',
-              border: '1px solid rgba(255,255,255,0.15)',
-              transition: 'opacity 0.15s ease',
-            }}
-          >
-            Write to Us
-          </a>
-        </div>
-      </motion.div>
+            <Button variant="m8-cta" size="lg" asChild>
+              <a href="/career">See Open Roles</a>
+            </Button>
+          </motion.div>
+        </motion.div>
+      </div>
     </>
   );
 }
