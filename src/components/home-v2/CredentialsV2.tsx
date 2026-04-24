@@ -643,6 +643,8 @@ function PeopleTab() {
 
 export default function CredentialsV2() {
   const [activeTab, setActiveTab] = useState<TabKey>('excellence');
+  const [hoveredTab, setHoveredTab] = useState<TabKey | null>(null);
+  const displayedTab = hoveredTab ?? activeTab;
   const securityRef = useRef<HTMLDivElement>(null);
   const [lockedHeight, setLockedHeight] = useState<number | undefined>(undefined);
 
@@ -668,11 +670,11 @@ export default function CredentialsV2() {
     return () => window.removeEventListener('resize', measure);
   }, []);
 
-  // Measure active tab position to slide the violet pill
+  // Measure displayed tab position to slide the violet pill (active or hovered)
   useLayoutEffect(() => {
     const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
     const measurePill = () => {
-      const activeIndex = tabKeys.indexOf(activeTab);
+      const activeIndex = tabKeys.indexOf(displayedTab);
       const activeEl = tabRefs.current[activeIndex];
       const groupEl = tabGroupRef.current;
       if (!activeEl || !groupEl) return;
@@ -684,7 +686,7 @@ export default function CredentialsV2() {
     measurePill();
     window.addEventListener('resize', measurePill);
     return () => window.removeEventListener('resize', measurePill);
-  }, [activeTab]);
+  }, [displayedTab]);
 
   return (
     <section style={{ padding: '100px 0', position: 'relative', background: 'transparent' }}>
@@ -773,12 +775,16 @@ export default function CredentialsV2() {
 
             {/* Tab buttons */}
             {tabs.map((tab, i) => {
-              const isActive = activeTab === tab.key;
+              const isActive = displayedTab === tab.key;
               return (
                 <button
                   key={tab.key}
                   ref={(el) => { tabRefs.current[i] = el; }}
                   onClick={() => setActiveTab(tab.key)}
+                  onMouseEnter={() => setHoveredTab(tab.key)}
+                  onMouseLeave={() => setHoveredTab(null)}
+                  onFocus={() => setHoveredTab(tab.key)}
+                  onBlur={() => setHoveredTab(null)}
                   style={{
                     flex: 1,
                     padding: '12px 0',
@@ -824,13 +830,13 @@ export default function CredentialsV2() {
         >
           {/* Content area — locked to SecurityTab's natural height */}
           <div style={{ padding: '48px', minHeight: lockedHeight ? `${lockedHeight + 96}px` : undefined }}>
-            <div style={{ display: activeTab === 'excellence' ? 'block' : 'none' }}>
+            <div style={{ display: displayedTab === 'excellence' ? 'block' : 'none' }}>
               <ExcellenceTab />
             </div>
-            <div ref={securityRef} style={{ display: activeTab === 'security' ? 'block' : 'none' }}>
+            <div ref={securityRef} style={{ display: displayedTab === 'security' ? 'block' : 'none' }}>
               <SecurityTab />
             </div>
-            <div style={{ display: activeTab === 'people' ? 'block' : 'none' }}>
+            <div style={{ display: displayedTab === 'people' ? 'block' : 'none' }}>
               <PeopleTab />
             </div>
           </div>
