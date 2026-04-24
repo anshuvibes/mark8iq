@@ -460,8 +460,9 @@ function PeopleTab() {
         ))}
       </div>
 
-      {/* Hiring callout — Figma 2245-13826: dark card, two violet ellipse glows, left-aligned copy */}
+      {/* Hiring callout — Figma 2245-13826: thin dark bar, violet glow under text, right wordmark panel */}
       <motion.div
+        className="cred-hire-card"
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
@@ -471,49 +472,52 @@ function PeopleTab() {
           background: '#0D1425',
           border: '1px solid #40445A',
           borderRadius: '5px',
-          padding: '16px 24px',
           position: 'relative',
           overflow: 'hidden',
-          minHeight: 'unset',
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'stretch',
+          gap: '16px',
+          padding: '16px',
         }}
       >
-        {/* Violet glow ellipse — small, lower-left, rotated */}
+        {/* Violet glow — bottom-left under the text, soft rise */}
         <div
           aria-hidden
           style={{
             position: 'absolute',
-            left: '-85px',
-            top: '66px',
-            width: '665px',
-            height: '665px',
-            transform: 'rotate(-15deg)',
+            left: '-180px',
+            bottom: '-280px',
+            width: '720px',
+            height: '520px',
             background:
-              'radial-gradient(closest-side, rgba(142,89,255,0.55) 0%, rgba(142,89,255,0.18) 45%, rgba(142,89,255,0) 75%)',
+              'radial-gradient(ellipse at center, rgba(142,89,255,0.55) 0%, rgba(142,89,255,0.18) 40%, rgba(142,89,255,0) 72%)',
             pointerEvents: 'none',
             filter: 'blur(8px)',
+            zIndex: 0,
           }}
         />
-        {/* Violet glow ellipse — large, right, rotated */}
+        {/* Violet wash — behind the right wordmark panel */}
         <div
           aria-hidden
           style={{
             position: 'absolute',
-            left: '244px',
-            top: '-52px',
-            width: '1174px',
-            height: '1174px',
-            transform: 'rotate(-15deg)',
+            right: '-160px',
+            top: '-120px',
+            width: '720px',
+            height: '520px',
             background:
-              'radial-gradient(closest-side, rgba(142,89,255,0.35) 0%, rgba(142,89,255,0.10) 50%, rgba(142,89,255,0) 75%)',
+              'radial-gradient(ellipse at center, rgba(142,89,255,0.40) 0%, rgba(142,89,255,0.12) 45%, rgba(142,89,255,0) 75%)',
             pointerEvents: 'none',
             filter: 'blur(10px)',
+            zIndex: 0,
           }}
         />
 
         {/* Left content block */}
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: '610px', flex: '1 1 auto' }}>
+        <div
+          className="cred-hire-content"
+          style={{ position: 'relative', zIndex: 2, flex: '1 1 auto', minWidth: 0, padding: '4px 8px' }}
+        >
           <h3
             style={{
               fontFamily: "'Saira', sans-serif",
@@ -521,8 +525,8 @@ function PeopleTab() {
               fontWeight: 400,
               color: '#EDEFF7',
               margin: 0,
-              marginBottom: '8px',
-              lineHeight: 1.15,
+              marginBottom: '6px',
+              lineHeight: 1.2,
               letterSpacing: '-0.02em',
             }}
           >
@@ -535,7 +539,7 @@ function PeopleTab() {
               fontWeight: 400,
               color: 'rgba(237,239,247,0.75)',
               margin: 0,
-              marginBottom: '12px',
+              marginBottom: '10px',
               lineHeight: 1.5,
               letterSpacing: '-0.01em',
             }}
@@ -543,7 +547,7 @@ function PeopleTab() {
             We are always looking for sharp, driven people. If that is you, let's talk.
           </p>
 
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: 0 }}>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             <a
               href="/career"
               style={{
@@ -557,7 +561,6 @@ function PeopleTab() {
                 textDecoration: 'none',
                 display: 'inline-block',
                 transition: 'opacity 0.15s ease',
-                backdropFilter: 'blur(17px)',
               }}
             >
               See Open Roles
@@ -591,29 +594,48 @@ function PeopleTab() {
           style={{
             position: 'relative',
             zIndex: 1,
-            flex: '0 0 240px',
-            height: '80px',
+            flex: '1 1 40%',
+            maxWidth: '520px',
+            minWidth: '220px',
+            alignSelf: 'stretch',
             borderRadius: '5px',
-            background: 'rgba(142,89,255,0.08)',
-            border: '1px solid rgba(142,89,255,0.2)',
+            background:
+              'linear-gradient(135deg, rgba(142,89,255,0.18) 0%, rgba(142,89,255,0.06) 100%)',
+            border: '1px solid rgba(142,89,255,0.22)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             overflow: 'hidden',
-            marginLeft: '24px',
+            backdropFilter: 'blur(8px)',
           }}
         >
           <img
             src="/img/product-logos/white/mark8-iq.svg"
             alt="Mark8 IQ"
             style={{
-              width: '60%',
+              width: '55%',
+              maxWidth: '240px',
               height: 'auto',
               objectFit: 'contain',
-              opacity: 0.55,
+              opacity: 0.85,
             }}
           />
         </div>
+
+        <style>{`
+          @media (max-width: 767px) {
+            .cred-hire-card {
+              flex-direction: column !important;
+              gap: 12px !important;
+            }
+            .cred-hire-panel {
+              flex: 0 0 auto !important;
+              width: 100% !important;
+              height: 80px !important;
+              max-width: none !important;
+            }
+          }
+        `}</style>
       </motion.div>
     </>
   );
