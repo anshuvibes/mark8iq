@@ -187,54 +187,6 @@ function LogoCard({
   );
 }
 
-function IconCard({
-  icon,
-  name,
-  description,
-}: {
-  icon: string;
-  name: string;
-  description: string;
-}) {
-  return (
-    <div style={cardStyle}>
-      <div
-        style={{
-          height: '64px',
-          width: '64px',
-          borderRadius: '50%',
-          background: 'rgba(142,89,255,0.08)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '28px',
-        }}
-      >
-        {icon}
-      </div>
-      <div
-        style={{
-          fontFamily: "'Saira', sans-serif",
-          fontSize: '13px',
-          fontWeight: 500,
-          color: '#080D19',
-        }}
-      >
-        {name}
-      </div>
-      <div
-        style={{
-          fontFamily: "'Saira', sans-serif",
-          fontSize: '11px',
-          fontWeight: 400,
-          color: 'rgba(8,13,25,0.45)',
-        }}
-      >
-        {description}
-      </div>
-    </div>
-  );
-}
 
 function ExcellenceTab() {
   return (
