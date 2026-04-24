@@ -202,10 +202,13 @@ export default function HeroDemoCard() {
                       }}
                     />
                     <span
-                      className="m8-p6"
                       style={{
+                        fontFamily: 'Saira, sans-serif',
+                        fontSize: '11px',
+                        fontWeight: 400,
                         color: 'var(--v2-text)',
                         lineHeight: 1.2,
+                        wordBreak: 'break-word',
                       }}
                     >
                       {tile.label}
