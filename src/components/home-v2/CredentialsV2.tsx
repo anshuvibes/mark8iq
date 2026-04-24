@@ -92,8 +92,7 @@ const securityItems = [
 ];
 
 type PeopleItem = {
-  logo: string | null;
-  icon?: string;
+  logo: string;
   name: string;
   description: string;
 };
@@ -105,26 +104,22 @@ const peopleItems: PeopleItem[] = [
     description: 'Certified Feb 2026 — Feb 2027, India.',
   },
   {
-    logo: null,
-    icon: '⚖️',
+    logo: '/img/compliance/posh.png',
     name: 'POSH Law',
     description: 'Zero-tolerance workplace policy with certified compliance officer.',
   },
   {
-    logo: null,
-    icon: '📈',
+    logo: '/img/compliance/esop.png',
     name: 'ESOP',
     description: "Every team member is a stakeholder in the company's long-term growth.",
   },
   {
-    logo: null,
-    icon: '🤝',
+    logo: '/img/compliance/gratuity.png',
     name: 'Gratuity',
     description: 'Statutory gratuity recognizing loyalty and long-term contribution.',
   },
   {
-    logo: null,
-    icon: '🏥',
+    logo: '/img/compliance/medical-insurance.png',
     name: 'Medical Insurance',
     description: 'Comprehensive health coverage for every employee and their family.',
   },
@@ -389,19 +384,11 @@ function PeopleTab() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.5, delay: i * 0.05 }}
           >
-            {item.logo ? (
-              <LogoCard
-                logo={item.logo}
-                name={item.name}
-                description={item.description}
-              />
-            ) : (
-              <IconCard
-                icon={item.icon || '•'}
-                name={item.name}
-                description={item.description}
-              />
-            )}
+            <LogoCard
+              logo={item.logo}
+              name={item.name}
+              description={item.description}
+            />
           </motion.div>
         ))}
       </div>
