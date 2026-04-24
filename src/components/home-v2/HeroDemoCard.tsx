@@ -59,7 +59,8 @@ export default function HeroDemoCard() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [errors, setErrors] = useState<{ name?: string; email?: string; phone?: string }>({});
+  const [notes, setNotes] = useState('');
+  const [errors, setErrors] = useState<{ name?: string; email?: string; phone?: string; notes?: string }>({});
 
   const toggle = (id: string) => {
     setSelected((prev) => {
