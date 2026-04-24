@@ -222,6 +222,9 @@ export default function AgentMarkWidget() {
   // Hide during fragmentation scroll. `visible` drives AnimatePresence so the
   // exit animation can play before unmount.
   const [visible, setVisible] = useState(false);
+  const [currentSection, setCurrentSection] = useState<SectionKey>('default');
+  const context = SECTION_CONTEXT[currentSection] ?? SECTION_CONTEXT['default'];
+  const starters = context.starters;
   useEffect(() => {
     // Small delay so the entrance fires after first paint
     const t = setTimeout(() => setVisible(true), 120);
