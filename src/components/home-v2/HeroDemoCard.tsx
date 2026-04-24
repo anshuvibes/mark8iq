@@ -150,18 +150,19 @@ export default function HeroDemoCard() {
                     className="hero-tile"
                     style={{
                       position: 'relative',
-                      aspectRatio: '4 / 5',
-                      padding: '14px 6px 12px',
+                      aspectRatio: '5 / 4',
+                      padding: '14px 8px 12px',
                       borderRadius: '10px',
                       background: isSelected ? `${tile.accent}10` : 'var(--v2-bg-card)',
                       border: `1.5px solid ${isSelected ? tile.accent : 'var(--v2-border)'}`,
                       cursor: 'pointer',
+                      fontFamily: 'Saira, sans-serif',
                       transition: 'background 0.18s ease, border-color 0.18s ease',
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: '6px',
+                      gap: '8px',
                       textAlign: 'center',
                       // expose accent for hover via CSS var
                       ['--tile-accent' as string]: tile.accent,
@@ -199,9 +200,8 @@ export default function HeroDemoCard() {
                       }}
                     />
                     <span
+                      className="m8-p6"
                       style={{
-                        fontSize: '11px',
-                        fontWeight: 400,
                         color: 'var(--v2-text)',
                         lineHeight: 1.2,
                       }}
