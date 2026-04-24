@@ -98,7 +98,7 @@ export default function HeroDemoCard() {
         top: '24px',
         right: '-24px',
         width: '340px',
-        minHeight: '520px',
+        minHeight: '500px',
         background: 'var(--v2-bg-card)',
         borderRadius: '18px',
         padding: '26px 22px',
