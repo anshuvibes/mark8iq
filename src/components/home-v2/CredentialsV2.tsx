@@ -404,6 +404,7 @@ function PeopleTab({ isActive }: { isActive: boolean }) {
             style={{ height: '100%' }}
           >
             <div
+              className="cred-card-hover"
               style={{
                 border: '1px solid rgba(8,13,25,0.08)',
                 borderRadius: '5px',
