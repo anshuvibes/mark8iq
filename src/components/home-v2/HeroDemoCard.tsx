@@ -98,6 +98,7 @@ export default function HeroDemoCard() {
         top: '24px',
         right: '-24px',
         width: '340px',
+        minHeight: '520px',
         background: 'var(--v2-bg-card)',
         borderRadius: '18px',
         padding: '26px 22px',
@@ -105,6 +106,8 @@ export default function HeroDemoCard() {
         border: '1px solid var(--v2-border)',
         zIndex: 2,
         overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       <AnimatePresence mode="wait">
