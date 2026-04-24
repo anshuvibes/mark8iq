@@ -830,13 +830,13 @@ export default function CredentialsV2() {
         >
           {/* Content area — locked to SecurityTab's natural height */}
           <div style={{ padding: '48px', minHeight: lockedHeight ? `${lockedHeight + 96}px` : undefined }}>
-            <div style={{ display: activeTab === 'excellence' ? 'block' : 'none' }}>
+            <div style={{ display: displayedTab === 'excellence' ? 'block' : 'none' }}>
               <ExcellenceTab />
             </div>
-            <div ref={securityRef} style={{ display: activeTab === 'security' ? 'block' : 'none' }}>
+            <div ref={securityRef} style={{ display: displayedTab === 'security' ? 'block' : 'none' }}>
               <SecurityTab />
             </div>
-            <div style={{ display: activeTab === 'people' ? 'block' : 'none' }}>
+            <div style={{ display: displayedTab === 'people' ? 'block' : 'none' }}>
               <PeopleTab />
             </div>
           </div>
