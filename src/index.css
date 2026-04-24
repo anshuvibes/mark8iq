@@ -933,7 +933,7 @@ All colors MUST be HSL.
 /* Layering: bg-color (#F0F1F6) → gradient DOM element (z:0) → grid ::after (z:1) → content (z:2) */
 
 .CustomBg_CustomBg__mpBxm .CustomBg_bg_image__RIwVy {
-  background-color: var(--m8-grid-base, #F0F1F6) !important;
+  background-color: var(--m8-grid-base, #F8F9FC) !important;
   background-image: none !important;
   position: relative !important;
   transition: background-color 0.4s ease !important;
