@@ -374,7 +374,7 @@ export default function HeroDemoCard() {
               <Button
                 type="submit"
                 variant="m8-violet"
-                style={{ width: '100%', marginTop: '4px', boxShadow: 'none', border: 'none' }}
+                style={{ width: '100%', marginTop: '4px', boxShadow: 'none', border: 'none', fontFamily: 'Saira, sans-serif' }}
               >
                 Get in Touch
               </Button>
