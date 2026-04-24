@@ -646,6 +646,11 @@ export default function CredentialsV2() {
   const securityRef = useRef<HTMLDivElement>(null);
   const [lockedHeight, setLockedHeight] = useState<number | undefined>(undefined);
 
+  const tabGroupRef = useRef<HTMLDivElement>(null);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const [pillWidth, setPillWidth] = useState(0);
+  const [pillOffset, setPillOffset] = useState(0);
+
   // SecurityTab is the tallest (2 rows). Measure its natural height and lock
   // the content area to it so switching tabs never changes container height.
   useLayoutEffect(() => {
@@ -662,6 +667,24 @@ export default function CredentialsV2() {
     window.addEventListener('resize', measure);
     return () => window.removeEventListener('resize', measure);
   }, []);
+
+  // Measure active tab position to slide the violet pill
+  useLayoutEffect(() => {
+    const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
+    const measurePill = () => {
+      const activeIndex = tabKeys.indexOf(activeTab);
+      const activeEl = tabRefs.current[activeIndex];
+      const groupEl = tabGroupRef.current;
+      if (!activeEl || !groupEl) return;
+      const groupRect = groupEl.getBoundingClientRect();
+      const activeRect = activeEl.getBoundingClientRect();
+      setPillWidth(activeRect.width);
+      setPillOffset(activeRect.left - groupRect.left);
+    };
+    measurePill();
+    window.addEventListener('resize', measurePill);
+    return () => window.removeEventListener('resize', measurePill);
+  }, [activeTab]);
 
   return (
     <section style={{ padding: '100px 0', position: 'relative', background: 'transparent' }}>
