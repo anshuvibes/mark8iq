@@ -775,12 +775,16 @@ export default function CredentialsV2() {
 
             {/* Tab buttons */}
             {tabs.map((tab, i) => {
-              const isActive = activeTab === tab.key;
+              const isActive = displayedTab === tab.key;
               return (
                 <button
                   key={tab.key}
                   ref={(el) => { tabRefs.current[i] = el; }}
                   onClick={() => setActiveTab(tab.key)}
+                  onMouseEnter={() => setHoveredTab(tab.key)}
+                  onMouseLeave={() => setHoveredTab(null)}
+                  onFocus={() => setHoveredTab(tab.key)}
+                  onBlur={() => setHoveredTab(null)}
                   style={{
                     flex: 1,
                     padding: '12px 0',
