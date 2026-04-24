@@ -826,22 +826,15 @@ export default function CredentialsV2() {
         >
           {/* Content area — locked to SecurityTab's natural height */}
           <div style={{ padding: '48px', minHeight: lockedHeight ? `${lockedHeight + 96}px` : undefined }}>
-            {/* Active tab — remounts on switch so animations replay */}
-            <div key={displayedTab}>
-              {displayedTab === 'excellence' && <ExcellenceTab />}
-              {displayedTab === 'security' && <SecurityTab />}
-              {displayedTab === 'people' && <PeopleTab />}
+            <div style={{ display: displayedTab === 'excellence' ? 'block' : 'none' }}>
+              <ExcellenceTab isActive={displayedTab === 'excellence'} />
             </div>
-            {/* Hidden Security mount — used only for measuring locked height */}
-            {displayedTab !== 'security' && (
-              <div
-                ref={securityRef}
-                aria-hidden
-                style={{ position: 'absolute', visibility: 'hidden', pointerEvents: 'none', left: '-9999px', top: 0, width: '100%' }}
-              >
-                <SecurityTab />
-              </div>
-            )}
+            <div ref={securityRef} style={{ display: displayedTab === 'security' ? 'block' : 'none' }}>
+              <SecurityTab isActive={displayedTab === 'security'} />
+            </div>
+            <div style={{ display: displayedTab === 'people' ? 'block' : 'none' }}>
+              <PeopleTab isActive={displayedTab === 'people'} />
+            </div>
           </div>
         </div>
       </div>
