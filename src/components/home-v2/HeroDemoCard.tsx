@@ -129,6 +129,7 @@ export default function HeroDemoCard() {
 
   return (
     <div
+      ref={cardRef}
       className="hero-module-card"
       style={{
         position: 'absolute',
