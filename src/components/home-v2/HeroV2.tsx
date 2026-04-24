@@ -70,81 +70,8 @@ export default function HeroV2() {
           />
         </div>
 
-        {/* Floating module selector card */}
-        <div
-          className="hero-module-card"
-          style={{
-            position: 'absolute',
-            top: '24px',
-            right: '-40px',
-            width: '320px',
-            background: 'var(--v2-bg-card)',
-            borderRadius: '16px',
-            padding: '28px',
-            boxShadow: `0 12px 40px var(--v2-shadow)`,
-            border: '1px solid var(--v2-border)',
-            zIndex: 2,
-          }}
-        >
-          <p className="m8-p4" style={{ color: 'var(--v2-text)', marginBottom: '20px' }}>
-            What do you want to manage?
-          </p>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '24px' }}>
-            {modules.map((mod, i) => (
-              <div
-                key={mod.name}
-                onMouseEnter={() => setActiveModule(i)}
-                style={{
-                  padding: '12px 14px',
-                  borderRadius: '10px',
-                  background: activeModule === i ? `${mod.accent}18` : `${mod.accent}08`,
-                  border: `1.5px solid ${activeModule === i ? mod.accent : `${mod.accent}30`}`,
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                }}
-              >
-                <div style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  background: mod.accent,
-                  marginBottom: '8px',
-                }} />
-                <div className="m8-p6" style={{ color: 'var(--v2-text)', marginBottom: '2px' }}>{mod.name}</div>
-                <div className="m8-p6" style={{ color: 'var(--v2-text-muted)' }}>{mod.desc}</div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {[
-              '1,000+ Cr GMV managed',
-              '35% avg ROAS improvement',
-              '90% client retention',
-            ].map((stat) => (
-              <div
-                key={stat}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  padding: '8px 12px',
-                  borderRadius: '8px',
-                  background: 'var(--v2-bg-subtle)',
-                }}
-              >
-                <div style={{
-                  width: '6px',
-                  height: '6px',
-                  borderRadius: '50%',
-                  background: '#8E59FF',
-                }} />
-                <span className="m8-p6" style={{ color: 'var(--v2-text)' }}>{stat}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Floating demo booking card */}
+        <HeroDemoCard />
       </motion.div>
 
       <style>{`
