@@ -259,7 +259,7 @@ export default function ProofV2() {
   }, []);
 
   return (
-    <section ref={sectionRef} style={{ position: 'relative' }}>
+    <section ref={sectionRef} data-section="proof" style={{ position: 'relative' }}>
       <div ref={stickyRef} style={{ minHeight: '100vh', padding: '120px 0 0', overflow: 'hidden' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.p
