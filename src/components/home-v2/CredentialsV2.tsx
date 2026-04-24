@@ -11,22 +11,22 @@ const tabs: { key: TabKey; label: string }[] = [
 
 const excellenceItems = [
   {
-    logo: '/img/compliance/Amazon ADvisors.png',
+    logo: '/img/compliance/amazon-advisors.png',
     name: 'Amazon Ads Advisory Board Member',
     description: 'Selected for expertise in marketplace advertising optimization.',
   },
   {
-    logo: '/img/compliance/Amazon Ads Advanced Partner.png',
+    logo: '/img/compliance/amazon-ads-advanced-partner.png',
     name: 'Top 5 Amazon Ads Agency in India',
     description: "Consistently ranked among India's leading Amazon advertising partners.",
   },
   {
-    logo: '/img/compliance/Amazon Ads Verified Partner.png',
+    logo: '/img/compliance/amazon-ads-verified-partner.png',
     name: 'Amazon Ads Verified Partner',
     description: 'Verified by Amazon for performance, compliance, and client outcomes.',
   },
   {
-    logo: '/img/compliance/NVIDIA.png',
+    logo: '/img/compliance/nvidia.png',
     name: 'NVIDIA Inception Program',
     description: 'Selected for AI/ML innovation in e-commerce intelligence. $1M grant.',
   },
@@ -44,48 +44,47 @@ const excellenceItems = [
 
 const securityItems = [
   {
-    logo: '/img/compliance/ISO Quality Management Systems.png',
+    logo: '/img/compliance/iso-9001.png',
     name: 'ISO 9001:2015',
     description: 'Quality Management Systems',
   },
   {
-    logo: '/img/compliance/ISO Environmental Management Systems.png',
+    logo: '/img/compliance/iso-14001.png',
     name: 'ISO 14001:2015',
     description: 'Environmental Management Systems',
   },
   {
-    // NOTE: filename has a double space between "ISO" and "Information"
-    logo: '/img/compliance/ISO  Information Security Management Systems.png',
+    logo: '/img/compliance/iso-27001.png',
     name: 'ISO 27001:2022',
     description: 'Information Security Management',
   },
   {
-    logo: '/img/compliance/SOC 2.png',
+    logo: '/img/compliance/soc-2.png',
     name: 'SOC 2 Type 2',
     description: 'Service Organization Controls',
   },
   {
-    logo: '/img/compliance/Safetica.png',
+    logo: '/img/compliance/safetica.png',
     name: 'Safetica',
     description: 'Data Loss Prevention',
   },
   {
-    logo: '/img/compliance/Microsoft Security.png',
+    logo: '/img/compliance/microsoft-security.png',
     name: 'Microsoft Security',
     description: 'Enterprise Security Suite',
   },
   {
-    logo: '/img/compliance/Microsoft Intune.png',
+    logo: '/img/compliance/microsoft-intune.png',
     name: 'Microsoft Intune',
     description: 'Device Management',
   },
   {
-    logo: '/img/compliance/Microsoft Defender.png',
+    logo: '/img/compliance/microsoft-defender.png',
     name: 'Microsoft Defender',
     description: 'Threat Protection',
   },
   {
-    logo: '/img/compliance/Microsoft Entra ID.png',
+    logo: '/img/compliance/microsoft-entra-id.png',
     name: 'Microsoft Entra ID',
     description: 'Identity and Access Management',
   },
@@ -99,7 +98,7 @@ type PeopleItem = {
 
 const peopleItems: PeopleItem[] = [
   {
-    logo: '/img/compliance/Great Place to Work.png',
+    logo: '/img/compliance/great-place-to-work.png',
     name: 'Great Place to Work',
     description: 'Certified Feb 2026 — Feb 2027, India.',
   },
