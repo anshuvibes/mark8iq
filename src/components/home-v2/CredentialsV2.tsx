@@ -371,93 +371,226 @@ function SecurityTab() {
 
 function PeopleTab() {
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(5, 1fr)',
-        gap: '16px',
-        alignItems: 'stretch',
-      }}
-      className="cred-grid"
-    >
-      {peopleItems.map((item, i) => (
-        <motion.div
-          key={item.name}
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.5, delay: i * 0.05 }}
-          style={{ height: '100%' }}
-        >
-          <div
-            style={{
-              border: '1px solid rgba(8,13,25,0.08)',
-              borderRadius: '5px',
-              display: 'flex',
-              flexDirection: 'column',
-              overflow: 'hidden',
-              background: '#FFFFFF',
-              height: '100%',
-            }}
+    <>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(5, 1fr)',
+          gap: '16px',
+          alignItems: 'stretch',
+        }}
+        className="cred-grid"
+      >
+        {peopleItems.map((item, i) => (
+          <motion.div
+            key={item.name}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.5, delay: i * 0.05 }}
+            style={{ height: '100%' }}
           >
-            {/* Logo area — full width, 1:1 square */}
             <div
               style={{
-                width: '100%',
-                aspectRatio: '1 / 1',
-                overflow: 'hidden',
-                flexShrink: 0,
-              }}
-            >
-              <img
-                src={item.logo}
-                alt={item.name}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  display: 'block',
-                }}
-              />
-            </div>
-
-            {/* Text below the image */}
-            <div
-              style={{
-                padding: '16px',
+                border: '1px solid rgba(8,13,25,0.08)',
+                borderRadius: '5px',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '6px',
+                overflow: 'hidden',
+                background: '#FFFFFF',
+                height: '100%',
               }}
             >
-              <p
+              {/* Logo area — full width, 1:1 square */}
+              <div
                 style={{
-                  fontFamily: "'Saira', sans-serif",
-                  fontSize: '14px',
-                  fontWeight: 500,
-                  color: '#080D19',
-                  margin: 0,
+                  width: '100%',
+                  aspectRatio: '1 / 1',
+                  overflow: 'hidden',
+                  flexShrink: 0,
                 }}
               >
-                {item.name}
-              </p>
-              <p
+                <img
+                  src={item.logo}
+                  alt={item.name}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    display: 'block',
+                  }}
+                />
+              </div>
+
+              {/* Text below the image */}
+              <div
                 style={{
-                  fontFamily: "'Saira', sans-serif",
-                  fontSize: '12px',
-                  fontWeight: 400,
-                  color: 'rgba(8,13,25,0.5)',
-                  margin: 0,
-                  lineHeight: 1.5,
+                  padding: '16px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '6px',
                 }}
               >
-                {item.description}
-              </p>
+                <p
+                  style={{
+                    fontFamily: "'Saira', sans-serif",
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    color: '#080D19',
+                    margin: 0,
+                  }}
+                >
+                  {item.name}
+                </p>
+                <p
+                  style={{
+                    fontFamily: "'Saira', sans-serif",
+                    fontSize: '12px',
+                    fontWeight: 400,
+                    color: 'rgba(8,13,25,0.5)',
+                    margin: 0,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  {item.description}
+                </p>
+              </div>
             </div>
-          </div>
-        </motion.div>
-      ))}
-    </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Hiring callout — dark gradient card matching footer CTA style */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.6 }}
+        style={{
+          marginTop: '40px',
+          background:
+            'linear-gradient(135deg, #12182B 0%, #1A1F3A 50%, #2A1F5A 100%)',
+          borderRadius: '8px',
+          padding: '64px 48px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Subtle violet glow accent */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '-30%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '60%',
+            height: '120%',
+            background:
+              'radial-gradient(ellipse at center, rgba(142,89,255,0.18) 0%, rgba(142,89,255,0) 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        <p
+          className="m8-eyebrow"
+          style={{
+            color: '#8E59FF',
+            marginBottom: '16px',
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
+          WE ARE HIRING
+        </p>
+
+        <h3
+          style={{
+            fontFamily: "'Saira', sans-serif",
+            fontSize: '36px',
+            fontWeight: 500,
+            color: '#FFFFFF',
+            margin: 0,
+            marginBottom: '16px',
+            lineHeight: 1.2,
+            maxWidth: '720px',
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
+          Great operations are built by great people.
+        </h3>
+
+        <p
+          style={{
+            fontFamily: "'Saira', sans-serif",
+            fontSize: '16px',
+            fontWeight: 400,
+            color: 'rgba(255,255,255,0.65)',
+            margin: 0,
+            marginBottom: '32px',
+            lineHeight: 1.6,
+            maxWidth: '640px',
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
+          We are always looking for sharp, driven people who want to build the
+          future of e-commerce intelligence. If that sounds like you, let's
+          talk.
+        </p>
+
+        <div
+          style={{
+            display: 'flex',
+            gap: '12px',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
+          <a
+            href="/career"
+            style={{
+              fontFamily: "'Saira', sans-serif",
+              fontSize: '14px',
+              fontWeight: 400,
+              color: '#12182B',
+              background: '#FFFFFF',
+              padding: '12px 28px',
+              borderRadius: '5px',
+              textDecoration: 'none',
+              display: 'inline-block',
+              transition: 'opacity 0.15s ease',
+            }}
+          >
+            See Open Roles
+          </a>
+          <a
+            href="mailto:careers@infytrix.com"
+            style={{
+              fontFamily: "'Saira', sans-serif",
+              fontSize: '14px',
+              fontWeight: 400,
+              color: 'rgba(255,255,255,0.75)',
+              background: 'rgba(255,255,255,0.08)',
+              padding: '12px 28px',
+              borderRadius: '5px',
+              textDecoration: 'none',
+              display: 'inline-block',
+              border: '1px solid rgba(255,255,255,0.15)',
+              transition: 'opacity 0.15s ease',
+            }}
+          >
+            Write to Us
+          </a>
+        </div>
+      </motion.div>
+    </>
   );
 }
 
