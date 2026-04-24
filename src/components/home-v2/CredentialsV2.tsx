@@ -690,7 +690,7 @@ export default function CredentialsV2() {
         </p>
         <h2
           className="m8-h2"
-          style={{ color: '#080D19', marginBottom: '48px', maxWidth: '900px', textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}
+          style={{ color: '#080D19', marginBottom: '0', maxWidth: '900px', textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}
         >
           Recognised by the best in the business.
         </h2>
