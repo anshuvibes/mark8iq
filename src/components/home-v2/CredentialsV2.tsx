@@ -335,9 +335,11 @@ function SecurityTab() {
             transition={{ duration: 0.5, delay: (i + firstRow.length) * 0.05 }}
             style={{
               ...cardBaseStyle,
-              // Height matches a row-1 square: (containerWidth - 4*16gap) / 5
-              height: 'calc((100% / 1) * 0)',
+              // Height matches a row-1 square: (100vw_of_row - 4*16gap) / 5
+              // Using cqw (container query width) of row container
+              height: 'calc((100cqw - 64px) / 5)',
             }}
+            className="cred-row2-card"
           >
             <img
               src={encodeURI(item.logo)}
