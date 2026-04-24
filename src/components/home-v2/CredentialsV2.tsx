@@ -398,10 +398,14 @@ export default function CredentialsV2() {
       <style>{`
         @media (max-width: 767px) {
           .cred-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .cred-grid-row2 { grid-template-columns: repeat(2, 1fr) !important; }
+          .cred-row2-card { height: calc((100cqw - 16px) / 2) !important; }
           .cred-excellence-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
         }
         @media (min-width: 768px) and (max-width: 1023px) {
           .cred-grid { grid-template-columns: repeat(3, 1fr) !important; }
+          .cred-grid-row2 { grid-template-columns: repeat(3, 1fr) !important; }
+          .cred-row2-card { height: calc((100cqw - 32px) / 3) !important; }
           .cred-excellence-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
       `}</style>
