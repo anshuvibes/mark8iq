@@ -11,7 +11,6 @@ import {
   Bot,
   Layers,
   Check,
-  ArrowRight,
   ArrowLeft,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
