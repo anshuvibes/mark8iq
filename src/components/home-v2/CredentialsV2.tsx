@@ -591,7 +591,7 @@ function PeopleTab() {
           </div>
         </div>
 
-        {/* Right decorative panel — translucent rounded rectangle from Figma */}
+        {/* Right decorative panel — Mark8 IQ wordmark */}
         <div
           aria-hidden
           className="cred-hire-panel"
@@ -601,12 +601,27 @@ function PeopleTab() {
             width: '483px',
             height: '200px',
             borderRadius: '15px',
-            background: 'rgba(217,217,217,0.08)',
-            border: '1px solid rgba(237,239,247,0.06)',
+            background: 'rgba(142,89,255,0.06)',
+            border: '1px solid rgba(142,89,255,0.15)',
             flexShrink: 0,
             marginLeft: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
           }}
-        />
+        >
+          <img
+            src="/img/product-logos/white/mark8-iq.svg"
+            alt="Mark8 IQ"
+            style={{
+              width: '60%',
+              height: 'auto',
+              objectFit: 'contain',
+              opacity: 0.15,
+            }}
+          />
+        </div>
       </motion.div>
     </>
   );
