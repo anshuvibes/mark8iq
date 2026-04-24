@@ -683,6 +683,10 @@ export default function CredentialsV2() {
           .cred-excellence-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .cred-hire-panel { width: 280px !important; height: 160px !important; }
         }
+        .cred-logo-card:hover {
+          border-color: rgba(142,89,255,0.6) !important;
+          box-shadow: 0 0 0 1px rgba(142,89,255,0.4), 0 0 24px rgba(142,89,255,0.35), 0 0 48px rgba(142,89,255,0.18);
+        }
       `}</style>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <p
