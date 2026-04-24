@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useLayoutEffect } from 'react';
 import { motion } from 'motion/react';
 
 type TabKey = 'excellence' | 'security' | 'people';
@@ -392,6 +392,25 @@ function PeopleTab() {
 
 export default function CredentialsV2() {
   const [activeTab, setActiveTab] = useState<TabKey>('excellence');
+  const securityRef = useRef<HTMLDivElement>(null);
+  const [lockedHeight, setLockedHeight] = useState<number | undefined>(undefined);
+
+  // SecurityTab is the tallest (2 rows). Measure its natural height and lock
+  // the content area to it so switching tabs never changes container height.
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = securityRef.current;
+      if (!el) return;
+      const prevDisplay = el.style.display;
+      el.style.display = 'block';
+      const h = el.offsetHeight;
+      el.style.display = prevDisplay;
+      if (h > 0) setLockedHeight(h);
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
 
   return (
     <section style={{ padding: '100px 0', position: 'relative', background: 'transparent' }}>
@@ -470,12 +489,12 @@ export default function CredentialsV2() {
             })}
           </div>
 
-          {/* Content area */}
-          <div style={{ padding: '48px' }}>
+          {/* Content area — locked to SecurityTab's natural height */}
+          <div style={{ padding: '48px', minHeight: lockedHeight ? `${lockedHeight + 96}px` : undefined }}>
             <div style={{ display: activeTab === 'excellence' ? 'block' : 'none' }}>
               <ExcellenceTab />
             </div>
-            <div style={{ display: activeTab === 'security' ? 'block' : 'none' }}>
+            <div ref={securityRef} style={{ display: activeTab === 'security' ? 'block' : 'none' }}>
               <SecurityTab />
             </div>
             <div style={{ display: activeTab === 'people' ? 'block' : 'none' }}>
