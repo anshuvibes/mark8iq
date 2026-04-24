@@ -646,10 +646,10 @@ export default function CredentialsV2() {
   const securityRef = useRef<HTMLDivElement>(null);
   const [lockedHeight, setLockedHeight] = useState<number | undefined>(undefined);
 
-  const tabGroupRef = useRef<HTMLDivElement>(null);
-  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const [pillWidth, setPillWidth] = useState(0);
-  const [pillOffset, setPillOffset] = useState(0);
+  const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
+  const activeIndex = tabKeys.indexOf(activeTab);
+  const prevIndexRef = useRef<number>(activeIndex);
+  const [prevIndex, setPrevIndex] = useState<number>(activeIndex);
 
   // SecurityTab is the tallest (2 rows). Measure its natural height and lock
   // the content area to it so switching tabs never changes container height.
