@@ -272,11 +272,22 @@ function ExcellenceTab() {
 function SecurityTab() {
   return (
     <>
-      <div style={{ marginBottom: '32px' }}>
-        <h3 className="m8-h3-m" style={{ color: '#080D19', marginBottom: '12px' }}>
+      <div style={{ marginBottom: '32px', textAlign: 'center' }}>
+        <h3
+          className="m8-h3-m"
+          style={{ color: '#080D19', marginBottom: '12px', textAlign: 'center' }}
+        >
           Data security built into every layer
         </h3>
-        <p className="m8-p4" style={{ color: 'rgba(8,13,25,0.6)', maxWidth: '640px' }}>
+        <p
+          className="m8-p4"
+          style={{
+            color: 'rgba(8,13,25,0.6)',
+            maxWidth: '640px',
+            margin: '0 auto',
+            textAlign: 'center',
+          }}
+        >
           Compliance and infrastructure certifications that protect every brand on
           our platform.
         </p>
@@ -312,11 +323,22 @@ function SecurityTab() {
 function PeopleTab() {
   return (
     <>
-      <div style={{ marginBottom: '32px' }}>
-        <h3 className="m8-h3-m" style={{ color: '#080D19', marginBottom: '12px' }}>
+      <div style={{ marginBottom: '32px', textAlign: 'center' }}>
+        <h3
+          className="m8-h3-m"
+          style={{ color: '#080D19', marginBottom: '12px', textAlign: 'center' }}
+        >
           A great place to work. Certified
         </h3>
-        <p className="m8-p4" style={{ color: 'rgba(8,13,25,0.6)', maxWidth: '640px' }}>
+        <p
+          className="m8-p4"
+          style={{
+            color: 'rgba(8,13,25,0.6)',
+            maxWidth: '640px',
+            margin: '0 auto',
+            textAlign: 'center',
+          }}
+        >
           We invest in our people the same way we invest in our product.
         </p>
       </div>
@@ -377,38 +399,39 @@ export default function CredentialsV2() {
           Recognised by the best in the business.
         </h2>
 
-        {/* Tab switcher — bottom-border indicator pattern */}
+        {/* Tab switcher — full-width segmented control */}
         <div
           style={{
             display: 'flex',
-            alignItems: 'flex-end',
-            gap: 0,
-            borderBottom: '1px solid rgba(8,13,25,0.1)',
+            border: '1px solid rgba(8,13,25,0.1)',
+            borderRadius: '5px',
+            overflow: 'hidden',
             marginBottom: '40px',
-            flexWrap: 'wrap',
           }}
         >
-          {tabs.map((tab) => {
+          {tabs.map((tab, i, arr) => {
             const isActive = activeTab === tab.key;
             return (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
                 style={{
-                  background: 'none',
+                  flex: 1,
+                  padding: '16px 24px',
                   border: 'none',
-                  borderBottom: isActive
-                    ? '2px solid #8E59FF'
-                    : '2px solid transparent',
-                  padding: '12px 24px',
-                  cursor: 'pointer',
+                  borderRight:
+                    i < arr.length - 1
+                      ? '1px solid rgba(8,13,25,0.1)'
+                      : 'none',
+                  background: isActive ? '#8E59FF' : 'transparent',
+                  color: isActive ? '#FFFFFF' : 'rgba(8,13,25,0.45)',
                   fontFamily: "'Saira', sans-serif",
-                  fontSize: '14px',
-                  fontWeight: isActive ? 500 : 400,
-                  color: isActive ? '#8E59FF' : 'rgba(8,13,25,0.45)',
-                  letterSpacing: '-0.01em',
-                  transition: 'color 0.15s ease, border-color 0.15s ease',
-                  marginBottom: '-1px',
+                  fontSize: '11px',
+                  fontWeight: 400,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer',
+                  transition: 'background 0.2s ease, color 0.2s ease',
                 }}
               >
                 {tab.label}
