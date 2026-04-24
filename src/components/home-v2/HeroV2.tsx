@@ -1,7 +1,8 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import heroDashboardSvg from '@/assets/hero-dashboard.svg?raw';
+import HeroDemoCard from './HeroDemoCard';
 
 
 const fadeIn = (delay: number) => ({
@@ -10,17 +11,7 @@ const fadeIn = (delay: number) => ({
   transition: { duration: 0.6, delay, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] },
 });
 
-const modules = [
-  { name: 'Mark8 Ads', accent: '#dd4062', desc: 'Ad performance' },
-  { name: 'Mark8 Sight', accent: '#52bfbc', desc: 'Visibility intel' },
-  { name: 'Mark8 Shelf', accent: '#6895fc', desc: 'Digital shelf' },
-  { name: 'Mark8 Returns', accent: '#fc7459', desc: 'Return control' },
-  { name: 'Mark8 Reco', accent: '#7cbc71', desc: 'Reconciliation' },
-  { name: 'Mark8 Inventory', accent: '#fcb24f', desc: 'Procurement' },
-];
-
 export default function HeroV2() {
-  const [activeModule, setActiveModule] = useState(0);
   const imgContainerRef = useRef<HTMLDivElement>(null);
 
   return (
