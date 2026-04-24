@@ -24,7 +24,7 @@ export default function HeroV2() {
   const imgContainerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column' }}>
+    <section data-section="hero" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column' }}>
       {/* Theme toggle — top right */}
       <div style={{ position: 'absolute', top: '80px', right: '40px', zIndex: 60 }}>
         <ThemeToggle />

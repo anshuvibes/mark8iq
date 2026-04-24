@@ -397,7 +397,7 @@ export default function ProductSuiteV2() {
   }, [paths]);
 
   return (
-    <section ref={sectionRef} style={{ padding: '100px 0', position: 'relative', zIndex: 1 }}>
+    <section ref={sectionRef} data-section="product-suite" style={{ padding: '100px 0', position: 'relative', zIndex: 1 }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.p
           className="m8-eyebrow"

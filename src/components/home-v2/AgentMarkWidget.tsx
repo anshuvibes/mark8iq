@@ -9,11 +9,69 @@ type Message = {
   type?: 'text' | 'loading' | 'response';
 };
 
-const starters = [
-  { text: 'What does Mark8 IQ actually do for a D2C brand?', key: 'what' },
-  { text: 'How did Asian Shoes save ₹60 lakh a month?', key: 'casestudy' },
-  { text: 'How is this different from what I already use?', key: 'differentiation' },
-];
+type SectionKey = 'hero' | 'product-suite' | 'role-based' | 'agent-foundry' | 'proof' | 'credentials' | 'default';
+
+const SECTION_CONTEXT: Record<SectionKey, {
+  placeholder: string;
+  starters: { key: string; text: string }[];
+}> = {
+  'hero': {
+    placeholder: 'What makes Mark8 IQ different?',
+    starters: [
+      { key: 'h1', text: 'How does Mark8 IQ work?' },
+      { key: 'h2', text: 'Which product is right for my business?' },
+      { key: 'h3', text: 'What marketplaces do you support?' },
+    ],
+  },
+  'product-suite': {
+    placeholder: 'Which Mark8 product solves your problem?',
+    starters: [
+      { key: 'ps1', text: 'What does Mark8 Ads do?' },
+      { key: 'ps2', text: 'How does Mark8 Sight track rankings?' },
+      { key: 'ps3', text: 'What is Market One?' },
+    ],
+  },
+  'role-based': {
+    placeholder: 'What does Mark8 IQ do for your role?',
+    starters: [
+      { key: 'rb1', text: 'What does Mark8 IQ do for a CEO?' },
+      { key: 'rb2', text: 'How does it help an Ads Manager?' },
+      { key: 'rb3', text: 'What does an analyst get from Mark8 IQ?' },
+    ],
+  },
+  'agent-foundry': {
+    placeholder: 'What can your agents automate today?',
+    starters: [
+      { key: 'af1', text: 'What is Agent Foundry?' },
+      { key: 'af2', text: 'Which agents are ready to deploy?' },
+      { key: 'af3', text: 'How does the Visibility Booster Agent work?' },
+    ],
+  },
+  'proof': {
+    placeholder: 'How did these brands grow with Mark8 IQ?',
+    starters: [
+      { key: 'pr1', text: 'How did Asian Shoes reduce ad spend by 68%?' },
+      { key: 'pr2', text: 'What did Zeel Rainwear achieve in 5 seasons?' },
+      { key: 'pr3', text: 'What is the average ROAS gain for clients?' },
+    ],
+  },
+  'credentials': {
+    placeholder: 'What makes Mark8 IQ a trusted platform?',
+    starters: [
+      { key: 'cr1', text: 'What certifications does Mark8 IQ hold?' },
+      { key: 'cr2', text: 'What is the NVIDIA Inception Program?' },
+      { key: 'cr3', text: 'What is the NIXI partnership?' },
+    ],
+  },
+  'default': {
+    placeholder: 'Ask Agent Mark anything about Mark8 IQ…',
+    starters: [
+      { key: 'd1', text: 'What is Mark8 IQ?' },
+      { key: 'd2', text: 'How is Mark8 IQ different from other tools?' },
+      { key: 'd3', text: 'How do I get started?' },
+    ],
+  },
+};
 
 const conversationFlows: Record<string, Message[]> = {
   what: [
@@ -164,6 +222,9 @@ export default function AgentMarkWidget() {
   // Hide during fragmentation scroll. `visible` drives AnimatePresence so the
   // exit animation can play before unmount.
   const [visible, setVisible] = useState(false);
+  const [currentSection, setCurrentSection] = useState<SectionKey>('default');
+  const context = SECTION_CONTEXT[currentSection] ?? SECTION_CONTEXT['default'];
+  const starters = context.starters;
   useEffect(() => {
     // Small delay so the entrance fires after first paint
     const t = setTimeout(() => setVisible(true), 120);
@@ -235,10 +296,36 @@ export default function AgentMarkWidget() {
     checkScroll();
     window.addEventListener('scroll', checkScroll, { passive: true });
 
+    // Track which section is centered in the viewport to drive contextual copy
+    const SECTION_KEYS: SectionKey[] = ['hero', 'product-suite', 'role-based', 'agent-foundry', 'proof', 'credentials'];
+    const checkCurrentSection = () => {
+      const viewportMid = window.innerHeight / 2;
+      let closest: SectionKey = 'default';
+      let closestDist = Infinity;
+
+      SECTION_KEYS.forEach((key) => {
+        const el = document.querySelector(`[data-section="${key}"]`);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const sectionMid = rect.top + rect.height / 2;
+        const dist = Math.abs(sectionMid - viewportMid);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = key;
+        }
+      });
+
+      setCurrentSection((prev) => (prev === closest ? prev : closest));
+    };
+
+    checkCurrentSection();
+    window.addEventListener('scroll', checkCurrentSection, { passive: true });
+
     return () => {
       fragObserver?.disconnect();
       footerObserver?.disconnect();
       window.removeEventListener('scroll', checkScroll);
+      window.removeEventListener('scroll', checkCurrentSection);
     };
   }, []);
 
@@ -289,7 +376,8 @@ export default function AgentMarkWidget() {
   const handleStarterClick = (starter: typeof starters[0]) => {
     setState('chat');
     setMessages([{ from: 'user', text: starter.text }]);
-    addAgentResponse(conversationFlows[starter.key]);
+    const flow = conversationFlows[starter.key] ?? conversationFlows.what;
+    addAgentResponse(flow);
   };
 
   const handlePillSend = () => {
@@ -487,7 +575,7 @@ export default function AgentMarkWidget() {
             onChange={(e) => setPillInputText(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handlePillSend()}
             onFocus={() => setState('expanded')}
-            placeholder="Ask Agent Mark anything about Mark8 IQ…"
+            placeholder={context.placeholder}
             className="agent-mark-pill-input m8-p6"
             style={{
               width: '100%',
