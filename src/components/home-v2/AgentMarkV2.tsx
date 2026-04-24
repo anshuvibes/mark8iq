@@ -106,7 +106,7 @@ export default function AgentMarkV2() {
     if (!anchor) return;
     const trigger = ScrollTrigger.create({
       trigger: anchor as Element,
-      start: 'top 80%',
+      start: 'top 50%',
       end: 'bottom 20%',
       onEnter: () => setThemeRef.current('light'),
       onEnterBack: () => setThemeRef.current('light'),
