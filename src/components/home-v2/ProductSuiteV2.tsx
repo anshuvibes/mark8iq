@@ -241,7 +241,9 @@ export default function ProductSuiteV2() {
     const trigger = ScrollTrigger.create({
       trigger: section,
       start: 'top 60%',
-      end: 'bottom 20%',
+      // End enforcement when section bottom reaches the bottom of viewport,
+      // so it releases BEFORE RoleBasedValueV2 (start: 'top 80%') tries to set dark.
+      end: 'bottom bottom',
       onEnter: () => setThemeRef.current('light'),
       onEnterBack: () => setThemeRef.current('light'),
       onUpdate: (self) => {
