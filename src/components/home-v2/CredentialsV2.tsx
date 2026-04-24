@@ -672,7 +672,7 @@ export default function CredentialsV2() {
 
   // Measure displayed tab position to slide the violet pill (active or hovered)
   useLayoutEffect(() => {
-    const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
+    const tabKeys: TabKey[] = ['security', 'excellence', 'people'];
     const measurePill = () => {
       const activeIndex = tabKeys.indexOf(displayedTab);
       const activeEl = tabRefs.current[activeIndex];
