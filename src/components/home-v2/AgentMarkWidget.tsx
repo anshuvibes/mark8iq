@@ -173,12 +173,14 @@ export default function AgentMarkWidget() {
     const fragmentationSection = document.querySelector('[data-section="fragmentation"]');
     const agentMarkSection = document.querySelector('[data-section="agent-mark"]');
     const agentFoundrySection = document.querySelector('[data-section="agent-foundry"]');
+    const footerEl = document.querySelector('footer');
 
     let fragmentationActive = false;
     let insideAgentZone = false;
+    let footerActive = false;
 
     const updateVisible = () => {
-      setVisible(!fragmentationActive && !insideAgentZone);
+      setVisible(!fragmentationActive && !insideAgentZone && !footerActive);
     };
 
     // Fragmentation: hide while in view
@@ -194,8 +196,20 @@ export default function AgentMarkWidget() {
       fragObserver.observe(fragmentationSection);
     }
 
+    // Footer: hide once it enters the viewport
+    let footerObserver: IntersectionObserver | null = null;
+    if (footerEl) {
+      footerObserver = new IntersectionObserver(
+        ([entry]) => {
+          footerActive = entry.isIntersecting;
+          updateVisible();
+        },
+        { threshold: 0.01 }
+      );
+      footerObserver.observe(footerEl);
+    }
+
     // Hide only while scrolling through Agent Mark + Agent Foundry sections.
-    // Reappear above (before Agent Mark) and below (after Foundry — Proof, Credentials, etc.)
     const checkScroll = () => {
       if (!agentMarkSection) {
         insideAgentZone = false;
@@ -209,10 +223,8 @@ export default function AgentMarkWidget() {
       let exitedZone = false;
       if (agentFoundrySection) {
         const foundryRect = agentFoundrySection.getBoundingClientRect();
-        // Once foundry's bottom passes the top of the viewport, we're past it
         exitedZone = foundryRect.bottom <= vh * 0.2;
       } else {
-        // Fallback: treat agent mark's bottom as exit point
         exitedZone = markRect.bottom <= vh * 0.2;
       }
 
@@ -225,6 +237,7 @@ export default function AgentMarkWidget() {
 
     return () => {
       fragObserver?.disconnect();
+      footerObserver?.disconnect();
       window.removeEventListener('scroll', checkScroll);
     };
   }, []);
