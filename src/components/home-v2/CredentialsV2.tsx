@@ -650,24 +650,35 @@ function PeopleTab() {
 
 export default function CredentialsV2() {
   const [activeTab, setActiveTab] = useState<TabKey>('excellence');
+  const excellenceRef = useRef<HTMLDivElement>(null);
   const securityRef = useRef<HTMLDivElement>(null);
+  const peopleRef = useRef<HTMLDivElement>(null);
   const [lockedHeight, setLockedHeight] = useState<number | undefined>(undefined);
 
-  // SecurityTab is the tallest (2 rows). Measure its natural height and lock
-  // the content area to it so switching tabs never changes container height.
+  // Measure all tabs and lock the content area to the tallest one so switching
+  // tabs never changes container height.
   useLayoutEffect(() => {
     const measure = () => {
-      const el = securityRef.current;
-      if (!el) return;
-      const prevDisplay = el.style.display;
-      el.style.display = 'block';
-      const h = el.offsetHeight;
-      el.style.display = prevDisplay;
-      if (h > 0) setLockedHeight(h);
+      const refs = [excellenceRef.current, securityRef.current, peopleRef.current];
+      let max = 0;
+      refs.forEach((el) => {
+        if (!el) return;
+        const prevDisplay = el.style.display;
+        el.style.display = 'block';
+        const h = el.offsetHeight;
+        el.style.display = prevDisplay;
+        if (h > max) max = h;
+      });
+      if (max > 0) setLockedHeight(max);
     };
     measure();
+    // Re-measure after fonts/images settle
+    const t = window.setTimeout(measure, 300);
     window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
+    return () => {
+      window.clearTimeout(t);
+      window.removeEventListener('resize', measure);
+    };
   }, []);
 
   return (
