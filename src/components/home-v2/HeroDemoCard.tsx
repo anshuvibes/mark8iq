@@ -150,8 +150,10 @@ export default function HeroDemoCard() {
                     className="hero-tile"
                     style={{
                       position: 'relative',
-                      minHeight: '88px',
-                      padding: '18px 6px 14px',
+                      width: '100%',
+                      minWidth: 0,
+                      minHeight: '104px',
+                      padding: '20px 4px 14px',
                       borderRadius: '10px',
                       background: isSelected ? `${tile.accent}10` : 'var(--v2-bg-card)',
                       border: `1.5px solid ${isSelected ? tile.accent : 'var(--v2-border)'}`,
