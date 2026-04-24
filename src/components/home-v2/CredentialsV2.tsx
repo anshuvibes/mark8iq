@@ -745,7 +745,7 @@ export default function CredentialsV2() {
   }, []);
 
   return (
-    <section style={{ padding: '100px 0', position: 'relative', background: 'transparent' }}>
+    <section ref={sectionRef} style={{ padding: '100px 0', position: 'relative', background: 'transparent' }}>
       <style>{`
         @media (max-width: 767px) {
           .cred-grid { grid-template-columns: repeat(2, 1fr) !important; }
@@ -780,37 +780,19 @@ export default function CredentialsV2() {
           Recognised by the best in the business.
         </h2>
 
-        {/* Tab switcher — standalone boxes on a full-width track with dashed connectors */}
+        {/* Tab switcher — standalone boxes; full-width animated track sits below */}
         {(() => {
           const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
-          // activeIndex retained for potential future use; current design swaps per-button styles.
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const activeIndex = tabKeys.indexOf(activeTab);
           return (
             <div
               style={{
                 position: 'relative',
                 display: 'flex',
                 alignItems: 'center',
-                marginBottom: '40px',
+                marginBottom: 0,
                 padding: '0 4px',
               }}
             >
-              {/* Full-width track line behind everything */}
-              <div
-                aria-hidden
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  top: '50%',
-                  height: '1px',
-                  background: 'rgba(8,13,25,0.12)',
-                  transform: 'translateY(-50%)',
-                  zIndex: 0,
-                }}
-              />
-
               {/* Tab boxes with dashed connectors between them */}
               <div
                 style={{
@@ -824,6 +806,11 @@ export default function CredentialsV2() {
               >
                 {tabs.map((tab, i) => {
                   const isActive = activeTab === tab.key;
+                  const tabIndex = tabKeys.indexOf(tab.key);
+                  // Per-tab fill: 0..1 over its 5s window
+                  const localProgress = isActive
+                    ? Math.min(Math.max((progress - tabIndex / 3) * 3, 0), 1)
+                    : 0;
                   return (
                     <Fragment key={tab.key}>
                       {i === 0 && (
@@ -838,7 +825,7 @@ export default function CredentialsV2() {
                       )}
 
                       <button
-                        onClick={() => setActiveTab(tab.key)}
+                        onClick={() => handleTabClick(tab.key)}
                         style={{
                           padding: '10px 28px',
                           border: `1px solid ${isActive ? '#8E59FF' : 'rgba(8,13,25,0.15)'}`,
@@ -857,9 +844,23 @@ export default function CredentialsV2() {
                           position: 'relative',
                           zIndex: 1,
                           flexShrink: 0,
+                          overflow: 'hidden',
                         }}
                       >
                         {tab.label}
+                        {/* Per-tab bottom progress bar */}
+                        <div
+                          aria-hidden
+                          style={{
+                            position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            height: '2px',
+                            width: `${localProgress * 100}%`,
+                            background: 'rgba(255,255,255,0.85)',
+                            transition: 'width 0.05s linear',
+                          }}
+                        />
                       </button>
 
                       <div
@@ -877,6 +878,76 @@ export default function CredentialsV2() {
             </div>
           );
         })()}
+
+        {/* Full-viewport-width line with travelling glowing dot */}
+        <div
+          aria-hidden
+          style={{
+            position: 'relative',
+            width: '100vw',
+            marginLeft: 'calc(-50vw + 50%)',
+            height: '2px',
+            marginTop: '-1px',
+            marginBottom: '40px',
+            zIndex: 2,
+          }}
+        >
+          {/* Base line */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'rgba(8,13,25,0.08)',
+            }}
+          />
+
+          {/* Filled progress track */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: `${progress * 100}%`,
+              height: '100%',
+              background:
+                'linear-gradient(90deg, rgba(142,89,255,0.3) 0%, rgba(142,89,255,0.8) 100%)',
+              transition: 'width 0.05s linear',
+            }}
+          />
+
+          {/* Glowing shooting-star dot */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: `${progress * 100}%`,
+              transform: 'translate(-50%, -50%)',
+              width: '10px',
+              height: '10px',
+              borderRadius: '50%',
+              background: '#8E59FF',
+              boxShadow:
+                '0 0 8px 3px rgba(142,89,255,0.8), 0 0 20px 8px rgba(142,89,255,0.4), 0 0 40px 16px rgba(142,89,255,0.15)',
+              zIndex: 3,
+              transition: 'left 0.05s linear',
+            }}
+          >
+            {/* Trailing tail — points left, behind the dot */}
+            <div
+              style={{
+                position: 'absolute',
+                right: '50%',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '60px',
+                height: '2px',
+                background:
+                  'linear-gradient(90deg, rgba(142,89,255,0) 0%, rgba(142,89,255,0.6) 100%)',
+                borderRadius: '1px',
+              }}
+            />
+          </div>
+        </div>
 
         {/* Content card — separate from the tab switcher */}
         <div
