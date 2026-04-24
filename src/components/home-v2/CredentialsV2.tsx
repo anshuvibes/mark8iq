@@ -646,10 +646,10 @@ export default function CredentialsV2() {
   const securityRef = useRef<HTMLDivElement>(null);
   const [lockedHeight, setLockedHeight] = useState<number | undefined>(undefined);
 
-  const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
-  const activeIndex = tabKeys.indexOf(activeTab);
-  const prevIndexRef = useRef<number>(activeIndex);
-  const [prevIndex, setPrevIndex] = useState<number>(activeIndex);
+  const tabGroupRef = useRef<HTMLDivElement>(null);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const [pillWidth, setPillWidth] = useState(0);
+  const [pillOffset, setPillOffset] = useState(0);
 
   // SecurityTab is the tallest (2 rows). Measure its natural height and lock
   // the content area to it so switching tabs never changes container height.
@@ -668,14 +668,23 @@ export default function CredentialsV2() {
     return () => window.removeEventListener('resize', measure);
   }, []);
 
-  // Track previous active tab index so each button's pill can slide in from
-  // the correct side (left if previous was to the left, right if to the right).
+  // Measure active tab position to slide the violet pill
   useLayoutEffect(() => {
-    if (prevIndexRef.current !== activeIndex) {
-      setPrevIndex(prevIndexRef.current);
-      prevIndexRef.current = activeIndex;
-    }
-  }, [activeIndex]);
+    const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
+    const measurePill = () => {
+      const activeIndex = tabKeys.indexOf(activeTab);
+      const activeEl = tabRefs.current[activeIndex];
+      const groupEl = tabGroupRef.current;
+      if (!activeEl || !groupEl) return;
+      const groupRect = groupEl.getBoundingClientRect();
+      const activeRect = activeEl.getBoundingClientRect();
+      setPillWidth(activeRect.width);
+      setPillOffset(activeRect.left - groupRect.left);
+    };
+    measurePill();
+    window.addEventListener('resize', measurePill);
+    return () => window.removeEventListener('resize', measurePill);
+  }, [activeTab]);
 
   return (
     <section style={{ padding: '100px 0', position: 'relative', background: 'transparent' }}>
@@ -733,6 +742,7 @@ export default function CredentialsV2() {
 
           {/* Tab box group */}
           <div
+            ref={tabGroupRef}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -742,33 +752,32 @@ export default function CredentialsV2() {
               gap: '24px',
             }}
           >
-            {/* Tab buttons — each contains its own pill, clipped to the button bounds */}
+            {/* Sliding violet pill */}
+            <div
+              aria-hidden
+              style={{
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                left: 0,
+                width: pillWidth > 0 ? `${pillWidth}px` : '33%',
+                transform: `translateX(${pillOffset}px)`,
+                transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+                background: '#8e59ff',
+                borderRadius: '3px',
+                zIndex: 2,
+                pointerEvents: 'none',
+                border: '1px solid #8e59ff',
+              }}
+            />
+
+            {/* Tab buttons */}
             {tabs.map((tab, i) => {
               const isActive = activeTab === tab.key;
-              // Slide direction: if previous active was to the left of this
-              // button, the pill arrives from the left (-100%); if from the
-              // right, arrives from the right (100%). When this button is
-              // active, the pill rests at 0%. When leaving, it exits toward
-              // the new active tab.
-              const newActive = activeIndex;
-              let pillTranslate = '0%';
-              if (!isActive) {
-                // Park inactive pills offscreen on the side closest to the active tab,
-                // so when this tab becomes active next, it slides in from that side.
-                pillTranslate = newActive > i ? '-100%' : '100%';
-              } else {
-                // Active: pill is at rest (0%). It animated in from the side
-                // of the previous active tab.
-                pillTranslate = '0%';
-              }
-              // For the active tab, set the starting position based on prevIndex
-              // by using a key that forces re-mount only when needed — but CSS
-              // transition handles it: the pill was previously parked at
-              // ±100% (because this tab was inactive), so transitioning to 0%
-              // automatically slides from the correct side.
               return (
                 <button
                   key={tab.key}
+                  ref={(el) => { tabRefs.current[i] = el; }}
                   onClick={() => setActiveTab(tab.key)}
                   style={{
                     flex: 1,
@@ -784,26 +793,12 @@ export default function CredentialsV2() {
                     cursor: 'pointer',
                     position: 'relative',
                     whiteSpace: 'nowrap',
-                    overflow: 'hidden',
                   }}
                 >
-                  {/* Per-button pill — clipped by button's overflow:hidden */}
-                  <span
-                    aria-hidden
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: '#8e59ff',
-                      transform: `translateX(${pillTranslate})`,
-                      transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
-                      zIndex: 1,
-                      pointerEvents: 'none',
-                    }}
-                  />
                   <span
                     style={{
                       position: 'relative',
-                      zIndex: 2,
+                      zIndex: 3,
                       display: 'inline-block',
                       color: isActive ? '#ffffff' : 'rgba(8,13,25,0.45)',
                       transition: 'color 0.18s cubic-bezier(0.4, 0, 0.2, 1) 0.14s',
