@@ -61,17 +61,25 @@ export default function Layout({ children }: LayoutProps) {
           {children}
         </div>
       </div>
-      <GradualBlur
-        target="page"
-        position="bottom"
-        height="80px"
-        strength={0.8}
-        divCount={6}
-        curve="bezier"
-        exponential={false}
-        opacity={0.9}
-        zIndex={9990}
-      />
+      <div
+        style={{
+          opacity: atBottom ? 0 : 1,
+          transition: 'opacity 0.3s ease',
+          pointerEvents: atBottom ? 'none' : 'auto',
+        }}
+      >
+        <GradualBlur
+          target="page"
+          position="bottom"
+          height="80px"
+          strength={0.8}
+          divCount={6}
+          curve="bezier"
+          exponential={false}
+          opacity={0.9}
+          zIndex={9990}
+        />
+      </div>
     </div>
   );
 }
