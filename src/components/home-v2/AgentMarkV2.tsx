@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import { useV2Theme } from './ThemeContext';
 import AgentMarkInput from './AgentMarkInput';
 import AgentMarkOrb from './AgentMarkOrb';
 
@@ -92,6 +95,25 @@ export default function AgentMarkV2() {
   // Transition between findings
   const [opacity, setOpacity] = useState(1);
   const [slideY, setSlideY] = useState(0);
+
+  // Force light theme while Agent Mark is in view
+  const { setTheme } = useV2Theme();
+  const setThemeRef = useRef(setTheme);
+  setThemeRef.current = setTheme;
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const anchor = document.querySelector('[data-section="agent-mark"]');
+    if (!anchor) return;
+    const trigger = ScrollTrigger.create({
+      trigger: anchor as Element,
+      start: 'top 80%',
+      end: 'bottom 20%',
+      onEnter: () => setThemeRef.current('light'),
+      onEnterBack: () => setThemeRef.current('light'),
+      onUpdate: (self) => { if (self.isActive) setThemeRef.current('light'); },
+    });
+    return () => { trigger.kill(); };
+  }, []);
 
   useEffect(() => {
     const ts: ReturnType<typeof setTimeout>[] = [];

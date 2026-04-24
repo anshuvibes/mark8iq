@@ -179,18 +179,19 @@ export default function ProofV2() {
   const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
 
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
     const section = sectionRef.current;
     if (!section) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setTheme('light');
-      },
-      { threshold: 0, rootMargin: '0px 0px -20% 0px' }
-    );
-
-    observer.observe(section);
-    return () => observer.disconnect();
+    const trigger = ScrollTrigger.create({
+      trigger: section,
+      start: 'top 80%',
+      end: 'bottom 20%',
+      onEnter: () => setTheme('light'),
+      onEnterBack: () => setTheme('light'),
+      onUpdate: (self) => { if (self.isActive) setTheme('light'); },
+    });
+    return () => { trigger.kill(); };
   }, [setTheme]);
 
   useEffect(() => {
