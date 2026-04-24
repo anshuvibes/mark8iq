@@ -668,23 +668,14 @@ export default function CredentialsV2() {
     return () => window.removeEventListener('resize', measure);
   }, []);
 
-  // Measure active tab position to slide the violet pill
+  // Track previous active tab index so each button's pill can slide in from
+  // the correct side (left if previous was to the left, right if to the right).
   useLayoutEffect(() => {
-    const tabKeys: TabKey[] = ['excellence', 'security', 'people'];
-    const measurePill = () => {
-      const activeIndex = tabKeys.indexOf(activeTab);
-      const activeEl = tabRefs.current[activeIndex];
-      const groupEl = tabGroupRef.current;
-      if (!activeEl || !groupEl) return;
-      const groupRect = groupEl.getBoundingClientRect();
-      const activeRect = activeEl.getBoundingClientRect();
-      setPillWidth(activeRect.width);
-      setPillOffset(activeRect.left - groupRect.left);
-    };
-    measurePill();
-    window.addEventListener('resize', measurePill);
-    return () => window.removeEventListener('resize', measurePill);
-  }, [activeTab]);
+    if (prevIndexRef.current !== activeIndex) {
+      setPrevIndex(prevIndexRef.current);
+      prevIndexRef.current = activeIndex;
+    }
+  }, [activeIndex]);
 
   return (
     <section style={{ padding: '100px 0', position: 'relative', background: 'transparent' }}>
