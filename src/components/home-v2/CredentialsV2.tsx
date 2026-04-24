@@ -765,7 +765,7 @@ export default function CredentialsV2() {
                 transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
                 background: '#8e59ff',
                 borderRadius: '3px',
-                zIndex: 0,
+                zIndex: 2,
                 pointerEvents: 'none',
                 border: '1px solid #8e59ff',
               }}
@@ -784,7 +784,7 @@ export default function CredentialsV2() {
                     padding: '12px 0',
                     border: '1px solid rgba(8,13,25,0.15)',
                     borderRadius: '3px',
-                    background: isActive ? 'transparent' : '#ffffff',
+                    background: '#ffffff',
                     color: isActive ? '#ffffff' : 'rgba(8,13,25,0.45)',
                     fontFamily: "'Saira', sans-serif",
                     fontSize: '11px',
@@ -793,7 +793,7 @@ export default function CredentialsV2() {
                     textTransform: 'uppercase',
                     cursor: 'pointer',
                     position: 'relative',
-                    zIndex: 1,
+                    zIndex: isActive ? 3 : 1,
                     transition: 'color 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
                     whiteSpace: 'nowrap',
                   }}
