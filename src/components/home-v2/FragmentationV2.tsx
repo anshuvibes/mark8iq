@@ -333,7 +333,7 @@ export default function FragmentationV2() {
       ease: 'power3.inOut',
     }, 48);
 
-    gsap.set(logoRef.current, { opacity: 0, xPercent: -50, yPercent: -50 });
+    gsap.set(logoRef.current, { opacity: 0 });
     tl.to(logoRef.current, {
       opacity: 1,
       duration: 2,
