@@ -13,7 +13,7 @@ export default function VideoCTAButton() {
         onMouseLeave={() => setHovered(false)}
         style={{
           position: 'relative',
-          width: 'clamp(280px, 36vw, 480px)',
+          width: 'clamp(320px, 48vw, 600px)',
           aspectRatio: '16 / 9',
           borderRadius: '5px',
           overflow: 'hidden',
