@@ -19,16 +19,6 @@ const TABS = [
     type: 'standard' as const,
   },
   {
-    id: 'ecom',
-    role: 'E-Commerce Head',
-    oneliner: 'Protect your search rank before competitors take it.',
-    body: 'The Visibility Booster Agent monitors your search rank across every marketplace through Mark8 Sight. The moment your position drops below the threshold you set, it triggers a targeted bid adjustment in Mark8 Ads to recover visibility. You do not find out after the damage is done. The agent acts while it is happening.',
-    agentName: 'Visibility Booster Agent',
-    connects: ['Mark8 Sight', 'Mark8 Ads'],
-    lastAction: '22 min ago',
-    type: 'standard' as const,
-  },
-  {
     id: 'finance',
     role: 'Finance Head',
     oneliner: 'Catch platform price violations before they cut your margin.',
