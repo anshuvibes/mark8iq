@@ -587,7 +587,7 @@ export default function FragmentationV2() {
           style={{
             position: 'absolute',
             left: '50%',
-            top: '50%',
+            top: 'calc(50% + 32px)',
             transform: 'translate(-50%, -50%)',
             display: 'flex',
             flexDirection: 'column',
