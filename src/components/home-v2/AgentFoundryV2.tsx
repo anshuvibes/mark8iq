@@ -321,13 +321,11 @@ export default function AgentFoundryV2() {
               ))}
             </div>
 
-            {/* RIGHT — Only active panel shown */}
+            {/* RIGHT — Spans full height of left nav */}
             <div style={{
               flex: 1,
               minWidth: 0,
-              position: 'sticky',
-              top: '100px',
-              alignSelf: 'flex-start',
+              alignSelf: 'stretch',
             }}>
               <div
                 key={activePersona.id}
@@ -341,10 +339,25 @@ export default function AgentFoundryV2() {
                   boxShadow: '0 8px 40px rgba(0,0,0,0.4)',
                   borderRadius: '5px',
                   padding: '40px',
-                  height: '480px',
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   transition: 'box-shadow 0.3s ease',
                 }}
               >
+                <span style={{
+                  fontFamily: "'Saira', sans-serif",
+                  fontSize: '18px',
+                  fontWeight: 400,
+                  color: 'var(--v2-text-subtle)',
+                  textAlign: 'center',
+                  lineHeight: '1.6',
+                }}>
+                  {activePersona.id === 'custom'
+                    ? 'Build Your Own visual will be shown here'
+                    : `${activePersona.role} visual will be shown here`}
+                </span>
               </div>
             </div>
           </div>
