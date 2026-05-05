@@ -13,7 +13,7 @@ const roles = [
     accentColor: '#8e59ff',
   },
   {
-    label: 'E-Commerce Manager',
+    label: 'KAM · Account Growth',
     taglineLine1: 'See what is moving, what is stuck, and why before your morning meeting.',
     taglineLine2: '',
     body: 'Trend lines. Week-on-week movement. Marketplace comparison. Inventory alerts.',
@@ -21,7 +21,7 @@ const roles = [
     accentColor: '#52bfbc',
   },
   {
-    label: 'CEO / Founder',
+    label: 'CXO · Business Overview',
     taglineLine1: 'The full picture. In the time it takes',
     taglineLine2: 'to pour your first coffee.',
     body: 'P&L impact. Blended ROAS. GMV trajectory. Financial leakage alerts.',
