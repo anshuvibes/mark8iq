@@ -335,6 +335,9 @@ export default function AgentFoundryV2() {
             <div style={{
               flex: 1,
               minWidth: 0,
+              position: 'sticky',
+              top: '100px',
+              alignSelf: 'flex-start',
             }}>
               <div
                 key={activePersona.id}
