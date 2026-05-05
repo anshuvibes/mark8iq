@@ -113,7 +113,7 @@ export default function AgentFoundryV2() {
   const [activeTab, setActiveTab] = useState(0);
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const navRef = useRef<HTMLDivElement>(null);
-  const [navHeight, setNavHeight] = useState<number>(0);
+  
   const { setTheme } = useV2Theme();
   const setThemeRef = useRef(setTheme);
   setThemeRef.current = setTheme;
@@ -152,49 +152,6 @@ export default function AgentFoundryV2() {
     };
   }, []);
 
-  useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-
-    panelRefs.current.forEach((panel, i) => {
-      if (!panel) return;
-
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setActiveTab(i);
-          }
-        },
-        {
-          threshold: 0.4,
-          rootMargin: '0px 0px -20% 0px',
-        }
-      );
-
-      observer.observe(panel);
-      observers.push(observer);
-    });
-
-    const ro = new ResizeObserver(() => {
-      if (navRef.current) {
-        setNavHeight(navRef.current.offsetHeight);
-      }
-    });
-
-    if (navRef.current) {
-      ro.observe(navRef.current);
-      requestAnimationFrame(() => {
-        if (navRef.current) {
-          setNavHeight(navRef.current.offsetHeight);
-          ScrollTrigger.refresh();
-        }
-      });
-    }
-
-    return () => {
-      observers.forEach((o) => o.disconnect());
-      ro.disconnect();
-    };
-  }, []);
 
   return (
     <>
@@ -326,9 +283,7 @@ export default function AgentFoundryV2() {
               {TABS.map((tab, i) => (
                 <button
                   key={tab.id}
-                  onClick={() => {
-                    panelRefs.current[i]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                  }}
+                  onClick={() => setActiveTab(i)}
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -395,8 +350,6 @@ export default function AgentFoundryV2() {
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '24px',
-                    height: navHeight > 0 ? `${navHeight}px` : 'auto',
-                    overflowY: navHeight > 0 ? 'auto' : 'visible',
                     transition: 'box-shadow 0.3s ease',
                     ...(activeTab === i ? {
                       boxShadow: '0 8px 40px rgba(0,0,0,0.4)',
