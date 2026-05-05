@@ -628,7 +628,7 @@ export default function FragmentationV2() {
           style={{
             position: 'absolute',
             left: '50%',
-            top: 'calc(50% + 110px)',
+            top: 'calc(50% + 90px)',
             transform: 'translateX(-50%)',
             zIndex: 30,
             pointerEvents: 'auto',
