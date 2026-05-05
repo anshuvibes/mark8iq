@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { useV2Theme } from './ThemeContext';
 import VideoCTAButton from './VideoCTAButton';
-  const hasFiredConfettiRef = useRef(false);
+
 
 const marketplacePills = [
   { label: 'Amazon',           logo: '/img/home-v2/fragmentation/amazon.png',            size: 80,  blur: 0,   x: -480, y: -220 },
