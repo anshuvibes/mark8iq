@@ -72,6 +72,7 @@ export default function FragmentationV2() {
   const logoRef = useRef<HTMLDivElement>(null);
   const subCopyRef = useRef<HTMLDivElement>(null);
   const videoCTAWrapperRef = useRef<HTMLDivElement>(null);
+  const endStateGroupRef = useRef<HTMLDivElement>(null);
   const endStateZoneRef = useRef<HTMLDivElement>(null);
   const logoMarkColorRef = useRef<string>('#FFFFFF');
   const logoMarkGroupRef = useRef<SVGGElement>(null);
