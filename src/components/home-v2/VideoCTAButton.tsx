@@ -27,6 +27,21 @@ export default function VideoCTAButton() {
           transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
         }}
       >
+        {/* First-frame thumbnail — preload metadata loads the first frame without downloading the full video */}
+        <video
+          src="/demo.mp4"
+          preload="metadata"
+          muted
+          playsInline
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            pointerEvents: 'none',
+          }}
+        />
         {/* Dark overlay — lightens on hover to signal interactivity */}
         <div
           style={{
