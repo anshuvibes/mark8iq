@@ -340,7 +340,7 @@ export default function FragmentationV2() {
       ease: 'power2.out',
     }, 51);
 
-    gsap.set(subCopyRef.current, { opacity: 0, xPercent: -50 });
+    gsap.set(subCopyRef.current, { opacity: 0 });
     tl.to(subCopyRef.current, {
       opacity: 1,
       duration: 2,
