@@ -329,31 +329,31 @@ export default function FragmentationV2() {
 
     tl.to(circleRef.current, {
       scale: 60,
-      duration: 4,
+      duration: 6,
       ease: 'power3.inOut',
     }, 48);
 
     gsap.set(logoRef.current, { opacity: 0 });
     tl.to(logoRef.current, {
       opacity: 1,
-      duration: 2,
+      duration: 3,
       ease: 'power2.out',
-    }, 51);
+    }, 55);
 
     gsap.set(subCopyRef.current, { opacity: 0 });
     tl.to(subCopyRef.current, {
       opacity: 1,
-      duration: 2,
+      duration: 3,
       ease: 'power2.out',
-    }, 52);
+    }, 58);
 
     gsap.set(videoCTAWrapperRef.current, { opacity: 0, y: 12 });
     tl.to(videoCTAWrapperRef.current, {
       opacity: 1,
       y: 0,
-      duration: 2,
+      duration: 3,
       ease: 'power2.out',
-    }, 53);
+    }, 61);
 
     // After circle reveal completes, clear sticky container background
     // so the global grid/gradient layer shows through.
@@ -361,7 +361,7 @@ export default function FragmentationV2() {
       backgroundColor: 'transparent',
       duration: 0.5,
       ease: 'none',
-    }, 52);
+    }, 58);
 
     return () => {
       tl.scrollTrigger?.kill();
