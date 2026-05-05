@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import confetti from 'canvas-confetti';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { useV2Theme } from './ThemeContext';
