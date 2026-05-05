@@ -77,6 +77,7 @@ export default function FragmentationV2() {
   const endStateZoneRef = useRef<HTMLDivElement>(null);
   const logoMarkColorRef = useRef<string>('#FFFFFF');
   const logoMarkGroupRef = useRef<SVGGElement>(null);
+  const hasFiredConfettiRef = useRef(false);
 
   // Store setTheme in a ref so GSAP callbacks can access it without stale closures
   const setThemeRef = useRef(setTheme);
