@@ -65,7 +65,7 @@ export default function RoleBasedValueV2() {
         trigger: container,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 1.2,
+        scrub: 0.6,
         pin: stickyRef.current,
         pinSpacing: false,
       },
@@ -108,7 +108,7 @@ export default function RoleBasedValueV2() {
   }, []);
 
   return (
-    <div ref={containerRef} data-section="role-based" style={{ height: '300vh', position: 'relative' }}>
+    <div ref={containerRef} data-section="role-based" style={{ height: '400vh', position: 'relative' }}>
       <div
         ref={stickyRef}
         style={{
