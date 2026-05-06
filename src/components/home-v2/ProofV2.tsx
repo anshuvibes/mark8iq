@@ -110,10 +110,6 @@ function MetricItem({ metric, index }: {
 export default function ProofV2() {
   const { setTheme } = useV2Theme();
   const sectionRef = useRef<HTMLElement | null>(null);
-  const stickyRef = useRef<HTMLDivElement | null>(null);
-  const carouselWrapperRef = useRef<HTMLDivElement | null>(null);
-  const trackRef = useRef<HTMLDivElement | null>(null);
-  const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -131,146 +127,65 @@ export default function ProofV2() {
     return () => { trigger.kill(); };
   }, [setTheme]);
 
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const section = sectionRef.current;
-    const track = trackRef.current;
-    const wrapper = carouselWrapperRef.current;
-    if (!section || !track || !wrapper) return;
-
-    const getSiteInset = () => Math.max(24, (window.innerWidth - 1200) / 2);
-    const getTravel = () => {
-      const lastCard = track.lastElementChild as HTMLElement | null;
-      if (!lastCard) return Math.max(0, track.scrollWidth - wrapper.clientWidth);
-
-      const lastCardRight = lastCard.offsetLeft + lastCard.offsetWidth;
-      return Math.max(0, lastCardRight - (wrapper.clientWidth - getSiteInset()));
-    };
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: () => `+=${Math.max(window.innerHeight * 0.9, getTravel() * 0.55)}`,
-        scrub: 1.2,
-        pin: stickyRef.current,
-        pinSpacing: true,
-        invalidateOnRefresh: true,
-      },
-    });
-
-    tl.to(track, {
-      x: () => -getTravel(),
-      ease: 'none',
-    });
-
-    scrollTriggerRef.current = tl.scrollTrigger ?? null;
-
-    return () => {
-      scrollTriggerRef.current = null;
-      tl.scrollTrigger?.kill();
-      tl.kill();
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleHorizontalWheel = (event: WheelEvent) => {
-      if (Math.abs(event.deltaX) < 2 || Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
-
-      const trigger = scrollTriggerRef.current;
-      const section = sectionRef.current;
-      if (!trigger || !section) return;
-
-      const currentScroll = window.scrollY;
-      const isWithinPinnedRange = currentScroll >= trigger.start - 2 && currentScroll <= trigger.end + 2;
-      if (!trigger.isActive && !isWithinPinnedRange) return;
-
-      event.preventDefault();
-      const nextScroll = Math.max(trigger.start, Math.min(trigger.end, currentScroll + event.deltaX));
-      window.scrollTo({ top: nextScroll, behavior: 'auto' });
-    };
-
-    document.addEventListener('wheel', handleHorizontalWheel, { passive: false, capture: true });
-    return () => document.removeEventListener('wheel', handleHorizontalWheel, { capture: true });
-  }, []);
-
   return (
     <section ref={sectionRef} data-section="proof" style={{ position: 'relative' }}>
-      <div ref={stickyRef} style={{ minHeight: '100vh', padding: '120px 0 0', overflow: 'hidden' }}>
-      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-        <motion.p
-          className="m8-eyebrow"
-          style={{ color: 'var(--v2-text-secondary)', textAlign: 'center', marginBottom: '12px' }}
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-        >
-          CLIENT RESULTS
-        </motion.p>
-        <motion.h2
-          className="m8-h1-large"
-          style={{ color: 'var(--v2-text)', textAlign: 'center', marginBottom: '42px' }}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ delay: 0.05 }}
-        >
-          India's fastest-growing brands run on Mark8 IQ.
-        </motion.h2>
+      <div style={{ padding: '120px 0 80px' }}>
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+          <motion.p
+            className="m8-eyebrow"
+            style={{ color: 'var(--v2-text-secondary)', textAlign: 'center', marginBottom: '12px' }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+          >
+            CLIENT RESULTS
+          </motion.p>
+          <motion.h2
+            className="m8-h1-large"
+            style={{ color: 'var(--v2-text)', textAlign: 'center', marginBottom: '42px' }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ delay: 0.05 }}
+          >
+            India's fastest-growing brands run on Mark8 IQ.
+          </motion.h2>
 
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
-          marginBottom: '36px',
-          flexWrap: 'wrap',
-          gap: '0',
-        }}>
-          {metrics.map((m, i) => (
-            <MetricItem key={m.label} metric={m} index={i} />
-          ))}
-        </div>
-
-      </div>
-
-      <div style={{ marginTop: '20px' }}>
-        <div
-          ref={carouselWrapperRef}
-          style={{
-            overflow: 'hidden',
-            width: '100vw',
-            marginLeft: 'calc(50% - 50vw)',
-            marginRight: 'calc(50% - 50vw)',
-          }}
-        >
-          <div ref={trackRef} style={{
+          <div style={{
             display: 'flex',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            marginBottom: '48px',
+            flexWrap: 'wrap',
+            gap: '0',
+          }}>
+            {metrics.map((m, i) => (
+              <MetricItem key={m.label} metric={m} index={i} />
+            ))}
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
             gap: '20px',
-            paddingLeft: 'max(24px, calc((100vw - 1200px) / 2))',
-            paddingRight: 'max(24px, calc((100vw - 1200px) / 2))',
-            willChange: 'transform',
           }}>
             {BRANDS.map((brand) => (
-              <div
-                key={brand.name}
-                style={{
-                  flex: '0 0 390px',
-                  minWidth: 0,
-                }}
-              >
+              <div key={brand.name}>
                 <BrandCard {...brand} />
               </div>
             ))}
           </div>
         </div>
-
-      </div>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          section article[style*="grid-template-columns"] {
+        @media (max-width: 1024px) {
+          section[data-section="proof"] .container > div:last-child {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+        @media (max-width: 600px) {
+          section[data-section="proof"] .container > div:last-child {
             grid-template-columns: 1fr !important;
           }
         }
