@@ -1,16 +1,31 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import VideoModal from './VideoModal';
 
 export default function VideoCTAButton() {
   const [modalOpen, setModalOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleMouseEnter = useCallback(() => {
+    setHovered(true);
+    videoRef.current?.play().catch(() => {});
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setHovered(false);
+    const v = videoRef.current;
+    if (v) {
+      v.pause();
+      v.currentTime = 0;
+    }
+  }, []);
 
   return (
     <>
       <div
         onClick={() => setModalOpen(true)}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         style={{
           position: 'relative',
           width: 'clamp(320px, 48vw, 600px)',
@@ -27,8 +42,9 @@ export default function VideoCTAButton() {
           transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
         }}
       >
-        {/* First-frame thumbnail — preload metadata loads the first frame without downloading the full video */}
+        {/* Video — plays muted on hover */}
         <video
+          ref={videoRef}
           src="/demo.mp4"
           preload="metadata"
           muted
