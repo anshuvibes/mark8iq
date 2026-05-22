@@ -483,11 +483,22 @@ export default function FragmentationV2() {
                 pointerEvents: 'none',
                 zIndex: 2,
                 letterSpacing: '-0.01em',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
               }}
             >
+              <img
+                src={tag.icon}
+                alt=""
+                width={20}
+                height={20}
+                style={{ display: 'block', flexShrink: 0 }}
+              />
               {tag.label}
             </span>
           ))}
+
 
           {/* Persona labels */}
           {personaLabels.map((persona, i) => (
