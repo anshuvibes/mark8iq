@@ -7,10 +7,10 @@ import {
   Package,
   RotateCcw,
   FileText,
-  CreditCard,
+  Banknote,
   Search,
   Bot,
-  Factory,
+  Cpu,
   Check,
   ArrowLeft,
   ArrowRight,
@@ -22,21 +22,21 @@ type Step = 'select' | 'form' | 'success';
 
 interface ValueTile {
   id: string;
-  label: string;
+  label: [string, string]; // forced two-line label per Figma
   accent: string;
   Icon: typeof Megaphone;
 }
 
 const TILES: ValueTile[] = [
-  { id: 'ads',       label: 'Ads Analytics',         accent: '#dd4062', Icon: Megaphone },
-  { id: 'visibility',label: 'Market Visibility',     accent: '#52bfbc', Icon: Eye },
-  { id: 'inventory', label: 'Inventory Control',     accent: '#6895fc', Icon: Package },
-  { id: 'po',        label: 'Purchase Order',        accent: '#fcb24f', Icon: FileText },
-  { id: 'returns',   label: 'Return Operations',     accent: '#fc7459', Icon: RotateCcw },
-  { id: 'reco',      label: 'Payment Reconciliation',accent: '#7cbc71', Icon: CreditCard },
-  { id: 'research',  label: 'Market Research',       accent: '#8E59FF', Icon: Search },
-  { id: 'mark',      label: 'Agent Mark',            accent: '#8E59FF', Icon: Bot },
-  { id: 'foundry',   label: 'Agent Foundry',         accent: '#8E59FF', Icon: Factory },
+  { id: 'ads',       label: ['Ads', 'Analytics'],          accent: '#dd4062', Icon: Megaphone },
+  { id: 'visibility',label: ['Market', 'Visibility'],      accent: '#52bfbc', Icon: Eye },
+  { id: 'inventory', label: ['Inventory', 'Control'],      accent: '#6895fc', Icon: Package },
+  { id: 'po',        label: ['Purchase', 'Order'],         accent: '#fcb24f', Icon: FileText },
+  { id: 'returns',   label: ['Return', 'Operations'],      accent: '#fc7459', Icon: RotateCcw },
+  { id: 'reco',      label: ['Payment', 'Reconciliation'], accent: '#7cbc71', Icon: Banknote },
+  { id: 'research',  label: ['Market', 'Research'],        accent: '#8E59FF', Icon: Search },
+  { id: 'mark',      label: ['Agent', 'Mark'],             accent: '#8E59FF', Icon: Bot },
+  { id: 'foundry',   label: ['Agent', 'Foundry'],          accent: '#8E59FF', Icon: Cpu },
 ];
 
 const formSchema = z.object({
@@ -272,11 +272,12 @@ export default function HeroDemoCard() {
                         fontSize: '11px',
                         fontWeight: 400,
                         color: 'var(--v2-text)',
-                        lineHeight: 1.2,
-                        wordBreak: 'break-word',
+                        lineHeight: 1.25,
                       }}
                     >
-                      {tile.label}
+                      {tile.label[0]}
+                      <br />
+                      {tile.label[1]}
                     </span>
                   </button>
                 );
