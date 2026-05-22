@@ -30,13 +30,13 @@ interface ValueTile {
 const TILES: ValueTile[] = [
   { id: 'ads',       label: ['Ads', 'Analytics'],          accent: '#dd4062', Icon: Megaphone },
   { id: 'visibility',label: ['Market', 'Visibility'],      accent: '#52bfbc', Icon: Eye },
-  { id: 'inventory', label: ['Inventory', 'Control'],      accent: '#6895fc', Icon: Package },
-  { id: 'po',        label: ['Purchase', 'Order'],         accent: '#fcb24f', Icon: FileText },
+  { id: 'inventory', label: ['Inventory', 'Control'],      accent: '#6895fc', Icon: Box },
+  { id: 'po',        label: ['Purchase', 'Order'],         accent: '#fcb24f', Icon: Receipt },
   { id: 'returns',   label: ['Return', 'Operations'],      accent: '#fc7459', Icon: RotateCcw },
   { id: 'reco',      label: ['Payment', 'Reconciliation'], accent: '#7cbc71', Icon: Banknote },
   { id: 'research',  label: ['Market', 'Research'],        accent: '#8E59FF', Icon: Search },
   { id: 'mark',      label: ['Agent', 'Mark'],             accent: '#8E59FF', Icon: Bot },
-  { id: 'foundry',   label: ['Agent', 'Foundry'],          accent: '#8E59FF', Icon: Cpu },
+  { id: 'foundry',   label: ['Agent', 'Foundry'],          accent: '#8E59FF', Icon: Factory },
 ];
 
 const formSchema = z.object({
