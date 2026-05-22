@@ -206,7 +206,7 @@ export default function HeroDemoCard() {
             >
               {TILES.map((tile) => {
                 const isSelected = selected.has(tile.id);
-                const Icon = tile.Icon;
+                const iconSrc = tile.icon;
                 return (
                   <button
                     key={tile.id}
