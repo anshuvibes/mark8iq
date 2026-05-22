@@ -22,9 +22,8 @@ export default function ScrollDownHint() {
     let nearPageEnd = false;
 
     const update = () => {
-      // Show whenever the AgentMarkWidget is hidden, but not at the very
-      // bottom of the page where there's nothing left to scroll to.
-      setShow((fragmentationActive || insideAgentZone) && !footerActive && !nearPageEnd);
+      // Only show in the Fragmentation area.
+      setShow(fragmentationActive && !footerActive && !nearPageEnd);
     };
 
     let fragObs: IntersectionObserver | null = null;
