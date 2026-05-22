@@ -7,13 +7,13 @@ import VideoCTAButton from './VideoCTAButton';
 
 
 const marketplacePills = [
-  { label: 'Amazon',           logo: '/img/home-v2/fragmentation/amazon.png',            size: 80,  blur: 0,   x: -480, y: -220 },
-  { label: 'Flipkart',         logo: '/img/home-v2/fragmentation/flipkart.png',          size: 72,  blur: 0,   x:  460, y: -180 },
-  { label: 'Myntra',           logo: '/img/home-v2/fragmentation/myntra.png',            size: 52,  blur: 1.5, x: -300, y:   80 },
-  { label: 'Meesho',           logo: '/img/home-v2/fragmentation/meesho.png',            size: 60,  blur: 0,   x:  500, y:   60 },
-  { label: 'Zepto',            logo: '/img/home-v2/fragmentation/zepto.png',             size: 44,  blur: 2,   x: -160, y:  280 },
-  { label: 'Blinkit',          logo: '/img/home-v2/fragmentation/blinkit.png',           size: 68,  blur: 0,   x:  200, y:  260 },
-  { label: 'Swiggy Instamart', logo: '/img/home-v2/fragmentation/swiggy-instamart.png',  size: 48,  blur: 1,   x:   60, y: -300 },
+  { label: 'Amazon',           logo: '/img/home-v2/fragmentation/amazon.png',            size: 80,  blur: 0,   x: -500, y: -280 },
+  { label: 'Flipkart',         logo: '/img/home-v2/fragmentation/flipkart.png',          size: 72,  blur: 0,   x:  500, y: -280 },
+  { label: 'Myntra',           logo: '/img/home-v2/fragmentation/myntra.png',            size: 52,  blur: 1.5, x: -620, y:    0 },
+  { label: 'Meesho',           logo: '/img/home-v2/fragmentation/meesho.png',            size: 60,  blur: 0,   x:  620, y:    0 },
+  { label: 'Zepto',            logo: '/img/home-v2/fragmentation/zepto.png',             size: 44,  blur: 2,   x: -280, y:  360 },
+  { label: 'Blinkit',          logo: '/img/home-v2/fragmentation/blinkit.png',           size: 68,  blur: 0,   x:  280, y:  360 },
+  { label: 'Swiggy Instamart', logo: '/img/home-v2/fragmentation/swiggy-instamart.png',  size: 48,  blur: 1,   x:  -60, y: -360 },
 ];
 
 import iconAdvertisements from '@/assets/fragmentation-icons/advertisements.svg';
@@ -23,21 +23,23 @@ import iconFinance from '@/assets/fragmentation-icons/finance.svg';
 import iconPOManagement from '@/assets/fragmentation-icons/po-management.svg';
 import iconMarketResearch from '@/assets/fragmentation-icons/market-research.svg';
 
+import personaAnalyst from '@/assets/personas/analyst.png';
+import personaKAM from '@/assets/personas/kam.png';
+import personaOpsHead from '@/assets/personas/operations-head.png';
+
 const departmentTags = [
-  { label: 'Advertisements',  icon: iconAdvertisements, opacity: 0.9,  x: -510, y:  -90 },
-  { label: 'Inventory',       icon: iconInventory,      opacity: 0.6,  x:  510, y:   70 },
-  { label: 'Returns',         icon: iconReturns,        opacity: 0.8,  x: -490, y:  170 },
-  { label: 'Finance',         icon: iconFinance,        opacity: 0.5,  x:  490, y: -150 },
-  { label: 'PO Management',   icon: iconPOManagement,   opacity: 0.7,  x: -310, y: -230 },
-  { label: 'Market Research', icon: iconMarketResearch, opacity: 0.55, x:  330, y:  230 },
+  { label: 'Advertisements',  icon: iconAdvertisements, opacity: 0.9,  x: -340, y: -200 },
+  { label: 'Inventory',       icon: iconInventory,      opacity: 0.7,  x:  460, y:  130 },
+  { label: 'Returns',         icon: iconReturns,        opacity: 0.8,  x:  340, y: -200 },
+  { label: 'Finance',         icon: iconFinance,        opacity: 0.7,  x: -460, y:  130 },
+  { label: 'PO Management',   icon: iconPOManagement,   opacity: 0.7,  x: -460, y: -100 },
+  { label: 'Market Research', icon: iconMarketResearch, opacity: 0.7,  x:  460, y: -100 },
 ];
 
 const personaLabels = [
-  { label: 'Analyst',              opacity: 0.9,  x: -610, y:  -70 },
-  { label: 'E-Commerce Manager',   opacity: 0.6,  x:  600, y:  -50 },
-  { label: 'CXO',                  opacity: 0.8,  x: -580, y:  210 },
-  { label: 'CAM',                  opacity: 0.5,  x:  560, y:  190 },
-  { label: 'Ops Head',             opacity: 0.7,  x:    0, y: -330 },
+  { label: 'Analyst',          image: personaAnalyst,  opacity: 0.95, x: -320, y: -360, width: 140 },
+  { label: 'KAM',              image: personaKAM,      opacity: 0.95, x:  320, y: -360, width: 140 },
+  { label: 'Operations Head',  image: personaOpsHead,  opacity: 0.95, x:    0, y:  300, width: 140 },
 ];
 
 /* headingBase kept for anchor copy */
