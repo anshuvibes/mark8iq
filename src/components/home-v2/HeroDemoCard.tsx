@@ -133,7 +133,7 @@ export default function HeroDemoCard() {
       className="hero-module-card"
       style={{
         position: 'absolute',
-        top: '24px',
+        top: '120px',
         right: '-24px',
         width: '340px',
         minHeight: '500px',
