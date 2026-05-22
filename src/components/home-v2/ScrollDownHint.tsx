@@ -120,7 +120,7 @@ export default function ScrollDownHint() {
             filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.45))',
           }}
         >
-          <svg width="26" height="40" viewBox="0 0 26 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg width="13" height="20" viewBox="0 0 26 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <rect x="1.25" y="1.25" width="23.5" height="37.5" rx="11.75" stroke="currentColor" strokeWidth="1.6" />
             <motion.rect
               x="11"
@@ -134,8 +134,8 @@ export default function ScrollDownHint() {
             />
           </svg>
           <motion.svg
-            width="18"
-            height="10"
+            width="9"
+            height="5"
             viewBox="0 0 18 10"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
