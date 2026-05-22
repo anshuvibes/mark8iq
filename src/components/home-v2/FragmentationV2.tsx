@@ -39,9 +39,9 @@ const departmentTags = [
 ];
 
 const personaLabels = [
-  { label: 'Analyst',          image: personaAnalyst,  opacity: 0.95, x: -230, y: -120, width: 110 },
-  { label: 'KAM',              image: personaKAM,      opacity: 0.95, x:  230, y: -120, width: 110 },
-  { label: 'Operations Head',  image: personaOpsHead,  opacity: 0.95, x:    0, y:  180, width: 110 },
+  { label: 'Analyst',          image: personaAnalyst,  opacity: 0.95, x: -230, y: -120, width: 170 },
+  { label: 'KAM',              image: personaKAM,      opacity: 0.95, x:  230, y: -120, width: 170 },
+  { label: 'Operations Head',  image: personaOpsHead,  opacity: 0.95, x:    0, y:  180, width: 170 },
 ];
 
 /* headingBase kept for anchor copy */
