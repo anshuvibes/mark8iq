@@ -469,7 +469,7 @@ export default function FragmentationV2() {
           {departmentTags.map((tag, i) => (
             <img
               key={tag.label}
-              ref={(el) => { deptRefs.current[i] = el as unknown as HTMLSpanElement; }}
+              ref={(el) => { deptRefs.current[i] = el; }}
               src={tag.icon}
               alt={tag.label}
               style={{
