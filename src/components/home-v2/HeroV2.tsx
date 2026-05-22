@@ -50,7 +50,7 @@ export default function HeroV2() {
         initial={{ y: 30 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-        style={{ position: 'relative', width: '100%', maxWidth: '1200px', margin: '0 auto' }}
+        style={{ position: 'relative', width: '100%', maxWidth: '1400px', margin: '0 auto' }}
       >
         <div
           ref={imgContainerRef}
@@ -58,7 +58,7 @@ export default function HeroV2() {
             position: 'relative',
             overflow: 'hidden',
             borderRadius: '16px 16px 0 0',
-            minHeight: '520px',
+            minHeight: '620px',
           }}
         >
           <img
