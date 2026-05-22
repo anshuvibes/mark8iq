@@ -2,15 +2,15 @@ import { useState, useEffect, useRef, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import {
-  TrendingUp,
+  Megaphone,
   Eye,
   Package,
   RotateCcw,
-  BarChart3,
+  FileText,
+  CreditCard,
   Search,
-  Zap,
   Bot,
-  Layers,
+  Factory,
   Check,
   ArrowLeft,
   ArrowRight,
@@ -24,24 +24,24 @@ interface ValueTile {
   id: string;
   label: string;
   accent: string;
-  Icon: typeof TrendingUp;
+  Icon: typeof Megaphone;
 }
 
 const TILES: ValueTile[] = [
-  { id: 'ads', label: 'Ad Performance', accent: '#dd4062', Icon: TrendingUp },
-  { id: 'visibility', label: 'Market Visibility', accent: '#52bfbc', Icon: Eye },
-  { id: 'shelf', label: 'Shelf Health', accent: '#6895fc', Icon: Package },
-  { id: 'returns', label: 'Returns Control', accent: '#fc7459', Icon: RotateCcw },
-  { id: 'reco', label: 'Financial Clarity', accent: '#7cbc71', Icon: BarChart3 },
-  { id: 'keyword', label: 'Keyword Strategy', accent: '#dd4062', Icon: Search },
-  { id: 'qcomm', label: 'Quick Commerce', accent: '#fcb24f', Icon: Zap },
-  { id: 'ai', label: 'AI Automation', accent: '#8E59FF', Icon: Bot },
-  { id: 'unified', label: 'Unified Data', accent: '#8E59FF', Icon: Layers },
+  { id: 'ads',       label: 'Ads Analytics',         accent: '#dd4062', Icon: Megaphone },
+  { id: 'visibility',label: 'Market Visibility',     accent: '#52bfbc', Icon: Eye },
+  { id: 'inventory', label: 'Inventory Control',     accent: '#6895fc', Icon: Package },
+  { id: 'po',        label: 'Purchase Order',        accent: '#fcb24f', Icon: FileText },
+  { id: 'returns',   label: 'Return Operations',     accent: '#fc7459', Icon: RotateCcw },
+  { id: 'reco',      label: 'Payment Reconciliation',accent: '#7cbc71', Icon: CreditCard },
+  { id: 'research',  label: 'Market Research',       accent: '#8E59FF', Icon: Search },
+  { id: 'mark',      label: 'Agent Mark',            accent: '#8E59FF', Icon: Bot },
+  { id: 'foundry',   label: 'Agent Foundry',         accent: '#8E59FF', Icon: Factory },
 ];
 
 const formSchema = z.object({
   name: z.string().trim().min(2, 'Please enter your name').max(80),
-  email: z.string().trim().email('Enter a valid work email').max(120),
+  email: z.string().trim().email('Enter a valid email').max(120),
   phone: z.string().trim().max(20).optional().or(z.literal('')),
   notes: z.string().trim().max(500).optional().or(z.literal('')),
 });
@@ -64,11 +64,9 @@ export default function HeroDemoCard() {
   const [errors, setErrors] = useState<{ name?: string; email?: string; phone?: string; notes?: string }>({});
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // Auto-revert to step 1 after success, and fire confetti
   useEffect(() => {
     if (step !== 'success') return;
 
-    // Fire confetti scoped to the card
     const node = cardRef.current;
     if (node) {
       const rect = node.getBoundingClientRect();
@@ -84,17 +82,6 @@ export default function HeroDemoCard() {
         scalar: 0.8,
       });
     }
-
-    const t = setTimeout(() => {
-      setStep('select');
-      setSelected(new Set());
-      setName('');
-      setEmail('');
-      setPhone('');
-      setNotes('');
-      setErrors({});
-    }, 5000);
-    return () => clearTimeout(t);
   }, [step]);
 
   const toggle = (id: string) => {
@@ -120,12 +107,41 @@ export default function HeroDemoCard() {
     }
     setErrors({});
     // eslint-disable-next-line no-console
-    console.log('Demo request', {
-      selected: Array.from(selected),
-      ...result.data,
-    });
+    console.log('Demo request', { selected: Array.from(selected), ...result.data });
     setStep('success');
   };
+
+  const resetAll = () => {
+    setStep('select');
+    setSelected(new Set());
+    setName('');
+    setEmail('');
+    setPhone('');
+    setNotes('');
+    setErrors({});
+  };
+
+  const labelStyle: React.CSSProperties = {
+    display: 'block',
+    fontFamily: 'Saira, sans-serif',
+    fontSize: '12px',
+    fontWeight: 400,
+    color: 'var(--v2-text)',
+    marginBottom: '6px',
+  };
+
+  const inputBaseStyle = (hasError: boolean): React.CSSProperties => ({
+    width: '100%',
+    padding: '10px 12px',
+    borderRadius: '8px',
+    border: `1px solid ${hasError ? '#dd4062' : 'var(--v2-border)'}`,
+    background: 'var(--v2-bg-subtle)',
+    color: 'var(--v2-text)',
+    fontFamily: 'Saira, sans-serif',
+    fontSize: '13px',
+    fontWeight: 400,
+    outline: 'none',
+  });
 
   return (
     <div
@@ -156,6 +172,7 @@ export default function HeroDemoCard() {
           .hero-module-card { width: 100% !important; max-width: 420px; margin: 16px auto 0; }
         }
       `}</style>
+
       <AnimatePresence mode="wait">
         {step === 'select' && (
           <motion.div
@@ -196,6 +213,7 @@ export default function HeroDemoCard() {
                     type="button"
                     onClick={() => toggle(tile.id)}
                     data-accent={tile.accent}
+                    data-selected={isSelected}
                     className="hero-tile"
                     style={{
                       position: 'relative',
@@ -215,11 +233,9 @@ export default function HeroDemoCard() {
                       justifyContent: 'center',
                       gap: '8px',
                       textAlign: 'center',
-                      // expose accent for hover via CSS var
                       ['--tile-accent' as string]: tile.accent,
                     }}
                   >
-                    {/* Checkbox top-left */}
                     <span
                       aria-hidden
                       className="hero-tile-checkbox"
@@ -279,14 +295,14 @@ export default function HeroDemoCard() {
             </div>
 
             <style>{`
-              .hero-tile:hover:not([data-selected="true"]) {
+              .hero-tile:hover[data-selected="false"] {
                 background: color-mix(in srgb, var(--tile-accent) 8%, transparent) !important;
                 border-color: color-mix(in srgb, var(--tile-accent) 55%, transparent) !important;
               }
-              .hero-tile:hover .hero-tile-icon {
+              .hero-tile:hover[data-selected="false"] .hero-tile-icon {
                 color: var(--tile-accent) !important;
               }
-              .hero-tile:hover .hero-tile-checkbox {
+              .hero-tile:hover[data-selected="false"] .hero-tile-checkbox {
                 border-color: var(--tile-accent) !important;
               }
               .hero-card-headline {
@@ -334,111 +350,99 @@ export default function HeroDemoCard() {
                 color: 'var(--v2-text-muted)',
                 cursor: 'pointer',
                 padding: 0,
-                marginBottom: '12px',
+                marginBottom: '14px',
+                fontFamily: 'Saira, sans-serif',
+                fontSize: '12px',
               }}
-              className="m8-p6"
             >
               <ArrowLeft size={12} /> Back
             </button>
 
-            <p className="m8-p4" style={{ color: 'var(--v2-text)', marginBottom: '6px' }}>
+            <p
+              style={{
+                fontFamily: 'Saira, sans-serif',
+                fontSize: '18px',
+                fontWeight: 500,
+                color: 'var(--v2-text)',
+                marginBottom: '8px',
+                lineHeight: 1.25,
+              }}
+            >
               Book a 20-minute demo
             </p>
-            <p className="m8-p6" style={{ color: 'var(--v2-text-secondary)', marginBottom: '18px' }}>
-              We'll show you exactly how Mark8 IQ works on your data.
+            <p
+              style={{
+                fontFamily: 'Saira, sans-serif',
+                fontSize: '12px',
+                fontWeight: 400,
+                color: 'var(--v2-text-secondary)',
+                marginBottom: '18px',
+                lineHeight: 1.5,
+              }}
+            >
+              Share a few details and our team will reach out to schedule a walkthrough on your data.
             </p>
 
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <div>
+                <label style={labelStyle}>
+                  Full Name<span style={{ color: '#dd4062' }}>*</span>
+                </label>
                 <input
                   type="text"
-                  placeholder="Full name"
+                  placeholder="Your full name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="hero-card-input"
-                  style={{
-                    width: '100%',
-                    padding: '10px 12px',
-                    borderRadius: '8px',
-                    border: `1px solid ${errors.name ? '#dd4062' : 'var(--v2-border)'}`,
-                    background: 'var(--v2-bg-subtle)',
-                    color: 'var(--v2-text)',
-                    fontFamily: 'Saira, sans-serif',
-                    fontSize: '13px',
-                    fontWeight: 400,
-                    outline: 'none',
-                  }}
+                  style={inputBaseStyle(!!errors.name)}
                 />
                 {errors.name && (
-                  <p className="m8-p6" style={{ color: '#dd4062', marginTop: '4px' }}>{errors.name}</p>
+                  <p style={{ color: '#dd4062', fontSize: '11px', marginTop: '4px', fontFamily: 'Saira, sans-serif' }}>
+                    {errors.name}
+                  </p>
                 )}
               </div>
+
               <div>
+                <label style={labelStyle}>
+                  E-mail Address<span style={{ color: '#dd4062' }}>*</span>
+                </label>
                 <input
                   type="email"
-                  placeholder="Work email"
+                  placeholder="Your e-mail Address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="hero-card-input"
-                  style={{
-                    width: '100%',
-                    padding: '10px 12px',
-                    borderRadius: '8px',
-                    border: `1px solid ${errors.email ? '#dd4062' : 'var(--v2-border)'}`,
-                    background: 'var(--v2-bg-subtle)',
-                    color: 'var(--v2-text)',
-                    fontFamily: 'Saira, sans-serif',
-                    fontSize: '13px',
-                    fontWeight: 400,
-                    outline: 'none',
-                  }}
+                  style={inputBaseStyle(!!errors.email)}
                 />
                 {errors.email && (
-                  <p className="m8-p6" style={{ color: '#dd4062', marginTop: '4px' }}>{errors.email}</p>
+                  <p style={{ color: '#dd4062', fontSize: '11px', marginTop: '4px', fontFamily: 'Saira, sans-serif' }}>
+                    {errors.email}
+                  </p>
                 )}
               </div>
+
               <div>
+                <label style={labelStyle}>Phone Number</label>
                 <input
                   type="tel"
-                  placeholder="Phone (optional)"
+                  placeholder="Your phone Number"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   className="hero-card-input"
-                  style={{
-                    width: '100%',
-                    padding: '10px 12px',
-                    borderRadius: '8px',
-                    border: `1px solid ${errors.phone ? '#dd4062' : 'var(--v2-border)'}`,
-                    background: 'var(--v2-bg-subtle)',
-                    color: 'var(--v2-text)',
-                    fontFamily: 'Saira, sans-serif',
-                    fontSize: '13px',
-                    fontWeight: 400,
-                    outline: 'none',
-                  }}
+                  style={inputBaseStyle(!!errors.phone)}
                 />
               </div>
+
               <div>
+                <label style={labelStyle}>Message</label>
                 <textarea
-                  placeholder="Notes (optional)"
+                  placeholder="Tell us how can we help"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   rows={3}
                   className="hero-card-input"
-                  style={{
-                    width: '100%',
-                    padding: '10px 12px',
-                    borderRadius: '8px',
-                    border: `1px solid ${errors.notes ? '#dd4062' : 'var(--v2-border)'}`,
-                    background: 'var(--v2-bg-subtle)',
-                    color: 'var(--v2-text)',
-                    fontFamily: 'Saira, sans-serif',
-                    fontSize: '13px',
-                    fontWeight: 400,
-                    outline: 'none',
-                    resize: 'vertical',
-                    minHeight: '72px',
-                  }}
+                  style={{ ...inputBaseStyle(!!errors.notes), resize: 'vertical', minHeight: '72px' }}
                 />
               </div>
 
@@ -477,20 +481,87 @@ export default function HeroDemoCard() {
               alignItems: 'center',
               justifyContent: 'center',
               textAlign: 'center',
-              padding: '12px 4px',
+              padding: '24px 8px',
+              minHeight: '420px',
             }}
           >
-            <img
-              src="/img/product-logos/black/mark8-iq.svg"
-              alt="Mark8 IQ"
-              style={{ height: '24px', width: 'auto', margin: '0 auto 18px', display: 'block' }}
-            />
-            <p className="m8-p3" style={{ color: 'var(--v2-text)', marginBottom: '10px' }}>
-              Thank you
+            {/* Purple circle with check + sparkles */}
+            <div
+              style={{
+                position: 'relative',
+                width: '120px',
+                height: '120px',
+                marginBottom: '24px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {/* Outer soft ring */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  borderRadius: '50%',
+                  background: '#8E59FF14',
+                }}
+              />
+              {/* Solid inner circle */}
+              <div
+                style={{
+                  position: 'relative',
+                  width: '72px',
+                  height: '72px',
+                  borderRadius: '50%',
+                  background: '#8E59FF',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 8px 24px rgba(142, 89, 255, 0.35)',
+                }}
+              >
+                <Check size={32} color="#fff" strokeWidth={3} />
+              </div>
+              {/* Decorative dots */}
+              <span style={{ position: 'absolute', top: '14px', left: '6px', width: '6px', height: '6px', borderRadius: '50%', border: '1.5px solid #8E59FF' }} />
+              <span style={{ position: 'absolute', bottom: '18px', left: '14px', width: '5px', height: '5px', borderRadius: '50%', background: '#8E59FF' }} />
+              <span style={{ position: 'absolute', top: '22px', right: '12px', color: '#8E59FF', fontSize: '14px', lineHeight: 1 }}>✦</span>
+              <span style={{ position: 'absolute', bottom: '10px', right: '8px', width: '7px', height: '7px', borderRadius: '50%', border: '1.5px solid #8E59FF' }} />
+              <span style={{ position: 'absolute', top: '4px', right: '32px', color: '#8E59FF', fontSize: '10px', lineHeight: 1 }}>✦</span>
+            </div>
+
+            <p
+              style={{
+                fontFamily: 'Saira, sans-serif',
+                fontSize: '20px',
+                fontWeight: 500,
+                color: 'var(--v2-text)',
+                marginBottom: '12px',
+              }}
+            >
+              Lock It In
             </p>
-            <p className="m8-p6" style={{ color: 'var(--v2-text-secondary)', lineHeight: 1.5, maxWidth: '260px' }}>
-              Your form has been submitted. Our team will reach out within a few hours. Meanwhile, keep exploring.
+            <p
+              style={{
+                fontFamily: 'Saira, sans-serif',
+                fontSize: '12px',
+                fontWeight: 400,
+                color: 'var(--v2-text-secondary)',
+                lineHeight: 1.6,
+                maxWidth: '260px',
+                marginBottom: '22px',
+              }}
+            >
+              Your submission is confirmed. Now pick a time and we'll walk you through the full platform, live.
             </p>
+
+            <Button
+              variant="m8-dark"
+              onClick={resetAll}
+              style={{ boxShadow: 'none', border: 'none', fontFamily: 'Saira, sans-serif' }}
+            >
+              Choose a time
+            </Button>
           </motion.div>
         )}
       </AnimatePresence>
