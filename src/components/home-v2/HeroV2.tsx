@@ -61,13 +61,13 @@ export default function HeroV2() {
             minHeight: '520px',
           }}
         >
-          <div
-            aria-label="Mark8 IQ Dashboard"
+          <img
+            src={heroDashboardImg}
+            alt="Mark8 IQ Dashboard"
             className="hero-dashboard-svg"
-            role="img"
-            style={{ width: '100%', display: 'block' }}
-            dangerouslySetInnerHTML={{ __html: heroDashboardSvg }}
+            style={{ width: '100%', height: 'auto', display: 'block' }}
           />
+
         </div>
 
         {/* Floating demo booking card */}
