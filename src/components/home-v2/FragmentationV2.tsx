@@ -538,7 +538,7 @@ export default function FragmentationV2() {
             color: 'var(--v2-frag-heading-text)',
           }}
         >
-          Your operation outgrows your team. Every time.
+          You scaled. Your visibility didn't.
         </div>
 
         {/* Pivot */}
