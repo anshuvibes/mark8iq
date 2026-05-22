@@ -24,12 +24,12 @@ import iconPOManagement from '@/assets/fragmentation-icons/po-management.svg';
 import iconMarketResearch from '@/assets/fragmentation-icons/market-research.svg';
 
 const departmentTags = [
-  { label: 'Advertisements',  icon: iconAdvertisements, opacity: 0.95, x: -260, y: -380 },
-  { label: 'PO Management',   icon: iconPOManagement,   opacity: 0.95, x:  320, y: -380 },
-  { label: 'Inventory',       icon: iconInventory,      opacity: 0.95, x: -200, y: -140 },
-  { label: 'Finance',         icon: iconFinance,        opacity: 0.95, x:  220, y: -130 },
-  { label: 'Returns',         icon: iconReturns,        opacity: 0.95, x: -450, y:  210 },
-  { label: 'Market Research', icon: iconMarketResearch, opacity: 0.95, x:  390, y:  210 },
+  { label: 'Advertisements',  icon: iconAdvertisements, opacity: 0.9,  x: -510, y:  -90 },
+  { label: 'Inventory',       icon: iconInventory,      opacity: 0.6,  x:  510, y:   70 },
+  { label: 'Returns',         icon: iconReturns,        opacity: 0.8,  x: -490, y:  170 },
+  { label: 'Finance',         icon: iconFinance,        opacity: 0.5,  x:  490, y: -150 },
+  { label: 'PO Management',   icon: iconPOManagement,   opacity: 0.7,  x: -310, y: -230 },
+  { label: 'Market Research', icon: iconMarketResearch, opacity: 0.55, x:  330, y:  230 },
 ];
 
 const personaLabels = [
@@ -190,20 +190,6 @@ export default function FragmentationV2() {
       duration: 4,
       ease: 'power2.in',
     }, 14);
-
-    // PHASE 3.5: Marketplace logos recede (shrink + push back in Z) to make room for dept icons
-    mktRefs.current.forEach((el, i) => {
-      if (!el) return;
-      tl.to(el, {
-        z: -400,
-        scale: 0.45,
-        opacity: 0.35,
-        x: marketplacePills[i].x * 1.05,
-        y: marketplacePills[i].y * 1.05,
-        duration: 4,
-        ease: 'power2.inOut',
-      }, 14);
-    });
 
     // PHASE 4: Department tags emerge from deeper Z (-1000 → 0)
     deptRefs.current.forEach((el, i) => {
