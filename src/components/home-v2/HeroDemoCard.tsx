@@ -2,21 +2,21 @@ import { useState, useEffect, useRef, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import {
-  Megaphone,
-  Eye,
-  Box,
-  RotateCcw,
-  Receipt,
-  Banknote,
-  Search,
-  Bot,
-  Factory,
   Check,
   ArrowLeft,
   ArrowRight,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { z } from 'zod';
+import iconAds from '@/assets/explore-icons/ads.svg';
+import iconVisibility from '@/assets/explore-icons/visibility.svg';
+import iconInventory from '@/assets/explore-icons/inventory.svg';
+import iconPurchase from '@/assets/explore-icons/purchase.svg';
+import iconReturns from '@/assets/explore-icons/returns.svg';
+import iconReco from '@/assets/explore-icons/reco.svg';
+import iconResearch from '@/assets/explore-icons/research.svg';
+import iconMark from '@/assets/explore-icons/mark.svg';
+import iconFoundry from '@/assets/explore-icons/foundry.svg';
 
 type Step = 'select' | 'form' | 'success';
 
@@ -24,19 +24,19 @@ interface ValueTile {
   id: string;
   label: [string, string]; // forced two-line label per Figma
   accent: string;
-  Icon: typeof Megaphone;
+  icon: string;
 }
 
 const TILES: ValueTile[] = [
-  { id: 'ads',       label: ['Ads', 'Analytics'],          accent: '#dd4062', Icon: Megaphone },
-  { id: 'visibility',label: ['Market', 'Visibility'],      accent: '#52bfbc', Icon: Eye },
-  { id: 'inventory', label: ['Inventory', 'Control'],      accent: '#6895fc', Icon: Box },
-  { id: 'po',        label: ['Purchase', 'Order'],         accent: '#fcb24f', Icon: Receipt },
-  { id: 'returns',   label: ['Return', 'Operations'],      accent: '#fc7459', Icon: RotateCcw },
-  { id: 'reco',      label: ['Payment', 'Reconciliation'], accent: '#7cbc71', Icon: Banknote },
-  { id: 'research',  label: ['Market', 'Research'],        accent: '#8E59FF', Icon: Search },
-  { id: 'mark',      label: ['Agent', 'Mark'],             accent: '#8E59FF', Icon: Bot },
-  { id: 'foundry',   label: ['Agent', 'Foundry'],          accent: '#8E59FF', Icon: Factory },
+  { id: 'ads',       label: ['Ads', 'Analytics'],          accent: '#dd4062', icon: iconAds },
+  { id: 'visibility',label: ['Market', 'Visibility'],      accent: '#52bfbc', icon: iconVisibility },
+  { id: 'inventory', label: ['Inventory', 'Control'],      accent: '#6895fc', icon: iconInventory },
+  { id: 'po',        label: ['Purchase', 'Order'],         accent: '#fcb24f', icon: iconPurchase },
+  { id: 'returns',   label: ['Return', 'Operations'],      accent: '#fc7459', icon: iconReturns },
+  { id: 'reco',      label: ['Payment', 'Reconciliation'], accent: '#7cbc71', icon: iconReco },
+  { id: 'research',  label: ['Market', 'Research'],        accent: '#8E59FF', icon: iconResearch },
+  { id: 'mark',      label: ['Agent', 'Mark'],             accent: '#ab73c5', icon: iconMark },
+  { id: 'foundry',   label: ['Agent', 'Foundry'],          accent: '#6c6acc', icon: iconFoundry },
 ];
 
 const formSchema = z.object({
@@ -206,7 +206,7 @@ export default function HeroDemoCard() {
             >
               {TILES.map((tile) => {
                 const isSelected = selected.has(tile.id);
-                const Icon = tile.Icon;
+                const iconSrc = tile.icon;
                 return (
                   <button
                     key={tile.id}
@@ -257,13 +257,17 @@ export default function HeroDemoCard() {
                       {isSelected && <Check size={8} color="#fff" strokeWidth={3.5} />}
                     </span>
 
-                    <Icon
-                      size={18}
+                    <img
+                      src={iconSrc}
+                      alt=""
+                      aria-hidden
+                      width={18}
+                      height={18}
                       className="hero-tile-icon"
                       style={{
-                        color: isSelected ? tile.accent : 'var(--v2-text-secondary)',
-                        strokeWidth: 1.5,
-                        transition: 'color 0.18s ease',
+                        display: 'block',
+                        width: '18px',
+                        height: '18px',
                       }}
                     />
                     <span
