@@ -16,14 +16,20 @@ const marketplacePills = [
   { label: 'Swiggy Instamart', logo: '/img/home-v2/fragmentation/swiggy-instamart.png',  size: 48,  blur: 1,   x:   60, y: -300 },
 ];
 
+import iconAdvertisements from '@/assets/fragmentation-icons/advertisements.svg';
+import iconInventory from '@/assets/fragmentation-icons/inventory.svg';
+import iconReturns from '@/assets/fragmentation-icons/returns.svg';
+import iconFinance from '@/assets/fragmentation-icons/finance.svg';
+import iconPOManagement from '@/assets/fragmentation-icons/po-management.svg';
+import iconMarketResearch from '@/assets/fragmentation-icons/market-research.svg';
+
 const departmentTags = [
-  { label: 'Ads',             opacity: 0.9,  x: -510, y:  -90 },
-  { label: 'Inventory',       opacity: 0.6,  x:  510, y:   70 },
-  { label: 'Returns',         opacity: 0.8,  x: -490, y:  170 },
-  { label: 'Finance',         opacity: 0.5,  x:  490, y: -150 },
-  { label: 'PO Management',   opacity: 0.7,  x: -310, y: -230 },
-  { label: 'Market Research', opacity: 0.55, x:  330, y:  230 },
-  { label: 'Reconciliation',  opacity: 0.65, x:   10, y: -310 },
+  { label: 'Advertisements',  icon: iconAdvertisements, opacity: 0.9,  x: -510, y:  -90 },
+  { label: 'Inventory',       icon: iconInventory,      opacity: 0.6,  x:  510, y:   70 },
+  { label: 'Returns',         icon: iconReturns,        opacity: 0.8,  x: -490, y:  170 },
+  { label: 'Finance',         icon: iconFinance,        opacity: 0.5,  x:  490, y: -150 },
+  { label: 'PO Management',   icon: iconPOManagement,   opacity: 0.7,  x: -310, y: -230 },
+  { label: 'Market Research', icon: iconMarketResearch, opacity: 0.55, x:  330, y:  230 },
 ];
 
 const personaLabels = [
