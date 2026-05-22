@@ -101,12 +101,12 @@ export default function ScrollDownHint() {
           transition={{ type: 'spring', stiffness: 260, damping: 28, mass: 0.8 }}
           style={{
             position: 'fixed',
-            bottom: '28px',
+            bottom: '14px',
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 99998,
-            width: '44px',
-            height: '64px',
+            width: '22px',
+            height: '32px',
             background: 'transparent',
             border: 'none',
             color: '#ffffff',
@@ -114,13 +114,13 @@ export default function ScrollDownHint() {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '4px',
+            gap: '2px',
             cursor: 'pointer',
             padding: 0,
             filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.45))',
           }}
         >
-          <svg width="26" height="40" viewBox="0 0 26 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg width="13" height="20" viewBox="0 0 26 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <rect x="1.25" y="1.25" width="23.5" height="37.5" rx="11.75" stroke="currentColor" strokeWidth="1.6" />
             <motion.rect
               x="11"
@@ -134,8 +134,8 @@ export default function ScrollDownHint() {
             />
           </svg>
           <motion.svg
-            width="18"
-            height="10"
+            width="9"
+            height="5"
             viewBox="0 0 18 10"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
