@@ -467,37 +467,25 @@ export default function FragmentationV2() {
 
           {/* Department tags */}
           {departmentTags.map((tag, i) => (
-            <span
+            <img
               key={tag.label}
-              ref={(el) => { deptRefs.current[i] = el; }}
+              ref={(el) => { deptRefs.current[i] = el as unknown as HTMLSpanElement; }}
+              src={tag.icon}
+              alt={tag.label}
               style={{
                 position: 'absolute',
                 left: '50%',
                 top: '50%',
-                color: '#ffffff',
                 opacity: tag.opacity,
-                fontSize: '18px',
-                fontFamily: "'Saira', sans-serif",
-                fontWeight: 300,
-                whiteSpace: 'nowrap',
+                width: '120px',
+                height: 'auto',
                 pointerEvents: 'none',
                 zIndex: 2,
-                letterSpacing: '-0.01em',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
+                display: 'block',
               }}
-            >
-              <img
-                src={tag.icon}
-                alt=""
-                width={20}
-                height={20}
-                style={{ display: 'block', flexShrink: 0 }}
-              />
-              {tag.label}
-            </span>
+            />
           ))}
+
 
 
           {/* Persona labels */}
