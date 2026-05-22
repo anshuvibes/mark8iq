@@ -86,7 +86,6 @@ export default function FragmentationV2() {
   const endStateZoneRef = useRef<HTMLDivElement>(null);
   const logoMarkColorRef = useRef<string>('#FFFFFF');
   const logoMarkGroupRef = useRef<SVGGElement>(null);
-  const hasFiredConfettiRef = useRef(false);
 
   // Store setTheme in a ref so GSAP callbacks can access it without stale closures
   const setThemeRef = useRef(setTheme);
@@ -344,23 +343,6 @@ export default function FragmentationV2() {
       ease: 'power3.inOut',
     }, 48);
 
-    // Reset confetti guard when scrolling back past explosion start
-    tl.call(() => { hasFiredConfettiRef.current = false; }, [], 48);
-
-    // Fire confetti burst when circle explosion completes
-    tl.call(() => {
-      if (hasFiredConfettiRef.current) return;
-      hasFiredConfettiRef.current = true;
-      confetti({
-        particleCount: 120,
-        spread: 80,
-        origin: { x: 0.5, y: 0.5 },
-        colors: ['#8e59ff', '#a280ff', '#c1b0ff', '#ffffff'],
-        startVelocity: 35,
-        gravity: 0.8,
-        ticks: 80,
-      });
-    }, [], 54);
 
     gsap.set(logoRef.current, { opacity: 0 });
     tl.to(logoRef.current, {
