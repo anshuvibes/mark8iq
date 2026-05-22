@@ -16,7 +16,7 @@ const metrics = [
 const BRANDS = [
   {
     name: 'Zeel Rainwear',
-    logo: '/img/logos/zeel-rainwear.png',
+    logo: '/img/logos/zeel-rainwear.svg',
     stat: '50x',
     statLabel: 'revenue growth in 5 years',
     category: 'D2C Rainwear',
@@ -24,7 +24,7 @@ const BRANDS = [
   },
   {
     name: 'Asian Shoes',
-    logo: '/img/logos/asian-shoes.png',
+    logo: '/img/logos/asian-shoes.svg',
     stat: '68%',
     statLabel: 'less ad spend. Same sales.',
     category: 'Footwear',
@@ -32,7 +32,7 @@ const BRANDS = [
   },
   {
     name: 'neude Skin',
-    logo: '/img/logos/neude-skin.png',
+    logo: '/img/logos/neude-skin.svg',
     stat: '3x',
     statLabel: 'sales growth, now in top 60 on Amazon',
     category: 'Skincare',
@@ -40,7 +40,7 @@ const BRANDS = [
   },
   {
     name: 'MARS Cosmetics',
-    logo: '/img/logos/mars-cosmetics.png',
+    logo: '/img/logos/mars-cosmetics.svg',
     stat: '₹4.8 Cr',
     statLabel: 'monthly sales, built from scratch',
     category: 'Beauty',
