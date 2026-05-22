@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronDown } from 'lucide-react';
 
 /**
  * ScrollDownHint — small chevron pill shown at the bottom of the viewport
