@@ -2,6 +2,9 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { useV2Theme } from './ThemeContext';
+import analystImg from '@/assets/role-analyst.jpg';
+import kamImg from '@/assets/role-kam.jpg';
+import cxoImg from '@/assets/role-cxo.jpg';
 
 const roles = [
   {
@@ -11,6 +14,7 @@ const roles = [
     body: 'Raw data exports. ASIN-level breakdowns. Campaign performance tables. Reconciliation reports.',
     gradient: 'linear-gradient(135deg, #8e59ff 0%, #4a2d99 50%, #12182b 100%)',
     accentColor: '#8e59ff',
+    image: analystImg,
   },
   {
     label: 'KAM · Account Growth',
@@ -19,6 +23,7 @@ const roles = [
     body: 'Trend lines. Week-on-week movement. Marketplace comparison. Inventory alerts.',
     gradient: 'linear-gradient(135deg, #52bfbc 0%, #2a6b69 50%, #12182b 100%)',
     accentColor: '#52bfbc',
+    image: kamImg,
   },
   {
     label: 'CXO · Business Overview',
@@ -27,6 +32,7 @@ const roles = [
     body: 'P&L impact. Blended ROAS. GMV trajectory. Financial leakage alerts.',
     gradient: 'linear-gradient(135deg, #fcb24f 0%, #8e59ff 60%, #12182b 100%)',
     accentColor: '#fcb24f',
+    image: cxoImg,
   },
 ];
 
@@ -192,28 +198,18 @@ export default function RoleBasedValueV2() {
                   maxWidth: '460px',
                 }}
               >
-                <div
+                <img
+                  src={role.image}
+                  alt={`${role.label} view`}
                   style={{
                     position: 'absolute',
                     inset: 0,
-                    background:
-                      'radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.08) 0%, transparent 60%)',
-                    borderRadius: '24px',
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    display: 'block',
                   }}
                 />
-                <span
-                  className="m8-p6"
-                  style={{
-                    position: 'absolute',
-                    bottom: '24px',
-                    left: '24px',
-                    color: 'rgba(255,255,255,0.3)',
-                    letterSpacing: '0.08em',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  {role.label} view — screenshot coming
-                </span>
               </div>
 
               {/* Right: copy grouped & bottom-aligned to image card height */}
