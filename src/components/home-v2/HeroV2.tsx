@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
-import heroDashboardSvg from '@/assets/hero-dashboard.svg?raw';
+import heroDashboardImg from '@/assets/hero-dashboard.png';
 import HeroDemoCard from './HeroDemoCard';
 
 
