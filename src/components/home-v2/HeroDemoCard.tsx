@@ -257,13 +257,17 @@ export default function HeroDemoCard() {
                       {isSelected && <Check size={8} color="#fff" strokeWidth={3.5} />}
                     </span>
 
-                    <Icon
-                      size={18}
+                    <img
+                      src={iconSrc}
+                      alt=""
+                      aria-hidden
+                      width={18}
+                      height={18}
                       className="hero-tile-icon"
                       style={{
-                        color: isSelected ? tile.accent : 'var(--v2-text-secondary)',
-                        strokeWidth: 1.5,
-                        transition: 'color 0.18s ease',
+                        display: 'block',
+                        width: '18px',
+                        height: '18px',
                       }}
                     />
                     <span
