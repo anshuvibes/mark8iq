@@ -1,17 +1,19 @@
 import { motion } from 'motion/react';
 
 const logos = [
-  { name: 'Asian Shoes', src: '/img/logos/asian-shoes.png' },
-  { name: 'Beast Life', src: '/img/logos/beast-life.png' },
-  { name: 'Urban Gabru', src: '/img/logos/urban-gabru.png' },
-  { name: 'Zeel Rainwear', src: '/img/logos/zeel-rainwear.png' },
-  { name: 'Fast & Up', src: '/img/logos/fast-and-up.png' },
-  { name: 'Rovers', src: '/img/logos/rovers.png' },
-  { name: 'Quench', src: '/img/logos/quench.png' },
-  { name: 'ARTMENT', src: '/img/logos/artment.png' },
-  { name: 'neude Skin', src: '/img/logos/neude-skin.png' },
-  { name: 'MARS Cosmetics', src: '/img/logos/mars-cosmetics.png' },
-  { name: 'XYXX', src: '/img/logos/xyxx.png' },
+  { name: 'Urban Gabru', src: '/img/logos/urban-gabru.svg' },
+  { name: 'Asian Shoes', src: '/img/logos/asian-shoes.svg' },
+  { name: 'Zeel Rainwear', src: '/img/logos/zeel-rainwear.svg' },
+  { name: 'ARTMENT', src: '/img/logos/artment.svg' },
+  { name: 'Fast & Up', src: '/img/logos/fast-and-up.svg' },
+  { name: 'MARS Cosmetics', src: '/img/logos/mars-cosmetics.svg' },
+  { name: 'Nat Habit', src: '/img/logos/nat-habit.svg' },
+  { name: 'neude Skin', src: '/img/logos/neude-skin.svg' },
+  { name: 'Rovers', src: '/img/logos/rovers.svg' },
+  { name: 'Seoulskin', src: '/img/logos/seoulskin.svg' },
+  { name: 'Trimfinity', src: '/img/logos/trimfinity.svg' },
+  { name: 'Urban Yog', src: '/img/logos/urban-yog.svg' },
+  { name: 'XYXX', src: '/img/logos/xyxx.svg' },
 ];
 
 export default function TrustStripV2() {
