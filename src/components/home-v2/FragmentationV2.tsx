@@ -24,12 +24,12 @@ import iconPOManagement from '@/assets/fragmentation-icons/po-management.svg';
 import iconMarketResearch from '@/assets/fragmentation-icons/market-research.svg';
 
 const departmentTags = [
-  { label: 'Advertisements',  icon: iconAdvertisements, opacity: 0.9,  x: -510, y:  -90 },
-  { label: 'Inventory',       icon: iconInventory,      opacity: 0.6,  x:  510, y:   70 },
-  { label: 'Returns',         icon: iconReturns,        opacity: 0.8,  x: -490, y:  170 },
-  { label: 'Finance',         icon: iconFinance,        opacity: 0.5,  x:  490, y: -150 },
-  { label: 'PO Management',   icon: iconPOManagement,   opacity: 0.7,  x: -310, y: -230 },
-  { label: 'Market Research', icon: iconMarketResearch, opacity: 0.55, x:  330, y:  230 },
+  { label: 'Advertisements',  icon: iconAdvertisements, opacity: 0.95, x: -260, y: -380 },
+  { label: 'PO Management',   icon: iconPOManagement,   opacity: 0.95, x:  320, y: -380 },
+  { label: 'Inventory',       icon: iconInventory,      opacity: 0.95, x: -200, y: -140 },
+  { label: 'Finance',         icon: iconFinance,        opacity: 0.95, x:  220, y: -130 },
+  { label: 'Returns',         icon: iconReturns,        opacity: 0.95, x: -450, y:  210 },
+  { label: 'Market Research', icon: iconMarketResearch, opacity: 0.95, x:  390, y:  210 },
 ];
 
 const personaLabels = [
