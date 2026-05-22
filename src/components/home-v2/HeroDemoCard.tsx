@@ -272,11 +272,12 @@ export default function HeroDemoCard() {
                         fontSize: '11px',
                         fontWeight: 400,
                         color: 'var(--v2-text)',
-                        lineHeight: 1.2,
-                        wordBreak: 'break-word',
+                        lineHeight: 1.25,
                       }}
                     >
-                      {tile.label}
+                      {tile.label[0]}
+                      <br />
+                      {tile.label[1]}
                     </span>
                   </button>
                 );
