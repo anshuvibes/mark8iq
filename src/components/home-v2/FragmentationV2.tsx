@@ -191,6 +191,20 @@ export default function FragmentationV2() {
       ease: 'power2.in',
     }, 14);
 
+    // PHASE 3.5: Marketplace logos recede (shrink + push back in Z) to make room for dept icons
+    mktRefs.current.forEach((el, i) => {
+      if (!el) return;
+      tl.to(el, {
+        z: -400,
+        scale: 0.45,
+        opacity: 0.35,
+        x: marketplacePills[i].x * 1.05,
+        y: marketplacePills[i].y * 1.05,
+        duration: 4,
+        ease: 'power2.inOut',
+      }, 14);
+    });
+
     // PHASE 4: Department tags emerge from deeper Z (-1000 → 0)
     deptRefs.current.forEach((el, i) => {
       if (!el) return;
