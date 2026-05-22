@@ -17,7 +17,7 @@ export default function HeroV2() {
   return (
     <section data-section="hero" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column' }}>
       {/* ZONE 1: Headline block */}
-      <div style={{ paddingTop: '80px', paddingBottom: '32px', textAlign: 'center' }}>
+      <div style={{ paddingTop: '80px', paddingBottom: '8px', textAlign: 'center' }}>
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ maxWidth: '860px', margin: '0 auto' }}>
             <motion.h1 className="m8-h2" style={{ color: 'var(--v2-text)', marginBottom: '16px' }} {...fadeIn(0.1)}>
