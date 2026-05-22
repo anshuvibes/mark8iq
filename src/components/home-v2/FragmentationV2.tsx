@@ -490,28 +490,25 @@ export default function FragmentationV2() {
 
 
 
-          {/* Persona labels */}
+          {/* Persona images */}
           {personaLabels.map((persona, i) => (
-            <span
+            <img
               key={persona.label}
               ref={(el) => { personaRefs.current[i] = el; }}
+              src={persona.image}
+              alt={persona.label}
               style={{
                 position: 'absolute',
                 left: '50%',
                 top: '50%',
-                color: '#ffffff',
                 opacity: persona.opacity,
-                fontSize: '18px',
-                fontFamily: "'Saira', sans-serif",
-                fontWeight: 300,
-                whiteSpace: 'nowrap',
+                width: `${persona.width}px`,
+                height: 'auto',
                 pointerEvents: 'none',
                 zIndex: 2,
-                letterSpacing: '-0.01em',
+                display: 'block',
               }}
-            >
-              {persona.label}
-            </span>
+            />
           ))}
         </div>
 
