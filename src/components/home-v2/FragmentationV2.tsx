@@ -6,14 +6,16 @@ import { useV2Theme } from './ThemeContext';
 import VideoCTAButton from './VideoCTAButton';
 
 
+// Layout: concentric orbits around the centered heading (the "sun").
+// Outer = marketplaces, middle = department icons, inner = personas.
 const marketplacePills = [
-  { label: 'Amazon',           logo: '/img/home-v2/fragmentation/amazon.png',            size: 80,  blur: 0,   x: -500, y: -280 },
-  { label: 'Flipkart',         logo: '/img/home-v2/fragmentation/flipkart.png',          size: 72,  blur: 0,   x:  500, y: -280 },
-  { label: 'Myntra',           logo: '/img/home-v2/fragmentation/myntra.png',            size: 52,  blur: 1.5, x: -620, y:    0 },
-  { label: 'Meesho',           logo: '/img/home-v2/fragmentation/meesho.png',            size: 60,  blur: 0,   x:  620, y:    0 },
-  { label: 'Zepto',            logo: '/img/home-v2/fragmentation/zepto.png',             size: 44,  blur: 2,   x: -280, y:  360 },
-  { label: 'Blinkit',          logo: '/img/home-v2/fragmentation/blinkit.png',           size: 68,  blur: 0,   x:  280, y:  360 },
-  { label: 'Swiggy Instamart', logo: '/img/home-v2/fragmentation/swiggy-instamart.png',  size: 48,  blur: 1,   x:  -60, y: -360 },
+  { label: 'Amazon',           logo: '/img/home-v2/fragmentation/amazon.png',            size: 80,  blur: 0,   x: -540, y: -340 },
+  { label: 'Swiggy Instamart', logo: '/img/home-v2/fragmentation/swiggy-instamart.png',  size: 48,  blur: 1,   x:    0, y: -400 },
+  { label: 'Flipkart',         logo: '/img/home-v2/fragmentation/flipkart.png',          size: 72,  blur: 0,   x:  540, y: -340 },
+  { label: 'Myntra',           logo: '/img/home-v2/fragmentation/myntra.png',            size: 52,  blur: 1.5, x: -540, y:  340 },
+  { label: 'Zepto',            logo: '/img/home-v2/fragmentation/zepto.png',             size: 44,  blur: 2,   x: -300, y:  400 },
+  { label: 'Blinkit',          logo: '/img/home-v2/fragmentation/blinkit.png',           size: 68,  blur: 0,   x:  300, y:  400 },
+  { label: 'Meesho',           logo: '/img/home-v2/fragmentation/meesho.png',            size: 60,  blur: 0,   x:  540, y:  340 },
 ];
 
 import iconAdvertisements from '@/assets/fragmentation-icons/advertisements.svg';
@@ -28,18 +30,18 @@ import personaKAM from '@/assets/personas/kam.png';
 import personaOpsHead from '@/assets/personas/operations-head.png';
 
 const departmentTags = [
-  { label: 'Advertisements',  icon: iconAdvertisements, opacity: 0.9,  x: -340, y: -200 },
-  { label: 'Inventory',       icon: iconInventory,      opacity: 0.7,  x:  460, y:  130 },
-  { label: 'Returns',         icon: iconReturns,        opacity: 0.8,  x:  340, y: -200 },
-  { label: 'Finance',         icon: iconFinance,        opacity: 0.7,  x: -460, y:  130 },
-  { label: 'PO Management',   icon: iconPOManagement,   opacity: 0.7,  x: -460, y: -100 },
-  { label: 'Market Research', icon: iconMarketResearch, opacity: 0.7,  x:  460, y: -100 },
+  { label: 'Advertisements',  icon: iconAdvertisements, opacity: 0.85, x: -380, y: -260 },
+  { label: 'Returns',         icon: iconReturns,        opacity: 0.85, x:  380, y: -260 },
+  { label: 'PO Management',   icon: iconPOManagement,   opacity: 0.85, x: -490, y:    0 },
+  { label: 'Inventory',       icon: iconInventory,      opacity: 0.85, x:  490, y:    0 },
+  { label: 'Finance',         icon: iconFinance,        opacity: 0.85, x: -380, y:  260 },
+  { label: 'Market Research', icon: iconMarketResearch, opacity: 0.85, x:  380, y:  260 },
 ];
 
 const personaLabels = [
-  { label: 'Analyst',          image: personaAnalyst,  opacity: 0.95, x: -320, y: -360, width: 140 },
-  { label: 'KAM',              image: personaKAM,      opacity: 0.95, x:  320, y: -360, width: 140 },
-  { label: 'Operations Head',  image: personaOpsHead,  opacity: 0.95, x:    0, y:  300, width: 140 },
+  { label: 'Analyst',          image: personaAnalyst,  opacity: 0.95, x: -220, y: -150, width: 130 },
+  { label: 'KAM',              image: personaKAM,      opacity: 0.95, x:  220, y: -150, width: 130 },
+  { label: 'Operations Head',  image: personaOpsHead,  opacity: 0.95, x:    0, y:  230, width: 130 },
 ];
 
 /* headingBase kept for anchor copy */
