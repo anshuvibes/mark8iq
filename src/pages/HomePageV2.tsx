@@ -10,6 +10,9 @@ import RoleBasedValueV2 from '../components/home-v2/RoleBasedValueV2';
 import AgentMarkV2 from '../components/home-v2/AgentMarkV2';
 import AgentFoundryV2 from '../components/home-v2/AgentFoundryV2';
 import ProofV2 from '../components/home-v2/ProofV2';
+import CaseStudiesV2 from '../components/home-v2/CaseStudiesV2';
+import TestimonialsV2 from '../components/home-v2/TestimonialsV2';
+import CredentialsV2 from '../components/home-v2/CredentialsV2';
 import AgentMarkWidget from '../components/home-v2/AgentMarkWidget';
 
 
@@ -27,6 +30,9 @@ export default function HomePageV2() {
           <AgentMarkV2 />
           <AgentFoundryV2 />
           <ProofV2 />
+          <CaseStudiesV2 />
+          <TestimonialsV2 />
+          <CredentialsV2 />
         </main>
         <Footer />
         <AgentMarkWidget />
