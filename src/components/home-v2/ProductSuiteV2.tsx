@@ -14,6 +14,16 @@ const modules: Record<string, { name: string; abbr: string; accent: string; pain
   marketone: { name: 'Market One', abbr: 'M1', accent: '#8e59ff', logo: '/img/product-logos/black/market-one.svg', pain: 'Every product is a consolidated product.\nMarket One is the consolidation of all consolidations.', metric: '6 dashboards. 15+ marketplaces. One source of truth.' },
 };
 
+const dashboardImages: Record<string, string> = {
+  ads: '/img/product-dashboards/mark8-ads.png',
+  sight: '/img/product-dashboards/mark8-sight.png',
+  shelf: '/img/product-dashboards/mark8-shelf.png',
+  returns: '/img/product-dashboards/mark8-returns.png',
+  reco: '/img/product-dashboards/mark8-reco.png',
+  inventory: '/img/product-dashboards/mark8-po.png',
+  marketone: '/img/product-dashboards/market-one.png',
+};
+
 const leftKeys = ['ads', 'shelf', 'reco'];
 const rightKeys = ['sight', 'returns', 'inventory'];
 
@@ -697,7 +707,31 @@ export default function ProductSuiteV2() {
                 textOverflow: 'ellipsis',
               }}>{active.metric}</p>
             </div>
-            <DataTable moduleKey={activeModule} accent={active.accent} />
+            <div style={{
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              overflow: 'hidden',
+              marginTop: '28px',
+              marginRight: '28px',
+              borderRadius: '10px 0 0 0',
+              border: '1px solid var(--v2-border)',
+              background: 'var(--v2-bg-card)',
+            }}>
+              <img
+                src={dashboardImages[activeModule]}
+                alt={`${active.name} dashboard`}
+                loading="eager"
+                decoding="sync"
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  height: 'auto',
+                  objectFit: 'cover',
+                  objectPosition: 'top left',
+                }}
+              />
+            </div>
           </motion.div>
         </AnimatePresence>
         </div>
