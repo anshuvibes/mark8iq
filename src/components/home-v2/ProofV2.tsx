@@ -191,7 +191,7 @@ export default function ProofV2() {
       <style>{`
         .proof-logo-card {
           background: #ffffff;
-          border-radius: 10px;
+          border-radius: 8px;
           height: 60px;
           display: flex;
           align-items: center;
