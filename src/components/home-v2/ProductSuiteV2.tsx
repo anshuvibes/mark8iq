@@ -71,6 +71,14 @@ const mockupData: Record<string, TableDef> = {
       { cells: ['SKU-SHOE-40B', '121 units', '9 days', ''], statusColor: '#f59e0b', statusLabel: 'Watch' },
     ],
   },
+  marketone: {
+    headers: ['Module', 'Key Metric', 'Status'],
+    rows: [
+      { cells: ['Mark8 Ads', '₹105 Cr optimized', ''], statusColor: '#22c55e', statusLabel: 'Synced' },
+      { cells: ['Mark8 Sight', '15 marketplaces', ''], statusColor: '#22c55e', statusLabel: 'Synced' },
+      { cells: ['Mark8 Shelf', '3,240 ASINs', ''], statusColor: '#22c55e', statusLabel: 'Synced' },
+    ],
+  },
 };
 
 function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string }) {
@@ -649,9 +657,9 @@ export default function ProductSuiteV2() {
             transition={{ duration: 0.3 }}
             className="product-suite-detail"
             style={{
-              display: activeModule === 'marketone' ? 'block' : 'grid',
-              gridTemplateColumns: activeModule === 'marketone' ? undefined : '1fr 1fr',
-              gap: activeModule === 'marketone' ? undefined : '32px',
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '32px',
               background: `#ffffff`,
               backgroundImage: `radial-gradient(ellipse at 0% 100%, ${active.accent}35 0%, ${active.accent}12 50%, transparent 100%)`,
               opacity: 1,
@@ -664,62 +672,32 @@ export default function ProductSuiteV2() {
               zIndex: 5,
             }}
           >
-            {activeModule === 'marketone' ? (
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'center',
-                padding: '32px 60px',
-                gap: '14px',
-                height: '100%',
-              }}>
-                <img
-                  src="/img/product-logos/black/market-one.svg"
-                  alt="Market One"
-                  loading="eager"
-                  decoding="sync"
-                  fetchPriority="high"
-                  style={{ height: '20px', width: 'auto', marginBottom: '4px' }}
-                />
-                <p className="m8-p2" style={{ color: 'var(--v2-text)', margin: 0, maxWidth: 'none', whiteSpace: 'nowrap' }}>
-                  Every product is a consolidated product.<br />Market One is the consolidation of all consolidations.
-                </p>
-                <p className="m8-p5" style={{ color: 'var(--v2-text-subtle)', margin: 0 }}>
-                  6 dashboards. 15+ marketplaces. One source of truth.
-                </p>
-              </div>
-            ) : (
-              <>
-                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', padding: '28px 28px' }}>
-                  <img
-                    src={activeLogo}
-                    alt={active.name}
-                    loading="eager"
-                    decoding="sync"
-                    fetchPriority="high"
-                    style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85, alignSelf: 'flex-start' }}
-                  />
-                  <p className="m8-p2" style={{
-                    color: 'var(--v2-text)',
-                    margin: 0,
-                    display: '-webkit-box',
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden',
-                  }}>{active.pain}</p>
-                  <p className="m8-p5" style={{
-                    color: 'var(--v2-text-subtle)',
-                    margin: 0,
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}>{active.metric}</p>
-                </div>
-                <DataTable moduleKey={activeModule} accent={active.accent} />
-              </>
-            )}
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', padding: '28px 28px' }}>
+              <img
+                src={activeLogo}
+                alt={active.name}
+                loading="eager"
+                decoding="sync"
+                fetchPriority="high"
+                style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85, alignSelf: 'flex-start' }}
+              />
+              <p className="m8-p2" style={{
+                color: 'var(--v2-text)',
+                margin: 0,
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+              }}>{active.pain}</p>
+              <p className="m8-p5" style={{
+                color: 'var(--v2-text-subtle)',
+                margin: 0,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}>{active.metric}</p>
+            </div>
+            <DataTable moduleKey={activeModule} accent={active.accent} />
           </motion.div>
         </AnimatePresence>
         </div>
