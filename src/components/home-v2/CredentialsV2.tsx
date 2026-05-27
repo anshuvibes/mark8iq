@@ -15,77 +15,13 @@ const BADGES: Badge[] = [
 
 function BadgeMedallion({ b }: { b: Badge }) {
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '90px',
-        height: '90px',
-        borderRadius: '999px',
-        overflow: 'hidden',
-        backgroundImage:
-          'radial-gradient(circle at 30% 25%, rgba(243,19,255,0.25), transparent 55%), linear-gradient(180deg, #1a0838 0%, #5900e7 55%, #2a0c5e 100%)',
-        boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.18), 0 6px 18px -8px rgba(89,0,231,0.55)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      {/* Outer ring */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 4,
-          borderRadius: '999px',
-          border: '1px solid rgba(255,255,255,0.25)',
-        }}
-      />
-      <div
-        style={{
-          position: 'absolute',
-          inset: 10,
-          borderRadius: '999px',
-          border: '1px dashed rgba(255,255,255,0.15)',
-        }}
-      />
-
-      <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
-        {b.suffix ? (
-          <>
-            <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '9px', color: 'rgba(255,255,255,0.85)', letterSpacing: '0.08em' }}>
-              {b.prefix}
-            </span>
-            <span style={{ height: '1px', width: '36px', background: 'rgba(255,255,255,0.35)' }} />
-            <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '20px', color: '#FFFFFF', lineHeight: 1, letterSpacing: '-0.02em' }}>
-              {b.code}
-            </span>
-            <span style={{ height: '1px', width: '36px', background: 'rgba(255,255,255,0.35)' }} />
-            <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '9px', color: 'rgba(255,255,255,0.9)', letterSpacing: '0.08em' }}>
-              {b.suffix}
-            </span>
-          </>
-        ) : (
-          <>
-            <span
-              style={{
-                fontFamily: "'Saira', sans-serif",
-                fontSize: '24px',
-                lineHeight: 1,
-                background: 'linear-gradient(180deg, #FFFFFF 40%, rgba(255,255,255,0.55) 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                letterSpacing: '-0.02em',
-              }}
-            >
-              {b.prefix}
-            </span>
-            <span style={{ fontFamily: "'Saira', sans-serif", fontSize: '12px', color: '#FFFFFF', letterSpacing: '0.05em' }}>
-              {b.code}
-            </span>
-          </>
-        )}
-      </div>
-    </div>
+    <img
+      src={b.src}
+      alt={b.alt}
+      width={90}
+      height={90}
+      style={{ display: 'block', width: '90px', height: '90px' }}
+    />
   );
 }
 
