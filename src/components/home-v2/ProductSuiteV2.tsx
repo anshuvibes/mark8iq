@@ -3,22 +3,15 @@ import { motion } from 'motion/react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { useV2Theme } from './ThemeContext';
-import adsDashboard from '@/assets/home-v2/dashboards/ads.png';
-import inventoryDashboard from '@/assets/home-v2/dashboards/inventory.png';
-import marketOneDashboard from '@/assets/home-v2/dashboards/marketone.png';
-import recoDashboard from '@/assets/home-v2/dashboards/reco.png';
-import returnsDashboard from '@/assets/home-v2/dashboards/returns.png';
-import shelfDashboard from '@/assets/home-v2/dashboards/shelf.png';
-import sightDashboard from '@/assets/home-v2/dashboards/sight.png';
 
-const modules: Record<string, { name: string; abbr: string; accent: string; pain: string; metric: string; logo: string; dashboard: string }> = {
-  ads: { name: 'Mark8 Ads', abbr: 'AD', accent: '#dd4062', logo: '/img/product-logos/black/mark8-ads.svg', dashboard: adsDashboard, pain: 'Your ad spend across every marketplace. Optimized in real time.', metric: '105 Cr in ad spend optimized. 35% average ROAS improvement.' },
-  sight: { name: 'Mark8 Sight', abbr: 'SI', accent: '#52bfbc', logo: '/img/product-logos/black/mark8-sight.svg', dashboard: sightDashboard, pain: 'Know exactly where your brand ranks. Before your competitor does.', metric: 'Real-time rank tracking across 15+ marketplaces.' },
-  shelf: { name: 'Mark8 Shelf', abbr: 'SH', accent: '#6895fc', logo: '/img/product-logos/black/mark8-shelf.svg', dashboard: shelfDashboard, pain: 'Your listings, your content, your digital shelf. Always at its best.', metric: 'ASIN-level visibility across every platform.' },
-  returns: { name: 'Mark8 Returns', abbr: 'RE', accent: '#fc7459', logo: '/img/product-logos/black/mark8-returns.svg', dashboard: returnsDashboard, pain: 'Stop losing money to returns you cannot see coming.', metric: 'Returns analyzed and flagged before they hit your P&L.' },
-  reco: { name: 'Mark8 Reco', abbr: 'RC', accent: '#7cbc71', logo: '/img/product-logos/black/mark8-reco.svg', dashboard: recoDashboard, pain: 'Reconciliation that closes itself. No chasing. No leakage.', metric: 'Financial leakages identified in real time.' },
-  inventory: { name: 'Mark8 Inventory', abbr: 'PO', accent: '#fcb24f', logo: '/img/product-logos/black/mark8-po.svg', dashboard: inventoryDashboard, pain: 'Never stockout. Never overstock. Always exactly right.', metric: 'Inventory decisions automated across all warehouses.' },
-  marketone: { name: 'Market One', abbr: 'M1', accent: '#8e59ff', logo: '/img/product-logos/black/market-one.svg', dashboard: marketOneDashboard, pain: 'Every product is a consolidated product.\nMarket One is the consolidation of all consolidations.', metric: '6 dashboards. 15+ marketplaces. One source of truth.' },
+const modules: Record<string, { name: string; abbr: string; accent: string; pain: string; metric: string; logo: string }> = {
+  ads: { name: 'Mark8 Ads', abbr: 'AD', accent: '#dd4062', logo: '/img/product-logos/black/mark8-ads.svg', pain: 'Your ad spend across every marketplace. Optimized in real time.', metric: '105 Cr in ad spend optimized. 35% average ROAS improvement.' },
+  sight: { name: 'Mark8 Sight', abbr: 'SI', accent: '#52bfbc', logo: '/img/product-logos/black/mark8-sight.svg', pain: 'Know exactly where your brand ranks. Before your competitor does.', metric: 'Real-time rank tracking across 15+ marketplaces.' },
+  shelf: { name: 'Mark8 Shelf', abbr: 'SH', accent: '#6895fc', logo: '/img/product-logos/black/mark8-shelf.svg', pain: 'Your listings, your content, your digital shelf. Always at its best.', metric: 'ASIN-level visibility across every platform.' },
+  returns: { name: 'Mark8 Returns', abbr: 'RE', accent: '#fc7459', logo: '/img/product-logos/black/mark8-returns.svg', pain: 'Stop losing money to returns you cannot see coming.', metric: 'Returns analyzed and flagged before they hit your P&L.' },
+  reco: { name: 'Mark8 Reco', abbr: 'RC', accent: '#7cbc71', logo: '/img/product-logos/black/mark8-reco.svg', pain: 'Reconciliation that closes itself. No chasing. No leakage.', metric: 'Financial leakages identified in real time.' },
+  inventory: { name: 'Mark8 Inventory', abbr: 'PO', accent: '#fcb24f', logo: '/img/product-logos/black/mark8-po.svg', pain: 'Never stockout. Never overstock. Always exactly right.', metric: 'Inventory decisions automated across all warehouses.' },
+  marketone: { name: 'Market One', abbr: 'M1', accent: '#8e59ff', logo: '/img/product-logos/black/market-one.svg', pain: 'Every product is a consolidated product.\nMarket One is the consolidation of all consolidations.', metric: '6 dashboards. 15+ marketplaces. One source of truth.' },
 };
 
 const leftKeys = ['ads', 'shelf', 'reco'];
@@ -239,13 +232,13 @@ export default function ProductSuiteV2() {
   const activeLogo = active.logo.replace('/black/', `/${theme === 'dark' ? 'white' : 'black'}/`);
 
   // Preload every product logo (both themes) once on mount so that switching
+  // Preload every product logo (both themes) once on mount so that switching
   // the contextual card never triggers a fresh network/decoded paint.
   useEffect(() => {
     const urls: string[] = [];
     Object.values(modules).forEach((m) => {
       urls.push(m.logo);
       urls.push(m.logo.replace('/black/', '/white/'));
-      urls.push(m.dashboard);
     });
     urls.forEach((src) => {
       const img = new Image();
@@ -661,74 +654,37 @@ export default function ProductSuiteV2() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.22 }}
           style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '32px',
             background: `#ffffff`,
             backgroundImage: `radial-gradient(ellipse at 0% 100%, ${active.accent}35 0%, ${active.accent}12 50%, transparent 100%)`,
             opacity: 1,
             borderRadius: '12px',
             border: `1px solid var(--v2-border)`,
             margin: '0 32px 32px 32px',
-            height: '220px',
+            padding: '28px',
             overflow: 'hidden',
             position: 'relative',
             zIndex: 5,
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', padding: '28px 28px', minWidth: 0 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', minWidth: 0 }}>
             <img
               src={activeLogo}
               alt={active.name}
               loading="eager"
               decoding="sync"
-              fetchPriority="high"
               style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85, alignSelf: 'flex-start' }}
             />
             <p className="m8-p2" style={{
               color: 'var(--v2-text)',
               margin: 0,
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-              minHeight: '3em',
-              maxWidth: '34ch',
+              maxWidth: '48ch',
             }}>{active.pain}</p>
             <p className="m8-p5" style={{
               color: 'var(--v2-text-subtle)',
               margin: 0,
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-              maxWidth: '34ch',
+              maxWidth: '48ch',
             }}>{active.metric}</p>
           </div>
-          {Object.entries(modules).map(([moduleKey, module]) => (
-            <img
-              key={moduleKey}
-              src={module.dashboard}
-              alt={moduleKey === activeModule ? `${module.name} dashboard preview` : ''}
-              aria-hidden={moduleKey !== activeModule}
-              loading="eager"
-              decoding="sync"
-              fetchPriority={moduleKey === activeModule ? 'high' : 'auto'}
-              style={{
-                position: 'absolute',
-                top: '28px',
-                left: '50%',
-                height: 'calc(100% - 28px)',
-                width: 'auto',
-                maxWidth: 'none',
-                display: 'block',
-                pointerEvents: 'none',
-                opacity: moduleKey === activeModule ? 1 : 0,
-                transition: 'opacity 160ms ease',
-                willChange: 'opacity',
-              }}
-            />
-          ))}
         </motion.div>
         </div>
 
