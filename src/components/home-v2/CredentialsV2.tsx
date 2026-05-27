@@ -72,7 +72,7 @@ export default function CredentialsV2() {
             >
               {BADGES.map((b, i) => (
                 <motion.div
-                  key={b.code}
+                  key={b.alt}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-80px' }}
