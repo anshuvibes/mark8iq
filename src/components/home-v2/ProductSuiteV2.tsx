@@ -669,7 +669,7 @@ export default function ProductSuiteV2() {
             style={{
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
-              gap: '32px',
+              gap: '0px',
               background: `#ffffff`,
               backgroundImage: `radial-gradient(ellipse at 0% 100%, ${active.accent}35 0%, ${active.accent}12 50%, transparent 100%)`,
               opacity: 1,
@@ -682,7 +682,7 @@ export default function ProductSuiteV2() {
               zIndex: 5,
             }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', padding: '28px 28px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px', padding: '28px', overflow: 'hidden' }}>
               <img
                 src={activeLogo}
                 alt={active.name}
@@ -715,11 +715,7 @@ export default function ProductSuiteV2() {
               width: '100%',
               height: '100%',
               overflow: 'hidden',
-              marginTop: '28px',
-              marginRight: '28px',
-              borderRadius: '10px 0 0 0',
-              border: '1px solid var(--v2-border)',
-              background: 'var(--v2-bg-card)',
+              borderLeft: '1px solid var(--v2-border)',
             }}>
               <img
                 src={dashboardImages[activeModule]}
