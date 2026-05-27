@@ -671,9 +671,10 @@ export default function ProductSuiteV2() {
             overflow: 'hidden',
             position: 'relative',
             zIndex: 5,
+            minHeight: '280px',
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', minWidth: 0 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', minWidth: 0, position: 'relative', zIndex: 2, maxWidth: '52%' }}>
             <img
               src={activeLogo}
               alt={active.name}
@@ -692,7 +693,27 @@ export default function ProductSuiteV2() {
               maxWidth: '48ch',
             }}>{active.metric}</p>
           </div>
+          <img
+            key={activeModule}
+            src={active.dashboard}
+            alt={`${active.name} dashboard`}
+            loading="eager"
+            decoding="sync"
+            style={{
+              position: 'absolute',
+              right: 0,
+              bottom: 0,
+              height: 'auto',
+              width: '52%',
+              maxWidth: 'none',
+              display: 'block',
+              pointerEvents: 'none',
+              borderTopLeftRadius: '10px',
+              boxShadow: '0 12px 32px -16px rgba(15, 23, 42, 0.25)',
+            }}
+          />
         </motion.div>
+
         </div>
 
         <motion.p
