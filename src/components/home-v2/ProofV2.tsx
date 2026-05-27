@@ -219,6 +219,9 @@ export default function ProofV2() {
           transform: scale(1.06);
           filter: grayscale(0%);
         }
+        .proof-headline-break {
+          display: block;
+        }
         @media (max-width: 1024px) {
           section[data-section="proof"] [data-logo-grid] {
             grid-template-columns: repeat(4, 1fr) !important;
