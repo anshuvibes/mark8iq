@@ -133,7 +133,9 @@ export default function ProofV2() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ delay: 0.05 }}
           >
-            India's fastest-growing brands run on Mark8 IQ.
+            India's fastest-growing brands{' '}
+            <span className="proof-headline-break" style={{ display: 'none' }} />
+            run on Mark8 IQ.
           </motion.h2>
 
           <div style={{
@@ -197,6 +199,11 @@ export default function ProofV2() {
         @media (max-width: 1024px) {
           section[data-section="proof"] [data-logo-grid] {
             grid-template-columns: repeat(4, 1fr) !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .proof-headline-break {
+            display: block !important;
           }
         }
         @media (max-width: 600px) {
