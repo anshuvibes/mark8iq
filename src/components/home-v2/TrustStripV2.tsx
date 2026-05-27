@@ -18,6 +18,8 @@ const logos = [
 ];
 
 export default function TrustStripV2() {
+  const { theme } = useV2Theme();
+  const isDark = theme === 'dark';
   return (
     <section style={{ paddingTop: '20px', paddingBottom: '60px', position: 'relative', overflow: 'hidden' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
