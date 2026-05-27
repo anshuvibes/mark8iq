@@ -691,7 +691,7 @@ export default function ProductSuiteV2() {
             }}
           >
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px', padding: '28px', overflow: 'hidden' }}>
-              <div style={{ position: 'relative', height: '22px', alignSelf: 'flex-start' }}>
+              <div style={{ display: 'grid', height: '22px', alignSelf: 'flex-start' }}>
                 {Object.entries(modules).map(([key, m]) => (
                   <img
                     key={key}
@@ -700,14 +700,15 @@ export default function ProductSuiteV2() {
                     loading="eager"
                     decoding="sync"
                     style={{
+                      gridArea: '1 / 1',
                       height: key === 'marketone' ? '18px' : '22px',
                       width: 'auto',
                       display: 'block',
                       opacity: key === activeModule ? 0.85 : 0,
                       transition: 'opacity 0.3s ease',
-                      position: 'absolute',
-                      top: key === 'marketone' ? '2px' : 0,
-                      left: 0,
+                      alignSelf: key === 'marketone' ? 'center' : 'start',
+                      justifySelf: 'start',
+                      pointerEvents: key === activeModule ? 'auto' : 'none',
                     }}
                   />
                 ))}
