@@ -166,23 +166,15 @@ export default function ProofV2() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ delay: 0.03 * i, duration: 0.5 }}
-                style={{
-                  background: '#ffffff',
-                  borderRadius: '12px',
-                  height: '60px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '0 16px',
-                  boxShadow: '0 1px 2px rgba(15, 23, 42, 0.04)',
-                }}
+                whileHover={{ y: -4 }}
+                className="proof-logo-card"
               >
                 {logo.src ? (
                   <img
                     src={logo.src}
                     alt={logo.name}
                     loading="lazy"
-                    style={{ maxWidth: '100%', maxHeight: '32px', objectFit: 'contain' }}
+                    className="proof-logo-img"
                   />
                 ) : (
                   <span style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#0f172a', letterSpacing: '-0.01em' }}>
@@ -191,11 +183,42 @@ export default function ProofV2() {
                 )}
               </motion.div>
             ))}
+
           </div>
         </div>
       </div>
 
       <style>{`
+        .proof-logo-card {
+          background: #ffffff;
+          border-radius: 10px;
+          height: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0 16px;
+          box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+          border: 1px solid transparent;
+          transition: box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+          cursor: pointer;
+          overflow: hidden;
+        }
+        .proof-logo-card:hover {
+          box-shadow: 0 12px 28px -12px rgba(15, 23, 42, 0.18);
+          border-color: rgba(15, 23, 42, 0.08);
+          background: #fbfcfe;
+        }
+        .proof-logo-img {
+          max-width: 100%;
+          max-height: 32px;
+          object-fit: contain;
+          transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), filter 0.35s ease;
+          filter: grayscale(15%);
+        }
+        .proof-logo-card:hover .proof-logo-img {
+          transform: scale(1.06);
+          filter: grayscale(0%);
+        }
         @media (max-width: 1024px) {
           section[data-section="proof"] [data-logo-grid] {
             grid-template-columns: repeat(4, 1fr) !important;
@@ -212,6 +235,7 @@ export default function ProofV2() {
           }
         }
       `}</style>
+
     </section>
   );
 }
