@@ -195,21 +195,21 @@ export default function CaseStudiesV2() {
               'linear-gradient(to right, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%)',
           }}
         >
-          <motion.div
-            animate={{ x: [0, -trackWidth] }}
-            transition={{
-              duration: STUDIES.length * 16,
-              ease: 'linear',
-              repeat: Infinity,
-            }}
+          <style>{`
+            @keyframes m8-case-marquee {
+              from { transform: translateX(0); }
+              to { transform: translateX(-${trackWidth}px); }
+            }
+          `}</style>
+          <div
             style={{
               display: 'flex',
               gap: `${CARD_GAP}px`,
               width: 'max-content',
               padding: '12px 0',
+              animation: `m8-case-marquee ${STUDIES.length * 16}s linear infinite`,
               animationPlayState: isPaused ? 'paused' : 'running',
             }}
-            {...(isPaused ? { animate: { x: undefined } } : {})}
           >
             {loop.map((s, i) => (
               <Card
@@ -220,7 +220,7 @@ export default function CaseStudiesV2() {
                 onLeave={() => setHoveredIdx((cur) => (cur === i ? null : cur))}
               />
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
