@@ -71,6 +71,14 @@ const mockupData: Record<string, TableDef> = {
       { cells: ['SKU-SHOE-40B', '121 units', '9 days', ''], statusColor: '#f59e0b', statusLabel: 'Watch' },
     ],
   },
+  marketone: {
+    headers: ['Module', 'Status', 'Key Metric'],
+    rows: [
+      { cells: ['Mark8 Ads', 'Active', '₹105 Cr optimized'], statusColor: '#22c55e', statusLabel: 'Synced' },
+      { cells: ['Mark8 Sight', 'Active', '15 marketplaces'], statusColor: '#22c55e', statusLabel: 'Synced' },
+      { cells: ['Mark8 Shelf', 'Active', '3,240 ASINs'], statusColor: '#22c55e', statusLabel: 'Synced' },
+    ],
+  },
 };
 
 function DataTable({ moduleKey, accent }: { moduleKey: string; accent: string }) {
