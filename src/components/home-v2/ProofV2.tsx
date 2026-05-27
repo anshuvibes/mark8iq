@@ -166,23 +166,15 @@ export default function ProofV2() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ delay: 0.03 * i, duration: 0.5 }}
-                style={{
-                  background: '#ffffff',
-                  borderRadius: '12px',
-                  height: '60px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '0 16px',
-                  boxShadow: '0 1px 2px rgba(15, 23, 42, 0.04)',
-                }}
+                whileHover={{ y: -4 }}
+                className="proof-logo-card"
               >
                 {logo.src ? (
                   <img
                     src={logo.src}
                     alt={logo.name}
                     loading="lazy"
-                    style={{ maxWidth: '100%', maxHeight: '32px', objectFit: 'contain' }}
+                    className="proof-logo-img"
                   />
                 ) : (
                   <span style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#0f172a', letterSpacing: '-0.01em' }}>
@@ -191,6 +183,7 @@ export default function ProofV2() {
                 )}
               </motion.div>
             ))}
+
           </div>
         </div>
       </div>
