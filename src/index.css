@@ -1373,6 +1373,6 @@ body {
 
 
 /* Client logos: invert to white in V2 dark mode */
-.n img[src^="/img/logos/"] {
+.v2-dark img[src*="/img/logos/"] {
   filter: brightness(0) invert(1);
 }
