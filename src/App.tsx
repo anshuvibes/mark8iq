@@ -18,7 +18,6 @@ import ProductReturnsPage from "./pages/ProductReturnsPage";
 import ComingSoonPage from "./pages/ComingSoonPage";
 import BlogSlugPage from "./pages/BlogSlugPage";
 import DesignSystemPage from "./pages/DesignSystemPage";
-import HomePageV2 from "./pages/HomePageV2";
 import DeckPage from "./pages/DeckPage";
 import DashboardAdsPage from "./pages/DashboardAdsPage";
 import CustomCursor from "./components/CustomCursor";
@@ -52,7 +51,8 @@ const App = () => {
   <BrowserRouter>
     <CustomCursor />
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<HomePageV2 />} />
+      <Route path="/home-v1" element={<HomePage />} />
       <Route path="/about-us" element={<AboutPage />} />
       <Route path="/get-in-touch" element={<ContactPage />} />
       <Route path="/pricing" element={<PricingPage />} />
