@@ -28,24 +28,40 @@ function BadgeMedallion({ b }: { b: Badge }) {
 export default function CredentialsV2() {
   return (
     <section data-section="credentials" style={{ position: 'relative', background: 'transparent' }}>
+      <style>{`
+        .credentials-v2-row {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          gap: 80px;
+          align-items: center;
+        }
+        .credentials-v2-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 16px;
+        }
+        @media (max-width: 900px) {
+          .credentials-v2-row {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 48px;
+          }
+        }
+        @media (max-width: 560px) {
+          .credentials-v2-grid {
+            grid-template-columns: minmax(0, 1fr);
+          }
+        }
+      `}</style>
       <div style={{ padding: '100px 0' }}>
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <div
-            style={{
-              display: 'flex',
-              gap: '100px',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-            }}
-          >
+          <div className="credentials-v2-row">
             {/* Left: copy */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
-              style={{ flex: '1 1 420px', minWidth: '300px', display: 'flex', flexDirection: 'column', gap: '16px' }}
+              style={{ display: 'flex', flexDirection: 'column', gap: '16px', minWidth: 0 }}
             >
               <p className="m8-eyebrow" style={{ color: '#8e59ff', marginBottom: '4px' }}>
                 SECURITY & COMPLIANCE
@@ -62,14 +78,7 @@ export default function CredentialsV2() {
             </motion.div>
 
             {/* Right: badge grid */}
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 320px)',
-                gap: '16px',
-                flex: '0 0 auto',
-              }}
-            >
+            <div className="credentials-v2-grid">
               {BADGES.map((b, i) => (
                 <motion.div
                   key={b.alt}
@@ -81,13 +90,13 @@ export default function CredentialsV2() {
                   style={{
                     background: '#FFFFFF',
                     borderRadius: '16px',
-                    padding: '30px',
+                    padding: '28px',
                     border: '1px solid rgba(15,23,42,0.06)',
                     boxShadow: '0 12px 28px -18px rgba(15,23,42,0.16)',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '21px',
-                    width: '320px',
+                    gap: '20px',
+                    minWidth: 0,
                   }}
                 >
                   <BadgeMedallion b={b} />
