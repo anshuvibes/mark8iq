@@ -1,5 +1,5 @@
-import { motion } from 'motion/react';
-import { Button } from '@/components/ui/button';
+import { useRef } from 'react';
+import { useNavigateLinks } from '../hooks/useNavigateLinks';
 
 export default function FooterCTA() {
   return (
