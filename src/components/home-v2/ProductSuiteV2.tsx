@@ -3,15 +3,22 @@ import { motion } from 'motion/react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { useV2Theme } from './ThemeContext';
+import adsDashboard from '@/assets/home-v2/dashboards/ads.png';
+import inventoryDashboard from '@/assets/home-v2/dashboards/inventory.png';
+import marketOneDashboard from '@/assets/home-v2/dashboards/marketone.png';
+import recoDashboard from '@/assets/home-v2/dashboards/reco.png';
+import returnsDashboard from '@/assets/home-v2/dashboards/returns.png';
+import shelfDashboard from '@/assets/home-v2/dashboards/shelf.png';
+import sightDashboard from '@/assets/home-v2/dashboards/sight.png';
 
 const modules: Record<string, { name: string; abbr: string; accent: string; pain: string; metric: string; logo: string; dashboard: string }> = {
-  ads: { name: 'Mark8 Ads', abbr: 'AD', accent: '#dd4062', logo: '/img/product-logos/black/mark8-ads.svg', dashboard: '/img/home-v2/dashboards/ads.png', pain: 'Your ad spend across every marketplace. Optimized in real time.', metric: '105 Cr in ad spend optimized. 35% average ROAS improvement.' },
-  sight: { name: 'Mark8 Sight', abbr: 'SI', accent: '#52bfbc', logo: '/img/product-logos/black/mark8-sight.svg', dashboard: '/img/home-v2/dashboards/sight.png', pain: 'Know exactly where your brand ranks. Before your competitor does.', metric: 'Real-time rank tracking across 15+ marketplaces.' },
-  shelf: { name: 'Mark8 Shelf', abbr: 'SH', accent: '#6895fc', logo: '/img/product-logos/black/mark8-shelf.svg', dashboard: '/img/home-v2/dashboards/shelf.png', pain: 'Your listings, your content, your digital shelf. Always at its best.', metric: 'ASIN-level visibility across every platform.' },
-  returns: { name: 'Mark8 Returns', abbr: 'RE', accent: '#fc7459', logo: '/img/product-logos/black/mark8-returns.svg', dashboard: '/img/home-v2/dashboards/returns.png', pain: 'Stop losing money to returns you cannot see coming.', metric: 'Returns analyzed and flagged before they hit your P&L.' },
-  reco: { name: 'Mark8 Reco', abbr: 'RC', accent: '#7cbc71', logo: '/img/product-logos/black/mark8-reco.svg', dashboard: '/img/home-v2/dashboards/reco.png', pain: 'Reconciliation that closes itself. No chasing. No leakage.', metric: 'Financial leakages identified in real time.' },
-  inventory: { name: 'Mark8 Inventory', abbr: 'PO', accent: '#fcb24f', logo: '/img/product-logos/black/mark8-po.svg', dashboard: '/img/home-v2/dashboards/inventory.png', pain: 'Never stockout. Never overstock. Always exactly right.', metric: 'Inventory decisions automated across all warehouses.' },
-  marketone: { name: 'Market One', abbr: 'M1', accent: '#8e59ff', logo: '/img/product-logos/black/market-one.svg', dashboard: '/img/home-v2/dashboards/marketone.png', pain: 'Every product is a consolidated product.\nMarket One is the consolidation of all consolidations.', metric: '6 dashboards. 15+ marketplaces. One source of truth.' },
+  ads: { name: 'Mark8 Ads', abbr: 'AD', accent: '#dd4062', logo: '/img/product-logos/black/mark8-ads.svg', dashboard: adsDashboard, pain: 'Your ad spend across every marketplace. Optimized in real time.', metric: '105 Cr in ad spend optimized. 35% average ROAS improvement.' },
+  sight: { name: 'Mark8 Sight', abbr: 'SI', accent: '#52bfbc', logo: '/img/product-logos/black/mark8-sight.svg', dashboard: sightDashboard, pain: 'Know exactly where your brand ranks. Before your competitor does.', metric: 'Real-time rank tracking across 15+ marketplaces.' },
+  shelf: { name: 'Mark8 Shelf', abbr: 'SH', accent: '#6895fc', logo: '/img/product-logos/black/mark8-shelf.svg', dashboard: shelfDashboard, pain: 'Your listings, your content, your digital shelf. Always at its best.', metric: 'ASIN-level visibility across every platform.' },
+  returns: { name: 'Mark8 Returns', abbr: 'RE', accent: '#fc7459', logo: '/img/product-logos/black/mark8-returns.svg', dashboard: returnsDashboard, pain: 'Stop losing money to returns you cannot see coming.', metric: 'Returns analyzed and flagged before they hit your P&L.' },
+  reco: { name: 'Mark8 Reco', abbr: 'RC', accent: '#7cbc71', logo: '/img/product-logos/black/mark8-reco.svg', dashboard: recoDashboard, pain: 'Reconciliation that closes itself. No chasing. No leakage.', metric: 'Financial leakages identified in real time.' },
+  inventory: { name: 'Mark8 Inventory', abbr: 'PO', accent: '#fcb24f', logo: '/img/product-logos/black/mark8-po.svg', dashboard: inventoryDashboard, pain: 'Never stockout. Never overstock. Always exactly right.', metric: 'Inventory decisions automated across all warehouses.' },
+  marketone: { name: 'Market One', abbr: 'M1', accent: '#8e59ff', logo: '/img/product-logos/black/market-one.svg', dashboard: marketOneDashboard, pain: 'Every product is a consolidated product.\nMarket One is the consolidation of all consolidations.', metric: '6 dashboards. 15+ marketplaces. One source of truth.' },
 };
 
 const leftKeys = ['ads', 'shelf', 'reco'];
