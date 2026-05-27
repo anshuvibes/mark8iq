@@ -691,14 +691,27 @@ export default function ProductSuiteV2() {
             }}
           >
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '10px', padding: '28px', overflow: 'hidden' }}>
-              <img
-                src={activeLogo}
-                alt={active.name}
-                loading="eager"
-                decoding="sync"
-                fetchPriority="high"
-                style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85, alignSelf: 'flex-start' }}
-              />
+              <div style={{ position: 'relative', height: '22px', alignSelf: 'flex-start' }}>
+                {Object.entries(modules).map(([key, m]) => (
+                  <img
+                    key={key}
+                    src={m.logo}
+                    alt={m.name}
+                    loading="eager"
+                    decoding="sync"
+                    style={{
+                      height: key === 'marketone' ? '18px' : '22px',
+                      width: 'auto',
+                      display: 'block',
+                      opacity: key === activeModule ? 0.85 : 0,
+                      transition: 'opacity 0.3s ease',
+                      position: 'absolute',
+                      top: key === 'marketone' ? '2px' : 0,
+                      left: 0,
+                    }}
+                  />
+                ))}
+              </div>
               <p className="m8-p2" style={{
                 color: 'var(--v2-text)',
                 margin: 0,
