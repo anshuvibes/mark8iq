@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { useState } from 'react';
 
 type CaseStudy = {
   logo: string;
@@ -57,9 +58,11 @@ const STUDIES: CaseStudy[] = [
 const CARD_WIDTH = 460;
 const CARD_GAP = 24;
 
-function Card({ s }: { s: CaseStudy }) {
+function Card({ s, hovered, onHover, onLeave }: { s: CaseStudy; hovered: boolean; onHover: () => void; onLeave: () => void }) {
   return (
     <article
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
       style={{
         flex: '0 0 auto',
         width: `${CARD_WIDTH}px`,
@@ -67,12 +70,17 @@ function Card({ s }: { s: CaseStudy }) {
         flexDirection: 'column',
         background: '#FFFFFF',
         borderRadius: '16px',
-        border: '1px solid rgba(15,23,42,0.06)',
-        boxShadow: '0 12px 32px -18px rgba(15,23,42,0.18)',
+        border: hovered ? '1px solid #8e59ff' : '1px solid rgba(15,23,42,0.06)',
+        boxShadow: hovered
+          ? '0 18px 40px -16px rgba(142,89,255,0.35), 0 0 0 3px rgba(142,89,255,0.12)'
+          : '0 12px 32px -18px rgba(15,23,42,0.18)',
         padding: '16px',
         height: '460px',
         overflow: 'hidden',
         gap: '20px',
+        transition: 'border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease',
+        transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
+        cursor: 'pointer',
       }}
     >
       {/* Top gradient visual */}
@@ -147,6 +155,8 @@ export default function CaseStudiesV2() {
   // Duplicate the array so the marquee loops seamlessly.
   const loop = [...STUDIES, ...STUDIES];
   const trackWidth = STUDIES.length * (CARD_WIDTH + CARD_GAP);
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const isPaused = hoveredIdx !== null;
 
   return (
     <section data-section="case-studies" style={{ position: 'relative', background: 'transparent' }}>
@@ -185,24 +195,32 @@ export default function CaseStudiesV2() {
               'linear-gradient(to right, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%)',
           }}
         >
-          <motion.div
-            animate={{ x: [0, -trackWidth] }}
-            transition={{
-              duration: STUDIES.length * 8,
-              ease: 'linear',
-              repeat: Infinity,
-            }}
+          <style>{`
+            @keyframes m8-case-marquee {
+              from { transform: translateX(0); }
+              to { transform: translateX(-${trackWidth}px); }
+            }
+          `}</style>
+          <div
             style={{
               display: 'flex',
               gap: `${CARD_GAP}px`,
               width: 'max-content',
               padding: '12px 0',
+              animation: `m8-case-marquee ${STUDIES.length * 16}s linear infinite`,
+              animationPlayState: isPaused ? 'paused' : 'running',
             }}
           >
             {loop.map((s, i) => (
-              <Card key={i} s={s} />
+              <Card
+                key={i}
+                s={s}
+                hovered={hoveredIdx === i}
+                onHover={() => setHoveredIdx(i)}
+                onLeave={() => setHoveredIdx((cur) => (cur === i ? null : cur))}
+              />
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
