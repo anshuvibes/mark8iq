@@ -246,8 +246,8 @@ export default function RoleBasedValueV2() {
                   >
                     {role.taglineLine1}
                     {role.taglineLine2 && <><br />{role.taglineLine2}</>}
-                    {/* @ts-expect-error taglineLine3 is optional */}
-                    {role.taglineLine3 && <><br />{role.taglineLine3}</>}
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                    {(role as any).taglineLine3 && <><br />{(role as any).taglineLine3}</>}
                   </h3>
 
                   {Array.isArray(role.body) ? (
