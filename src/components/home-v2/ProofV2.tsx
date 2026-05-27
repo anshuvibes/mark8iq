@@ -133,7 +133,9 @@ export default function ProofV2() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ delay: 0.05 }}
           >
-            India's fastest-growing brands run on Mark8 IQ.
+            India's fastest-growing brands{' '}
+            <span className="proof-headline-break" style={{ display: 'none' }} />
+            run on Mark8 IQ.
           </motion.h2>
 
           <div style={{
