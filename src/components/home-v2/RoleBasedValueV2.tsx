@@ -273,6 +273,7 @@ export default function RoleBasedValueV2() {
                         margin: 0,
                         maxWidth: '460px',
                         lineHeight: '160%',
+                        whiteSpace: 'pre-line',
                       }}
                     >
                       {role.body}
