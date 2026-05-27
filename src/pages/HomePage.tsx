@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
 import Footer from '../components/Footer';
+import FooterCTA from '../components/FooterCTA';
 import HeroBanner from '../components/home/HeroBanner';
 import EcommGrowth from '../components/home/EcommGrowth';
 import BuildingBlocks from '../components/home/BuildingBlocks';
@@ -41,6 +42,7 @@ export default function HomePage() {
           <HomeFaq />
         </div>
       </main>
+      <FooterCTA />
       <Footer />
     </Layout>
   );

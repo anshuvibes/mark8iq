@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
 import Footer from '../components/Footer';
+import FooterCTA from '../components/FooterCTA';
 import { V2ThemeProvider } from '../components/home-v2/ThemeContext';
 import HeroV2 from '../components/home-v2/HeroV2';
 import TrustStripV2 from '../components/home-v2/TrustStripV2';
@@ -34,6 +35,7 @@ export default function HomePageV2() {
           <TestimonialsV2 />
           <CredentialsV2 />
         </main>
+        <FooterCTA />
         <Footer />
         <AgentMarkWidget />
       </Layout>
