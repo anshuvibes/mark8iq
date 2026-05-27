@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 
 type CaseStudy = {
   logo: string;
@@ -93,122 +93,101 @@ export default function CaseStudiesV2() {
             The brands that moved first
           </motion.h2>
 
-          {/* Card */}
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <AnimatePresence mode="wait">
-              <motion.article
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.45, ease: 'easeOut' }}
-                style={{
-                  display: 'flex',
-                  gap: '24px',
-                  alignItems: 'center',
-                  background: '#FFFFFF',
-                  borderRadius: '16px',
-                  border: '1px solid rgba(15,23,42,0.06)',
-                  boxShadow: '0 12px 32px -18px rgba(15,23,42,0.18)',
-                  padding: '16px 16px 16px 40px',
-                  width: '100%',
-                  maxWidth: '1040px',
-                  height: '410px',
-                  overflow: 'hidden',
-                }}
-              >
-                {/* Left content */}
-                <div style={{ flex: '1 1 0', minWidth: 0, display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                  <img
-                    src={study.logo}
-                    alt={study.logoAlt}
-                    style={{ height: '32px', width: 'auto', objectFit: 'contain', alignSelf: 'flex-start' }}
-                  />
-
-                  <h3
-                    className="m8-h3-m"
-                    style={{
-                      color: '#2f3e6f',
-                      maxWidth: '460px',
-                      lineHeight: 1.5,
-                      margin: 0,
-                    }}
-                  >
-                    {study.headline.map((seg, i) => (
-                      <span
-                        key={i}
-                        style={{
-                          color: seg.highlight ? '#8e59ff' : undefined,
-                          fontWeight: seg.highlight ? 500 : 400,
-                        }}
-                      >
-                        {seg.text}
-                      </span>
-                    ))}
-                  </h3>
-
-                  <a
-                    href={study.href}
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                      color: 'var(--v2-text)',
-                      fontFamily: "'Saira', sans-serif",
-                      fontSize: '16px',
-                      lineHeight: 1,
-                      paddingBottom: '6px',
-                      borderBottom: '1px solid currentColor',
-                      width: 'fit-content',
-                    }}
-                  >
-                    Read the case study
-                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden>
-                      <path d="M5 10h10m0 0l-4-4m4 4l-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </a>
-                </div>
-
-                {/* Right gradient visual */}
-                <div
+          {/* Carousel viewport */}
+          <div style={{ overflow: 'hidden', width: '100%', maxWidth: '1040px', margin: '0 auto' }}>
+            <motion.div
+              animate={{ x: `-${index * 100}%` }}
+              transition={{ type: 'spring', stiffness: 120, damping: 22, mass: 0.8 }}
+              style={{ display: 'flex', width: '100%' }}
+            >
+              {STUDIES.map((s, i) => (
+                <article
+                  key={i}
                   style={{
-                    width: '576px',
-                    flexShrink: 0,
-                    height: '100%',
-                    borderRadius: '12px',
-                    background: study.gradient,
-                    position: 'relative',
+                    flex: '0 0 100%',
+                    display: 'flex',
+                    gap: '24px',
+                    alignItems: 'center',
+                    background: '#FFFFFF',
+                    borderRadius: '16px',
+                    border: '1px solid rgba(15,23,42,0.06)',
+                    boxShadow: '0 12px 32px -18px rgba(15,23,42,0.18)',
+                    padding: '16px 16px 16px 40px',
+                    height: '410px',
                     overflow: 'hidden',
-                    boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)',
                   }}
                 >
-                  {/* subtle radial glow */}
+                  {/* Left content */}
+                  <div style={{ flex: '1 1 0', minWidth: 0, display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                    <img
+                      src={s.logo}
+                      alt={s.logoAlt}
+                      style={{ height: '32px', width: 'auto', objectFit: 'contain', alignSelf: 'flex-start' }}
+                    />
+
+                    <h3
+                      className="m8-h3-m"
+                      style={{
+                        color: '#2f3e6f',
+                        maxWidth: '460px',
+                        lineHeight: 1.5,
+                        margin: 0,
+                      }}
+                    >
+                      {s.headline.map((seg, j) => (
+                        <span
+                          key={j}
+                          style={{
+                            color: seg.highlight ? '#8e59ff' : undefined,
+                            fontWeight: seg.highlight ? 500 : 400,
+                          }}
+                        >
+                          {seg.text}
+                        </span>
+                      ))}
+                    </h3>
+                  </div>
+
+                  {/* Right gradient visual */}
                   <div
                     style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%)',
+                      width: '576px',
+                      flexShrink: 0,
+                      height: '100%',
+                      borderRadius: '12px',
+                      background: s.gradient,
+                      position: 'relative',
+                      overflow: 'hidden',
+                      boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)',
                     }}
-                  />
-                  {/* logo watermark */}
-                  <img
-                    src={study.logo}
-                    alt=""
-                    aria-hidden
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      margin: 'auto',
-                      width: '160px',
-                      height: 'auto',
-                      filter: 'brightness(0) invert(1)',
-                      opacity: 0.85,
-                    }}
-                  />
-                </div>
-              </motion.article>
-            </AnimatePresence>
+                  >
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%)',
+                      }}
+                    />
+                    <img
+                      src={s.logo}
+                      alt=""
+                      aria-hidden
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        margin: 'auto',
+                        width: '160px',
+                        height: 'auto',
+                        filter: 'brightness(0) invert(1)',
+                        opacity: 0.85,
+                      }}
+                    />
+                  </div>
+                </article>
+              ))}
+            </motion.div>
           </div>
+
 
           {/* Controls */}
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginTop: '32px' }}>
