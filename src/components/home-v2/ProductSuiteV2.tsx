@@ -715,7 +715,8 @@ export default function ProductSuiteV2() {
               width: '100%',
               height: '100%',
               overflow: 'hidden',
-              borderLeft: '1px solid var(--v2-border)',
+              paddingTop: '28px',
+              paddingLeft: '20px',
             }}>
               <img
                 src={dashboardImages[activeModule]}
@@ -724,12 +725,15 @@ export default function ProductSuiteV2() {
                 decoding="sync"
                 style={{
                   position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
+                  top: 28,
+                  left: 20,
+                  width: 'calc(100% - 20px)',
+                  height: 'calc(100% - 28px)',
                   objectFit: 'cover',
                   objectPosition: 'top left',
+                  borderTopLeftRadius: '10px',
+                  borderTop: '1px solid var(--v2-border)',
+                  borderLeft: '1px solid var(--v2-border)',
                 }}
               />
             </div>
