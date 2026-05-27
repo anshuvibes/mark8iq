@@ -711,11 +711,13 @@ export default function ProductSuiteV2() {
                 style={{
                   position: 'absolute',
                   top: '28px',
-                  bottom: 0,
                   left: 0,
+                  right: 0,
+                  bottom: 0,
+                  width: '100%',
                   height: 'calc(100% - 28px)',
-                  width: 'auto',
-                  maxWidth: 'none',
+                  objectFit: 'cover',
+                  objectPosition: 'top left',
                   display: 'block',
                 }}
               />
