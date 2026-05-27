@@ -72,11 +72,11 @@ const mockupData: Record<string, TableDef> = {
     ],
   },
   marketone: {
-    headers: ['Module', 'Status', 'Key Metric'],
+    headers: ['Module', 'Key Metric', 'Status'],
     rows: [
-      { cells: ['Mark8 Ads', 'Active', '₹105 Cr optimized'], statusColor: '#22c55e', statusLabel: 'Synced' },
-      { cells: ['Mark8 Sight', 'Active', '15 marketplaces'], statusColor: '#22c55e', statusLabel: 'Synced' },
-      { cells: ['Mark8 Shelf', 'Active', '3,240 ASINs'], statusColor: '#22c55e', statusLabel: 'Synced' },
+      { cells: ['Mark8 Ads', '₹105 Cr optimized', ''], statusColor: '#22c55e', statusLabel: 'Synced' },
+      { cells: ['Mark8 Sight', '15 marketplaces', ''], statusColor: '#22c55e', statusLabel: 'Synced' },
+      { cells: ['Mark8 Shelf', '3,240 ASINs', ''], statusColor: '#22c55e', statusLabel: 'Synced' },
     ],
   },
 };
