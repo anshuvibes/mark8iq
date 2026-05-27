@@ -134,7 +134,7 @@ export default function ProofV2() {
             transition={{ delay: 0.05 }}
           >
             India's fastest-growing brands{' '}
-            <span className="proof-headline-break" style={{ display: 'none' }} />
+            <span className="proof-headline-break" />
             run on Mark8 IQ.
           </motion.h2>
 
@@ -219,14 +219,12 @@ export default function ProofV2() {
           transform: scale(1.06);
           filter: grayscale(0%);
         }
+        .proof-headline-break {
+          display: block;
+        }
         @media (max-width: 1024px) {
           section[data-section="proof"] [data-logo-grid] {
             grid-template-columns: repeat(4, 1fr) !important;
-          }
-        }
-        @media (max-width: 768px) {
-          .proof-headline-break {
-            display: block !important;
           }
         }
         @media (max-width: 600px) {
