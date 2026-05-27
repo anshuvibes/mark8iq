@@ -155,6 +155,8 @@ export default function CaseStudiesV2() {
   // Duplicate the array so the marquee loops seamlessly.
   const loop = [...STUDIES, ...STUDIES];
   const trackWidth = STUDIES.length * (CARD_WIDTH + CARD_GAP);
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const isPaused = hoveredIdx !== null;
 
   return (
     <section data-section="case-studies" style={{ position: 'relative', background: 'transparent' }}>
