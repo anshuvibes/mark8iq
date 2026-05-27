@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 type CaseStudy = {
   logo: string;
