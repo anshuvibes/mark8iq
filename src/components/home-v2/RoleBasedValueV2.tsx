@@ -11,7 +11,7 @@ const roles = [
     label: 'Analyst',
     taglineLine1: 'Stop building reports.',
     taglineLine2: 'Start finding answers.',
-    body: ['Raw data exports.', 'ASIN-level breakdowns. Campaign performance tables. Reconciliation reports.'],
+    body: ['Raw data exports. ASIN-level breakdowns. Campaign performance tables.', 'Reconciliation reports.'],
     gradient: 'linear-gradient(135deg, #8e59ff 0%, #4a2d99 50%, #12182b 100%)',
     accentColor: '#8e59ff',
     image: analystImg,
