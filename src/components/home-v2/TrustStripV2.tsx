@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { useV2Theme } from './ThemeContext';
 
 const logos = [
   { name: 'Urban Gabru', src: '/img/logos/urban-gabru.svg' },
