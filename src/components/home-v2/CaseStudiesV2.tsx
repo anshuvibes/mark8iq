@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 type CaseStudy = {
   logo: string;
@@ -156,7 +156,13 @@ export default function CaseStudiesV2() {
   const loop = [...STUDIES, ...STUDIES];
   const trackWidth = STUDIES.length * (CARD_WIDTH + CARD_GAP);
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-  const isPaused = hoveredIdx !== null;
+  const trackRef = useRef<HTMLDivElement | null>(null);
+
+  const setMarqueeSpeed = (playbackRate: number) => {
+    trackRef.current?.getAnimations().forEach((animation) => {
+      animation.updatePlaybackRate(playbackRate);
+    });
+  };
 
   return (
     <section data-section="case-studies" style={{ position: 'relative', background: 'transparent' }}>
@@ -185,6 +191,8 @@ export default function CaseStudiesV2() {
 
         {/* Marquee viewport — full bleed with edge fade */}
         <div
+          onMouseEnter={() => setMarqueeSpeed(0.3)}
+          onMouseLeave={() => setMarqueeSpeed(1)}
           style={{
             position: 'relative',
             overflow: 'hidden',
@@ -202,13 +210,13 @@ export default function CaseStudiesV2() {
             }
           `}</style>
           <div
+            ref={trackRef}
             style={{
               display: 'flex',
               gap: `${CARD_GAP}px`,
               width: 'max-content',
               padding: '12px 0',
-              animation: `m8-case-marquee ${STUDIES.length * 16}s linear infinite`,
-              animationPlayState: isPaused ? 'paused' : 'running',
+              animation: `m8-case-marquee ${STUDIES.length * 10}s linear infinite`,
             }}
           >
             {loop.map((s, i) => (
