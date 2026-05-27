@@ -711,13 +711,12 @@ export default function ProductSuiteV2() {
                 style={{
                   position: 'absolute',
                   top: '28px',
+                  bottom: 0,
                   left: 0,
                   height: 'calc(100% - 28px)',
                   width: 'auto',
                   maxWidth: 'none',
                   display: 'block',
-                  borderTopLeftRadius: '8px',
-                  boxShadow: '0 4px 16px rgba(0,0,0,0.06)',
                 }}
               />
             </div>
