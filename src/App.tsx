@@ -71,7 +71,6 @@ const App = () => {
       <Route path="/events" element={<ComingSoonPage />} />
       <Route path="/career" element={<ComingSoonPage />} />
       <Route path="/design-system" element={<DesignSystemPage />} />
-      <Route path="/home-v2" element={<HomePageV2 />} />
       <Route path="/deck" element={<DeckPage />} />
       <Route path="/dashboard/ads" element={<DashboardAdsPage />} />
       <Route path="*" element={<ComingSoonPage />} />
