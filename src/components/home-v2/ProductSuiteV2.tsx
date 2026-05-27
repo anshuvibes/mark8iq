@@ -705,32 +705,30 @@ export default function ProductSuiteV2() {
               maxWidth: '34ch',
             }}>{active.metric}</p>
           </div>
-          <div style={{ position: 'relative', overflow: 'hidden', borderTopRightRadius: '12px', borderBottomRightRadius: '12px', minWidth: 0 }}>
-            {Object.entries(modules).map(([moduleKey, module]) => (
-              <img
-                key={moduleKey}
-                src={module.dashboard}
-                alt={moduleKey === activeModule ? `${module.name} dashboard preview` : ''}
-                aria-hidden={moduleKey !== activeModule}
-                loading="eager"
-                decoding="sync"
-                fetchPriority={moduleKey === activeModule ? 'high' : 'auto'}
-                style={{
-                  position: 'absolute',
-                  top: '20px',
-                  left: 0,
-                  height: 'calc(100% - 20px)',
-                  width: 'auto',
-                  maxWidth: 'none',
-                  display: 'block',
-                  pointerEvents: 'none',
-                  opacity: moduleKey === activeModule ? 1 : 0,
-                  transition: 'opacity 160ms ease',
-                  willChange: 'opacity',
-                }}
-              />
-            ))}
-          </div>
+          {Object.entries(modules).map(([moduleKey, module]) => (
+            <img
+              key={moduleKey}
+              src={module.dashboard}
+              alt={moduleKey === activeModule ? `${module.name} dashboard preview` : ''}
+              aria-hidden={moduleKey !== activeModule}
+              loading="eager"
+              decoding="sync"
+              fetchPriority={moduleKey === activeModule ? 'high' : 'auto'}
+              style={{
+                position: 'absolute',
+                top: '28px',
+                left: '50%',
+                height: 'calc(100% - 28px)',
+                width: 'auto',
+                maxWidth: 'none',
+                display: 'block',
+                pointerEvents: 'none',
+                opacity: moduleKey === activeModule ? 1 : 0,
+                transition: 'opacity 160ms ease',
+                willChange: 'opacity',
+              }}
+            />
+          ))}
         </motion.div>
         </div>
 
