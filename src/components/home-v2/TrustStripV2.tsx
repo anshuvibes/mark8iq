@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { useV2Theme } from './ThemeContext';
 
 const logos = [
   { name: 'Urban Gabru', src: '/img/logos/urban-gabru.svg' },
@@ -17,6 +18,8 @@ const logos = [
 ];
 
 export default function TrustStripV2() {
+  const { theme } = useV2Theme();
+  const isDark = theme === 'dark';
   return (
     <section style={{ paddingTop: '20px', paddingBottom: '60px', position: 'relative', overflow: 'hidden' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
@@ -39,16 +42,21 @@ export default function TrustStripV2() {
 
       <div style={{ overflow: 'hidden', width: '100%' }}>
         <div className="trust-marquee-track">
-          {[...logos, ...logos].map((logo, i) => (
-            <div key={i} style={{ padding: '6px 28px', flexShrink: 0 }}>
-              <img
-                src={logo.src}
-                alt={logo.name}
-                style={{ height: '32px', width: 'auto' }}
-                loading="lazy"
-              />
-            </div>
-          ))}
+          {[...logos, ...logos].map((logo, i) => {
+            const src = isDark && logo.name === 'Urban Yog'
+              ? '/img/logos/dark/urban-yog.svg'
+              : logo.src;
+            return (
+              <div key={i} style={{ padding: '6px 28px', flexShrink: 0 }}>
+                <img
+                  src={src}
+                  alt={logo.name}
+                  style={{ height: '32px', width: 'auto' }}
+                  loading="lazy"
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
 
