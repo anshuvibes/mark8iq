@@ -238,6 +238,7 @@ export default function ProductSuiteV2() {
     Object.values(modules).forEach((m) => {
       urls.push(m.logo);
       urls.push(m.logo.replace('/black/', '/white/'));
+      urls.push(m.dashboard);
     });
     urls.forEach((src) => {
       const img = new Image();
