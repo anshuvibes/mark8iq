@@ -32,7 +32,6 @@ export default function HomePageV2() {
         </main>
         <Footer />
         <AgentMarkWidget />
-        <ScrollDownHint />
       </Layout>
     </V2ThemeProvider>
   );
