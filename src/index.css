@@ -1372,7 +1372,7 @@ body {
 
 
 
-/* Client logos: invert to white in V2 dark mode */
-.v2-dark img[src*="/img/logos/"] {
+/* Client logos: invert to white in V2 dark mode (except XYXX and Urban Yog) */
+.v2-dark img[src*="/img/logos/"]:not([src*="xyxx"]):not([src*="urban-yog"]) {
   filter: brightness(0) invert(1);
 }
