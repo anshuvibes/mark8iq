@@ -244,20 +244,40 @@ export default function RoleBasedValueV2() {
                       lineHeight: '115%',
                     }}
                   >
-                    {role.taglineLine1}{role.taglineLine2 && <><br />{role.taglineLine2}</>}
+                    {role.taglineLine1}
+                    {role.taglineLine2 && <><br />{role.taglineLine2}</>}
+                    {/* @ts-expect-error taglineLine3 is optional */}
+                    {role.taglineLine3 && <><br />{role.taglineLine3}</>}
                   </h3>
 
-                  <p
-                    className="m8-p4"
-                    style={{
-                      color: 'var(--v2-text-secondary)',
-                      margin: 0,
-                      maxWidth: '460px',
-                      lineHeight: '160%',
-                    }}
-                  >
-                    {role.body}
-                  </p>
+                  {Array.isArray(role.body) ? (
+                    role.body.map((line, idx) => (
+                      <p
+                        key={idx}
+                        className="m8-p4"
+                        style={{
+                          color: 'var(--v2-text-secondary)',
+                          margin: 0,
+                          maxWidth: '460px',
+                          lineHeight: '160%',
+                        }}
+                      >
+                        {line}
+                      </p>
+                    ))
+                  ) : (
+                    <p
+                      className="m8-p4"
+                      style={{
+                        color: 'var(--v2-text-secondary)',
+                        margin: 0,
+                        maxWidth: '460px',
+                        lineHeight: '160%',
+                      }}
+                    >
+                      {role.body}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
