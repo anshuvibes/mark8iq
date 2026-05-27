@@ -134,7 +134,7 @@ export default function ProofV2() {
             transition={{ delay: 0.05 }}
           >
             India's fastest-growing brands{' '}
-            <span className="proof-headline-break" style={{ display: 'none' }} />
+            <span className="proof-headline-break" />
             run on Mark8 IQ.
           </motion.h2>
 
