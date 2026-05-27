@@ -12,7 +12,7 @@ import AgentFoundryV2 from '../components/home-v2/AgentFoundryV2';
 import ProofV2 from '../components/home-v2/ProofV2';
 import CredentialsV2 from '../components/home-v2/CredentialsV2';
 import AgentMarkWidget from '../components/home-v2/AgentMarkWidget';
-import ScrollDownHint from '../components/home-v2/ScrollDownHint';
+
 
 export default function HomePageV2() {
   useEffect(() => { window.scrollTo(0, 0); }, []);
