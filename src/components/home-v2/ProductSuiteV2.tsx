@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, forwardRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { useV2Theme } from './ThemeContext';
@@ -649,81 +649,83 @@ export default function ProductSuiteV2() {
           </svg>
         </motion.div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeModule}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-            className="product-suite-detail"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '32px',
-              background: `#ffffff`,
-              backgroundImage: `radial-gradient(ellipse at 0% 100%, ${active.accent}35 0%, ${active.accent}12 50%, transparent 100%)`,
-              opacity: 1,
-              borderRadius: '12px',
-              border: `1px solid var(--v2-border)`,
-              margin: '0 32px 32px 32px',
-              height: '220px',
+        <motion.div
+          className="product-suite-detail"
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.22 }}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '32px',
+            background: `#ffffff`,
+            backgroundImage: `radial-gradient(ellipse at 0% 100%, ${active.accent}35 0%, ${active.accent}12 50%, transparent 100%)`,
+            opacity: 1,
+            borderRadius: '12px',
+            border: `1px solid var(--v2-border)`,
+            margin: '0 32px 32px 32px',
+            height: '220px',
+            overflow: 'hidden',
+            position: 'relative',
+            zIndex: 5,
+          }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', padding: '28px 28px', minWidth: 0 }}>
+            <img
+              src={activeLogo}
+              alt={active.name}
+              loading="eager"
+              decoding="sync"
+              fetchPriority="high"
+              style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85, alignSelf: 'flex-start' }}
+            />
+            <p className="m8-p2" style={{
+              color: 'var(--v2-text)',
+              margin: 0,
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
               overflow: 'hidden',
-              position: 'relative',
-              zIndex: 5,
-            }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', padding: '28px 28px', minWidth: 0 }}>
+              minHeight: '3em',
+              maxWidth: '34ch',
+            }}>{active.pain}</p>
+            <p className="m8-p5" style={{
+              color: 'var(--v2-text-subtle)',
+              margin: 0,
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              maxWidth: '34ch',
+            }}>{active.metric}</p>
+          </div>
+          <div style={{ position: 'relative', overflow: 'hidden', borderTopRightRadius: '12px', borderBottomRightRadius: '12px', minWidth: 0 }}>
+            {Object.entries(modules).map(([moduleKey, module]) => (
               <img
-                src={activeLogo}
-                alt={active.name}
+                key={moduleKey}
+                src={module.dashboard}
+                alt={moduleKey === activeModule ? `${module.name} dashboard preview` : ''}
+                aria-hidden={moduleKey !== activeModule}
                 loading="eager"
                 decoding="sync"
-                fetchPriority="high"
-                style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85, alignSelf: 'flex-start' }}
-              />
-              <p className="m8-p2" style={{
-                color: 'var(--v2-text)',
-                margin: 0,
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
-                overflow: 'hidden',
-                minHeight: '3em',
-                maxWidth: '34ch',
-              }}>{active.pain}</p>
-              <p className="m8-p5" style={{
-                color: 'var(--v2-text-subtle)',
-                margin: 0,
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
-                overflow: 'hidden',
-                maxWidth: '34ch',
-              }}>{active.metric}</p>
-            </div>
-            <div style={{ position: 'relative', overflow: 'hidden', borderTopRightRadius: '12px', borderBottomRightRadius: '12px' }}>
-              <img
-                src={active.dashboard}
-                alt={`${active.name} dashboard preview`}
-                loading="eager"
-                decoding="sync"
+                fetchPriority={moduleKey === activeModule ? 'high' : 'auto'}
                 style={{
                   position: 'absolute',
-                  top: '28px',
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  width: '100%',
-                  height: 'calc(100% - 28px)',
-                  objectFit: 'cover',
+                  top: '20px',
+                  left: '-7px',
+                  width: 'calc(100% + 21px)',
+                  height: 'calc(100% - 12px)',
+                  objectFit: 'fill',
                   objectPosition: 'top left',
                   display: 'block',
+                  pointerEvents: 'none',
+                  opacity: moduleKey === activeModule ? 1 : 0,
+                  transition: 'opacity 160ms ease',
+                  willChange: 'opacity',
                 }}
               />
-            </div>
-          </motion.div>
-        </AnimatePresence>
+            ))}
+          </div>
+        </motion.div>
         </div>
 
         <motion.p
