@@ -62,7 +62,7 @@ const STUDIES: CaseStudy[] = [
 
 export default function CaseStudiesV2() {
   const [index, setIndex] = useState(0);
-  const study = STUDIES[index];
+
 
   const go = (dir: -1 | 1) => {
     setIndex((i) => (i + dir + STUDIES.length) % STUDIES.length);
