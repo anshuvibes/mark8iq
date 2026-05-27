@@ -11,7 +11,7 @@ const roles = [
     label: 'Analyst',
     taglineLine1: 'Stop building reports.',
     taglineLine2: 'Start finding answers.',
-    body: 'Raw data exports. ASIN-level breakdowns. Campaign performance tables. Reconciliation reports.',
+    body: ['Raw data exports.', 'ASIN-level breakdowns. Campaign performance tables. Reconciliation reports.'],
     gradient: 'linear-gradient(135deg, #8e59ff 0%, #4a2d99 50%, #12182b 100%)',
     accentColor: '#8e59ff',
     image: analystImg,
@@ -27,8 +27,9 @@ const roles = [
   },
   {
     label: 'CXO · Business Overview',
-    taglineLine1: 'The full picture. In the time it takes',
-    taglineLine2: 'to pour your first coffee.',
+    taglineLine1: 'The full picture.',
+    taglineLine2: 'In the time it takes',
+    taglineLine3: 'to pour your first coffee.',
     body: 'P&L impact. Blended ROAS. GMV trajectory. Financial leakage alerts.',
     gradient: 'linear-gradient(135deg, #fcb24f 0%, #8e59ff 60%, #12182b 100%)',
     accentColor: '#fcb24f',
@@ -243,20 +244,40 @@ export default function RoleBasedValueV2() {
                       lineHeight: '115%',
                     }}
                   >
-                    {role.taglineLine1}{role.taglineLine2 && <><br />{role.taglineLine2}</>}
+                    {role.taglineLine1}
+                    {role.taglineLine2 && <><br />{role.taglineLine2}</>}
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                    {(role as any).taglineLine3 && <><br />{(role as any).taglineLine3}</>}
                   </h3>
 
-                  <p
-                    className="m8-p4"
-                    style={{
-                      color: 'var(--v2-text-secondary)',
-                      margin: 0,
-                      maxWidth: '460px',
-                      lineHeight: '160%',
-                    }}
-                  >
-                    {role.body}
-                  </p>
+                  {Array.isArray(role.body) ? (
+                    role.body.map((line, idx) => (
+                      <p
+                        key={idx}
+                        className="m8-p4"
+                        style={{
+                          color: 'var(--v2-text-secondary)',
+                          margin: 0,
+                          maxWidth: '460px',
+                          lineHeight: '160%',
+                        }}
+                      >
+                        {line}
+                      </p>
+                    ))
+                  ) : (
+                    <p
+                      className="m8-p4"
+                      style={{
+                        color: 'var(--v2-text-secondary)',
+                        margin: 0,
+                        maxWidth: '460px',
+                        lineHeight: '160%',
+                      }}
+                    >
+                      {role.body}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
