@@ -118,7 +118,7 @@ export default function ProofV2() {
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <motion.p
             className="m8-eyebrow"
-            style={{ color: 'var(--v2-text-secondary)', textAlign: 'center', marginBottom: '12px' }}
+            style={{ color: '#8e59ff', textAlign: 'center', marginBottom: '12px' }}
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
