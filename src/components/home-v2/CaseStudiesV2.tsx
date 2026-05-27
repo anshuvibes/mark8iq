@@ -198,7 +198,7 @@ export default function CaseStudiesV2() {
           <motion.div
             animate={{ x: [0, -trackWidth] }}
             transition={{
-              duration: STUDIES.length * 8,
+              duration: STUDIES.length * 16,
               ease: 'linear',
               repeat: Infinity,
             }}
@@ -207,10 +207,18 @@ export default function CaseStudiesV2() {
               gap: `${CARD_GAP}px`,
               width: 'max-content',
               padding: '12px 0',
+              animationPlayState: isPaused ? 'paused' : 'running',
             }}
+            {...(isPaused ? { animate: { x: undefined } } : {})}
           >
             {loop.map((s, i) => (
-              <Card key={i} s={s} />
+              <Card
+                key={i}
+                s={s}
+                hovered={hoveredIdx === i}
+                onHover={() => setHoveredIdx(i)}
+                onLeave={() => setHoveredIdx((cur) => (cur === i ? null : cur))}
+              />
             ))}
           </motion.div>
         </div>
