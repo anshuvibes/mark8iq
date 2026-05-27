@@ -201,6 +201,11 @@ export default function ProofV2() {
             grid-template-columns: repeat(4, 1fr) !important;
           }
         }
+        @media (max-width: 768px) {
+          .proof-headline-break {
+            display: block !important;
+          }
+        }
         @media (max-width: 600px) {
           section[data-section="proof"] [data-logo-grid] {
             grid-template-columns: repeat(2, 1fr) !important;
