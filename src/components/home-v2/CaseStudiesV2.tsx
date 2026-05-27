@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import { motion } from 'motion/react';
 
 type CaseStudy = {
   logo: string;
   logoAlt: string;
   headline: { text: string; highlight?: boolean }[];
-  href: string;
   gradient: string;
 };
 
@@ -16,10 +14,9 @@ const STUDIES: CaseStudy[] = [
     headline: [
       { text: '3x ROI', highlight: true },
       { text: ' on monsoon campaigns with predictive demand sensing across ' },
-      { text: 'every regional pincode', highlight: true },
-      { text: ' in under six weeks.' },
+      { text: 'every pincode', highlight: true },
+      { text: ' in six weeks.' },
     ],
-    href: '#',
     gradient: 'linear-gradient(138deg, #fcb24f 0%, #8e59ff 60%, #12182b 100%)',
   },
   {
@@ -29,9 +26,8 @@ const STUDIES: CaseStudy[] = [
       { text: '42% lift', highlight: true },
       { text: ' in share-of-voice on Amazon beauty after rebuilding the ' },
       { text: 'creative & bid stack', highlight: true },
-      { text: ' with Mark8 Ads.' },
+      { text: '.' },
     ],
-    href: '#',
     gradient: 'linear-gradient(138deg, #dd4062 0%, #8e59ff 55%, #12182b 100%)',
   },
   {
@@ -41,9 +37,8 @@ const STUDIES: CaseStudy[] = [
       { text: '30% ACOS reduction', highlight: true },
       { text: ' in the first quarter by routing every SKU through ' },
       { text: 'autonomous bidding', highlight: true },
-      { text: ' guardrails.' },
+      { text: '.' },
     ],
-    href: '#',
     gradient: 'linear-gradient(138deg, #52bfbc 0%, #8e59ff 55%, #12182b 100%)',
   },
   {
@@ -53,26 +48,110 @@ const STUDIES: CaseStudy[] = [
       { text: '100Cr+ GMV', highlight: true },
       { text: ' managed across marketplaces with a single ' },
       { text: 'unified control plane', highlight: true },
-      { text: ' for the merch team.' },
+      { text: '.' },
     ],
-    href: '#',
     gradient: 'linear-gradient(138deg, #6895fc 0%, #8e59ff 55%, #12182b 100%)',
   },
 ];
 
+const CARD_WIDTH = 460;
+const CARD_GAP = 24;
+
+function Card({ s }: { s: CaseStudy }) {
+  return (
+    <article
+      style={{
+        flex: '0 0 auto',
+        width: `${CARD_WIDTH}px`,
+        display: 'flex',
+        flexDirection: 'column',
+        background: '#FFFFFF',
+        borderRadius: '16px',
+        border: '1px solid rgba(15,23,42,0.06)',
+        boxShadow: '0 12px 32px -18px rgba(15,23,42,0.18)',
+        padding: '16px',
+        height: '460px',
+        overflow: 'hidden',
+        gap: '20px',
+      }}
+    >
+      {/* Top gradient visual */}
+      <div
+        style={{
+          flexShrink: 0,
+          height: '220px',
+          borderRadius: '12px',
+          background: s.gradient,
+          position: 'relative',
+          overflow: 'hidden',
+          boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)',
+        }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%)',
+          }}
+        />
+        <img
+          src={s.logo}
+          alt=""
+          aria-hidden
+          style={{
+            position: 'absolute',
+            inset: 0,
+            margin: 'auto',
+            width: '140px',
+            height: 'auto',
+            filter: 'brightness(0) invert(1)',
+            opacity: 0.9,
+          }}
+        />
+      </div>
+
+      {/* Content */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '4px 16px 16px' }}>
+        <img
+          src={s.logo}
+          alt={s.logoAlt}
+          style={{ height: '28px', width: 'auto', objectFit: 'contain', alignSelf: 'flex-start' }}
+        />
+        <h3
+          className="m8-h3-m"
+          style={{
+            color: '#2f3e6f',
+            lineHeight: 1.45,
+            margin: 0,
+            fontSize: '22px',
+          }}
+        >
+          {s.headline.map((seg, j) => (
+            <span
+              key={j}
+              style={{
+                color: seg.highlight ? '#8e59ff' : undefined,
+                fontWeight: seg.highlight ? 500 : 400,
+              }}
+            >
+              {seg.text}
+            </span>
+          ))}
+        </h3>
+      </div>
+    </article>
+  );
+}
+
 export default function CaseStudiesV2() {
-  const [index, setIndex] = useState(0);
-
-
-  const go = (dir: -1 | 1) => {
-    setIndex((i) => (i + dir + STUDIES.length) % STUDIES.length);
-  };
+  // Duplicate the array so the marquee loops seamlessly.
+  const loop = [...STUDIES, ...STUDIES];
+  const trackWidth = STUDIES.length * (CARD_WIDTH + CARD_GAP);
 
   return (
     <section data-section="case-studies" style={{ position: 'relative', background: 'transparent' }}>
       <div style={{ padding: '100px 0' }}>
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          {/* Eyebrow + headline */}
           <motion.p
             className="m8-eyebrow"
             style={{ color: '#8e59ff', textAlign: 'center', marginBottom: '12px' }}
@@ -92,133 +171,38 @@ export default function CaseStudiesV2() {
           >
             The brands that moved first
           </motion.h2>
+        </div>
 
-          {/* Carousel viewport */}
-          <div style={{ overflow: 'hidden', width: '100%', maxWidth: '1040px', margin: '0 auto' }}>
-            <motion.div
-              animate={{ x: `-${index * 100}%` }}
-              transition={{ type: 'spring', stiffness: 120, damping: 22, mass: 0.8 }}
-              style={{ display: 'flex', width: '100%' }}
-            >
-              {STUDIES.map((s, i) => (
-                <article
-                  key={i}
-                  style={{
-                    flex: '0 0 100%',
-                    display: 'flex',
-                    gap: '24px',
-                    alignItems: 'center',
-                    background: '#FFFFFF',
-                    borderRadius: '16px',
-                    border: '1px solid rgba(15,23,42,0.06)',
-                    boxShadow: '0 12px 32px -18px rgba(15,23,42,0.18)',
-                    padding: '16px 16px 16px 40px',
-                    height: '410px',
-                    overflow: 'hidden',
-                  }}
-                >
-                  {/* Left content */}
-                  <div style={{ flex: '1 1 0', minWidth: 0, display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                    <img
-                      src={s.logo}
-                      alt={s.logoAlt}
-                      style={{ height: '32px', width: 'auto', objectFit: 'contain', alignSelf: 'flex-start' }}
-                    />
-
-                    <h3
-                      className="m8-h3-m"
-                      style={{
-                        color: '#2f3e6f',
-                        maxWidth: '460px',
-                        lineHeight: 1.5,
-                        margin: 0,
-                      }}
-                    >
-                      {s.headline.map((seg, j) => (
-                        <span
-                          key={j}
-                          style={{
-                            color: seg.highlight ? '#8e59ff' : undefined,
-                            fontWeight: seg.highlight ? 500 : 400,
-                          }}
-                        >
-                          {seg.text}
-                        </span>
-                      ))}
-                    </h3>
-                  </div>
-
-                  {/* Right gradient visual */}
-                  <div
-                    style={{
-                      width: '576px',
-                      flexShrink: 0,
-                      height: '100%',
-                      borderRadius: '12px',
-                      background: s.gradient,
-                      position: 'relative',
-                      overflow: 'hidden',
-                      boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)',
-                    }}
-                  >
-                    <div
-                      style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%)',
-                      }}
-                    />
-                    <img
-                      src={s.logo}
-                      alt=""
-                      aria-hidden
-                      style={{
-                        position: 'absolute',
-                        inset: 0,
-                        margin: 'auto',
-                        width: '160px',
-                        height: 'auto',
-                        filter: 'brightness(0) invert(1)',
-                        opacity: 0.85,
-                      }}
-                    />
-                  </div>
-                </article>
-              ))}
-            </motion.div>
-          </div>
-
-
-          {/* Controls */}
-          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginTop: '32px' }}>
-            {[-1, 1].map((dir) => (
-              <button
-                key={dir}
-                type="button"
-                onClick={() => go(dir as -1 | 1)}
-                aria-label={dir === -1 ? 'Previous case study' : 'Next case study'}
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '999px',
-                  background: '#DFE5F1',
-                  border: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  color: '#12182B',
-                  transition: 'background 0.2s ease',
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = '#cfd6e6'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = '#DFE5F1'; }}
-              >
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden style={{ transform: dir === -1 ? 'rotate(180deg)' : 'none' }}>
-                  <path d="M7 5l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
+        {/* Marquee viewport — full bleed with edge fade */}
+        <div
+          style={{
+            position: 'relative',
+            overflow: 'hidden',
+            width: '100%',
+            maskImage:
+              'linear-gradient(to right, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%)',
+            WebkitMaskImage:
+              'linear-gradient(to right, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%)',
+          }}
+        >
+          <motion.div
+            animate={{ x: [0, -trackWidth] }}
+            transition={{
+              duration: STUDIES.length * 8,
+              ease: 'linear',
+              repeat: Infinity,
+            }}
+            style={{
+              display: 'flex',
+              gap: `${CARD_GAP}px`,
+              width: 'max-content',
+              padding: '12px 0',
+            }}
+          >
+            {loop.map((s, i) => (
+              <Card key={i} s={s} />
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
