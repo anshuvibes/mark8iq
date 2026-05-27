@@ -726,24 +726,30 @@ export default function ProductSuiteV2() {
               paddingTop: '28px',
               paddingLeft: '20px',
             }}>
-              <img
-                src={dashboardImages[activeModule]}
-                alt={`${active.name} dashboard`}
-                loading="eager"
-                decoding="sync"
-                style={{
-                  position: 'absolute',
-                  top: 28,
-                  left: 20,
-                  width: 'calc(100% - 20px)',
-                  height: 'calc(100% - 28px)',
-                  objectFit: 'cover',
-                  objectPosition: 'top left',
-                  borderTopLeftRadius: '10px',
-                  borderTop: '1px solid var(--v2-border)',
-                  borderLeft: '1px solid var(--v2-border)',
-                }}
-              />
+              {Object.entries(dashboardImages).map(([key, src]) => (
+                <img
+                  key={key}
+                  src={src}
+                  alt={`${key} dashboard`}
+                  loading="eager"
+                  decoding="sync"
+                  style={{
+                    position: 'absolute',
+                    top: 28,
+                    left: 20,
+                    width: 'calc(100% - 20px)',
+                    height: 'calc(100% - 28px)',
+                    objectFit: 'cover',
+                    objectPosition: 'top left',
+                    borderTopLeftRadius: '10px',
+                    borderTop: '1px solid var(--v2-border)',
+                    borderLeft: '1px solid var(--v2-border)',
+                    opacity: key === activeModule ? 1 : 0,
+                    transition: 'opacity 0.3s ease',
+                  }}
+                />
+              ))}
+            </div>
             </div>
           </motion.div>
         </AnimatePresence>
