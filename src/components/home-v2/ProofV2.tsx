@@ -26,7 +26,10 @@ const LOGOS = [
   { name: 'Urban Yog', src: '/img/logos/urban-yog.svg' },
   { name: 'Seoulskin', src: '/img/logos/seoulskin.svg' },
   { name: 'Trimfinity', src: '/img/logos/trimfinity.svg' },
+  { name: 'MakeMeeBold', label: 'MakeMeeBold' },
 ];
+
+type LogoItem = { name: string; src?: string; label?: string };
 
 
 
@@ -150,11 +153,11 @@ export default function ProofV2() {
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(7, 1fr)',
-              gap: '16px',
+              gap: '12px',
             }}
             data-logo-grid
           >
-            {LOGOS.map((logo, i) => (
+            {(LOGOS as LogoItem[]).map((logo, i) => (
               <motion.div
                 key={logo.name}
                 initial={{ opacity: 0, y: 16 }}
@@ -162,21 +165,28 @@ export default function ProofV2() {
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ delay: 0.03 * i, duration: 0.5 }}
                 style={{
-                  background: 'var(--v2-surface, #f4f6fb)',
-                  borderRadius: '14px',
-                  height: '92px',
+                  background: '#ffffff',
+                  borderRadius: '12px',
+                  height: '60px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  padding: '0 18px',
+                  padding: '0 16px',
+                  boxShadow: '0 1px 2px rgba(15, 23, 42, 0.04)',
                 }}
               >
-                <img
-                  src={logo.src}
-                  alt={logo.name}
-                  loading="lazy"
-                  style={{ maxWidth: '100%', maxHeight: '40px', objectFit: 'contain' }}
-                />
+                {logo.src ? (
+                  <img
+                    src={logo.src}
+                    alt={logo.name}
+                    loading="lazy"
+                    style={{ maxWidth: '100%', maxHeight: '32px', objectFit: 'contain' }}
+                  />
+                ) : (
+                  <span style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#0f172a', letterSpacing: '-0.01em' }}>
+                    {logo.label}
+                  </span>
+                )}
               </motion.div>
             ))}
           </div>
