@@ -1,17 +1,16 @@
 import { motion } from 'motion/react';
 
 type Badge = {
-  prefix: string;       // "ISO" or "AICPA"
-  code: string;         // "9001", "27001", "SOC2"
-  suffix?: string;      // "TYPE 2"
-  title: string[];      // label lines
+  src: string;
+  alt: string;
+  title: string[];
 };
 
 const BADGES: Badge[] = [
-  { prefix: 'ISO', code: '9001', title: ['Quality Management', 'Systems'] },
-  { prefix: 'ISO', code: '14001', title: ['Environmental Management', 'Systems'] },
-  { prefix: 'ISO', code: '27001', title: ['Information Security', 'Management System'] },
-  { prefix: 'AICPA', code: 'SOC2', suffix: 'TYPE 2', title: ['AICPA System &', 'Organization Controls 2'] },
+  { src: '/img/badges/iso-9001.svg', alt: 'ISO 9001', title: ['Quality Management', 'Systems'] },
+  { src: '/img/badges/iso-14001.svg', alt: 'ISO 14001', title: ['Environmental Management', 'Systems'] },
+  { src: '/img/badges/iso-27001.svg', alt: 'ISO 27001', title: ['Information Security', 'Management System'] },
+  { src: '/img/badges/soc2-type2.svg', alt: 'AICPA SOC2 Type 2', title: ['AICPA System &', 'Organization Controls 2'] },
 ];
 
 function BadgeMedallion({ b }: { b: Badge }) {
