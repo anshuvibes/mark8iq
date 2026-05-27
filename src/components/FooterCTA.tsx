@@ -1,10 +1,45 @@
-import { useRef } from 'react';
-import { useNavigateLinks } from '../hooks/useNavigateLinks';
-
-const ctaHTML = `<div class="Footer_main_footer__xevJU"><div class="Footer_main_footer_inner__CLu4C" style="background:transparent;padding:0;"><div class="Footer_footer_content_wrap___c6El"><div class="Footer_contact_btn_wrap__5hG97 contact_btn_wrap br_30"><div class="Footer_gradient_wrap__epkzQ Footer_gradient_wrap_small__pPza3"><div class="GradientCircle_GradientCircle__mH3g6 bg_primary gradient_circle" style="opacity:1"></div></div><div class="Footer_gradient_wrap__epkzQ Footer_gradient_wrap_large__5xIOl"><div class="GradientCircle_GradientCircle__mH3g6 bg_primary gradient_circle" style="opacity:1"></div></div><div class="Footer_text_btn_wrap___0Pzz"><div class="Footer_contact_text__EXzSa "><h2 class="fs_50  text_center"><span>Your operation should run itself.</span></h2><p class="text_center">Let us show you how.</p></div><div class="undefined text_center color_text"><a href="/get-in-touch"><span class="Button_btn_wrap__DW66V Button_gradientBordered__mLA7E"><button class="fs_18 font_primary fw_400 Button_btn_common_styles__ddJx7 "><span>Book a Demo.</span></button><span class="Button_gradientBorderedBg__t_hMi"></span></span></a></div></div></div></div></div></div>`;
+import { motion } from 'motion/react';
+import { Button } from '@/components/ui/button';
 
 export default function FooterCTA() {
-  const ref = useRef<HTMLDivElement>(null);
-  useNavigateLinks(ref);
-  return <div ref={ref} style={{ paddingTop: 40 }} dangerouslySetInnerHTML={{ __html: ctaHTML }} />;
+  return (
+    <div style={{ paddingTop: 10, paddingBottom: 0 }}>
+      <div className="Footer_main_footer__xevJU">
+        <div className="Footer_main_footer_inner__CLu4C" style={{ background: 'transparent', padding: 0 }}>
+          <div className="Footer_footer_content_wrap___c6El">
+            <div
+              className="Footer_contact_btn_wrap__5hG97 contact_btn_wrap br_30"
+              style={{ marginBottom: 15 }}
+            >
+              <div className="Footer_gradient_wrap__epkzQ Footer_gradient_wrap_small__pPza3">
+                <div className="GradientCircle_GradientCircle__mH3g6 bg_primary gradient_circle" style={{ opacity: 1 }} />
+              </div>
+              <div className="Footer_gradient_wrap__epkzQ Footer_gradient_wrap_large__5xIOl">
+                <div className="GradientCircle_GradientCircle__mH3g6 bg_primary gradient_circle" style={{ opacity: 1 }} />
+              </div>
+              <div className="Footer_text_btn_wrap___0Pzz">
+                <div className="Footer_contact_text__EXzSa">
+                  <h2 className="fs_50 text_center" style={{ color: '#ffffff' }}>
+                    <span>Your operation should run itself.</span>
+                  </h2>
+                </div>
+                <div className="text_center" style={{ marginTop: 24 }}>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                    style={{ display: 'inline-block' }}
+                  >
+                    <Button variant="m8-cta" size="lg" asChild>
+                      <a href="/get-in-touch">Book a Demo</a>
+                    </Button>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
