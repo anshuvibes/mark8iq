@@ -3,13 +3,6 @@ import { motion } from 'motion/react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { useV2Theme } from './ThemeContext';
-import adsDashboard from '@/assets/home-v2/dashboards/ads.png';
-import inventoryDashboard from '@/assets/home-v2/dashboards/inventory.png';
-import marketOneDashboard from '@/assets/home-v2/dashboards/marketone.png';
-import recoDashboard from '@/assets/home-v2/dashboards/reco.png';
-import returnsDashboard from '@/assets/home-v2/dashboards/returns.png';
-import shelfDashboard from '@/assets/home-v2/dashboards/shelf.png';
-import sightDashboard from '@/assets/home-v2/dashboards/sight.png';
 
 const modules: Record<string, { name: string; abbr: string; accent: string; pain: string; metric: string; logo: string; dashboard: string }> = {
   ads: { name: 'Mark8 Ads', abbr: 'AD', accent: '#dd4062', logo: '/img/product-logos/black/mark8-ads.svg', dashboard: adsDashboard, pain: 'Your ad spend across every marketplace. Optimized in real time.', metric: '105 Cr in ad spend optimized. 35% average ROAS improvement.' },
