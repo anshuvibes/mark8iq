@@ -24,6 +24,14 @@ const dashboardImages: Record<string, string> = {
   marketone: '/img/product-dashboards/market-one.png',
 };
 
+// Preload all dashboard images at module load so swapping is instant
+if (typeof window !== 'undefined') {
+  Object.values(dashboardImages).forEach((src) => {
+    const img = new Image();
+    img.src = src;
+  });
+}
+
 const leftKeys = ['ads', 'shelf', 'reco'];
 const rightKeys = ['sight', 'returns', 'inventory'];
 
