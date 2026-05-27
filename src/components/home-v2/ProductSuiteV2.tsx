@@ -654,74 +654,37 @@ export default function ProductSuiteV2() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.22 }}
           style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '32px',
             background: `#ffffff`,
             backgroundImage: `radial-gradient(ellipse at 0% 100%, ${active.accent}35 0%, ${active.accent}12 50%, transparent 100%)`,
             opacity: 1,
             borderRadius: '12px',
             border: `1px solid var(--v2-border)`,
             margin: '0 32px 32px 32px',
-            height: '220px',
+            padding: '28px',
             overflow: 'hidden',
             position: 'relative',
             zIndex: 5,
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', padding: '28px 28px', minWidth: 0 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '10px', minWidth: 0 }}>
             <img
               src={activeLogo}
               alt={active.name}
               loading="eager"
               decoding="sync"
-              fetchPriority="high"
               style={{ height: '22px', width: 'auto', display: 'block', opacity: 0.85, alignSelf: 'flex-start' }}
             />
             <p className="m8-p2" style={{
               color: 'var(--v2-text)',
               margin: 0,
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-              minHeight: '3em',
-              maxWidth: '34ch',
+              maxWidth: '48ch',
             }}>{active.pain}</p>
             <p className="m8-p5" style={{
               color: 'var(--v2-text-subtle)',
               margin: 0,
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-              maxWidth: '34ch',
+              maxWidth: '48ch',
             }}>{active.metric}</p>
           </div>
-          {Object.entries(modules).map(([moduleKey, module]) => (
-            <img
-              key={moduleKey}
-              src={module.dashboard}
-              alt={moduleKey === activeModule ? `${module.name} dashboard preview` : ''}
-              aria-hidden={moduleKey !== activeModule}
-              loading="eager"
-              decoding="sync"
-              fetchPriority={moduleKey === activeModule ? 'high' : 'auto'}
-              style={{
-                position: 'absolute',
-                top: '28px',
-                left: '50%',
-                height: 'calc(100% - 28px)',
-                width: 'auto',
-                maxWidth: 'none',
-                display: 'block',
-                pointerEvents: 'none',
-                opacity: moduleKey === activeModule ? 1 : 0,
-                transition: 'opacity 160ms ease',
-                willChange: 'opacity',
-              }}
-            />
-          ))}
         </motion.div>
         </div>
 
