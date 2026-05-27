@@ -2,51 +2,33 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import BrandCard from './BrandCard';
 import { useV2Theme } from './ThemeContext';
 
 const metrics = [
-  { numeric: 1000, suffix: ' Cr+', label: 'GMV Managed', format: (n: number) => `${Math.round(n).toLocaleString('en-IN')}` },
-  { numeric: 105, suffix: ' Cr+', label: 'Ad Spend Optimized', format: (n: number) => `${Math.round(n)}` },
-  { numeric: 35, suffix: '%', label: 'Avg ROAS Gain', format: (n: number) => `${Math.round(n)}` },
-  { numeric: 90, suffix: '%', label: 'Client Retention', format: (n: number) => `${Math.round(n)}` },
-  { numeric: 15, suffix: '+', label: 'Marketplaces', format: (n: number) => `${Math.round(n)}` },
+  { numeric: 100, suffix: 'Cr+', label: 'GMV Managed', format: (n: number) => `${Math.round(n)}` },
+  { numeric: 50, suffix: 'Cr+', label: 'Ad Spend Optimised', format: (n: number) => `${Math.round(n)}` },
+  { numeric: 42, suffix: '%', label: 'SOV Improvement', format: (n: number) => `${Math.round(n)}` },
+  { numeric: 30, suffix: '%', label: 'ACOS Reduction', format: (n: number) => `${Math.round(n)}` },
+  { numeric: 40, suffix: '+', label: 'Hours Saved Monthly', format: (n: number) => `${Math.round(n)}` },
 ];
 
-const BRANDS = [
-  {
-    name: 'Zeel Rainwear',
-    logo: '/img/logos/zeel-rainwear.svg',
-    stat: '50x',
-    statLabel: 'revenue growth in 5 years',
-    category: 'D2C Rainwear',
-    primaryColor: '#0202e5',
-  },
-  {
-    name: 'Asian Shoes',
-    logo: '/img/logos/asian-shoes.svg',
-    stat: '68%',
-    statLabel: 'less ad spend. Same sales.',
-    category: 'Footwear',
-    primaryColor: '#52bfbc',
-  },
-  {
-    name: 'neude Skin',
-    logo: '/img/logos/neude-skin.svg',
-    stat: '3x',
-    statLabel: 'sales growth, now in top 60 on Amazon',
-    category: 'Skincare',
-    primaryColor: '#d9ae9d',
-  },
-  {
-    name: 'MARS Cosmetics',
-    logo: '/img/logos/mars-cosmetics.svg',
-    stat: '₹4.8 Cr',
-    statLabel: 'monthly sales, built from scratch',
-    category: 'Beauty',
-    primaryColor: '#fc7459',
-  },
+const LOGOS = [
+  { name: 'Asian Shoes', src: '/img/logos/asian-shoes.svg' },
+  { name: 'Urban Gabru', src: '/img/logos/urban-gabru.svg' },
+  { name: 'Zeel', src: '/img/logos/zeel-rainwear.svg' },
+  { name: 'Fast&Up', src: '/img/logos/fast-and-up.svg' },
+  { name: 'Rovars', src: '/img/logos/rovers.svg' },
+  { name: 'Artment', src: '/img/logos/artment.svg' },
+  { name: 'Neude', src: '/img/logos/neude-skin.svg' },
+  { name: 'MARS', src: '/img/logos/mars-cosmetics.svg' },
+  { name: 'XYXX', src: '/img/logos/xyxx.svg' },
+  { name: 'Nat Habit', src: '/img/logos/nat-habit.svg' },
+  { name: 'Urban Yog', src: '/img/logos/urban-yog.svg' },
+  { name: 'Seoulskin', src: '/img/logos/seoulskin.svg' },
+  { name: 'Trimfinity', src: '/img/logos/trimfinity.svg' },
 ];
+
+
 
 function useCountUp(target: number, duration: number = 1200, decimals: number = 0) {
   const [count, setCount] = useState(0);
@@ -164,15 +146,38 @@ export default function ProofV2() {
             ))}
           </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '20px',
-          }}>
-            {BRANDS.map((brand) => (
-              <div key={brand.name}>
-                <BrandCard {...brand} />
-              </div>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(7, 1fr)',
+              gap: '16px',
+            }}
+            data-logo-grid
+          >
+            {LOGOS.map((logo, i) => (
+              <motion.div
+                key={logo.name}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ delay: 0.03 * i, duration: 0.5 }}
+                style={{
+                  background: 'var(--v2-surface, #f4f6fb)',
+                  borderRadius: '14px',
+                  height: '92px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '0 18px',
+                }}
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  loading="lazy"
+                  style={{ maxWidth: '100%', maxHeight: '40px', objectFit: 'contain' }}
+                />
+              </motion.div>
             ))}
           </div>
         </div>
@@ -180,13 +185,13 @@ export default function ProofV2() {
 
       <style>{`
         @media (max-width: 1024px) {
-          section[data-section="proof"] .container > div:last-child {
-            grid-template-columns: repeat(2, 1fr) !important;
+          section[data-section="proof"] [data-logo-grid] {
+            grid-template-columns: repeat(4, 1fr) !important;
           }
         }
         @media (max-width: 600px) {
-          section[data-section="proof"] .container > div:last-child {
-            grid-template-columns: 1fr !important;
+          section[data-section="proof"] [data-logo-grid] {
+            grid-template-columns: repeat(2, 1fr) !important;
           }
         }
       `}</style>
