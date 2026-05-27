@@ -750,7 +750,6 @@ export default function ProductSuiteV2() {
                 />
               ))}
             </div>
-            </div>
           </motion.div>
         </AnimatePresence>
         </div>
