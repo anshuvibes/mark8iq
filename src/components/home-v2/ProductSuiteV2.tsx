@@ -238,6 +238,7 @@ export default function ProductSuiteV2() {
     Object.values(modules).forEach((m) => {
       urls.push(m.logo);
       urls.push(m.logo.replace('/black/', '/white/'));
+      urls.push(m.dashboard);
     });
     urls.forEach((src) => {
       const img = new Image();
@@ -709,12 +710,14 @@ export default function ProductSuiteV2() {
                 decoding="sync"
                 style={{
                   position: 'absolute',
-                  top: '50%',
+                  top: '28px',
                   left: 0,
-                  transform: 'translateY(-50%)',
-                  width: '100%',
-                  height: 'auto',
+                  height: 'calc(100% - 28px)',
+                  width: 'auto',
+                  maxWidth: 'none',
                   display: 'block',
+                  borderTopLeftRadius: '8px',
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.06)',
                 }}
               />
             </div>
