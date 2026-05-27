@@ -698,6 +698,8 @@ export default function ProductSuiteV2() {
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: 'vertical',
                 overflow: 'hidden',
+                minHeight: '3em',
+                lineHeight: 1.5,
               }}>{active.pain}</p>
               <p className="m8-p5" style={{
                 color: 'var(--v2-text-subtle)',
@@ -705,6 +707,7 @@ export default function ProductSuiteV2() {
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
+                minHeight: '1.5em',
               }}>{active.metric}</p>
             </div>
             <div style={{
@@ -724,9 +727,11 @@ export default function ProductSuiteV2() {
                 loading="eager"
                 decoding="sync"
                 style={{
-                  display: 'block',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
                   width: '100%',
-                  height: 'auto',
+                  height: '100%',
                   objectFit: 'cover',
                   objectPosition: 'top left',
                 }}
