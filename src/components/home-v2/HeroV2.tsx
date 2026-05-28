@@ -88,6 +88,24 @@ export default function HeroV2() {
           display: block;
         }
 
+        @media (max-width: 991px) {
+          [data-section="hero"] > div:first-child {
+            padding-top: 48px !important;
+          }
+          .hero-dashboard-container {
+            min-height: auto !important;
+          }
+        }
+        @media (max-width: 640px) {
+          [data-section="hero"] > div:first-child {
+            padding-top: 32px !important;
+            padding-bottom: 0 !important;
+          }
+          .hero-dashboard-container {
+            min-height: auto !important;
+          }
+        }
+
         .hero-headline-mobile,
         .hero-subhead-mobile { display: none; }
         .hero-headline-desktop,
