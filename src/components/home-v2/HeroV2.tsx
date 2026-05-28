@@ -114,7 +114,7 @@ export default function HeroV2() {
         }
         @media (max-width: 640px) {
           [data-section="hero"] > div:first-child {
-            padding-top: 32px !important;
+            padding-top: 48px !important;
             padding-bottom: 0 !important;
           }
           .hero-dashboard-container {
