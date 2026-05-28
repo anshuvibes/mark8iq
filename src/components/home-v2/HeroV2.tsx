@@ -22,11 +22,15 @@ export default function HeroV2() {
           <div style={{ maxWidth: '860px', margin: '0 auto' }}>
             <motion.h1 className="m8-h2" style={{ color: 'var(--v2-text)', marginBottom: '16px' }} {...fadeIn(0.1)}>
               The AI OS behind{' '}
-              <span style={{ color: '#8E59FF' }}><br />India's fastest growing brands</span>
+              <span className="hero-headline-mobile-break" style={{ color: '#8E59FF' }}>
+                <br className="desktop-br" />
+                India's fastest growing brands
+              </span>
             </motion.h1>
 
             <motion.p className="m8-p2" style={{ color: 'var(--v2-text-secondary)', maxWidth: '600px', margin: '0 auto 28px' }} {...fadeIn(0.25)}>
-              The only platform that unifies every marketplace, thinks with your data, and acts while you sleep
+              <span className="desktop-text">The only platform that unifies every marketplace, thinks with your data, and acts while you sleep</span>
+              <span className="mobile-text">The only platform that unifies every marketplace, thinks with your data,<br />and acts while you sleep</span>
             </motion.p>
 
             <motion.div {...fadeIn(0.4)}>
@@ -79,6 +83,31 @@ export default function HeroV2() {
           width: 100%;
           height: auto;
           display: block;
+        }
+
+        .mobile-text { display: none; }
+        .desktop-text { display: inline; }
+        .desktop-br { display: block; }
+
+        @media (max-width: 640px) {
+          .mobile-text { display: inline; }
+          .desktop-text { display: none; }
+          .desktop-br { display: none; }
+          
+          .hero-headline-mobile-break::before {
+            content: "\\A India's fastest\\A growing brands";
+            white-space: pre;
+            display: block;
+            font-size: 32px; /* Matching mobile h2 size from index.css */
+            line-height: 1.2;
+          }
+          .hero-headline-mobile-break {
+            display: block;
+            font-size: 0;
+          }
+          .hero-headline-mobile-break * {
+            display: none;
+          }
         }
 
         @media (max-width: 1280px) {
