@@ -61,6 +61,7 @@ export default function HeroV2() {
       >
         <div
           ref={imgContainerRef}
+          className="hero-dashboard-container"
           style={{
             position: 'relative',
             overflow: 'hidden',
@@ -86,6 +87,24 @@ export default function HeroV2() {
           width: 100%;
           height: auto;
           display: block;
+        }
+
+        @media (max-width: 991px) {
+          [data-section="hero"] > div:first-child {
+            padding-top: 48px !important;
+          }
+          .hero-dashboard-container {
+            min-height: auto !important;
+          }
+        }
+        @media (max-width: 640px) {
+          [data-section="hero"] > div:first-child {
+            padding-top: 32px !important;
+            padding-bottom: 0 !important;
+          }
+          .hero-dashboard-container {
+            min-height: auto !important;
+          }
         }
 
         .hero-headline-mobile,
