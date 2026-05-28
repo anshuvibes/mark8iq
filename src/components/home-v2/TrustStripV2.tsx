@@ -21,7 +21,7 @@ export default function TrustStripV2() {
   const { theme } = useV2Theme();
   const isDark = theme === 'dark';
   return (
-    <section style={{ paddingTop: '20px', paddingBottom: '60px', position: 'relative', overflow: 'hidden' }}>
+    <section className="trust-strip-v2" style={{ paddingTop: '20px', paddingBottom: '60px', position: 'relative', overflow: 'hidden' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.p
           className="m8-p6"
@@ -47,10 +47,11 @@ export default function TrustStripV2() {
               ? '/img/logos/dark/urban-yog.svg'
               : logo.src;
             return (
-              <div key={i} style={{ padding: '6px 28px', flexShrink: 0 }}>
+              <div className="trust-logo-item" key={i} style={{ padding: '6px 28px', flexShrink: 0 }}>
                 <img
                   src={src}
                   alt={logo.name}
+                  className="trust-logo-img"
                   style={{ height: '32px', width: 'auto' }}
                   loading="lazy"
                 />
@@ -66,10 +67,45 @@ export default function TrustStripV2() {
           align-items: center;
           width: max-content;
           animation: trustScroll 30s linear infinite;
+          will-change: transform;
+          transform: translate3d(0, 0, 0);
+          backface-visibility: hidden;
         }
         @keyframes trustScroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
+        }
+
+        @media (max-width: 991px) {
+          .trust-strip-v2 {
+            padding-top: 8px !important;
+            padding-bottom: 32px !important;
+          }
+          .trust-logo-item {
+            padding: 4px 16px !important;
+          }
+          .trust-logo-img {
+            height: 22px !important;
+          }
+          .trust-marquee-track {
+            animation-duration: 40s !important;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .trust-strip-v2 {
+            padding-top: 4px !important;
+            padding-bottom: 24px !important;
+          }
+          .trust-logo-item {
+            padding: 4px 12px !important;
+          }
+          .trust-logo-img {
+            height: 18px !important;
+          }
+          .trust-marquee-track {
+            animation-duration: 35s !important;
+          }
         }
       `}</style>
     </section>
