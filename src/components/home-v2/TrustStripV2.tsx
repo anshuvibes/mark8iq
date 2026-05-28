@@ -98,10 +98,10 @@ export default function TrustStripV2() {
             padding-bottom: 24px !important;
           }
           .trust-logo-item {
-            padding: 4px 12px !important;
+            padding: 4px 16px !important;
           }
           .trust-logo-img {
-            height: 18px !important;
+            height: 26px !important;
           }
           .trust-marquee-track {
             animation-duration: 35s !important;
