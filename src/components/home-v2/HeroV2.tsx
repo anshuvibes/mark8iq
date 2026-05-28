@@ -21,7 +21,7 @@ export default function HeroV2() {
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ maxWidth: '860px', margin: '0 auto' }}>
             <motion.h1 className="m8-h2" style={{ color: 'var(--v2-text)', marginBottom: '16px' }} {...fadeIn(0.1)}>
-              The operating system behind{' '}
+              The AI OS behind{' '}
               <span style={{ color: '#8E59FF' }}><br />India's fastest growing brands</span>
             </motion.h1>
 
