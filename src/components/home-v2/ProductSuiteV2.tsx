@@ -776,7 +776,7 @@ export default function ProductSuiteV2() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: '-80px' }}
         >
-          Everything talks to everything.<br />Through Market One, your single source of truth.
+          Everything talks to everything. Through Market One, your single source of truth.
         </motion.p>
       </div>
 

@@ -8,26 +8,25 @@ import cxoImg from '@/assets/role-cxo.jpg';
 
 const roles = [
   {
-    label: 'ANALYST',
+    label: 'Analyst',
     taglineLine1: 'Stop building reports.',
     taglineLine2: 'Start finding answers.',
-    body: 'Raw data exports. ASIN-level breakdowns. Campaign performance tables. Reconciliation reports.',
+    body: 'Raw data exports. ASIN-level breakdowns. Campaign performance tables.\nReconciliation reports.',
     gradient: 'linear-gradient(135deg, #8e59ff 0%, #4a2d99 50%, #12182b 100%)',
     accentColor: '#8e59ff',
     image: analystImg,
   },
   {
-    label: 'KAM · ACCOUNT GROWTH',
-    taglineLine1: 'See what is moving,',
-    taglineLine2: 'what is stuck, and why before',
-    taglineLine3: 'your morning meeting.',
-    body: 'Trend lines. Week-on-week\nmovement. Marketplace comparison. Inventory alerts.',
+    label: 'KAM · Account Growth',
+    taglineLine1: 'See what is moving, what is stuck, and why before your morning meeting.',
+    taglineLine2: '',
+    body: 'Trend lines. Week-on-week movement. Marketplace comparison. Inventory alerts.',
     gradient: 'linear-gradient(135deg, #52bfbc 0%, #2a6b69 50%, #12182b 100%)',
     accentColor: '#52bfbc',
     image: kamImg,
   },
   {
-    label: 'CXO · BUSINESS OVERVIEW',
+    label: 'CXO · Business Overview',
     taglineLine1: 'The full picture.',
     taglineLine2: 'In the time it takes',
     taglineLine3: 'to pour your first coffee.',
@@ -54,40 +53,35 @@ export default function RoleBasedValueV2() {
     const track = trackRef.current;
     if (!container || !track) return;
 
-    const isMobile = window.matchMedia('(max-width: 991px)').matches;
+    // Layout math (in vw):
+    //   leftMargin = 6vw  (existing visual margin)
+    //   cardW      = 76vw
+    //   peek       = 10% of cardW visible on right edge of slide 1 = 7.6vw
+    //   → card2 left edge sits at (100 - peek) = 92.4vw
+    //   → gap between card1 and card2 = 92.4 - (leftMargin + cardW) = 10.4vw
+    //   gap2↔3 mirrors gap1↔2.
+    const vw = window.innerWidth / 100;
+    const leftMargin = 6 * vw;
+    const cardW = 76 * vw;
+    const peek = cardW * 0.1;
+    const gap = (100 * vw) - peek - leftMargin - cardW;
+    const slideTravel = cardW + gap; // distance to advance one card
 
-    let tl: gsap.core.Timeline | null = null;
-    if (!isMobile) {
-      // Layout math (in vw):
-      //   leftMargin = 6vw  (existing visual margin)
-      //   cardW      = 76vw
-      //   peek       = 10% of cardW visible on right edge of slide 1 = 7.6vw
-      //   → card2 left edge sits at (100 - peek) = 92.4vw
-      //   → gap between card1 and card2 = 92.4 - (leftMargin + cardW) = 10.4vw
-      //   gap2↔3 mirrors gap1↔2.
-      const vw = window.innerWidth / 100;
-      const leftMargin = 6 * vw;
-      const cardW = 76 * vw;
-      const peek = cardW * 0.1;
-      const gap = (100 * vw) - peek - leftMargin - cardW;
-      const slideTravel = cardW + gap; // distance to advance one card
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 0.6,
+        pin: stickyRef.current,
+        pinSpacing: false,
+      },
+    });
 
-      tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: container,
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 0.6,
-          pin: stickyRef.current,
-          pinSpacing: false,
-        },
-      });
-
-      tl.to(track, {
-        x: -(slideTravel * (roles.length - 1)),
-        ease: 'none',
-      });
-    }
+    tl.to(track, {
+      x: -(slideTravel * (roles.length - 1)),
+      ease: 'none',
+    });
 
     const trigger = ScrollTrigger.create({
       trigger: container,
@@ -112,8 +106,8 @@ export default function RoleBasedValueV2() {
     });
 
     return () => {
-      tl?.scrollTrigger?.kill();
-      tl?.kill();
+      tl.scrollTrigger?.kill();
+      tl.kill();
       trigger.kill();
       setThemeRef.current('light');
       document.dispatchEvent(new CustomEvent('cursor-show'));
@@ -121,10 +115,9 @@ export default function RoleBasedValueV2() {
   }, []);
 
   return (
-    <div ref={containerRef} data-section="role-based" className="role-based-container" style={{ height: '400vh', position: 'relative' }}>
+    <div ref={containerRef} data-section="role-based" style={{ height: '400vh', position: 'relative' }}>
       <div
         ref={stickyRef}
-        className="role-based-sticky"
         style={{
           position: 'sticky',
           top: 0,
@@ -137,7 +130,6 @@ export default function RoleBasedValueV2() {
       >
         {/* Heading block — at top */}
         <div
-          className="role-based-heading"
           style={{
             padding: 'clamp(112px, 13vh, 152px) clamp(24px, 6vw, 120px) 0',
             zIndex: 10,
@@ -163,13 +155,12 @@ export default function RoleBasedValueV2() {
               margin: 0,
             }}
           >
-            Everyone on your<br />team gets exactly what they need.
+            Everyone on your team gets <br />exactly what they need.
           </h2>
         </div>
 
         <div
           ref={trackRef}
-          className="role-based-track"
           style={{
             display: 'flex',
             paddingLeft: '6vw',
@@ -179,10 +170,9 @@ export default function RoleBasedValueV2() {
             willChange: 'transform',
           }}
         >
-          {roles.map((role) => (
+          {roles.map((role, i) => (
             <div
               key={role.label}
-              className="role-based-slide"
               style={{
                 width: '76vw',
                 height: '100%',
@@ -196,7 +186,6 @@ export default function RoleBasedValueV2() {
             >
               {/* Left: gradient placeholder card — 4:3 ratio */}
               <div
-                className="role-based-image"
                 style={{
                   background: role.gradient,
                   borderRadius: '20px',
@@ -226,7 +215,6 @@ export default function RoleBasedValueV2() {
 
               {/* Right: copy grouped & bottom-aligned to image card height */}
               <div
-                className="role-based-copy"
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -297,39 +285,6 @@ export default function RoleBasedValueV2() {
           ))}
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 991px) {
-          .role-based-container { height: auto !important; padding-bottom: 80px; }
-          .role-based-sticky {
-            position: static !important;
-            height: auto !important;
-            overflow: visible !important;
-          }
-          .role-based-heading { margin-bottom: 32px !important; }
-          .role-based-track {
-            flex-direction: column !important;
-            padding: 0 24px !important;
-            gap: 56px !important;
-            transform: none !important;
-          }
-          .role-based-slide {
-            width: 100% !important;
-            height: auto !important;
-            grid-template-columns: 1fr !important;
-            gap: 20px !important;
-            padding-bottom: 0 !important;
-          }
-          .role-based-image,
-          .role-based-copy {
-            max-width: 100% !important;
-            justify-self: stretch !important;
-            aspect-ratio: auto !important;
-          }
-          .role-based-image { aspect-ratio: 4 / 3 !important; }
-          .role-based-copy { justify-content: flex-start !important; }
-        }
-      `}</style>
     </div>
   );
 }
