@@ -499,6 +499,7 @@ export default function FragmentationV2() {
         {/* Text 1 */}
         <div
           ref={text1Ref}
+          className="frag-heading"
           style={{
             ...headingBase,
             color: 'var(--v2-frag-heading-text)',
@@ -510,6 +511,7 @@ export default function FragmentationV2() {
         {/* Text 2 */}
         <div
           ref={text2Ref}
+          className="frag-heading"
           style={{
             ...headingBase,
             color: 'var(--v2-frag-heading-text)',
@@ -521,6 +523,7 @@ export default function FragmentationV2() {
         {/* Text 3 */}
         <div
           ref={text3Ref}
+          className="frag-heading"
           style={{
             ...headingBase,
             color: 'var(--v2-frag-heading-text)',
@@ -532,6 +535,7 @@ export default function FragmentationV2() {
         {/* Pivot */}
         <div
           ref={pivotRef}
+          className="frag-heading"
           style={{
             ...headingBase,
             maxWidth: undefined,
