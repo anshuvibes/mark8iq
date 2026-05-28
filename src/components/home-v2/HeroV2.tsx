@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import heroDashboardImg from '@/assets/hero-dashboard.png';
+import heroDashboardMobileImg from '@/assets/hero-dashboard-mobile.png';
 import HeroDemoCard from './HeroDemoCard';
 
 
@@ -72,8 +73,14 @@ export default function HeroV2() {
           <img
             src={heroDashboardImg}
             alt="Mark8 IQ Dashboard"
-            className="hero-dashboard-svg"
+            className="hero-dashboard-svg hero-dashboard-desktop"
             style={{ width: '100%', height: 'auto', display: 'block' }}
+          />
+          <img
+            src={heroDashboardMobileImg}
+            alt="Mark8 IQ Dashboard"
+            className="hero-dashboard-svg hero-dashboard-mobile"
+            style={{ width: '100%', height: 'auto', display: 'none' }}
           />
 
         </div>
@@ -97,9 +104,11 @@ export default function HeroV2() {
             min-height: auto !important;
             overflow: visible !important;
           }
-          .hero-dashboard-container > img.hero-dashboard-svg {
-            width: 200% !important;
-            max-width: 200% !important;
+          .hero-dashboard-container > img.hero-dashboard-desktop { display: none !important; }
+          .hero-dashboard-container > img.hero-dashboard-mobile {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
             margin-left: 0 !important;
           }
         }
@@ -112,9 +121,11 @@ export default function HeroV2() {
             min-height: auto !important;
             overflow: visible !important;
           }
-          .hero-dashboard-container > img.hero-dashboard-svg {
-            width: 200% !important;
-            max-width: 200% !important;
+          .hero-dashboard-container > img.hero-dashboard-desktop { display: none !important; }
+          .hero-dashboard-container > img.hero-dashboard-mobile {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
             margin-left: 0 !important;
           }
         }
