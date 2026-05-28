@@ -202,18 +202,28 @@ export default function TestimonialsV2() {
             They said it better than we could
           </motion.h2>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            <div style={{ display: 'flex', gap: '24px' }}>
+          <div className="testimonials-grid" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div className="testimonials-row" style={{ display: 'flex', gap: '24px' }}>
               {ROW_1.map((t, i) => (
                 <Card key={`r1-${i}`} t={t} index={i} />
               ))}
             </div>
-            <div style={{ display: 'flex', gap: '24px' }}>
+            <div className="testimonials-row" style={{ display: 'flex', gap: '24px' }}>
               {ROW_2.map((t, i) => (
                 <Card key={`r2-${i}`} t={t} index={i + ROW_1.length} />
               ))}
             </div>
           </div>
+          <style>{`
+            @media (max-width: 991px) {
+              .testimonials-row { flex-wrap: wrap; }
+              .testimonials-row > article { flex: 1 1 calc(50% - 12px) !important; min-width: 0; }
+            }
+            @media (max-width: 640px) {
+              .testimonials-row { flex-direction: column; }
+              .testimonials-row > article { flex: 1 1 100% !important; width: 100%; min-height: 220px !important; }
+            }
+          `}</style>
         </div>
       </div>
     </section>

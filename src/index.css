@@ -1376,3 +1376,31 @@ body {
 .v2-dark img[src*="/img/logos/"]:not([src*="xyxx"]):not([src*="urban-yog"]) {
   filter: brightness(0) invert(1);
 }
+
+/* Mobile/tablet responsive overrides */
+@media (max-width: 991px) {
+  /* Hide heavy fragmentation timeline on mobile/tablet — desktop only */
+  .fragmentation-v2 { display: none !important; }
+
+  /* Product Suite ModuleCard: don't clamp text on mobile */
+  .product-suite-col p { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; -webkit-line-clamp: unset !important; display: block !important; }
+  .product-suite-detail .m8-p2 { -webkit-line-clamp: unset !important; min-height: 0 !important; }
+
+  /* Footer mobile fixes */
+  .Footer_main_footer__xevJU { padding: 16px !important; }
+  .Footer_main_footer_inner__CLu4C { padding: 32px 20px !important; }
+  .Footer_main_footer_inner__CLu4C img[alt="Great Place to Work Certified"] {
+    position: static !important; height: 64px !important; display: block !important; margin: 0 0 20px auto !important;
+  }
+  .Footer_footer_text_wrap__ZjgrD .col-md-6 { width: 100% !important; max-width: 100% !important; flex: 0 0 100% !important; }
+  .Footer_links_wrap__NR20T { margin-top: 32px !important; display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
+  .Footer_links_wrap_item__5mGTg { flex: unset !important; width: 100% !important; }
+  .Footer_title__7c5VS { font-size: 28px !important; }
+  .Footer_desc__Aiofl { font-size: 16px !important; }
+  .Footer_bottom_footer_row__cI26L { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; }
+  .Footer_bottom_footer_row__cI26L p { white-space: normal !important; font-size: 13px !important; }
+  .Footer_follow_us_wrap__m0RL_ { justify-content: flex-start !important; }
+}
+@media (max-width: 480px) {
+  .Footer_links_wrap__NR20T { grid-template-columns: 1fr !important; }
+}

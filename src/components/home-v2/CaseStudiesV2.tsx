@@ -61,6 +61,7 @@ const CARD_GAP = 24;
 function Card({ s, hovered, onHover, onLeave }: { s: CaseStudy; hovered: boolean; onHover: () => void; onLeave: () => void }) {
   return (
     <article
+      className="case-study-card"
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       style={{
@@ -207,6 +208,9 @@ export default function CaseStudiesV2() {
             @keyframes m8-case-marquee {
               from { transform: translateX(0); }
               to { transform: translateX(-${trackWidth}px); }
+            }
+            @media (max-width: 640px) {
+              .case-study-card { width: 86vw !important; height: auto !important; min-height: 380px; }
             }
           `}</style>
           <div

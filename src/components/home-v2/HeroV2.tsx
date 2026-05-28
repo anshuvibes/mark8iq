@@ -20,9 +20,9 @@ export default function HeroV2() {
       <div style={{ paddingTop: '80px', paddingBottom: '8px', textAlign: 'center' }}>
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-            <motion.h1 className="m8-h2" style={{ color: 'var(--v2-text)', marginBottom: '16px' }} {...fadeIn(0.1)}>
+            <motion.h1 className="m8-h2 hero-headline" style={{ color: 'var(--v2-text)', marginBottom: '16px' }} {...fadeIn(0.1)}>
               The AI OS behind{' '}
-              <span style={{ color: '#8E59FF' }}><br />India's fastest growing brands</span>
+              <span style={{ color: '#8E59FF' }}><br className="hero-headline-br" />India's fastest growing brands</span>
             </motion.h1>
 
             <motion.p className="m8-p2" style={{ color: 'var(--v2-text-secondary)', maxWidth: '600px', margin: '0 auto 28px' }} {...fadeIn(0.25)}>
@@ -94,6 +94,9 @@ export default function HeroV2() {
             width: 100% !important;
             margin-top: 16px;
           }
+        }
+        @media (max-width: 640px) {
+          .hero-headline-br { display: none; }
         }
       `}</style>
     </section>
