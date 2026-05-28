@@ -381,7 +381,7 @@ export default function FragmentationV2() {
   }, []);
 
   return (
-    <div ref={containerRef} data-section="fragmentation" style={{ height: '250vh', position: 'relative' }}>
+    <div ref={containerRef} data-section="fragmentation" className="fragmentation-v2" style={{ height: '250vh', position: 'relative' }}>
       <div
         ref={stickyRef}
         style={{
