@@ -81,7 +81,10 @@ export default function RoleBasedValueV2() {
     tl.to(track, {
       x: -(slideTravel * (roles.length - 1)),
       ease: 'none',
+      duration: roles.length - 1, // 1 unit per slide transition
     });
+    // Hold on the last slide so CXO gets a beat to read before the pin releases.
+    tl.to({}, { duration: 0.6 });
 
     const trigger = ScrollTrigger.create({
       trigger: container,
