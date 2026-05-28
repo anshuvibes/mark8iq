@@ -410,6 +410,7 @@ export default function FragmentationV2() {
         {/* 3D depth wrapper for floating elements */}
         <div
           ref={depthWrapperRef}
+          className="frag-depth"
           style={{
             position: 'absolute',
             inset: 0,
@@ -498,6 +499,7 @@ export default function FragmentationV2() {
         {/* Text 1 */}
         <div
           ref={text1Ref}
+          className="frag-heading"
           style={{
             ...headingBase,
             color: 'var(--v2-frag-heading-text)',
@@ -509,6 +511,7 @@ export default function FragmentationV2() {
         {/* Text 2 */}
         <div
           ref={text2Ref}
+          className="frag-heading"
           style={{
             ...headingBase,
             color: 'var(--v2-frag-heading-text)',
@@ -520,6 +523,7 @@ export default function FragmentationV2() {
         {/* Text 3 */}
         <div
           ref={text3Ref}
+          className="frag-heading"
           style={{
             ...headingBase,
             color: 'var(--v2-frag-heading-text)',
@@ -531,6 +535,7 @@ export default function FragmentationV2() {
         {/* Pivot */}
         <div
           ref={pivotRef}
+          className="frag-heading"
           style={{
             ...headingBase,
             maxWidth: undefined,
@@ -623,6 +628,7 @@ export default function FragmentationV2() {
           {/* Sub copy */}
           <div
             ref={subCopyRef}
+            className="frag-sub"
             style={{
               fontFamily: "'Saira', sans-serif",
               fontSize: '24px',
@@ -665,6 +671,26 @@ export default function FragmentationV2() {
             100% {
               transform: scale(1.6);
               opacity: 0;
+            }
+          }
+
+          /* Mobile-only: scale the 3D orbit layout so off-screen
+             positions (x: ±600, ±540, ±420) fit within a 390px viewport,
+             and shrink heading + sub-copy typography accordingly. */
+          @media (max-width: 640px) {
+            [data-section="fragmentation"] .frag-depth {
+              transform: scale(0.42);
+              transform-origin: center center;
+            }
+            [data-section="fragmentation"] .frag-heading {
+              font-size: 32px !important;
+              max-width: 90vw !important;
+              letter-spacing: -0.02em !important;
+            }
+            [data-section="fragmentation"] .frag-sub {
+              font-size: 16px !important;
+              white-space: normal !important;
+              max-width: 80vw;
             }
           }
         `}</style>
