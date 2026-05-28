@@ -186,7 +186,7 @@ export default function CaseStudiesV2() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ delay: 0.05 }}
           >
-            The brands that moved first
+            The brands that<br />moved first
           </motion.h2>
         </div>
 

@@ -8,25 +8,26 @@ import cxoImg from '@/assets/role-cxo.jpg';
 
 const roles = [
   {
-    label: 'Analyst',
+    label: 'ANALYST',
     taglineLine1: 'Stop building reports.',
     taglineLine2: 'Start finding answers.',
-    body: 'Raw data exports. ASIN-level breakdowns. Campaign performance tables.\nReconciliation reports.',
+    body: 'Raw data exports. ASIN-level breakdowns. Campaign performance tables. Reconciliation reports.',
     gradient: 'linear-gradient(135deg, #8e59ff 0%, #4a2d99 50%, #12182b 100%)',
     accentColor: '#8e59ff',
     image: analystImg,
   },
   {
-    label: 'KAM · Account Growth',
-    taglineLine1: 'See what is moving, what is stuck, and why before your morning meeting.',
-    taglineLine2: '',
-    body: 'Trend lines. Week-on-week movement. Marketplace comparison. Inventory alerts.',
+    label: 'KAM · ACCOUNT GROWTH',
+    taglineLine1: 'See what is moving,',
+    taglineLine2: 'what is stuck, and why before',
+    taglineLine3: 'your morning meeting.',
+    body: 'Trend lines. Week-on-week\nmovement. Marketplace comparison. Inventory alerts.',
     gradient: 'linear-gradient(135deg, #52bfbc 0%, #2a6b69 50%, #12182b 100%)',
     accentColor: '#52bfbc',
     image: kamImg,
   },
   {
-    label: 'CXO · Business Overview',
+    label: 'CXO · BUSINESS OVERVIEW',
     taglineLine1: 'The full picture.',
     taglineLine2: 'In the time it takes',
     taglineLine3: 'to pour your first coffee.',
@@ -162,7 +163,7 @@ export default function RoleBasedValueV2() {
               margin: 0,
             }}
           >
-            Everyone on your team gets <br />exactly what they need.
+            Everyone on your<br />team gets exactly what they need.
           </h2>
         </div>
 

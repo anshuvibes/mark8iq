@@ -36,7 +36,7 @@ export default function TrustStripV2() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: '-80px' }}
         >
-          Trusted by India's fastest growing brands
+          TRUSTED BY THE BEST
         </motion.p>
       </div>
 

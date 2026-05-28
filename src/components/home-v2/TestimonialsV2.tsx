@@ -199,7 +199,7 @@ export default function TestimonialsV2() {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ delay: 0.05 }}
           >
-            They said it better than we could
+            They said it better<br />than we could
           </motion.h2>
 
           <div className="testimonials-grid" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
