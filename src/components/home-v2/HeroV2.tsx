@@ -100,7 +100,7 @@ export default function HeroV2() {
           .hero-dashboard-container > img.hero-dashboard-svg {
             width: 200% !important;
             max-width: 200% !important;
-            margin-left: -50% !important;
+            margin-left: 0 !important;
           }
         }
         @media (max-width: 640px) {
@@ -115,7 +115,7 @@ export default function HeroV2() {
           .hero-dashboard-container > img.hero-dashboard-svg {
             width: 200% !important;
             max-width: 200% !important;
-            margin-left: -50% !important;
+            margin-left: 0 !important;
           }
         }
 
