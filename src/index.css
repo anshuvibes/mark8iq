@@ -1379,8 +1379,7 @@ body {
 
 /* Mobile/tablet responsive overrides */
 @media (max-width: 991px) {
-  /* Hide heavy fragmentation timeline on mobile/tablet — desktop only */
-  .fragmentation-v2 { display: none !important; }
+  /* Fragmentation timeline visible on mobile/tablet — refinement in progress */
 
   /* Product Suite ModuleCard: don't clamp text on mobile */
   .product-suite-col p { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; -webkit-line-clamp: unset !important; display: block !important; }
