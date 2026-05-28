@@ -410,6 +410,7 @@ export default function FragmentationV2() {
         {/* 3D depth wrapper for floating elements */}
         <div
           ref={depthWrapperRef}
+          className="frag-depth"
           style={{
             position: 'absolute',
             inset: 0,
