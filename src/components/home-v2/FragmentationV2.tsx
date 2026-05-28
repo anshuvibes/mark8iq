@@ -679,11 +679,11 @@ export default function FragmentationV2() {
              and shrink heading + sub-copy typography accordingly. */
           @media (max-width: 640px) {
             [data-section="fragmentation"] .frag-depth {
-              transform: scale(0.42);
+              transform: scale(0.55);
               transform-origin: center center;
             }
             [data-section="fragmentation"] .frag-heading {
-              font-size: 32px !important;
+              font-size: 34px !important;
               max-width: 90vw !important;
               letter-spacing: -0.02em !important;
             }
