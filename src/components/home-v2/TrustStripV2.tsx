@@ -21,7 +21,7 @@ export default function TrustStripV2() {
   const { theme } = useV2Theme();
   const isDark = theme === 'dark';
   return (
-    <section style={{ paddingTop: '20px', paddingBottom: '60px', position: 'relative', overflow: 'hidden' }}>
+    <section className="trust-strip-v2" style={{ paddingTop: '20px', paddingBottom: '60px', position: 'relative', overflow: 'hidden' }}>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <motion.p
           className="m8-p6"
@@ -47,7 +47,7 @@ export default function TrustStripV2() {
               ? '/img/logos/dark/urban-yog.svg'
               : logo.src;
             return (
-              <div key={i} style={{ padding: '6px 28px', flexShrink: 0 }}>
+              <div key={i} className="trust-logo-item" style={{ padding: '6px 28px', flexShrink: 0 }}>
                 <img
                   src={src}
                   alt={logo.name}
@@ -70,6 +70,12 @@ export default function TrustStripV2() {
         @keyframes trustScroll {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
+        }
+        @media (max-width: 768px) {
+          .trust-strip-v2 { padding-top: 8px !important; padding-bottom: 24px !important; }
+          .trust-logo-item { padding: 4px 16px !important; }
+          .trust-logo-item img { height: 22px !important; }
+          .trust-marquee-track { animation-duration: 22s !important; }
         }
       `}</style>
     </section>
