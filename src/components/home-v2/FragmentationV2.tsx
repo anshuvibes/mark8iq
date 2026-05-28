@@ -136,8 +136,11 @@ export default function FragmentationV2() {
     };
   }, []);
 
-  // GSAP scroll-driven timeline
+  // GSAP scroll-driven timeline (desktop/tablet only — mobile uses vertical layout)
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.matchMedia('(max-width: 640px)').matches) {
+      return;
+    }
     gsap.registerPlugin(ScrollTrigger);
 
     const container = containerRef.current;
