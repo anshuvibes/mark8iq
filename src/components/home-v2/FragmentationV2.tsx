@@ -384,9 +384,11 @@ export default function FragmentationV2() {
   }, []);
 
   return (
-    <div ref={containerRef} data-section="fragmentation" style={{ height: '250vh', position: 'relative' }}>
+    <div ref={containerRef} data-section="fragmentation" className="frag-container" style={{ height: '250vh', position: 'relative' }}>
+      {/* Desktop / tablet: 3D orbit pinned layout */}
       <div
         ref={stickyRef}
+        className="frag-desktop"
         style={{
           position: 'sticky',
           top: 0,
