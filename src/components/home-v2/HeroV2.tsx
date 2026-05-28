@@ -98,10 +98,12 @@ export default function HeroV2() {
             content: "\\A India's fastest\\A growing brands";
             white-space: pre;
             display: block;
+            font-size: 32px; /* Matching mobile h2 size from index.css */
+            line-height: 1.2;
           }
           .hero-headline-mobile-break {
             display: block;
-            font-size: 0; /* Hide original text */
+            font-size: 0;
           }
           .hero-headline-mobile-break * {
             display: none;
