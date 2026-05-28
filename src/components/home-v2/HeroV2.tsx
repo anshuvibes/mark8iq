@@ -128,6 +128,12 @@ export default function HeroV2() {
             max-width: 150% !important;
             margin-left: 0 !important;
           }
+          [data-section="hero"] a[href="/get-in-touch"] {
+            padding: 8px 20px !important;
+            font-size: 14px !important;
+            min-height: auto !important;
+            height: auto !important;
+          }
         }
 
         .hero-headline-mobile,
