@@ -628,6 +628,7 @@ export default function FragmentationV2() {
           {/* Sub copy */}
           <div
             ref={subCopyRef}
+            className="frag-sub"
             style={{
               fontFamily: "'Saira', sans-serif",
               fontSize: '24px',
