@@ -53,35 +53,40 @@ export default function RoleBasedValueV2() {
     const track = trackRef.current;
     if (!container || !track) return;
 
-    // Layout math (in vw):
-    //   leftMargin = 6vw  (existing visual margin)
-    //   cardW      = 76vw
-    //   peek       = 10% of cardW visible on right edge of slide 1 = 7.6vw
-    //   → card2 left edge sits at (100 - peek) = 92.4vw
-    //   → gap between card1 and card2 = 92.4 - (leftMargin + cardW) = 10.4vw
-    //   gap2↔3 mirrors gap1↔2.
-    const vw = window.innerWidth / 100;
-    const leftMargin = 6 * vw;
-    const cardW = 76 * vw;
-    const peek = cardW * 0.1;
-    const gap = (100 * vw) - peek - leftMargin - cardW;
-    const slideTravel = cardW + gap; // distance to advance one card
+    const isMobile = window.matchMedia('(max-width: 991px)').matches;
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 0.6,
-        pin: stickyRef.current,
-        pinSpacing: false,
-      },
-    });
+    let tl: gsap.core.Timeline | null = null;
+    if (!isMobile) {
+      // Layout math (in vw):
+      //   leftMargin = 6vw  (existing visual margin)
+      //   cardW      = 76vw
+      //   peek       = 10% of cardW visible on right edge of slide 1 = 7.6vw
+      //   → card2 left edge sits at (100 - peek) = 92.4vw
+      //   → gap between card1 and card2 = 92.4 - (leftMargin + cardW) = 10.4vw
+      //   gap2↔3 mirrors gap1↔2.
+      const vw = window.innerWidth / 100;
+      const leftMargin = 6 * vw;
+      const cardW = 76 * vw;
+      const peek = cardW * 0.1;
+      const gap = (100 * vw) - peek - leftMargin - cardW;
+      const slideTravel = cardW + gap; // distance to advance one card
 
-    tl.to(track, {
-      x: -(slideTravel * (roles.length - 1)),
-      ease: 'none',
-    });
+      tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.6,
+          pin: stickyRef.current,
+          pinSpacing: false,
+        },
+      });
+
+      tl.to(track, {
+        x: -(slideTravel * (roles.length - 1)),
+        ease: 'none',
+      });
+    }
 
     const trigger = ScrollTrigger.create({
       trigger: container,
@@ -106,8 +111,8 @@ export default function RoleBasedValueV2() {
     });
 
     return () => {
-      tl.scrollTrigger?.kill();
-      tl.kill();
+      tl?.scrollTrigger?.kill();
+      tl?.kill();
       trigger.kill();
       setThemeRef.current('light');
       document.dispatchEvent(new CustomEvent('cursor-show'));
