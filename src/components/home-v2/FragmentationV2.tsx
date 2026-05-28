@@ -673,6 +673,26 @@ export default function FragmentationV2() {
               opacity: 0;
             }
           }
+
+          /* Mobile-only: scale the 3D orbit layout so off-screen
+             positions (x: ±600, ±540, ±420) fit within a 390px viewport,
+             and shrink heading + sub-copy typography accordingly. */
+          @media (max-width: 640px) {
+            [data-section="fragmentation"] .frag-depth {
+              transform: scale(0.42);
+              transform-origin: center center;
+            }
+            [data-section="fragmentation"] .frag-heading {
+              font-size: 32px !important;
+              max-width: 90vw !important;
+              letter-spacing: -0.02em !important;
+            }
+            [data-section="fragmentation"] .frag-sub {
+              font-size: 16px !important;
+              white-space: normal !important;
+              max-width: 80vw;
+            }
+          }
         `}</style>
       </div>
     </div>
