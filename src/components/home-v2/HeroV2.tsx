@@ -21,12 +21,19 @@ export default function HeroV2() {
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ maxWidth: '860px', margin: '0 auto' }}>
             <motion.h1 className="m8-h2" style={{ color: 'var(--v2-text)', marginBottom: '16px' }} {...fadeIn(0.1)}>
-              The AI OS behind{' '}
-              <span style={{ color: '#8E59FF' }}><br />India's fastest growing brands</span>
+              <span className="hero-headline-desktop">
+                The AI OS behind{' '}
+                <span style={{ color: '#8E59FF' }}><br />India's fastest growing brands</span>
+              </span>
+              <span className="hero-headline-mobile">
+                The AI OS behind{' '}
+                <span style={{ color: '#8E59FF' }}><br />India's fastest<br />growing brands</span>
+              </span>
             </motion.h1>
 
-            <motion.p className="m8-p2 hero-subhead" style={{ color: 'var(--v2-text-secondary)', maxWidth: '600px', margin: '0 auto 28px' }} {...fadeIn(0.25)}>
-              The only platform that unifies every marketplace, thinks with your data, and acts while you sleep
+            <motion.p className="m8-p2" style={{ color: 'var(--v2-text-secondary)', maxWidth: '600px', margin: '0 auto 28px' }} {...fadeIn(0.25)}>
+              <span className="hero-subhead-desktop">The only platform that unifies every marketplace, thinks with your data, and acts while you sleep</span>
+              <span className="hero-subhead-mobile">The only platform that unifies every marketplace, thinks with your data,<br />and acts while you sleep</span>
             </motion.p>
 
             <motion.div {...fadeIn(0.4)}>
