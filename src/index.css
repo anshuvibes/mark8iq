@@ -1403,3 +1403,49 @@ body {
 @media (max-width: 480px) {
   .Footer_links_wrap__NR20T { grid-template-columns: 1fr !important; }
 }
+
+/* ============================================================
+   Responsive Typography Scale
+   Desktop (>1024px)  → defined in base .m8-* classes (lines 17, 183–193)
+   Tablet  (≤1024px)  → ~80% of desktop
+   Mobile  (≤640px)   → ~62% of desktop, capped for readability
+   Industry baseline: body ≥16px, h1 ≤40px on mobile.
+   ============================================================ */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .m8-eyebrow    { font-size: 11px !important; letter-spacing: 0.1em !important; }
+  .m8-h1-display { font-size: 56px !important; line-height: 108% !important; }
+  .m8-h1-large   { font-size: 40px !important; line-height: 110% !important; }
+  .m8-h2         { font-size: 40px !important; line-height: 48px !important; }
+  .m8-h3-xl      { font-size: 32px !important; line-height: 38px !important; }
+  .m8-h3-l       { font-size: 28px !important; line-height: 36px !important; }
+  .m8-h3-m       { font-size: 26px !important; line-height: 32px !important; }
+  .m8-h4         { font-size: 24px !important; line-height: 112% !important; }
+  .m8-p1         { font-size: 20px !important; line-height: 150% !important; }
+  .m8-p2         { font-size: 19px !important; line-height: 28px !important; }
+  .m8-p3,
+  .m8-p3-medium  { font-size: 17px !important; line-height: 150% !important; }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .m8-eyebrow    { font-size: 10px !important; letter-spacing: 0.09em !important; }
+  .m8-h1-display { font-size: 40px !important; line-height: 110% !important; letter-spacing: -0.02em !important; }
+  .m8-h1-large   { font-size: 32px !important; line-height: 112% !important; letter-spacing: -0.02em !important; }
+  .m8-h2         { font-size: 30px !important; line-height: 36px !important; letter-spacing: -0.02em !important; }
+  .m8-h3-xl      { font-size: 26px !important; line-height: 32px !important; }
+  .m8-h3-l       { font-size: 24px !important; line-height: 30px !important; }
+  .m8-h3-m       { font-size: 22px !important; line-height: 28px !important; }
+  .m8-h4         { font-size: 20px !important; line-height: 115% !important; }
+  .m8-p1         { font-size: 18px !important; line-height: 150% !important; }
+  .m8-p2         { font-size: 16px !important; line-height: 26px !important; }
+  .m8-p3,
+  .m8-p3-medium  { font-size: 15px !important; line-height: 150% !important; }
+}
+
+/* Inline font-size overrides used in legacy Footer should not exceed mobile cap */
+@media (max-width: 640px) {
+  .Footer_title__7c5VS { font-size: 24px !important; line-height: 110% !important; }
+  .Footer_desc__Aiofl  { font-size: 15px !important; line-height: 150% !important; }
+}
