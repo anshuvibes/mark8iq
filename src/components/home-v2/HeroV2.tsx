@@ -104,13 +104,6 @@ export default function HeroV2() {
             min-height: auto !important;
             overflow: visible !important;
           }
-          .hero-dashboard-container > img.hero-dashboard-desktop { display: none !important; }
-          .hero-dashboard-container > img.hero-dashboard-mobile {
-            display: block !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            margin-left: 0 !important;
-          }
         }
         @media (max-width: 640px) {
           [data-section="hero"] > div:first-child {
