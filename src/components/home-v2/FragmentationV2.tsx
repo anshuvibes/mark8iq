@@ -136,11 +136,8 @@ export default function FragmentationV2() {
     };
   }, []);
 
-  // GSAP scroll-driven timeline (desktop/tablet only — mobile uses vertical layout)
+  // GSAP scroll-driven timeline
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.matchMedia('(max-width: 640px)').matches) {
-      return;
-    }
     gsap.registerPlugin(ScrollTrigger);
 
     const container = containerRef.current;
@@ -384,11 +381,9 @@ export default function FragmentationV2() {
   }, []);
 
   return (
-    <div ref={containerRef} data-section="fragmentation" className="frag-container" style={{ height: '250vh', position: 'relative' }}>
-      {/* Desktop / tablet: 3D orbit pinned layout */}
+    <div ref={containerRef} data-section="fragmentation" style={{ height: '250vh', position: 'relative' }}>
       <div
         ref={stickyRef}
-        className="frag-desktop"
         style={{
           position: 'sticky',
           top: 0,
@@ -665,137 +660,40 @@ export default function FragmentationV2() {
 
         <style>{`
           @keyframes fragPulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            70% { transform: scale(1.6); opacity: 0; }
-            100% { transform: scale(1.6); opacity: 0; }
+            0% {
+              transform: scale(1);
+              opacity: 0.8;
+            }
+            70% {
+              transform: scale(1.6);
+              opacity: 0;
+            }
+            100% {
+              transform: scale(1.6);
+              opacity: 0;
+            }
           }
 
-          /* Mobile-only: hide 3D orbit, use vertical stacked viewports */
-          .frag-mobile { display: none; }
+          /* Mobile-only: scale the 3D orbit layout so off-screen
+             positions (x: ±600, ±540, ±420) fit within a 390px viewport,
+             and shrink heading + sub-copy typography accordingly. */
           @media (max-width: 640px) {
-            [data-section="fragmentation"].frag-container { height: auto !important; }
-            .frag-desktop { display: none !important; }
-            .frag-mobile { display: block; background: var(--v2-frag-reveal-bg, #0B0F1F); }
-            .frag-mobile-screen {
-              min-height: 100vh;
-              width: 100%;
-              padding: 64px 24px;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              justify-content: center;
-              gap: 32px;
-              position: relative;
+            [data-section="fragmentation"] .frag-depth {
+              transform: scale(0.42);
+              transform-origin: center center;
             }
-            .frag-mobile-heading {
-              font-family: 'Saira', sans-serif;
-              font-size: 32px;
-              font-weight: 400;
-              line-height: 110%;
-              letter-spacing: -0.02em;
-              text-align: center;
-              color: var(--v2-frag-heading-text, #FFFFFF);
-              max-width: 90vw;
+            [data-section="fragmentation"] .frag-heading {
+              font-size: 32px !important;
+              max-width: 90vw !important;
+              letter-spacing: -0.02em !important;
             }
-            .frag-mobile-grid {
-              display: grid;
-              grid-template-columns: repeat(3, 1fr);
-              gap: 24px 16px;
-              align-items: center;
-              justify-items: center;
-              width: 100%;
-              max-width: 320px;
-            }
-            .frag-mobile-grid img {
-              max-width: 80px;
-              max-height: 52px;
-              width: auto;
-              height: auto;
-              object-fit: contain;
-              opacity: 0.95;
-            }
-            .frag-mobile-personas {
-              display: flex;
-              gap: 14px;
-              justify-content: center;
-              align-items: flex-end;
-              flex-wrap: wrap;
-              max-width: 340px;
-            }
-            .frag-mobile-personas img {
-              width: 100px;
-              height: auto;
-              object-fit: contain;
-            }
-            .frag-mobile-end {
-              min-height: 100vh;
-              padding: 64px 24px;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              justify-content: center;
-              gap: 20px;
-            }
-            .frag-mobile-sub {
-              font-family: 'Saira', sans-serif;
-              font-size: 16px;
-              font-weight: 400;
-              color: var(--v2-frag-sub-text, #FFFFFF);
-              text-align: center;
+            [data-section="fragmentation"] .frag-sub {
+              font-size: 16px !important;
+              white-space: normal !important;
               max-width: 80vw;
             }
           }
         `}</style>
-      </div>
-
-      {/* Mobile: vertical stacked layout — 3 viewport screens, one per fragmentation message */}
-      <div className="frag-mobile">
-        <section className="frag-mobile-screen">
-          <div className="frag-mobile-grid">
-            {marketplacePills.map((p) => (
-              <img key={p.label} src={p.logo} alt={p.label} />
-            ))}
-          </div>
-          <h2 className="frag-mobile-heading">Your data is everywhere.</h2>
-        </section>
-
-        <section className="frag-mobile-screen">
-          <div className="frag-mobile-grid">
-            {departmentTags.map((t) => (
-              <img key={t.label} src={t.icon} alt={t.label} style={{ maxWidth: 72, maxHeight: 72 }} />
-            ))}
-          </div>
-          <h2 className="frag-mobile-heading">Your decisions are waiting.</h2>
-        </section>
-
-        <section className="frag-mobile-screen">
-          <div className="frag-mobile-personas">
-            {personaLabels.map((p) => (
-              <img key={p.label} src={p.image} alt={p.label} />
-            ))}
-          </div>
-          <h2 className="frag-mobile-heading">You scaled. Your visibility didn't.</h2>
-        </section>
-
-        <section className="frag-mobile-end">
-          <svg width="160" height="33" viewBox="0 0 241 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g fill="#FFFFFF">
-              <path d="M37.2151 20.4008V43.8706H32.2648V20.4008C32.2648 18.6022 30.6618 17.1391 28.6865 17.1391H21.3887V12.6289H28.6865C33.3995 12.6289 37.2151 16.1083 37.2151 20.4008Z"/>
-              <path d="M56.508 43.8706H51.5578V20.3978C51.5578 18.5961 49.9547 17.1391 47.9794 17.1391H40.6816V12.6289H47.9794C52.6895 12.6289 56.511 16.1083 56.511 20.3978V43.8706H56.508Z"/>
-              <path d="M17.919 20.9258H12.9688V43.8696H17.919V20.9258Z"/>
-              <path d="M12.9688 8.95987V0H17.919V8.95987H12.9688Z"/>
-              <path d="M9.50367 12.6289H0.833984V17.13H9.50367V12.6289Z"/>
-              <path d="M93.3903 20.3999V43.8667H88.4371V30.1185H73.1811C71.2028 30.1185 69.5997 31.5756 69.5997 33.3772V36.1008C69.5997 37.8964 71.2028 39.3595 73.1811 39.3595H84.9998V43.8667H73.1811C68.468 43.8667 64.6465 40.3903 64.6465 36.1008V33.3772C64.6465 29.0847 68.468 25.6053 73.1811 25.6053H88.4371V20.3969C88.4371 18.5952 86.834 17.1321 84.8617 17.1321H66.0514V12.625H84.8617C89.5688 12.625 93.3903 16.1013 93.3903 20.3969V20.3999Z"/>
-              <path d="M101.48 43.8706H106.43V20.3978C106.43 18.5961 108.033 17.1391 110.008 17.1391H119.407V12.6289H110.008C105.298 12.6289 101.477 16.1083 101.477 20.3978V43.8706H101.48Z"/>
-              <path d="M128.836 12.647V43.8706H123.883V12.6289L128.836 12.647Z"/>
-              <path d="M136.207 30.8842L150.398 43.8706H143.442L132.713 34.0522C130.008 31.5734 130.008 27.299 132.707 24.8172L146.027 12.6289H152.982L136.21 27.9701C135.358 28.75 135.358 30.1013 136.21 30.8812L136.207 30.8842Z"/>
-            </g>
-            <path d="M205.046 13.0332H200.129V44.5288H205.046V13.0332Z" fill="#8E59FF"/>
-            <path d="M236.73 43.1647C236.787 43.1254 236.838 43.0892 236.892 43.0499C237.88 42.3395 238.6 41.3329 239.051 40.0633C239.474 38.8571 239.75 37.3064 239.87 35.4533C239.984 33.6335 240.047 31.3936 240.047 28.7818C240.047 26.17 239.984 23.924 239.87 22.1042C239.75 20.2572 239.474 18.7004 239.051 17.4943C238.603 16.2277 237.88 15.2241 236.892 14.5077C235.935 13.8154 234.632 13.3227 233.014 13.0627C231.459 12.8088 229.474 12.6758 227.121 12.6758C224.947 12.6758 218.511 12.7967 216.881 13.0627C215.269 13.3227 213.96 13.8124 213.003 14.5077C212.021 15.2241 211.294 16.2277 210.85 17.4943C210.427 18.7004 210.145 20.2542 210.031 22.1042C209.911 23.9059 209.854 26.1549 209.854 28.7818C209.854 31.4087 209.911 33.6517 210.031 35.4533C210.145 37.3064 210.427 38.8571 210.85 40.0633C211.291 41.3329 212.021 42.3395 213.003 43.0499C213.96 43.7482 215.269 44.2349 216.881 44.5009C218.511 44.7608 224.947 44.8818 227.121 44.8818C229.042 44.8818 230.717 44.7941 232.113 44.6278L235.676 49.6005H240.834V48.739L236.733 43.1647H236.73ZM227.121 40.4623C225.446 40.4623 219.847 40.4048 218.871 40.3111C217.926 40.2114 217.163 39.9998 216.611 39.6582C216.095 39.3468 215.722 38.8329 215.458 38.0863C215.17 37.2761 214.981 36.1214 214.897 34.6553C214.81 33.1469 214.765 31.1729 214.765 28.7818C214.765 26.3907 214.81 24.4077 214.897 22.9023C214.984 21.4422 215.173 20.2844 215.458 19.4713C215.722 18.7246 216.101 18.2107 216.617 17.8994C217.163 17.5638 217.926 17.3462 218.871 17.2525C219.853 17.1557 225.446 17.0953 227.121 17.0953C228.7 17.0953 230.024 17.1466 231.05 17.2525C232.008 17.3462 232.765 17.5578 233.299 17.8933C233.797 18.2047 234.187 18.7367 234.464 19.4773C234.761 20.2874 234.95 21.4361 235.019 22.8962C235.094 24.4228 235.127 26.4028 235.127 28.7818C235.127 31.1608 235.094 33.1378 235.019 34.6613C234.95 36.1214 234.761 37.2731 234.464 38.0802C234.299 38.5367 234.079 38.9115 233.827 39.2078L229.817 33.7605H224.332L229.111 40.426C228.502 40.4502 227.838 40.4593 227.121 40.4593V40.4623Z" fill="#8E59FF"/>
-          </svg>
-          <div className="frag-mobile-sub">This is what control looks like.</div>
-          <VideoCTAButton />
-        </section>
       </div>
     </div>
   );
