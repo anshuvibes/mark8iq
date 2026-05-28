@@ -61,6 +61,7 @@ export default function HeroV2() {
       >
         <div
           ref={imgContainerRef}
+          className="hero-dashboard-container"
           style={{
             position: 'relative',
             overflow: 'hidden',
