@@ -124,8 +124,8 @@ export default function HeroV2() {
           .hero-dashboard-container > img.hero-dashboard-desktop { display: none !important; }
           .hero-dashboard-container > img.hero-dashboard-mobile {
             display: block !important;
-            width: 200% !important;
-            max-width: 200% !important;
+            width: 100% !important;
+            max-width: 100% !important;
             margin-left: 0 !important;
           }
         }
