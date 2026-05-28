@@ -85,6 +85,29 @@ export default function HeroV2() {
           display: block;
         }
 
+        .mobile-text { display: none; }
+        .desktop-text { display: inline; }
+        .desktop-br { display: block; }
+
+        @media (max-width: 640px) {
+          .mobile-text { display: inline; }
+          .desktop-text { display: none; }
+          .desktop-br { display: none; }
+          
+          .hero-headline-mobile-break::before {
+            content: "\\A India's fastest\\A growing brands";
+            white-space: pre;
+            display: block;
+          }
+          .hero-headline-mobile-break {
+            display: block;
+            font-size: 0; /* Hide original text */
+          }
+          .hero-headline-mobile-break * {
+            display: none;
+          }
+        }
+
         @media (max-width: 1280px) {
           .hero-module-card {
             right: 16px !important;
