@@ -29,12 +29,12 @@ import personaKAM from '@/assets/personas/kam.png';
 import personaOpsHead from '@/assets/personas/operations-head.png';
 
 const departmentTags = [
-  { label: 'Advertisements',  icon: iconAdvertisements, opacity: 0.85, x: -420, y: -190 },
-  { label: 'Returns',         icon: iconReturns,        opacity: 0.85, x:  420, y: -190 },
-  { label: 'PO Management',   icon: iconPOManagement,   opacity: 0.85, x: -540, y:   30 },
-  { label: 'Inventory',       icon: iconInventory,      opacity: 0.85, x:  540, y:   30 },
-  { label: 'Finance',         icon: iconFinance,        opacity: 0.85, x: -420, y:  190 },
-  { label: 'Market Research', icon: iconMarketResearch, opacity: 0.85, x:  420, y:  190 },
+  { label: 'Advertisements',  src: '/img/home-v2/fragmentation/departments/advertisements.svg',  opacity: 0.9,  x: -510, y:  -90 },
+  { label: 'Returns',         src: '/img/home-v2/fragmentation/departments/returns.svg',         opacity: 0.8,  x: -490, y:  170 },
+  { label: 'PO Management',   src: '/img/home-v2/fragmentation/departments/po-management.svg',   opacity: 0.7,  x: -310, y: -230 },
+  { label: 'Inventory',       src: '/img/home-v2/fragmentation/departments/inventory.svg',       opacity: 0.6,  x:  510, y:   70 },
+  { label: 'Finance',         src: '/img/home-v2/fragmentation/departments/finance.svg',         opacity: 0.5,  x:  490, y: -150 },
+  { label: 'Market Research', src: '/img/home-v2/fragmentation/departments/market-research.svg', opacity: 0.55, x:  330, y:  230 },
 ];
 
 const personaLabels = [
@@ -70,7 +70,7 @@ export default function FragmentationV2() {
   const depthWrapperRef = useRef<HTMLDivElement>(null);
 
   const mktRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const deptRefs = useRef<(HTMLImageElement | null)[]>([]);
+  const deptRefs = useRef<(HTMLDivElement | null)[]>([]);
   const personaRefs = useRef<(HTMLImageElement | null)[]>([]);
 
   const text1Ref = useRef<HTMLDivElement>(null);
@@ -453,23 +453,18 @@ export default function FragmentationV2() {
 
           {/* Department tags */}
           {departmentTags.map((tag, i) => (
-            <img
-              key={tag.label}
+            <div
               ref={(el) => { deptRefs.current[i] = el; }}
-              src={tag.icon}
-              alt={tag.label}
+              key={tag.label}
               style={{
                 position: 'absolute',
                 left: '50%',
                 top: '50%',
-                opacity: tag.opacity,
-                width: '120px',
-                height: 'auto',
                 pointerEvents: 'none',
-                zIndex: 2,
-                display: 'block',
               }}
-            />
+            >
+              <img src={tag.src} alt={tag.label} style={{ width: '180px', height: 'auto', display: 'block' }} />
+            </div>
           ))}
 
 
