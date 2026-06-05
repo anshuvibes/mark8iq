@@ -463,7 +463,7 @@ export default function FragmentationV2() {
                 pointerEvents: 'none',
               }}
             >
-              <img src={tag.src} alt={tag.label} style={{ width: '180px', height: 'auto', display: 'block' }} />
+              <img src={tag.src} alt={tag.label} style={{ height: '44px', width: 'auto', display: 'block' }} />
             </div>
           ))}
 
